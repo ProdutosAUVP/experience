@@ -21,10 +21,26 @@ imersoes/chile.html         página de destino
 assets/css/fonts.css        @font-face das fontes auto-hospedadas
 assets/css/main.css         tokens, reset, tipografia e componentes
 assets/css/sections.css     estilos por seção
-assets/js/app.js            todas as interações (~600 linhas, comentado)
+assets/js/app.js            todas as interações (~700 linhas, comentado)
 assets/fonts/               Cormorant Garamond + Inter (OFL 1.1)
 assets/img/                 arte vetorial gerada para o projeto
+wordpress/                  plugin WordPress + Elementor (ver abaixo)
 ```
+
+## WordPress / Elementor
+
+Existe um plugin que entrega o site como widgets do Elementor, com formulários
+gravando no painel. Instruções completas em **[`wordpress/README.md`](wordpress/README.md)**.
+
+```bash
+bash wordpress/package.sh    # gera dist/auvp-experience-1.0.0.zip
+```
+
+Os assets do plugin são **gerados** a partir de `assets/` — depois de mexer em
+qualquer CSS ou JS aqui na raiz, rode `node wordpress/build.js`.
+
+Todas as classes CSS são prefixadas com `auvp-` e, no plugin, escopadas em
+`.auvp-x`. É o que impede colisão com o tema hospedeiro nos dois sentidos.
 
 ## Rodar localmente
 
@@ -44,7 +60,7 @@ Estes pontos estão marcados no código e **precisam de decisão da equipe**:
 
 | O quê | Onde | Situação |
 |---|---|---|
-| Endpoint do formulário | `assets/js/app.js` → `CONFIG.formEndpoint` | vazio; sem ele o formulário abre o cliente de e-mail |
+| Endpoint do formulário | `assets/js/app.js` → `CONFIG.formEndpoint` | vazio; sem ele o formulário abre o cliente de e-mail. **No WordPress isso é automático** — o plugin injeta a rota REST |
 | E-mail de contato | `assets/js/app.js` → `CONFIG.contactEmail` | `experience@auvp.com.br` — **confirmar** |
 | Links de Instagram / LinkedIn | rodapé de todas as páginas (`<!-- TODO -->`) | apontando para `#` |
 | Datas, investimento e roteiro | `imersoes/*.html` | marcados como "A confirmar" |
