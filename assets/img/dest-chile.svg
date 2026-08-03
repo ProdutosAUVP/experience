@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" width="1200" height="1500" role="img" aria-label="Cordilheira e mina a ceu aberto — Chile">
+  <defs>
+    <linearGradient id="hSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#08080A"/>
+      <stop offset="0.5" stop-color="#131013"/>
+      <stop offset="0.82" stop-color="#33231A"/>
+      <stop offset="1" stop-color="#5A3A1E"/>
+    </linearGradient>
+    <linearGradient id="ridge1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#241C17"/>
+      <stop offset="1" stop-color="#100C0B"/>
+    </linearGradient>
+    <linearGradient id="ridge2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#14100F"/>
+      <stop offset="1" stop-color="#080707"/>
+    </linearGradient>
+    <radialGradient id="hSun" cx="0.66" cy="0.62" r="0.42">
+      <stop offset="0" stop-color="#E8B96F" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hVig" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0.58"/>
+      <stop offset="0.45" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.72"/>
+    </linearGradient>
+    
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="7" result="n"/>
+    <feColorMatrix in="n" type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+  </filter>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#hSky)"/>
+  <rect width="1200" height="1500" fill="url(#hSun)"/>
+  <path d="M-20 1100L-20 787.15L0 787.15L54.55 818.35L109.09 766.88L163.64 718.41L218.18 633.82L272.73 602.68L327.27 554.18L381.82 558.52L436.36 463.67L490.91 393L545.45 393.55L600 446.68L654.55 435.83L709.09 502.28L763.64 508.4L818.18 493.03L872.73 508.87L927.27 592.85L981.82 628.97L1036.36 717.6L1090.91 839.44L1145.45 842.82L1200 819.27L1220 1100Z" fill="url(#ridge1)"/>
+  <path d="M-20 1180L-20 947.74L0 947.74L66.67 902.17L133.33 823.78L200 761.94L266.67 739.69L333.33 682.76L400 660.75L466.67 640.92L533.33 624.08L600 598.9L666.67 654.78L733.33 659.34L800 720.55L866.67 729.46L933.33 763.63L1000 852.86L1066.67 911.7L1133.33 934.26L1200 937.87L1220 1180Z" fill="url(#ridge2)"/>
+  <rect x="0" y="980" width="1200" height="520" fill="#0A0908"/>
+  <g><ellipse cx="600" cy="1170" rx="470" ry="128" fill="none" stroke="#8A6A3C" stroke-width="1.4" opacity="0.5"/><path d="M130 1170A470 128 0 0 0 1070 1170" fill="#0A0908" opacity="0.5"/><ellipse cx="600" cy="1204" rx="408" ry="111" fill="none" stroke="#8A6A3C" stroke-width="1.2999999999999998" opacity="0.45"/><path d="M192 1204A408 111 0 0 0 1008 1204" fill="#0A0908" opacity="0.5"/><ellipse cx="600" cy="1238" rx="346" ry="94" fill="none" stroke="#8A6A3C" stroke-width="1.2" opacity="0.4"/><path d="M254 1238A346 94 0 0 0 946 1238" fill="#0A0908" opacity="0.5"/><ellipse cx="600" cy="1272" rx="284" ry="77" fill="none" stroke="#8A6A3C" stroke-width="1.0999999999999999" opacity="0.35"/><path d="M316 1272A284 77 0 0 0 884 1272" fill="#0A0908" opacity="0.5"/><ellipse cx="600" cy="1306" rx="222" ry="60" fill="none" stroke="#8A6A3C" stroke-width="0.9999999999999999" opacity="0.3"/><path d="M378 1306A222 60 0 0 0 822 1306" fill="#0A0908" opacity="0.5"/><ellipse cx="600" cy="1340" rx="160" ry="43" fill="none" stroke="#8A6A3C" stroke-width="0.8999999999999999" opacity="0.25"/><path d="M440 1340A160 43 0 0 0 760 1340" fill="#0A0908" opacity="0.5"/><ellipse cx="600" cy="1374" rx="98" ry="26" fill="none" stroke="#8A6A3C" stroke-width="0.7999999999999998" opacity="0.19999999999999996"/><path d="M502 1374A98 26 0 0 0 698 1374" fill="#0A0908" opacity="0.5"/></g>
+  <rect width="1200" height="1500" fill="url(#hVig)"/>
+  <rect width="1200" height="1500" filter="url(#grain)" opacity="0.3" style="mix-blend-mode:overlay"/>
+</svg>
