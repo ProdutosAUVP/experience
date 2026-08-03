@@ -1,165 +1,134 @@
 # AUVP Experience
 
-Site institucional da **AUVP Experience Co.** — imersões estratégicas globais.
+Site da AUVP Experience Co. — imersões estratégicas globais.
 
-Posicionamento: desejo (aspiracional) → filtro (não é para qualquer um) → ação (aplicar).
+**O repositório tem um arquivo só: `index.html`.** A página inteira está nele —
+estilo, imagens e interações. Sem JavaScript, sem plugin, sem arquivo externo.
 
 ---
 
-## Stack
+## Colar no WordPress / Elementor
 
-HTML, CSS e JavaScript puros. **Sem build, sem dependências, sem requisições a terceiros.**
+1. **Páginas → Adicionar nova**.
+2. Nos atributos da página, escolha o template **Elementor Canvas** (página em
+   branco). O site tem menu e rodapé próprios; o cabeçalho do tema brigaria com
+   eles.
+3. **Editar com Elementor** → arraste o widget **HTML**.
+4. Abra o `index.html`, **selecione tudo, copie e cole** no widget.
+5. Publique.
 
-A decisão foi deliberada: é uma landing page de campanha que precisa carregar rápido,
-ser fácil de editar por qualquer pessoa da equipe e publicar em qualquer lugar
-(GitHub Pages, Vercel, Netlify, S3) sem pipeline.
+O `<head>` do arquivo é descartado pelo navegador na hora de colar — pode
+copiar tudo sem medo. Se preferir copiar só o essencial, o arquivo tem duas
+marcações: comece no comentário **“PARA USAR NO WORDPRESS / ELEMENTOR”** e vá
+até o `</div>` com o comentário **“fim do bloco para colar”**.
 
-```
-index.html                  página principal
-imersoes/china.html         página de destino
-imersoes/chile.html         página de destino
-assets/css/fonts.css        @font-face das fontes auto-hospedadas
-assets/css/main.css         tokens, reset, tipografia e componentes
-assets/css/sections.css     estilos por seção
-assets/js/app.js            todas as interações (~700 linhas, comentado)
-assets/fonts/               Cormorant Garamond + Inter (OFL 1.1)
-assets/img/                 arte vetorial gerada para o projeto
-wordpress/                  plugin WordPress + Elementor (ver abaixo)
-```
+> No editor do Elementor a prévia pode aparecer estranha, porque ele injeta o
+> próprio CSS na área de edição. Confira sempre na página publicada.
 
-## WordPress / Elementor
+### Por que não quebra
 
-Existe um plugin que entrega o site como widgets do Elementor, com formulários
-gravando no painel. Instruções completas em **[`wordpress/README.md`](wordpress/README.md)**.
+A versão anterior dependia de JavaScript, e no WordPress isso falha com
+facilidade: a prévia do editor não executa scripts, e o WordPress remove
+`<script>` de quem não tem a permissão `unfiltered_html` (comum em host
+gerenciado, multisite ou com plugin de segurança). Sem o script, a página
+ficava preta.
 
-```bash
-bash wordpress/package.sh    # gera dist/auvp-experience-1.0.0.zip
-```
+Agora **não há JavaScript nenhum**. Menu, acordeões, abas, cards que abrem e
+animações de rolagem são feitos em CSS puro:
 
-Os assets do plugin são **gerados** a partir de `assets/` — depois de mexer em
-qualquer CSS ou JS aqui na raiz, rode `node wordpress/build.js`.
+| Interação | Como funciona |
+|---|---|
+| Menu em tela cheia | âncora `#menu` + `:target` — fecha sozinho ao navegar |
+| Cards de destino | `<details>` — abrem os detalhes na própria página |
+| FAQ | `<details name="…">` — abre um e fecha o outro |
+| Abas da Experiência | `<input type="radio">` + `<label>` |
+| Chips de destino | `<input type="checkbox">` — vão junto no formulário |
+| Faixa deslizante | `@keyframes` |
+| Perfis de networking | rolagem horizontal nativa, com encaixe |
+| Revelação ao rolar | `animation-timeline: view()` |
+| Barra de progresso | `animation-timeline: scroll()` |
 
-Todas as classes CSS são prefixadas com `auvp-` e, no plugin, escopadas em
-`.auvp-x`. É o que impede colisão com o tema hospedeiro nos dois sentidos.
+As animações de rolagem estão dentro de um `@supports`. Em navegador que não
+as suporta, o bloco é ignorado e o conteúdo aparece normalmente — **em nenhuma
+hipótese a página fica em branco.**
 
-## Rodar localmente
+### Por que não briga com o tema
 
-Precisa de um servidor HTTP — abrir com `file://` quebra o carregamento das fontes.
+Todas as classes são prefixadas com `auvp-` e todos os seletores são escopados
+em `.auvp-x`, a `<div>` que envolve o bloco. O estilo do site não alcança o
+tema, e o do tema não alcança o site.
 
-```bash
-npx http-server -p 8000
-# ou
-python3 -m http.server 8000
-```
+O menu usa `position: sticky`, não `fixed`: containers do Elementor costumam ter
+`transform`, o que anula `position: fixed` nos elementos de dentro.
+
+---
+
+## Editar
+
+Abra o `index.html` num editor de texto. O `<style>` fica no começo do bloco e
+o conteúdo vem logo depois — é só editar o texto no HTML e colar de novo.
+
+Não mexa nas classes `auvp-*`: são elas que ligam o conteúdo ao estilo.
 
 ---
 
 ## Antes de publicar
 
-Estes pontos estão marcados no código e **precisam de decisão da equipe**:
-
-| O quê | Onde | Situação |
-|---|---|---|
-| Endpoint do formulário | `assets/js/app.js` → `CONFIG.formEndpoint` | vazio; sem ele o formulário abre o cliente de e-mail. **No WordPress isso é automático** — o plugin injeta a rota REST |
-| E-mail de contato | `assets/js/app.js` → `CONFIG.contactEmail` | `experience@auvp.com.br` — **confirmar** |
-| Links de Instagram / LinkedIn | rodapé de todas as páginas (`<!-- TODO -->`) | apontando para `#` |
-| Datas, investimento e roteiro | `imersoes/*.html` | marcados como "A confirmar" |
-| Foto/vídeo real no hero | `index.html`, seção HERO | usando arte vetorial (ver abaixo) |
+| O quê | Onde |
+|---|---|
+| Ligar os formulários | comentário **“COMO LIGAR O FORMULÁRIO”**, na seção de candidatura |
+| Links de Instagram e LinkedIn | rodapé, marcados com `TODO` |
+| Datas, investimento e roteiro | dentro dos cards China e Chile, marcados como “A confirmar” |
+| Destino do card 2 | ver observação abaixo |
 
 ### Formulários
 
-Há dois: **candidatura** (seção 8) e **sugestão de destino** (seção 3).
-Ambos validam no cliente e depois:
+Como não há JavaScript nem plugin, o `<form>` precisa de um destino. Três
+caminhos, do mais simples ao mais integrado:
 
-- **com `CONFIG.formEndpoint` preenchido** → `POST` JSON para o endpoint (Formspree, HubSpot, RD Station, rota própria);
-- **sem endpoint** → montam um `mailto:` com os campos preenchidos e abrem o cliente de e-mail do usuário.
+1. **Serviço de formulário** — crie um formulário no Formspree, Getform ou
+   similar e cole a URL no `action=""`. Funciona sem mais nada.
+2. **Elementor Pro** — apague o `<form>` e ponha o widget “Formulário” do
+   Elementor no lugar, com os mesmos campos.
+3. **Link direto** — troque o botão por um link de WhatsApp ou e-mail.
 
-O segundo caminho é um fallback honesto para não publicar um formulário que finge enviar.
-Assim que houver CRM definido, basta preencher a constante.
+Enquanto nenhum for feito, o botão não envia nada. O comentário no arquivo
+explica cada opção.
+
+### Fontes
+
+Cormorant Garamond e Inter vêm do Google Fonts, por `@import` no topo do
+`<style>`. Se o Google Fonts estiver indisponível, a página cai para Georgia e
+a fonte de sistema — continua legível e com a mesma diagramação.
 
 ### Imagens
 
-Não havia banco de imagens disponível, então a arte foi **gerada para o projeto**
-(`assets/img/*.svg`): skylines em camadas, cordilheira com mina a céu aberto e malha
-de meridianos, todas com granulação e vinheta para leitura editorial.
-
-Elas funcionam como está, mas o ideal é trocar por fotografia real quando houver banco.
-Os arquivos têm as proporções certas — é só substituir mantendo o nome, ou apontar o `src`.
-
-**Para usar vídeo no hero**, troque o `<img>` de `.hero__media` por:
-
-```html
-<video autoplay muted loop playsinline poster="assets/img/hero-city.svg">
-  <source src="assets/video/hero.mp4" type="video/mp4">
-</video>
-```
-
-O CSS já cobre `video` com as mesmas regras do `img`.
+Não havia banco de imagens, então a arte (skylines, cordilheira com mina,
+malha de meridianos) foi **desenhada em SVG para o projeto** e está embutida no
+arquivo. Para trocar por fotografia, substitua cada `<svg class="auvp-art">`
+por um `<img class="auvp-art" src="URL-DA-IMAGEM" alt="…">` — as imagens
+precisam estar hospedadas (por exemplo, na biblioteca de mídia do WordPress).
 
 ---
 
 ## Divergências no briefing
 
-Duas coisas foram resolvidas por interpretação — vale revisar:
+1. **O card 2** vinha rotulado como *Portugal*, mas título e subtítulo
+   descreviam o **Chile** (“o coração mineiro da América Latina”). Foi tratado
+   como Chile, e “mercado europeu” virou “mercado latino-americano”. Se o
+   destino correto for Portugal, esse card precisa ser reescrito.
+2. A estrutura do briefing **pula o item 7** (vai de 6 para 8). Nada ficou de
+   fora; as seções foram renumeradas de 01 a 07 na interface.
+3. A seção de candidatura não tinha copy no briefing e foi escrita seguindo o
+   tom das demais.
 
-1. **Card 2 da seção "Nossas imersões"** vinha rotulado como *Portugal*, mas título e
-   subtítulo descreviam o **Chile** ("o coração mineiro da América Latina"). Foi tratado
-   como Chile, e a descrição sobre "mercado europeu" virou "mercado latino-americano".
-   Se o destino correto for Portugal, `imersoes/chile.html` precisa ser reescrito.
-2. A estrutura do briefing **pula o item 7** (vai de 6 para 8). Nada ficou de fora;
-   as seções foram renumeradas de 01 a 07 na interface.
+## O que foi verificado
 
-Além disso, a seção de candidatura (CTA final) não tinha copy no briefing e foi escrita
-seguindo o tom das demais.
+Renderização e interações com **JavaScript desativado**, dentro de um container
+com `transform`, contra um tema que estiliza `.btn`, `.card`, `.title`, `h1`,
+`h2`, `h3` e `p` com cores berrantes — em desktop e mobile. Também com o Google
+Fonts bloqueado.
 
----
-
-## Design
-
-**Paleta** — preto quase absoluto (`#08080a`), marfim (`#efeae1`) e dourado (`#c9a15b`).
-Todas as cores, tipos e espaçamentos são custom properties em `main.css` (`:root`),
-então rebranding é troca de tokens, não caça a valores no CSS.
-
-**Tipografia** — Cormorant Garamond (display, alta modulação, itálico para os destaques)
-com Inter (interface, caixa alta e tracking aberto nos rótulos). As duas são fontes
-variáveis auto-hospedadas: 6 arquivos, ~86 KB efetivos em pt-BR (só o subset `latin` é baixado).
-
-## Interações
-
-Tudo em um único loop de `requestAnimationFrame` — nada de bibliotecas de scroll.
-
-- Preloader com contador e cortina
-- Cursor customizado com `mix-blend-mode`, estado de hover e rótulo contextual
-- Botões magnéticos (`data-magnetic`)
-- Revelação por palavra nos títulos (`data-split`) e por elemento (`data-reveal`)
-- Máscara de mídia em `clip-path` nas imagens
-- Parallax (`data-parallax`) no hero e nas capas dos destinos
-- Marquee infinito que acelera conforme a velocidade do scroll
-- Faixa de perfis arrastável (ponteiro + trackpad horizontal)
-- Painel de sugestão de destinos com chips selecionáveis
-- Lista da seção Experiência com painel que troca no hover (acordeão no mobile)
-- Acordeão de FAQ, barra de progresso e índice lateral de seções
-
-### Acessibilidade
-
-- Navegação por teclado em todos os controles, `aria-expanded`/`aria-pressed` nos
-  componentes de estado, `skip link`, foco visível.
-- `prefers-reduced-motion: reduce` desliga animações, parallax, marquee e cursor,
-  e entrega o conteúdo em estado final.
-- Sem dependência de hover: o painel da seção Experiência responde a clique/toque,
-  e a faixa de perfis rola por toque e por trackpad.
-- Textos alternativos descritivos; conteúdo decorativo com `aria-hidden`.
-
----
-
-## Deploy
-
-O workflow em `.github/workflows/pages.yml` publica no GitHub Pages a cada push na
-branch padrão. Ele só roda depois de ativar **Settings → Pages → Source: GitHub Actions**.
-
-Como não há build, qualquer host estático serve: basta subir a pasta inteira.
-
-## Licenças
-
-Código deste repositório: AUVP Experience Co.
-Fontes: SIL Open Font License 1.1 — textos completos em `assets/fonts/LICENSE-*.txt`.
+**Não foi testado numa instalação real de WordPress** (o ambiente onde o site
+foi feito não tinha acesso a wordpress.org). Vale colar numa página de
+homologação antes de publicar.

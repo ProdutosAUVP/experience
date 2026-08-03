@@ -6,43 +6,1011 @@
 <title>AUVP Experience — Imersões estratégicas globais</title>
 <meta name="description" content="A AUVP Experience promove imersões nos bastidores das economias que estão moldando o futuro. Visitas a empresas globais, conversas com quem opera o mercado e networking de alto nível.">
 <meta name="theme-color" content="#08080a">
-
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="AUVP Experience">
 <meta property="og:title" content="AUVP Experience — Imersões estratégicas globais">
 <meta property="og:description" content="O mundo não é igual para quem vê de perto. Imersões nos bastidores das economias que movem o mundo.">
-<meta property="og:image" content="assets/img/hero-city.svg">
 <meta name="twitter:card" content="summary_large_image">
-
-<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/fonts.css">
-<link rel="stylesheet" href="assets/css/main.css">
-<link rel="stylesheet" href="assets/css/sections.css">
 </head>
 
-<body>
+<body class="auvp-x">
 
+<!-- ============================================================================
+     AUVP EXPERIENCE — página completa em um arquivo só.
+
+     PARA USAR NO WORDPRESS / ELEMENTOR
+     Copie deste comentário até o </div> marcado como "fim do bloco" e cole
+     num widget HTML. Ou copie o arquivo inteiro — o <head> é ignorado.
+     Nada aqui depende de JavaScript, de plugin ou de arquivo externo:
+     se o WordPress remover scripts, a página continua funcionando.
+
+     A classe auvp-x é o escopo do CSS. Sem ela nada é estilizado — e é
+     ela que impede o estilo do site de vazar para o tema, e vice-versa.
+     ============================================================================ -->
+<div class="auvp-x">
+
+<style>
+/* ==========================================================================
+   AUVP Experience
+   Sem JavaScript: menu, acordeões, abas e revelações são feitos em CSS.
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap");
+
+/* ---------- 1. Tokens ---------- */
+.auvp-x {
+  --ink-900: #08080a;
+  --ink-850: #0b0b0d;
+  --ink-800: #0e0e11;
+
+  --bone: #efeae1;
+  --bone-80: rgba(239, 234, 225, 0.8);
+  --bone-60: rgba(239, 234, 225, 0.6);
+  --bone-45: rgba(239, 234, 225, 0.45);
+  --bone-30: rgba(239, 234, 225, 0.3);
+
+  --gold: #c9a15b;
+  --gold-lt: #e3c07a;
+  --gold-20: rgba(201, 161, 91, 0.2);
+  --gold-40: rgba(201, 161, 91, 0.4);
+
+  --line: rgba(239, 234, 225, 0.13);
+  --line-soft: rgba(239, 234, 225, 0.07);
+
+  --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --fs-hero: clamp(2.9rem, 7.6vw, 8.4rem);
+  --fs-display: clamp(2.3rem, 5.2vw, 5.2rem);
+  --fs-title: clamp(1.75rem, 3.2vw, 3.1rem);
+  --fs-sub: clamp(1.15rem, 1.7vw, 1.6rem);
+  --fs-body: clamp(0.95rem, 1.05vw, 1.075rem);
+  --fs-small: 0.8125rem;
+  --fs-micro: 0.6875rem;
+
+  --gutter: clamp(1.25rem, 5vw, 5rem);
+  --section-y: clamp(5.5rem, 11vw, 11rem);
+  --max-w: 1560px;
+  --nav-h: 76px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- 2. Base ---------- */
+.auvp-x {
+  margin: 0;
+  background: var(--ink-900);
+  color: var(--bone);
+  font-family: var(--sans);
+  font-size: var(--fs-body);
+  font-weight: 300;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+.auvp-x, .auvp-x *, .auvp-x *::before, .auvp-x *::after { box-sizing: border-box; }
+
+/* Cor e família tipográfica são definidas aqui, nunca herdadas do tema.
+   Este bloco fica dentro do <body>, depois do CSS do tema — em caso de
+   empate de especificidade, quem vem depois vence. */
+.auvp-x h1, .auvp-x h2, .auvp-x h3, .auvp-x h4, .auvp-x h5, .auvp-x h6, .auvp-x p, .auvp-x li, .auvp-x span, .auvp-x a, .auvp-x em, .auvp-x strong, .auvp-x i, .auvp-x b, .auvp-x small, .auvp-x label, .auvp-x summary, .auvp-x figure, .auvp-x figcaption, .auvp-x dl, .auvp-x dt, .auvp-x dd, .auvp-x button, .auvp-x input, .auvp-x select, .auvp-x textarea, .auvp-x article {
+  color: inherit;
+  font-family: inherit;
+}
+
+.auvp-x h1, .auvp-x h2, .auvp-x h3, .auvp-x h4 {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: normal;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  text-transform: none;
+}
+
+.auvp-x p, .auvp-x figure, .auvp-x dd { margin: 0; }
+.auvp-x ul, .auvp-x ol { margin: 0; padding: 0; list-style: none; }
+.auvp-x a { text-decoration: none; }
+.auvp-x img, .auvp-x svg, .auvp-x video { display: block; max-width: 100%; }
+.auvp-x button { font: inherit; background: none; border: 0; cursor: pointer; }
+.auvp-x summary::-webkit-details-marker { display: none; }
+.auvp-x summary { list-style: none; cursor: pointer; }
+.auvp-x ::selection { background: var(--gold); color: var(--ink-900); }
+.auvp-x :focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+.auvp-x [id] { scroll-margin-top: calc(var(--nav-h) + 24px); }
+
+/* ---------- 3. Layout e utilitários ---------- */
+.auvp-x .auvp-shell {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.auvp-x .auvp-section { position: relative; padding-block: var(--section-y); }
+
+.auvp-x .auvp-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.auvp-x .auvp-eyebrow::before {
+  content: "";
+  width: clamp(1.5rem, 3vw, 3rem);
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.auvp-x .auvp-display { font-size: var(--fs-display); }
+.auvp-x .auvp-title { font-size: var(--fs-title); }
+.auvp-x .auvp-lede { font-size: var(--fs-sub); line-height: 1.5; color: var(--bone-80); }
+.auvp-x .auvp-muted { color: var(--bone-60); }
+.auvp-x .auvp-serif { font-family: var(--serif); }
+.auvp-x .auvp-gold { color: var(--gold); }
+.auvp-x .auvp-measure { max-width: 62ch; }
+.auvp-x .auvp-measure-sm { max-width: 46ch; }
+.auvp-x em { color: var(--gold-lt); font-style: italic; }
+
+.auvp-x .auvp-num {
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.auvp-x .auvp-sr {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.auvp-x .auvp-skip {
+  position: absolute;
+  top: -100px; left: var(--gutter);
+  z-index: 10000;
+  padding: 0.75rem 1.25rem;
+  background: var(--gold);
+  color: var(--ink-900);
+  font-size: var(--fs-small);
+}
+.auvp-x .auvp-skip:focus { top: 1rem; }
+
+/* Arte vetorial de fundo */
+.auvp-x .auvp-art {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- 4. Grão e barra de progresso ---------- */
+.auvp-x .auvp-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.auvp-x .auvp-progress {
+  position: absolute;
+  left: 0; bottom: -1px;
+  width: 100%; height: 1px;
+  pointer-events: none;
+}
+.auvp-x .auvp-progress i {
+  display: block;
+  height: 100%;
+  background: var(--gold);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* ---------- 5. Botões e links ---------- */
+.auvp-x .auvp-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85em;
+  padding: 1.05em 2.1em;
+  font-size: var(--fs-small);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  border: 1px solid var(--gold-40);
+  color: var(--bone);
+  overflow: hidden;
+  isolation: isolate;
+  text-align: center;
+  transition: color 0.5s var(--ease), border-color 0.5s var(--ease);
+}
+.auvp-x .auvp-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--gold);
+  transform: translateY(101%);
+  transition: transform 0.55s var(--ease);
+}
+.auvp-x .auvp-btn:hover, .auvp-x .auvp-btn:focus-visible { color: var(--ink-900); border-color: var(--gold); }
+.auvp-x .auvp-btn:hover::after, .auvp-x .auvp-btn:focus-visible::after { transform: translateY(0); }
+.auvp-x .auvp-btn i { font-style: normal; transition: transform 0.5s var(--ease); }
+.auvp-x .auvp-btn:hover i { transform: translateX(4px); }
+
+.auvp-x .auvp-btn--solid { background: var(--gold); color: var(--ink-900); border-color: var(--gold); }
+.auvp-x .auvp-btn--solid::after { background: var(--bone); }
+.auvp-x .auvp-btn--solid:hover, .auvp-x .auvp-btn--solid:focus-visible { color: var(--ink-900); }
+.auvp-x .auvp-btn--sm { padding: 0.8em 1.5em; font-size: var(--fs-micro); }
+
+/* ---------- 6. Navegação ---------- */
+/* sticky, e não fixed: containers do Elementor costumam ter transform,
+   o que anula position:fixed nos filhos. A margem negativa mantém a nav
+   sobreposta ao hero. */
+.auvp-x .auvp-nav {
+  position: sticky;
+  top: 0;
+  z-index: 800;
+  width: 100%;
+  margin-bottom: calc(var(--nav-h) * -1);
+  background: rgba(8, 8, 10, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line-soft);
+}
+.auvp-x .auvp-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  height: var(--nav-h);
+}
+
+.auvp-x .auvp-brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.auvp-x .auvp-brand strong { font-weight: 500; }
+.auvp-x .auvp-brand span { color: var(--bone-45); }
+
+.auvp-x .auvp-nav__links { display: flex; align-items: center; gap: clamp(1.25rem, 2.4vw, 2.6rem); }
+.auvp-x .auvp-nav__link {
+  position: relative;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bone-60);
+  transition: color 0.4s var(--ease);
+}
+.auvp-x .auvp-nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -6px;
+  width: 100%; height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--ease);
+}
+.auvp-x .auvp-nav__link:hover { color: var(--bone); }
+.auvp-x .auvp-nav__link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.auvp-x .auvp-burger {
+  display: none;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bone-80);
+}
+.auvp-x .auvp-burger i { display: block; width: 22px; height: 1px; background: currentColor; position: relative; }
+.auvp-x .auvp-burger i::before { content: ""; position: absolute; inset: -5px 0 auto 0; height: 1px; background: currentColor; }
+
+@media (max-width: 900px) {
+  .auvp-x .auvp-nav__links { display: none; }
+  .auvp-x .auvp-burger { display: inline-flex; }
+}
+
+/* Menu em tela cheia — aberto por :target, fecha sozinho ao navegar */
+/* O menu entra no fluxo em vez de usar position:fixed — assim funciona
+   mesmo dentro de um container com transform. O :target já rola até ele. */
+.auvp-x .auvp-menu {
+  display: none;
+  scroll-margin-top: 0;
+  min-height: 100svh;
+  background: var(--ink-850);
+  grid-template-rows: var(--nav-h) 1fr auto;
+  position: relative;
+  z-index: 900;
+}
+.auvp-x .auvp-menu:target { display: grid; }
+
+.auvp-x .auvp-menu__top { display: flex; align-items: center; justify-content: space-between; }
+.auvp-x .auvp-menu__body { display: grid; align-content: center; gap: clamp(0.4rem, 1.4vw, 0.9rem); padding-block: 2rem; }
+.auvp-x .auvp-menu__link {
+  font-family: var(--serif);
+  font-size: clamp(2.1rem, 8vw, 4rem);
+  line-height: 1.12;
+  transition: color 0.4s var(--ease);
+}
+.auvp-x .auvp-menu__link:hover { color: var(--gold); }
+.auvp-x .auvp-menu__link i { font-style: normal; font-size: var(--fs-micro); letter-spacing: 0.2em; color: var(--gold); vertical-align: super; margin-right: 0.6rem; }
+.auvp-x .auvp-menu__foot {
+  display: flex; flex-wrap: wrap; gap: 1rem 2rem;
+  justify-content: space-between; align-items: center;
+  padding-block: 2rem;
+  border-top: 1px solid var(--line-soft);
+  font-size: var(--fs-small);
+  color: var(--bone-45);
+}
+
+/* ---------- 7. Hero ---------- */
+.auvp-x .auvp-hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: end;
+  padding-top: var(--nav-h);
+  overflow: hidden;
+}
+.auvp-x .auvp-hero__media { position: absolute; inset: 0; z-index: 0; }
+.auvp-x .auvp-hero__scrim {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(to bottom, rgba(8,8,10,0.82) 0%, rgba(8,8,10,0.18) 34%, rgba(8,8,10,0.55) 72%, var(--ink-900) 100%),
+    linear-gradient(to right, rgba(8,8,10,0.75) 0%, rgba(8,8,10,0.1) 60%);
+}
+.auvp-x .auvp-hero__content { position: relative; z-index: 2; width: 100%; padding-bottom: clamp(2.5rem, 5vw, 4.5rem); align-self: end; }
+.auvp-x .auvp-hero__eyebrow { margin-bottom: clamp(1.5rem, 3vw, 2.6rem); }
+.auvp-x .auvp-hero__title { font-size: var(--fs-hero); line-height: 0.96; letter-spacing: -0.025em; max-width: 15ch; }
+.auvp-x .auvp-hero__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: clamp(1.75rem, 4vw, 4rem);
+  margin-top: clamp(1.75rem, 3.5vw, 3rem);
+}
+.auvp-x .auvp-hero__lede { max-width: 44ch; color: var(--bone-80); font-size: clamp(1rem, 1.35vw, 1.25rem); line-height: 1.55; }
+.auvp-x .auvp-hero__lede strong { font-weight: 400; color: var(--bone); }
+.auvp-x .auvp-hero__foot {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  padding-block: 1.15rem;
+  border-top: 1px solid var(--line-soft);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bone-45);
+}
+.auvp-x .auvp-cue { display: inline-flex; align-items: center; gap: 0.75rem; }
+.auvp-x .auvp-cue span { position: relative; display: block; width: 46px; height: 1px; background: var(--line); overflow: hidden; }
+.auvp-x .auvp-cue span::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--gold);
+  animation: auvp-cue 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes auvp-cue {
+  0% { transform: scaleX(0); transform-origin: left; }
+  45% { transform: scaleX(1); transform-origin: left; }
+  55% { transform: scaleX(1); transform-origin: right; }
+  100% { transform: scaleX(0); transform-origin: right; }
+}
+.auvp-x .auvp-hero__meta { display: flex; gap: clamp(1rem, 3vw, 2.5rem); }
+.auvp-x .auvp-hero__meta span { display: inline-flex; align-items: center; gap: 0.55rem; }
+.auvp-x .auvp-hero__meta span::before { content: ""; width: 3px; height: 3px; background: var(--gold); border-radius: 50%; }
+
+@media (max-width: 760px) {
+  .auvp-x .auvp-hero__row { grid-template-columns: 1fr; align-items: start; }
+  .auvp-x .auvp-hero__meta span:not(:first-child) { display: none; }
+}
+@media (max-width: 620px) { .auvp-x .auvp-hero__meta { display: none; } }
+
+/* ---------- 8. Posicionamento ---------- */
+.auvp-x .auvp-proof__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: end;
+  padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+.auvp-x .auvp-proof__statement {
+  font-size: clamp(1.6rem, 3.3vw, 3.15rem);
+  line-height: 1.16;
+  max-width: 22ch;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+.auvp-x .auvp-proof__aside { color: var(--bone-60); max-width: 40ch; }
+
+.auvp-x .auvp-pillars {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line-soft);
+  border-block: 1px solid var(--line-soft);
+}
+.auvp-x .auvp-pillar {
+  position: relative;
+  background: var(--ink-900);
+  padding: clamp(1.75rem, 2.6vw, 2.75rem) clamp(1.25rem, 1.8vw, 2rem) clamp(2.25rem, 3.5vw, 3.5rem);
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+  transition: background-color 0.6s var(--ease);
+}
+.auvp-x .auvp-pillar:hover { background: var(--ink-800); }
+.auvp-x .auvp-pillar::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -1px;
+  width: 100%; height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease);
+}
+.auvp-x .auvp-pillar:hover::after { transform: scaleX(1); }
+.auvp-x .auvp-pillar h3 { font-size: clamp(1.15rem, 1.65vw, 1.55rem); line-height: 1.18; margin-top: 0.35rem; }
+.auvp-x .auvp-pillar p { font-size: var(--fs-small); line-height: 1.7; color: var(--bone-60); }
+
+@media (max-width: 1080px) { .auvp-x .auvp-pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) {
+  .auvp-x .auvp-pillars { grid-template-columns: 1fr; }
+  .auvp-x .auvp-proof__head { grid-template-columns: 1fr; }
+}
+
+/* ---------- 9. Imersões ---------- */
+.auvp-x .auvp-dest__head {
+  display: flex; flex-wrap: wrap;
+  align-items: flex-end; justify-content: space-between;
+  gap: 1.5rem 3rem;
+  padding-bottom: clamp(2.25rem, 4vw, 3.5rem);
+}
+.auvp-x .auvp-dest__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.4vw, 1.4rem);
+  align-items: start;
+}
+
+.auvp-x .auvp-card { border: 1px solid var(--line-soft); transition: border-color 0.6s var(--ease); }
+.auvp-x .auvp-card[open], .auvp-x .auvp-card:hover { border-color: var(--gold-20); }
+
+.auvp-x .auvp-card__face {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: clamp(380px, 62vh, 620px);
+  padding: clamp(1.5rem, 2.2vw, 2.4rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+.auvp-x .auvp-card__media { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+.auvp-x .auvp-card__media svg { transition: transform 1.4s var(--ease); }
+.auvp-x .auvp-card:hover .auvp-card__media svg { transform: scale(1.07); }
+.auvp-x .auvp-card__face::before {
+  content: "";
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(to top, rgba(6,6,8,0.94) 8%, rgba(6,6,8,0.45) 48%, rgba(6,6,8,0.15) 100%);
+}
+.auvp-x .auvp-card__index {
+  position: absolute;
+  top: clamp(1.25rem, 2vw, 2rem);
+  left: clamp(1.5rem, 2.2vw, 2.4rem);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.2em;
+  color: var(--bone-45);
+}
+.auvp-x .auvp-card__title { font-size: clamp(2.2rem, 3.6vw, 3.6rem); line-height: 0.98; margin-bottom: 0.55rem; }
+.auvp-x .auvp-card__sub {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  color: var(--gold-lt);
+  line-height: 1.3;
+  margin-bottom: 0.9rem;
+}
+.auvp-x .auvp-card__desc { font-size: var(--fs-small); color: var(--bone-60); max-width: 34ch; line-height: 1.65; }
+.auvp-x .auvp-card__cta {
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  margin-top: clamp(1.25rem, 2vw, 1.9rem);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.auvp-x .auvp-card__cta i {
+  display: grid; place-items: center;
+  width: 34px; height: 34px;
+  border: 1px solid var(--gold-40);
+  border-radius: 50%;
+  font-style: normal;
+  transition: background-color 0.5s var(--ease), color 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.auvp-x .auvp-card:hover .auvp-card__cta i { background: var(--gold); color: var(--ink-900); }
+.auvp-x .auvp-card[open] .auvp-card__cta i { transform: rotate(-90deg); background: var(--gold); color: var(--ink-900); }
+.auvp-x .auvp-card[open] .auvp-card__cta em { color: inherit; font-style: normal; }
+.auvp-x .auvp-card__cta .auvp-fechar { display: none; }
+.auvp-x .auvp-card[open] .auvp-card__cta .auvp-abrir { display: none; }
+.auvp-x .auvp-card[open] .auvp-card__cta .auvp-fechar { display: inline; }
+
+.auvp-x .auvp-card__panel {
+  padding: clamp(1.5rem, 2.2vw, 2.4rem);
+  border-top: 1px solid var(--line-soft);
+  display: grid;
+  gap: 1.5rem;
+  background: var(--ink-850);
+}
+.auvp-x .auvp-card__panel h4 { font-size: 1.15rem; }
+.auvp-x .auvp-card__panel p { font-size: var(--fs-small); color: var(--bone-60); line-height: 1.7; }
+.auvp-x .auvp-facts { display: grid; gap: 0.75rem; }
+.auvp-x .auvp-facts div { display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: 1rem; font-size: var(--fs-small); }
+.auvp-x .auvp-facts dt { color: var(--bone-45); text-transform: uppercase; letter-spacing: 0.12em; font-size: var(--fs-micro); padding-top: 0.2em; }
+.auvp-x .auvp-facts dd { font-family: var(--serif); font-size: 1.05rem; }
+
+.auvp-x .auvp-nota {
+  font-size: var(--fs-micro);
+  letter-spacing: 0.08em;
+  color: var(--bone-30);
+  border-left: 1px solid var(--gold-40);
+  padding-left: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 980px) {
+  .auvp-x .auvp-dest__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .auvp-x .auvp-card--next { grid-column: 1 / -1; }
+  .auvp-x .auvp-card--next .auvp-card__face { min-height: 340px; }
+}
+@media (max-width: 640px) {
+  .auvp-x .auvp-dest__grid { grid-template-columns: 1fr; }
+  .auvp-x .auvp-card--next { grid-column: auto; }
+  .auvp-x .auvp-facts div { grid-template-columns: 1fr; gap: 0.2rem; }
+}
+
+/* Chips: caixas de seleção reais, para o formulário levar a escolha */
+.auvp-x .auvp-chips { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+.auvp-x .auvp-chip input { position: absolute; opacity: 0; pointer-events: none; }
+.auvp-x .auvp-chip span {
+  display: block;
+  padding: 0.6em 1.15em;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  font-size: var(--fs-small);
+  color: var(--bone-60);
+  cursor: pointer;
+  transition: border-color 0.35s var(--ease), color 0.35s var(--ease), background-color 0.35s var(--ease);
+}
+.auvp-x .auvp-chip span:hover { border-color: var(--gold-40); color: var(--bone); }
+.auvp-x .auvp-chip input:checked + span { background: var(--gold); border-color: var(--gold); color: var(--ink-900); }
+.auvp-x .auvp-chip input:focus-visible + span { outline: 1px solid var(--gold); outline-offset: 3px; }
+
+/* ---------- 10. Diferencial ---------- */
+.auvp-x .auvp-edge__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+.auvp-x .auvp-edge__sticky { position: sticky; top: calc(var(--nav-h) + 8vh); }
+.auvp-x .auvp-edge__title { font-size: clamp(2rem, 4.2vw, 4.2rem); line-height: 1.04; max-width: 15ch; margin-top: clamp(1.25rem, 2.5vw, 2rem); }
+.auvp-x .auvp-edge__body { display: grid; gap: clamp(1.75rem, 3.5vw, 3rem); }
+.auvp-x .auvp-edge__body p { color: var(--bone-80); }
+.auvp-x .auvp-edge__figure { position: relative; aspect-ratio: 16 / 10; overflow: hidden; }
+.auvp-x .auvp-edge__tags { display: flex; flex-wrap: wrap; gap: 0.5rem 0.65rem; }
+.auvp-x .auvp-edge__tags li {
+  padding: 0.5em 1em;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bone-60);
+}
+@media (max-width: 860px) {
+  .auvp-x .auvp-edge__grid { grid-template-columns: 1fr; }
+  .auvp-x .auvp-edge__sticky { position: static; }
+}
+
+/* ---------- 11. Faixa deslizante ---------- */
+.auvp-x .auvp-marquee {
+  position: relative;
+  padding-block: clamp(1.5rem, 3vw, 2.6rem);
+  border-block: 1px solid var(--line-soft);
+  overflow: hidden;
+  user-select: none;
+}
+.auvp-x .auvp-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: auvp-slide 34s linear infinite;
+}
+@keyframes auvp-slide { to { transform: translateX(-50%); } }
+.auvp-x .auvp-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  padding-right: clamp(1.5rem, 3vw, 3rem);
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 5vw, 4.6rem);
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.auvp-x .auvp-marquee__item::after {
+  content: "";
+  width: clamp(6px, 0.7vw, 9px);
+  height: clamp(6px, 0.7vw, 9px);
+  border-radius: 50%;
+  background: var(--gold);
+  flex: none;
+}
+
+/* ---------- 12. Networking ---------- */
+.auvp-x .auvp-net__statement { font-size: clamp(2.2rem, 6vw, 6.2rem); line-height: 1; letter-spacing: -0.02em; max-width: 16ch; }
+.auvp-x .auvp-net__complement { max-width: 46ch; margin-top: clamp(1.5rem, 3vw, 2.4rem); color: var(--bone-80); font-size: var(--fs-sub); line-height: 1.5; }
+
+.auvp-x .auvp-strip {
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+  display: flex;
+  gap: clamp(0.75rem, 1.2vw, 1.2rem);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 1.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-40) transparent;
+}
+.auvp-x .auvp-strip::-webkit-scrollbar { height: 3px; }
+.auvp-x .auvp-strip::-webkit-scrollbar-track { background: var(--line-soft); }
+.auvp-x .auvp-strip::-webkit-scrollbar-thumb { background: var(--gold-40); }
+
+.auvp-x .auvp-profile {
+  flex: none;
+  width: clamp(230px, 26vw, 340px);
+  scroll-snap-align: start;
+  padding: clamp(1.4rem, 2vw, 2rem);
+  border: 1px solid var(--line-soft);
+  background: linear-gradient(160deg, var(--ink-800), var(--ink-900) 70%);
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
+  min-height: clamp(190px, 21vw, 250px);
+  transition: border-color 0.5s var(--ease), transform 0.6s var(--ease);
+}
+.auvp-x .auvp-profile:hover { border-color: var(--gold-20); transform: translateY(-6px); }
+.auvp-x .auvp-profile h3 { font-size: clamp(1.3rem, 1.9vw, 1.75rem); line-height: 1.15; }
+.auvp-x .auvp-profile p { font-size: var(--fs-small); color: var(--bone-60); line-height: 1.65; }
+
+.auvp-x .auvp-hint {
+  display: flex; align-items: center; gap: 0.8rem;
+  margin-top: 1rem;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bone-30);
+}
+.auvp-x .auvp-hint span { display: block; width: 60px; height: 1px; background: var(--line); }
+
+/* ---------- 13. Experiência (abas em CSS puro) ---------- */
+.auvp-x .auvp-care__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+.auvp-x .auvp-care input { position: absolute; opacity: 0; pointer-events: none; }
+.auvp-x .auvp-care__list { border-top: 1px solid var(--line); }
+.auvp-x .auvp-care__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1.25rem;
+  padding: clamp(1.35rem, 2.2vw, 1.9rem) 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  transition: padding-left 0.55s var(--ease);
+}
+.auvp-x .auvp-care__item::before {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -1px;
+  width: 100%; height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.65s var(--ease);
+}
+.auvp-x .auvp-care__item h3 {
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 1.9vw, 1.8rem);
+  line-height: 1.2;
+  color: var(--bone-60);
+  transition: color 0.45s var(--ease);
+}
+.auvp-x .auvp-care__item .auvp-num { padding-top: 0.55em; }
+.auvp-x .auvp-care__text { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.6s var(--ease); }
+.auvp-x .auvp-care__text p { overflow: hidden; font-size: var(--fs-small); color: var(--bone-60); line-height: 1.7; max-width: 46ch; }
+
+.auvp-x .auvp-care__stage {
+  position: sticky;
+  top: calc(var(--nav-h) + 10vh);
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--line-soft);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(120% 100% at 50% 100%, rgba(201,161,91,0.14), transparent 62%), var(--ink-850);
+}
+.auvp-x .auvp-care__rings { position: absolute; inset: 0; opacity: 0.45; }
+.auvp-x .auvp-care__plate {
+  position: absolute; inset: 0;
+  display: grid; place-content: center; justify-items: center;
+  gap: 1.25rem; padding: 2rem; text-align: center;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.7s var(--ease), transform 0.9s var(--ease);
+}
+.auvp-x .auvp-care__plate b {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(5rem, 13vw, 11rem);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--gold-40);
+}
+.auvp-x .auvp-care__plate p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.15rem, 1.9vw, 1.7rem);
+  color: var(--bone-80);
+  max-width: 20ch;
+}
+
+/* estado ativo de cada aba */
+.auvp-x #auvp-e1:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(1), .auvp-x #auvp-e2:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(2), .auvp-x #auvp-e3:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(3), .auvp-x #auvp-e4:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(4) { padding-left: 0.9rem; }
+
+.auvp-x #auvp-e1:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(1)::before, .auvp-x #auvp-e2:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(2)::before, .auvp-x #auvp-e3:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(3)::before, .auvp-x #auvp-e4:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(4)::before { transform: scaleX(1); }
+
+.auvp-x #auvp-e1:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(1) h3, .auvp-x #auvp-e2:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(2) h3, .auvp-x #auvp-e3:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(3) h3, .auvp-x #auvp-e4:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(4) h3 { color: var(--bone); }
+
+.auvp-x #auvp-e1:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(1) .auvp-care__text, .auvp-x #auvp-e2:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(2) .auvp-care__text, .auvp-x #auvp-e3:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(3) .auvp-care__text, .auvp-x #auvp-e4:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(4) .auvp-care__text { grid-template-rows: 1fr; }
+
+.auvp-x #auvp-e1:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(1) .auvp-care__text p, .auvp-x #auvp-e2:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(2) .auvp-care__text p, .auvp-x #auvp-e3:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(3) .auvp-care__text p, .auvp-x #auvp-e4:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(4) .auvp-care__text p { padding-top: 0.85rem; }
+
+.auvp-x #auvp-e1:checked ~ .auvp-care__grid .auvp-care__plate:nth-of-type(1), .auvp-x #auvp-e2:checked ~ .auvp-care__grid .auvp-care__plate:nth-of-type(2), .auvp-x #auvp-e3:checked ~ .auvp-care__grid .auvp-care__plate:nth-of-type(3), .auvp-x #auvp-e4:checked ~ .auvp-care__grid .auvp-care__plate:nth-of-type(4) { opacity: 1; transform: none; }
+
+@media (max-width: 900px) {
+  .auvp-x .auvp-care__grid { grid-template-columns: 1fr; }
+  .auvp-x .auvp-care__stage { display: none; }
+}
+
+/* ---------- 14. FAQ ---------- */
+.auvp-x .auvp-faq__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+.auvp-x .auvp-faq__aside { position: sticky; top: calc(var(--nav-h) + 10vh); display: grid; gap: 1.5rem; }
+
+.auvp-x .auvp-acc { border-top: 1px solid var(--line); }
+.auvp-x .auvp-acc__item { border-bottom: 1px solid var(--line); }
+.auvp-x .auvp-acc__item summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: clamp(1.35rem, 2.4vw, 2.1rem) 0;
+  color: var(--bone-80);
+  transition: color 0.4s var(--ease);
+}
+.auvp-x .auvp-acc__item summary:hover, .auvp-x .auvp-acc__item[open] summary { color: var(--bone); }
+.auvp-x .auvp-acc__item h3 { font-size: clamp(1.2rem, 2vw, 1.85rem); line-height: 1.2; }
+.auvp-x .auvp-acc__sign { position: relative; flex: none; width: 15px; height: 15px; margin-top: 0.45em; }
+.auvp-x .auvp-acc__sign::before, .auvp-x .auvp-acc__sign::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 0;
+  width: 100%; height: 1px;
+  background: var(--gold);
+  transition: transform 0.4s var(--ease);
+}
+.auvp-x .auvp-acc__sign::after { transform: rotate(90deg); }
+.auvp-x .auvp-acc__item[open] .auvp-acc__sign::after { transform: rotate(0deg); }
+.auvp-x .auvp-acc__item p {
+  max-width: 68ch;
+  padding-bottom: clamp(1.35rem, 2.4vw, 2.1rem);
+  color: var(--bone-60);
+}
+
+@media (max-width: 860px) {
+  .auvp-x .auvp-faq__grid { grid-template-columns: 1fr; }
+  .auvp-x .auvp-faq__aside { position: static; }
+}
+
+/* ---------- 15. Candidatura ---------- */
+.auvp-x .auvp-apply {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(90% 70% at 15% 100%, rgba(201,161,91,0.12), transparent 60%),
+    linear-gradient(to bottom, var(--ink-900), var(--ink-850));
+  border-top: 1px solid var(--line-soft);
+}
+.auvp-x .auvp-apply__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: start;
+}
+.auvp-x .auvp-apply__title { font-size: clamp(2.1rem, 4.6vw, 4.4rem); line-height: 1.03; max-width: 14ch; margin-top: clamp(1.25rem, 2.5vw, 2rem); }
+.auvp-x .auvp-apply__points { display: grid; gap: 1rem; margin-top: clamp(1.75rem, 3vw, 2.5rem); }
+.auvp-x .auvp-apply__points li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.9rem;
+  font-size: var(--fs-small);
+  color: var(--bone-60);
+  line-height: 1.6;
+}
+.auvp-x .auvp-apply__points li::before { content: "—"; color: var(--gold); }
+
+.auvp-x .auvp-form { display: grid; gap: clamp(1.25rem, 2vw, 1.75rem); }
+.auvp-x .auvp-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.25rem, 2vw, 1.75rem); }
+
+.auvp-x .auvp-field { display: grid; gap: 0.5rem; }
+.auvp-x .auvp-field label {
+  font-size: var(--fs-micro);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bone-45);
+}
+.auvp-x .auvp-field input, .auvp-x .auvp-field select, .auvp-x .auvp-field textarea {
+  width: 100%;
+  padding: 0.9rem 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  font-size: 1rem;
+  font-weight: 300;
+  transition: border-color 0.4s var(--ease);
+  appearance: none;
+}
+.auvp-x .auvp-field textarea { min-height: 92px; resize: vertical; }
+.auvp-x .auvp-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a15b' fill='none' stroke-width='1.2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 2px center;
+  cursor: pointer;
+}
+.auvp-x .auvp-field select option { background: var(--ink-800); color: var(--bone); }
+.auvp-x .auvp-field input:focus, .auvp-x .auvp-field select:focus, .auvp-x .auvp-field textarea:focus { outline: none; border-bottom-color: var(--gold); }
+.auvp-x .auvp-field input::placeholder, .auvp-x .auvp-field textarea::placeholder { color: var(--bone-30); }
+.auvp-x .auvp-field input:user-invalid, .auvp-x .auvp-field textarea:user-invalid { border-bottom-color: #d98c6a; }
+
+.auvp-x .auvp-form__note { font-size: var(--fs-small); color: var(--bone-45); }
+.auvp-x .auvp-isca { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+@media (max-width: 860px) {
+  .auvp-x .auvp-apply__grid { grid-template-columns: 1fr; }
+  .auvp-x .auvp-form__row { grid-template-columns: 1fr; }
+}
+
+/* ---------- 16. Rodapé ---------- */
+.auvp-x .auvp-footer { border-top: 1px solid var(--line-soft); padding-block: clamp(3rem, 6vw, 5rem) 2rem; }
+.auvp-x .auvp-footer__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 2.5rem; }
+.auvp-x .auvp-footer__col h4 {
+  font-family: var(--sans);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bone-45);
+  margin-bottom: 1.1rem;
+}
+.auvp-x .auvp-footer__col li + li { margin-top: 0.6rem; }
+.auvp-x .auvp-footer__col a { font-size: var(--fs-small); color: var(--bone-80); transition: color 0.35s var(--ease); }
+.auvp-x .auvp-footer__col a:hover { color: var(--gold); }
+.auvp-x .auvp-footer__word {
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 12.5vw, 12rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  opacity: 0.14;
+  white-space: nowrap;
+  margin-block: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.5rem);
+}
+.auvp-x .auvp-footer__bar {
+  display: flex; flex-wrap: wrap;
+  gap: 0.6rem 2rem;
+  justify-content: space-between;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line-soft);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.08em;
+  color: var(--bone-30);
+}
+
+/* ==========================================================================
+   17. Animação ligada à rolagem
+
+   Feita com scroll-driven animations do CSS. Onde não houver suporte, o
+   bloco @supports inteiro é ignorado e o conteúdo aparece normalmente —
+   nunca há risco de a página ficar em branco.
+   ========================================================================== */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .auvp-x .auvp-sobe {
+      animation: auvp-sobe linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 32%;
+    }
+    .auvp-x .auvp-abre {
+      animation: auvp-abre linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 38%;
+    }
+    .auvp-x .auvp-hero__media {
+      animation: auvp-parallax linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100svh;
+    }
+    .auvp-x .auvp-progress i {
+      animation: auvp-progresso linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+
+@keyframes auvp-sobe {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes auvp-abre {
+  from { clip-path: inset(0 0 100% 0); transform: scale(1.08); }
+  to { clip-path: inset(0 0 0 0); transform: none; }
+}
+@keyframes auvp-parallax { to { transform: translateY(12%); } }
+@keyframes auvp-progresso { to { transform: scaleX(1); } }
+
+/* ---------- 18. Preferência por menos movimento ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .auvp-x *, .auvp-x *::before, .auvp-x *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .auvp-x .auvp-marquee__track { animation: none; }
+}
+</style>
+
+<a class="auvp-skip" href="#conteudo">Ir para o conteúdo</a>
 <div class="auvp-grain" aria-hidden="true"></div>
-<div class="auvp-cursor" aria-hidden="true"></div>
-<div class="auvp-cursor-ring" aria-hidden="true"><span class="auvp-cursor-ring__label"></span></div>
-<div class="auvp-progress" aria-hidden="true"><div class="auvp-progress__bar"></div></div>
-
-<!-- ============ PRELOADER ============ -->
-<div class="auvp-preloader" role="status" aria-live="polite">
-  <div class="auvp-preloader__inner">
-    <div class="auvp-preloader__mark">Experience</div>
-    <div class="auvp-preloader__track"><div class="auvp-preloader__fill"></div></div>
-    <div class="auvp-preloader__count">000</div>
-  </div>
-</div>
-
-<a class="auvp-skip-link" href="#hero">Ir para o conteúdo</a>
-
-<!-- ============ NAV ============ -->
+<!-- ============ NAVEGAÇÃO ============ -->
 <header class="auvp-nav">
+  <div class="auvp-progress" aria-hidden="true"><i></i></div>
   <div class="auvp-shell auvp-nav__inner">
     <a class="auvp-brand" href="#hero" aria-label="AUVP Experience — início">
       <strong>AUVP</strong><span>Experience</span>
@@ -54,80 +1022,58 @@
       <a class="auvp-nav__link" href="#networking">Networking</a>
       <a class="auvp-nav__link" href="#experiencia">Experiência</a>
       <a class="auvp-nav__link" href="#faq">FAQ</a>
-      <a class="auvp-btn auvp-btn--sm auvp-nav__cta" href="#aplicar" data-magnetic="0.2">Aplicar</a>
+      <a class="auvp-btn auvp-btn--sm" href="#aplicar">Aplicar</a>
     </nav>
 
-    <button class="auvp-burger" type="button" aria-expanded="false" aria-controls="menu">
-      <span class="auvp-burger__text">Menu</span>
-      <span class="auvp-burger__bars" aria-hidden="true"><i></i><i></i></span>
-    </button>
+    <a class="auvp-burger" href="#menu">Menu <i aria-hidden="true"></i></a>
   </div>
 </header>
 
-<!-- ============ MENU FULLSCREEN ============ -->
-<div class="auvp-menu" id="menu">
-  <div></div>
-  <nav class="auvp-shell auvp-menu__body" aria-label="Navegação em tela cheia">
-    <a class="auvp-menu__link" href="#imersoes" style="--i:0"><i>01</i>Imersões</a>
-    <a class="auvp-menu__link" href="#diferencial" style="--i:1"><i>02</i>Diferencial</a>
-    <a class="auvp-menu__link" href="#networking" style="--i:2"><i>03</i>Networking</a>
-    <a class="auvp-menu__link" href="#experiencia" style="--i:3"><i>04</i>Experiência</a>
-    <a class="auvp-menu__link" href="#faq" style="--i:4"><i>05</i>FAQ</a>
-    <a class="auvp-menu__link auvp-gold" href="#aplicar" style="--i:5"><i>06</i>Aplicar</a>
-  </nav>
+<!-- Menu em tela cheia. Abre por âncora e fecha sozinho ao navegar. -->
+<nav class="auvp-menu" id="menu" aria-label="Navegação em tela cheia">
+  <div class="auvp-shell auvp-menu__top">
+    <span class="auvp-brand"><strong>AUVP</strong><span>Experience</span></span>
+    <a class="auvp-burger" href="#hero" style="display:inline-flex">Fechar <i aria-hidden="true"></i></a>
+  </div>
+  <div class="auvp-shell auvp-menu__body">
+    <a class="auvp-menu__link" href="#imersoes"><i>01</i>Imersões</a>
+    <a class="auvp-menu__link" href="#diferencial"><i>02</i>Diferencial</a>
+    <a class="auvp-menu__link" href="#networking"><i>03</i>Networking</a>
+    <a class="auvp-menu__link" href="#experiencia"><i>04</i>Experiência</a>
+    <a class="auvp-menu__link" href="#faq"><i>05</i>FAQ</a>
+    <a class="auvp-menu__link auvp-gold" href="#aplicar"><i>06</i>Aplicar</a>
+  </div>
   <div class="auvp-shell auvp-menu__foot">
     <span>AUVP Experience Co.</span>
     <span>Imersões estratégicas globais</span>
   </div>
-</div>
-
-<!-- ============ ÍNDICE LATERAL ============ -->
-<nav class="auvp-dotnav" aria-label="Índice das seções">
-  <a class="auvp-dotnav__item" href="#posicionamento"><span class="auvp-dotnav__label">Posicionamento</span></a>
-  <a class="auvp-dotnav__item" href="#imersoes"><span class="auvp-dotnav__label">Imersões</span></a>
-  <a class="auvp-dotnav__item" href="#diferencial"><span class="auvp-dotnav__label">Diferencial</span></a>
-  <a class="auvp-dotnav__item" href="#networking"><span class="auvp-dotnav__label">Networking</span></a>
-  <a class="auvp-dotnav__item" href="#experiencia"><span class="auvp-dotnav__label">Experiência</span></a>
-  <a class="auvp-dotnav__item" href="#faq"><span class="auvp-dotnav__label">FAQ</span></a>
-  <a class="auvp-dotnav__item" href="#aplicar"><span class="auvp-dotnav__label">Aplicar</span></a>
 </nav>
 
 <main id="conteudo">
 
-  <!-- ============================================================
-       1. HERO
-       Para trocar por vídeo, substitua o <img> por:
-       <video autoplay muted loop playsinline poster="assets/img/hero-city.svg">
-         <source src="assets/video/hero.mp4" type="video/mp4">
-       </video>
-       ============================================================ -->
+  <!-- ============ 1. HERO ============ -->
   <section class="auvp-hero" id="hero">
-    <div class="auvp-hero__media" data-parallax="0.08">
-      <img src="assets/img/hero-city.svg" alt="Skyline noturno de uma metrópole global" fetchpriority="high">
-    </div>
+    <div class="auvp-hero__media" aria-hidden="true"><svg class="auvp-art" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><defs><linearGradient id="hs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050506"/><stop offset=".45" stop-color="#0b0a0c"/><stop offset=".75" stop-color="#1c1712"/><stop offset="1" stop-color="#573a1d"/></linearGradient><radialGradient id="hb" cx=".55" cy=".88" r=".85"><stop offset="0" stop-color="#e6b968" stop-opacity=".55"/><stop offset=".5" stop-color="#b07c33" stop-opacity=".2"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient><linearGradient id="hv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".7"/><stop offset=".4" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#08080a"/></linearGradient><pattern id="jn" width="46" height="58" patternUnits="userSpaceOnUse"><rect x="5" y="7" width="4" height="6" fill="#e8c87e"/><rect x="28" y="21" width="4" height="6" fill="#e8c87e"/><rect x="16" y="40" width="4" height="6" fill="#e8c87e"/><rect x="37" y="49" width="4" height="6" fill="#e8c87e"/></pattern></defs><rect width="1600" height="900" fill="url(#hs)"/><rect width="1600" height="900" fill="url(#hb)"/><path d="M-30 720V561H38V720ZM47 720V628H117V720ZM122 720V513H188V720ZM196 720V613H245V720ZM250 720V621H322V720ZM327 720V559L342 519H398L413 559V720ZM421 720V650L431 632H465L475 650V720ZM446 632h4V613h-4ZM479 720V528H527V720ZM534 720V639L550 619H605L621 639V720ZM576 619h4V597h-4ZM625 720V646L632 628H659L666 646V720ZM673 720V596L683 565H718L728 596V720ZM735 720V573H777V720ZM754 573h4V541h-4ZM783 720V587H849V720ZM854 720V595H936V720ZM944 720V622H993V720ZM996 720V610L1007 583H1045L1056 610V720ZM1024 583h4V553h-4ZM1063 720V502H1126V720ZM1130 720V655L1142 639H1186L1198 655V720ZM1204 720V646L1212 628H1243L1251 646V720ZM1257 720V556H1303V720ZM1278 556h4V520h-4ZM1312 720V549H1385V720ZM1388 720V578L1402 542H1450L1464 578V720ZM1467 720V578L1476 543H1506L1515 578V720ZM1524 720V526H1585V720ZM1589 720V566H1666V720Z" fill="#1b1712" opacity=".55"/><path d="M-30 760V556H90V760ZM96 760V412H218V760ZM225 760V561H305V760ZM311 760V381H419V760ZM427 760V554H561V760ZM492 554h4V509h-4ZM569 760V409H690V760ZM628 409h4V332h-4ZM700 760V572H788V760ZM790 760V431H886V760ZM892 760V450H1015V760ZM1019 760V548L1045 495H1135L1161 548V760ZM1165 760V572H1304V760ZM1309 760V438L1329 358H1400L1420 438V760ZM1428 760V570H1515V760ZM1523 760V585L1544 541H1617L1638 585V760ZM304 760V312L313 200H347L356 312V760ZM328 200h4V77h-4ZM1008 760V360L1015 260H1041L1048 360V760ZM1026 260h4V150h-4Z" fill="#070607"/><path d="M-30 760V556H90V760ZM96 760V412H218V760ZM225 760V561H305V760ZM311 760V381H419V760ZM427 760V554H561V760ZM492 554h4V509h-4ZM569 760V409H690V760ZM628 409h4V332h-4ZM700 760V572H788V760ZM790 760V431H886V760ZM892 760V450H1015V760ZM1019 760V548L1045 495H1135L1161 548V760ZM1165 760V572H1304V760ZM1309 760V438L1329 358H1400L1420 438V760ZM1428 760V570H1515V760ZM1523 760V585L1544 541H1617L1638 585V760ZM304 760V312L313 200H347L356 312V760ZM328 200h4V77h-4ZM1008 760V360L1015 260H1041L1048 360V760ZM1026 260h4V150h-4Z" fill="url(#jn)" opacity=".55"/><rect y="760" width="1600" height="140" fill="#050505"/><rect width="1600" height="900" fill="url(#hv)"/></svg></div>
     <div class="auvp-hero__scrim" aria-hidden="true"></div>
 
     <div class="auvp-shell auvp-hero__content">
       <p class="auvp-eyebrow auvp-hero__eyebrow">AUVP Experience Co. — Imersões estratégicas globais</p>
 
-      <h1 class="auvp-hero__title" data-split>O mundo não é igual para quem vê <em>de perto</em>.</h1>
+      <h1 class="auvp-hero__title">O mundo não é igual para quem vê <em>de perto</em>.</h1>
 
       <div class="auvp-hero__row">
-        <p class="auvp-hero__lede" data-reveal data-delay="260">
+        <p class="auvp-hero__lede">
           <strong>A AUVP Experience te coloca dentro dos mercados que movem o mundo.</strong>
           Não como turista. Como alguém que quer entender, conectar e crescer.
         </p>
-        <div data-reveal data-delay="380">
-          <a class="auvp-btn" href="#aplicar" data-magnetic="0.25">
-            Quero participar da próxima imersão
-            <span class="auvp-btn__arrow" aria-hidden="true">→</span>
-          </a>
+        <div>
+          <a class="auvp-btn" href="#aplicar">Quero participar da próxima imersão <i aria-hidden="true">&rarr;</i></a>
         </div>
       </div>
     </div>
 
     <div class="auvp-shell auvp-hero__foot">
-      <span class="auvp-scroll-cue"><span class="auvp-scroll-cue__line" aria-hidden="true"></span> Role para descobrir</span>
+      <span class="auvp-cue"><span aria-hidden="true"></span> Role para descobrir</span>
       <span class="auvp-hero__meta">
         <span>Grupo reduzido</span>
         <span>Processo seletivo</span>
@@ -136,19 +1082,17 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       2. PROVA / POSICIONAMENTO
-       ============================================================ -->
+  <!-- ============ 2. POSICIONAMENTO ============ -->
   <section class="auvp-section" id="posicionamento">
     <div class="auvp-shell">
       <div class="auvp-proof__head">
         <div>
-          <p class="auvp-eyebrow" data-reveal>01 — Posicionamento</p>
-          <h2 class="auvp-proof__statement" data-split>
+          <p class="auvp-eyebrow auvp-sobe">01 — Posicionamento</p>
+          <h2 class="auvp-proof__statement auvp-sobe">
             AUVP Experience promove uma imersão nos bastidores de economias que estão <em>moldando o futuro</em>.
           </h2>
         </div>
-        <p class="auvp-proof__aside" data-reveal data-delay="200">
+        <p class="auvp-proof__aside auvp-sobe">
           Quatro pilares sustentam cada imersão. Nenhum deles é acessório —
           é o que separa estar no país de estar dentro do mercado.
         </p>
@@ -157,22 +1101,22 @@
 
     <div class="auvp-shell">
       <ul class="auvp-pillars">
-        <li class="auvp-pillar" data-reveal>
+        <li class="auvp-pillar auvp-sobe">
           <span class="auvp-num">01</span>
           <h3>Visitas a empresas globais</h3>
           <p>Acesso direto a empresas que moldam a economia mundial. Mais do que conhecer, você entende como elas operam, crescem e tomam decisões estratégicas na prática.</p>
         </li>
-        <li class="auvp-pillar" data-reveal data-delay="100">
+        <li class="auvp-pillar auvp-sobe">
           <span class="auvp-num">02</span>
           <h3>Conversas com quem opera o mercado</h3>
           <p>Você aprende com quem está no jogo. Executivos e empresários compartilham visões, bastidores e decisões que não chegam nos livros.</p>
         </li>
-        <li class="auvp-pillar" data-reveal data-delay="200">
+        <li class="auvp-pillar auvp-sobe">
           <span class="auvp-num">03</span>
           <h3>Networking com empresários e investidores</h3>
           <p>Conexões que vão além do evento. Você se relaciona com pessoas que estão construindo, investindo e expandindo, abrindo portas para oportunidades reais.</p>
         </li>
-        <li class="auvp-pillar" data-reveal data-delay="300">
+        <li class="auvp-pillar auvp-sobe">
           <span class="auvp-num">04</span>
           <h3>Curadoria estratégica da AUVP</h3>
           <p>Nada aqui é aleatório. Cada destino, empresa e encontro é pensado para gerar repertório, visão de mercado e decisões mais inteligentes sobre dinheiro.</p>
@@ -181,138 +1125,143 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       3. NOSSAS IMERSÕES
-       ============================================================ -->
+  <!-- ============ 3. IMERSÕES ============
+       Os cards são <details>: clicar abre os detalhes do destino na
+       própria página, sem JavaScript e sem página separada. -->
   <section class="auvp-section" id="imersoes">
     <div class="auvp-shell">
       <div class="auvp-dest__head">
         <div>
-          <p class="auvp-eyebrow" data-reveal>02 — Destinos</p>
-          <h2 class="auvp-display" data-split>Nossas imersões</h2>
+          <p class="auvp-eyebrow auvp-sobe">02 — Destinos</p>
+          <h2 class="auvp-display auvp-sobe">Nossas imersões</h2>
         </div>
-        <p class="auvp-muted auvp-measure-sm" data-reveal data-delay="150">
+        <p class="auvp-muted auvp-measure-sm auvp-sobe">
           Cada destino é escolhido por um motivo econômico, não turístico.
         </p>
       </div>
 
       <div class="auvp-dest__grid">
 
-        <a class="auvp-card" href="imersoes/china.html" data-reveal data-cursor="Ver">
-          <div class="auvp-card__media"><img src="assets/img/dest-china.svg" alt="Skyline vertical com torres, representando a China" loading="lazy"></div>
-          <span class="auvp-card__index">01 / Ásia</span>
-          <h3 class="auvp-card__title">China</h3>
-          <p class="auvp-card__sub">O maior laboratório de negócios do mundo</p>
-          <p class="auvp-card__desc">Shanghai, Shenzhen e Hangzhou. Tecnologia, escala e execução em nível global.</p>
-          <span class="auvp-card__cta">Ver detalhes <i aria-hidden="true">→</i></span>
-        </a>
+        <details class="auvp-card auvp-sobe">
+          <summary class="auvp-card__face">
+            <span class="auvp-card__media" aria-hidden="true"><svg class="auvp-art" viewBox="0 0 1000 1250" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><defs><linearGradient id="cs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#07070a"/><stop offset=".6" stop-color="#0d0b0c"/><stop offset="1" stop-color="#4a3018"/></linearGradient><radialGradient id="cb" cx=".55" cy=".8" r=".6"><stop offset="0" stop-color="#e3b268" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient><pattern id="jn" width="46" height="58" patternUnits="userSpaceOnUse"><rect x="5" y="7" width="4" height="6" fill="#e8c87e"/><rect x="28" y="21" width="4" height="6" fill="#e8c87e"/><rect x="16" y="40" width="4" height="6" fill="#e8c87e"/><rect x="37" y="49" width="4" height="6" fill="#e8c87e"/></pattern></defs><rect width="1000" height="1250" fill="url(#cs)"/><rect width="1000" height="1250" fill="url(#cb)"/><path d="M-30 1020V883H40V1020ZM45 1020V877H88V1020ZM94 1020V792H171V1020ZM180 1020V748H239V1020ZM246 1020V892H314V1020ZM316 1020V861H352V1020ZM361 1020V846H399V1020ZM405 1020V817H451V1020ZM457 1020V807L466 754H499L508 807V1020ZM516 1020V918L526 892H563L573 918V1020ZM577 1020V875H638V1020ZM646 1020V874H695V1020ZM703 1020V815H748V1020ZM753 1020V809H796V1020ZM801 1020V770H850V1020ZM824 770h4V715h-4ZM859 1020V763H919V1020ZM927 1020V776H984V1020ZM988 1020V852H1067V1020Z" fill="#191410" opacity=".5"/><path d="M-30 1080V810H71V1080ZM79 1080V824H159V1080ZM168 1080V653H256V1080ZM259 1080V690H366V1080ZM371 1080V814L383 747H428L440 814V1080ZM443 1080V884L460 835H519L536 884V1080ZM488 835h4V781h-4ZM544 1080V896L565 850H640L661 896V1080ZM664 1080V863H784V1080ZM722 863h4V815h-4ZM789 1080V642H856V1080ZM863 1080V879L884 829H961L982 879V1080ZM991 1080V876H1081V1080ZM1034 876h4V831h-4ZM540 1080V496L548 350H578L586 496V1080ZM561 350h4V189h-4Z" fill="#080708"/><path d="M-30 1080V810H71V1080ZM79 1080V824H159V1080ZM168 1080V653H256V1080ZM259 1080V690H366V1080ZM371 1080V814L383 747H428L440 814V1080ZM443 1080V884L460 835H519L536 884V1080ZM488 835h4V781h-4ZM544 1080V896L565 850H640L661 896V1080ZM664 1080V863H784V1080ZM722 863h4V815h-4ZM789 1080V642H856V1080ZM863 1080V879L884 829H961L982 879V1080ZM991 1080V876H1081V1080ZM1034 876h4V831h-4ZM540 1080V496L548 350H578L586 496V1080ZM561 350h4V189h-4Z" fill="url(#jn)" opacity=".6"/><rect y="1080" width="1000" height="170" fill="#050505"/></svg></span>
+            <span class="auvp-card__index">01 / Ásia</span>
+            <h3 class="auvp-card__title">China</h3>
+            <p class="auvp-card__sub">O maior laboratório de negócios do mundo</p>
+            <p class="auvp-card__desc">Shanghai, Shenzhen e Hangzhou. Tecnologia, escala e execução em nível global.</p>
+            <span class="auvp-card__cta"><span class="auvp-abrir">Ver detalhes</span><span class="auvp-fechar">Fechar</span> <i aria-hidden="true">&rarr;</i></span>
+          </summary>
 
-        <a class="auvp-card" href="imersoes/chile.html" data-reveal data-delay="120" data-cursor="Ver">
-          <div class="auvp-card__media"><img src="assets/img/dest-chile.svg" alt="Cordilheira e mina a céu aberto, representando o Chile" loading="lazy"></div>
-          <span class="auvp-card__index">02 / América Latina</span>
-          <h3 class="auvp-card__title">Chile</h3>
-          <p class="auvp-card__sub">O coração mineiro da América Latina</p>
-          <p class="auvp-card__desc">Negócios, internacionalização e oportunidades no mercado latino-americano.</p>
-          <span class="auvp-card__cta">Ver detalhes <i aria-hidden="true">→</i></span>
-        </a>
-
-        <button class="auvp-card auvp-card--next" type="button" data-vote-open aria-controls="vote" aria-expanded="false" data-reveal data-delay="240" data-cursor="Sugerir">
-          <div class="auvp-card__media"><img src="assets/img/dest-next.svg" alt="Malha de meridianos com pontos marcando destinos" loading="lazy"></div>
-          <span class="auvp-card__index">03 / A definir</span>
-          <h3 class="auvp-card__title">Próximos destinos</h3>
-          <p class="auvp-card__sub">Decida com a gente — para onde vamos depois?</p>
-          <p class="auvp-card__desc">A AUVP Experience evolui com quem está dentro. Participe da escolha dos próximos destinos.</p>
-          <span class="auvp-card__cta">Sugerir destino <i aria-hidden="true">→</i></span>
-        </button>
-
-      </div>
-    </div>
-
-    <!-- Painel interativo: seleção de destinos + sugestão -->
-    <!-- inert enquanto fechado: sem ele, os chips e campos continuam no fluxo de tabulação -->
-    <div class="auvp-vote" id="vote" aria-hidden="true" inert>
-      <div class="auvp-vote__inner">
-        <div class="auvp-shell">
-          <div class="auvp-vote__box">
-            <div>
-              <p class="auvp-eyebrow" >Decida com a gente</p>
-              <h3 class="auvp-title" style="margin-top:1rem">Para onde vamos depois?</h3>
-              <p class="auvp-muted" style="margin-top:1rem;max-width:38ch">
-                Marque os destinos que fariam você embarcar — e diga o que quer ver por lá.
-                As sugestões entram na curadoria dos próximos roteiros.
-              </p>
-            </div>
-
-            <form class="auvp-vote__form" data-form data-tipo="sugestao" data-subject="Sugestão de destino — AUVP Experience" data-success="vote-success">
-              <div class="auvp-chips" role="group" aria-label="Destinos sugeridos">
-                <button class="auvp-chip" type="button" aria-pressed="false">Japão</button>
-                <button class="auvp-chip" type="button" aria-pressed="false">Estados Unidos</button>
-                <button class="auvp-chip" type="button" aria-pressed="false">Emirados Árabes</button>
-                <button class="auvp-chip" type="button" aria-pressed="false">Índia</button>
-                <button class="auvp-chip" type="button" aria-pressed="false">Coreia do Sul</button>
-                <button class="auvp-chip" type="button" aria-pressed="false">Alemanha</button>
-                <button class="auvp-chip" type="button" aria-pressed="false">Singapura</button>
-                <button class="auvp-chip" type="button" aria-pressed="false">México</button>
-              </div>
-
-              <input type="hidden" name="destinos_marcados" data-vote-selected value="">
-
-              <div class="auvp-field">
-                <label for="vote-sugestao">Sua sugestão</label>
-                <input id="vote-sugestao" name="sugestao" type="text" placeholder="Destino e o que você gostaria de ver lá" required>
-                <span class="auvp-field__error"></span>
-              </div>
-
-              <div class="auvp-field">
-                <label for="vote-email">E-mail</label>
-                <input id="vote-email" name="email" type="email" placeholder="voce@empresa.com" required>
-                <span class="auvp-field__error"></span>
-              </div>
-
-              <div class="auvp-vote__actions">
-                <button class="auvp-btn" type="submit" data-magnetic="0.2">Enviar sugestão <span class="auvp-btn__arrow" aria-hidden="true">→</span></button>
-                <span class="auvp-form__status" role="status"></span>
-              </div>
-            </form>
-
-            <div class="auvp-form__success" id="vote-success">
-              <h3 class="auvp-serif">Sugestão registrada.</h3>
-              <p>Obrigado. Sua indicação entra na curadoria dos próximos destinos da AUVP Experience.</p>
-            </div>
+          <div class="auvp-card__panel">
+            <dl class="auvp-facts">
+              <div><dt>Cidades</dt><dd>Shanghai, Shenzhen e Hangzhou</dd></div>
+              <div><dt>Foco</dt><dd>Tecnologia, escala e execução</dd></div>
+              <div><dt>Formato</dt><dd>Agenda de negócios</dd></div>
+              <div><dt>Grupo</dt><dd>Reduzido, por seleção</dd></div>
+            </dl>
+            <p>Nenhum outro lugar do mundo permite ver, em poucos dias, tanta coisa acontecendo ao mesmo tempo: manufatura avançada, comércio digital, logística, energia e capital circulando em outra velocidade.</p>
+            <p>Shanghai mostra o mercado financeiro e o consumo. Shenzhen mostra a engenharia e a indústria de hardware. Hangzhou mostra o comércio digital e a tecnologia aplicada.</p>
+            <p class="auvp-nota">A confirmar: datas da próxima edição, investimento, o que está incluso no pacote e o roteiro dia a dia.</p>
+            <a class="auvp-btn auvp-btn--sm" href="#aplicar">Quero participar <i aria-hidden="true">&rarr;</i></a>
           </div>
-        </div>
+        </details>
+
+        <details class="auvp-card auvp-sobe">
+          <summary class="auvp-card__face">
+            <span class="auvp-card__media" aria-hidden="true"><svg class="auvp-art" viewBox="0 0 1000 1250" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><defs><linearGradient id="ls" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#08080a"/><stop offset=".55" stop-color="#131013"/><stop offset="1" stop-color="#5a3a1e"/></linearGradient><radialGradient id="lb" cx=".65" cy=".6" r=".45"><stop offset="0" stop-color="#e8b96f" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs><rect width="1000" height="1250" fill="url(#ls)"/><rect width="1000" height="1250" fill="url(#lb)"/><path d="M-20 990L-20 660L0 691L63 700L125 638L188 580L250 497L313 463L375 424L438 436L500 377L563 347L625 383L688 469L750 512L813 626L875 706L938 711L1000 709L1020 990Z" fill="#241c17"/><path d="M-20 1060L-20 760L0 827L77 775L154 691L231 626L308 603L385 555L462 548L538 552L615 567L692 582L769 681L846 742L923 830L1000 830L1020 1060Z" fill="#100c0b"/><rect y="860" width="1000" height="390" fill="#0a0908"/><ellipse cx="500" cy="1020" rx="390" ry="100" fill="none" stroke="#8a6a3c" stroke-width="1" opacity="0.45"/><ellipse cx="500" cy="1050" rx="332" ry="87" fill="none" stroke="#8a6a3c" stroke-width="1" opacity="0.39"/><ellipse cx="500" cy="1080" rx="274" ry="74" fill="none" stroke="#8a6a3c" stroke-width="1" opacity="0.33"/><ellipse cx="500" cy="1110" rx="216" ry="61" fill="none" stroke="#8a6a3c" stroke-width="1" opacity="0.27"/><ellipse cx="500" cy="1140" rx="158" ry="48" fill="none" stroke="#8a6a3c" stroke-width="1" opacity="0.21"/><ellipse cx="500" cy="1170" rx="100" ry="35" fill="none" stroke="#8a6a3c" stroke-width="1" opacity="0.15"/></svg></span>
+            <span class="auvp-card__index">02 / América Latina</span>
+            <h3 class="auvp-card__title">Chile</h3>
+            <p class="auvp-card__sub">O coração mineiro da América Latina</p>
+            <p class="auvp-card__desc">Negócios, internacionalização e oportunidades no mercado latino-americano.</p>
+            <span class="auvp-card__cta"><span class="auvp-abrir">Ver detalhes</span><span class="auvp-fechar">Fechar</span> <i aria-hidden="true">&rarr;</i></span>
+          </summary>
+
+          <div class="auvp-card__panel">
+            <dl class="auvp-facts">
+              <div><dt>Região</dt><dd>América Latina</dd></div>
+              <div><dt>Foco</dt><dd>Mineração e economia real</dd></div>
+              <div><dt>Formato</dt><dd>Agenda de negócios</dd></div>
+              <div><dt>Grupo</dt><dd>Reduzido, por seleção</dd></div>
+            </dl>
+            <p>Negócios, internacionalização e oportunidades no mercado latino-americano — a partir do país que ocupa uma posição central na cadeia global de minerais críticos.</p>
+            <p>Entender o Chile é entender como um país organiza uma economia em torno de recursos naturais: regulação, infraestrutura, capital estrangeiro e a disputa por quem processa o que se extrai.</p>
+            <p class="auvp-nota">O briefing trazia este card rotulado como “Portugal”, mas o título descrevia o Chile. A página foi escrita para o Chile — confirmar. A confirmar também: datas, cidades do roteiro, investimento e empresas visitadas.</p>
+            <a class="auvp-btn auvp-btn--sm" href="#aplicar">Quero participar <i aria-hidden="true">&rarr;</i></a>
+          </div>
+        </details>
+
+        <details class="auvp-card auvp-card--next auvp-sobe">
+          <summary class="auvp-card__face">
+            <span class="auvp-card__media" aria-hidden="true"><svg class="auvp-art" viewBox="0 0 1000 1250" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><defs><linearGradient id="ns" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#08080a"/><stop offset=".6" stop-color="#0e0d10"/><stop offset="1" stop-color="#241a12"/></linearGradient><radialGradient id="nb" cx=".5" cy=".45" r=".45"><stop offset="0" stop-color="#c9a15b" stop-opacity=".18"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs><rect width="1000" height="1250" fill="url(#ns)"/><rect width="1000" height="1250" fill="url(#nb)"/><circle cx="500" cy="560" r="330" fill="none" stroke="#c9a15b" stroke-width="1" opacity=".45"/><ellipse cx="500" cy="313" rx="218" ry="35" fill="none" stroke="#c9a15b" stroke-width="1" opacity="0.19"/><ellipse cx="500" cy="395" rx="286" ry="46" fill="none" stroke="#c9a15b" stroke-width="1" opacity="0.23"/><ellipse cx="500" cy="478" rx="320" ry="51" fill="none" stroke="#c9a15b" stroke-width="1" opacity="0.27"/><ellipse cx="500" cy="560" rx="330" ry="53" fill="none" stroke="#c9a15b" stroke-width="1" opacity="0.30"/><ellipse cx="500" cy="643" rx="320" ry="51" fill="none" stroke="#c9a15b" stroke-width="1" opacity="0.27"/><ellipse cx="500" cy="725" rx="286" ry="46" fill="none" stroke="#c9a15b" stroke-width="1" opacity="0.23"/><ellipse cx="500" cy="808" rx="218" ry="35" fill="none" stroke="#c9a15b" stroke-width="1" opacity="0.19"/><ellipse cx="500" cy="560" rx="330" ry="330" fill="none" stroke="#c9a15b" stroke-width="1" opacity=".2"/><ellipse cx="500" cy="560" rx="220" ry="330" fill="none" stroke="#c9a15b" stroke-width="1" opacity=".2"/><ellipse cx="500" cy="560" rx="110" ry="330" fill="none" stroke="#c9a15b" stroke-width="1" opacity=".2"/><ellipse cx="500" cy="560" rx="0" ry="330" fill="none" stroke="#c9a15b" stroke-width="1" opacity=".2"/><ellipse cx="500" cy="560" rx="110" ry="330" fill="none" stroke="#c9a15b" stroke-width="1" opacity=".2"/><ellipse cx="500" cy="560" rx="220" ry="330" fill="none" stroke="#c9a15b" stroke-width="1" opacity=".2"/><ellipse cx="500" cy="560" rx="330" ry="330" fill="none" stroke="#c9a15b" stroke-width="1" opacity=".2"/><circle cx="556" cy="737" r="2.4" fill="#e3c07a" opacity="0.44"/><circle cx="380" cy="476" r="3.2" fill="#e3c07a" opacity="0.66"/><circle cx="493" cy="300" r="2.1" fill="#e3c07a" opacity="0.59"/><circle cx="613" cy="640" r="3.1" fill="#e3c07a" opacity="0.80"/><circle cx="331" cy="725" r="1.9" fill="#e3c07a" opacity="0.67"/><circle cx="466" cy="576" r="2.2" fill="#e3c07a" opacity="0.68"/><circle cx="769" cy="480" r="2.1" fill="#e3c07a" opacity="0.51"/><circle cx="492" cy="561" r="3.4" fill="#e3c07a" opacity="0.78"/><circle cx="603" cy="301" r="1.9" fill="#e3c07a" opacity="0.47"/><circle cx="304" cy="770" r="2.9" fill="#e3c07a" opacity="0.74"/><circle cx="784" cy="484" r="2.3" fill="#e3c07a" opacity="0.71"/><circle cx="321" cy="592" r="2.5" fill="#e3c07a" opacity="0.70"/><circle cx="217" cy="489" r="3.1" fill="#e3c07a" opacity="0.59"/><circle cx="536" cy="713" r="1.5" fill="#e3c07a" opacity="0.53"/></svg></span>
+            <span class="auvp-card__index">03 / A definir</span>
+            <h3 class="auvp-card__title">Próximos destinos</h3>
+            <p class="auvp-card__sub">Decida com a gente — para onde vamos depois?</p>
+            <p class="auvp-card__desc">A AUVP Experience evolui com quem está dentro. Participe da escolha dos próximos destinos.</p>
+            <span class="auvp-card__cta"><span class="auvp-abrir">Sugerir destino</span><span class="auvp-fechar">Fechar</span> <i aria-hidden="true">&rarr;</i></span>
+          </summary>
+
+          <div class="auvp-card__panel">
+            <p>Marque os destinos que fariam você embarcar — e diga o que quer ver por lá. As sugestões entram na curadoria dos próximos roteiros.</p>
+
+            <!-- COMO LIGAR ESTE FORMULÁRIO — veja a nota no formulário de
+                 candidatura, mais abaixo. Vale o mesmo aqui. -->
+            <form class="auvp-form" method="post" action="">
+              <input type="text" name="_isca" class="auvp-isca" tabindex="-1" autocomplete="off" aria-hidden="true">
+              <input type="hidden" name="assunto" value="Sugestão de destino — AUVP Experience">
+
+              <div class="auvp-chips">
+                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Japão"><span>Japão</span></label>
+                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Estados Unidos"><span>Estados Unidos</span></label>
+                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Emirados Árabes"><span>Emirados Árabes</span></label>
+                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Índia"><span>Índia</span></label>
+                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Coreia do Sul"><span>Coreia do Sul</span></label>
+                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Alemanha"><span>Alemanha</span></label>
+                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Singapura"><span>Singapura</span></label>
+                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="México"><span>México</span></label>
+              </div>
+
+              <div class="auvp-field">
+                <label for="sug-destino">Sua sugestão</label>
+                <input id="sug-destino" name="sugestao" type="text" placeholder="Destino e o que você gostaria de ver lá" required>
+              </div>
+              <div class="auvp-field">
+                <label for="sug-email">E-mail</label>
+                <input id="sug-email" name="email" type="email" placeholder="voce@empresa.com" required>
+              </div>
+
+              <div><button class="auvp-btn" type="submit">Enviar sugestão <i aria-hidden="true">&rarr;</i></button></div>
+            </form>
+          </div>
+        </details>
+
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       4. DIFERENCIAL
-       ============================================================ -->
-  <section class="auvp-section auvp-edge" id="diferencial">
+  <!-- ============ 4. DIFERENCIAL ============ -->
+  <section class="auvp-section" id="diferencial">
     <div class="auvp-shell auvp-edge__grid">
       <div class="auvp-edge__sticky">
-        <p class="auvp-eyebrow" data-reveal>03 — Diferencial</p>
-        <h2 class="auvp-edge__title" data-split>
+        <p class="auvp-eyebrow auvp-sobe">03 — Diferencial</p>
+        <h2 class="auvp-edge__title auvp-sobe">
           O valor da Experience não está só no destino. Está no <em>acesso</em>.
         </h2>
       </div>
 
       <div class="auvp-edge__body">
-        <p class="auvp-lede" data-reveal>
+        <p class="auvp-lede auvp-sobe">
           Negócios não existem no vácuo. Eles nascem da cultura, dos hábitos e da forma como as pessoas vivem.
           Por isso, cada imersão também é um mergulho no contexto local.
         </p>
 
-        <figure class="auvp-edge__figure auvp-media-mask" style="margin:0" data-delay="120">
-          <img src="assets/img/context-city.svg" alt="Rua noturna iluminada por luz quente" loading="lazy">
-        </figure>
+        <figure class="auvp-edge__figure auvp-abre" aria-hidden="true"><svg class="auvp-art" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><defs><linearGradient id="hs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050506"/><stop offset=".45" stop-color="#0b0a0c"/><stop offset=".75" stop-color="#1c1712"/><stop offset="1" stop-color="#573a1d"/></linearGradient><radialGradient id="hb" cx=".55" cy=".88" r=".85"><stop offset="0" stop-color="#e6b968" stop-opacity=".55"/><stop offset=".5" stop-color="#b07c33" stop-opacity=".2"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient><linearGradient id="hv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".7"/><stop offset=".4" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#08080a"/></linearGradient><pattern id="jn" width="46" height="58" patternUnits="userSpaceOnUse"><rect x="5" y="7" width="4" height="6" fill="#e8c87e"/><rect x="28" y="21" width="4" height="6" fill="#e8c87e"/><rect x="16" y="40" width="4" height="6" fill="#e8c87e"/><rect x="37" y="49" width="4" height="6" fill="#e8c87e"/></pattern></defs><rect width="1600" height="900" fill="url(#hs)"/><rect width="1600" height="900" fill="url(#hb)"/><path d="M-30 720V561H38V720ZM47 720V628H117V720ZM122 720V513H188V720ZM196 720V613H245V720ZM250 720V621H322V720ZM327 720V559L342 519H398L413 559V720ZM421 720V650L431 632H465L475 650V720ZM446 632h4V613h-4ZM479 720V528H527V720ZM534 720V639L550 619H605L621 639V720ZM576 619h4V597h-4ZM625 720V646L632 628H659L666 646V720ZM673 720V596L683 565H718L728 596V720ZM735 720V573H777V720ZM754 573h4V541h-4ZM783 720V587H849V720ZM854 720V595H936V720ZM944 720V622H993V720ZM996 720V610L1007 583H1045L1056 610V720ZM1024 583h4V553h-4ZM1063 720V502H1126V720ZM1130 720V655L1142 639H1186L1198 655V720ZM1204 720V646L1212 628H1243L1251 646V720ZM1257 720V556H1303V720ZM1278 556h4V520h-4ZM1312 720V549H1385V720ZM1388 720V578L1402 542H1450L1464 578V720ZM1467 720V578L1476 543H1506L1515 578V720ZM1524 720V526H1585V720ZM1589 720V566H1666V720Z" fill="#1b1712" opacity=".55"/><path d="M-30 760V556H90V760ZM96 760V412H218V760ZM225 760V561H305V760ZM311 760V381H419V760ZM427 760V554H561V760ZM492 554h4V509h-4ZM569 760V409H690V760ZM628 409h4V332h-4ZM700 760V572H788V760ZM790 760V431H886V760ZM892 760V450H1015V760ZM1019 760V548L1045 495H1135L1161 548V760ZM1165 760V572H1304V760ZM1309 760V438L1329 358H1400L1420 438V760ZM1428 760V570H1515V760ZM1523 760V585L1544 541H1617L1638 585V760ZM304 760V312L313 200H347L356 312V760ZM328 200h4V77h-4ZM1008 760V360L1015 260H1041L1048 360V760ZM1026 260h4V150h-4Z" fill="#070607"/><path d="M-30 760V556H90V760ZM96 760V412H218V760ZM225 760V561H305V760ZM311 760V381H419V760ZM427 760V554H561V760ZM492 554h4V509h-4ZM569 760V409H690V760ZM628 409h4V332h-4ZM700 760V572H788V760ZM790 760V431H886V760ZM892 760V450H1015V760ZM1019 760V548L1045 495H1135L1161 548V760ZM1165 760V572H1304V760ZM1309 760V438L1329 358H1400L1420 438V760ZM1428 760V570H1515V760ZM1523 760V585L1544 541H1617L1638 585V760ZM304 760V312L313 200H347L356 312V760ZM328 200h4V77h-4ZM1008 760V360L1015 260H1041L1048 360V760ZM1026 260h4V150h-4Z" fill="url(#jn)" opacity=".55"/><rect y="760" width="1600" height="140" fill="#050505"/><rect width="1600" height="900" fill="url(#hv)"/></svg></figure>
 
-        <p data-reveal>
+        <p class="auvp-sobe">
           Gastronomia, rotina, comportamento, arquitetura e dinâmica social: tudo aquilo que ajuda a entender
           como aquele mercado pensa, consome e cresce.
         </p>
 
-        <ul class="auvp-edge__tags" data-reveal data-delay="120">
+        <ul class="auvp-edge__tags auvp-sobe">
           <li>Gastronomia</li>
           <li>Rotina</li>
           <li>Comportamento</li>
@@ -323,210 +1272,207 @@
     </div>
   </section>
 
-  <!-- Faixa de assinatura -->
-  <div class="auvp-marquee" data-speed="0.5" aria-hidden="true">
+  <!-- ============ 5. FAIXA ============ -->
+  <div class="auvp-marquee" aria-hidden="true">
     <div class="auvp-marquee__track">
+      <span class="auvp-marquee__item">Imersões exclusivas</span>
+      <span class="auvp-marquee__item"><em>Explore os bastidores da economia global</em></span>
+      <span class="auvp-marquee__item">Imersões exclusivas</span>
+      <span class="auvp-marquee__item"><em>Explore os bastidores da economia global</em></span>
+      <span class="auvp-marquee__item">Imersões exclusivas</span>
+      <span class="auvp-marquee__item"><em>Explore os bastidores da economia global</em></span>
       <span class="auvp-marquee__item">Imersões exclusivas</span>
       <span class="auvp-marquee__item"><em>Explore os bastidores da economia global</em></span>
     </div>
   </div>
-  <p class="auvp-sr-only">Imersões exclusivas. Explore os bastidores da economia global.</p>
+  <p class="auvp-sr">Imersões exclusivas. Explore os bastidores da economia global.</p>
 
-  <!-- ============================================================
-       5. NETWORKING
-       ============================================================ -->
-  <section class="auvp-section auvp-net" id="networking">
+  <!-- ============ 6. NETWORKING ============ -->
+  <section class="auvp-section" id="networking">
     <div class="auvp-shell">
-      <p class="auvp-eyebrow" data-reveal>04 — Networking</p>
-      <h2 class="auvp-net__statement" data-split>Você não vai sozinho. E isso <em>muda tudo</em>.</h2>
-      <p class="auvp-net__complement" data-reveal data-delay="180">
+      <p class="auvp-eyebrow auvp-sobe">04 — Networking</p>
+      <h2 class="auvp-net__statement auvp-sobe">Você não vai sozinho. E isso <em>muda tudo</em>.</h2>
+      <p class="auvp-net__complement auvp-sobe">
         Empresários, investidores e executivos que estão jogando o mesmo jogo que você.
       </p>
     </div>
 
     <div class="auvp-shell">
-      <div class="auvp-hscroll" data-cursor="Arraste">
-        <div class="auvp-hscroll__track">
-          <article class="auvp-profile">
-            <span class="auvp-profile__idx">01</span>
-            <h3 class="auvp-serif">Empresários</h3>
-            <p>Quem já opera um negócio e busca referência de escala, eficiência e expansão fora do Brasil.</p>
-          </article>
-          <article class="auvp-profile">
-            <span class="auvp-profile__idx">02</span>
-            <h3 class="auvp-serif">Investidores</h3>
-            <p>Quem aloca capital e quer entender, na fonte, as economias que definem os próximos ciclos.</p>
-          </article>
-          <article class="auvp-profile">
-            <span class="auvp-profile__idx">03</span>
-            <h3 class="auvp-serif">Executivos</h3>
-            <p>Quem toma decisão dentro de grandes estruturas e precisa de repertório internacional real.</p>
-          </article>
-          <article class="auvp-profile">
-            <span class="auvp-profile__idx">04</span>
-            <h3 class="auvp-serif">Fundadores</h3>
-            <p>Quem está construindo e quer ver de perto como empresas globais resolveram os mesmos problemas.</p>
-          </article>
-          <article class="auvp-profile">
-            <span class="auvp-profile__idx">05</span>
-            <h3 class="auvp-serif">Conversas que continuam</h3>
-            <p>O grupo não termina no embarque de volta. As conexões seguem — e é aí que costuma nascer o negócio.</p>
-          </article>
-        </div>
+      <div class="auvp-strip" tabindex="0" role="group" aria-label="Perfis que participam">
+        <article class="auvp-profile">
+          <span class="auvp-num">01</span>
+          <h3 class="auvp-serif">Empresários</h3>
+          <p>Quem já opera um negócio e busca referência de escala, eficiência e expansão fora do Brasil.</p>
+        </article>
+        <article class="auvp-profile">
+          <span class="auvp-num">02</span>
+          <h3 class="auvp-serif">Investidores</h3>
+          <p>Quem aloca capital e quer entender, na fonte, as economias que definem os próximos ciclos.</p>
+        </article>
+        <article class="auvp-profile">
+          <span class="auvp-num">03</span>
+          <h3 class="auvp-serif">Executivos</h3>
+          <p>Quem toma decisão dentro de grandes estruturas e precisa de repertório internacional real.</p>
+        </article>
+        <article class="auvp-profile">
+          <span class="auvp-num">04</span>
+          <h3 class="auvp-serif">Fundadores</h3>
+          <p>Quem está construindo e quer ver de perto como empresas globais resolveram os mesmos problemas.</p>
+        </article>
+        <article class="auvp-profile">
+          <span class="auvp-num">05</span>
+          <h3 class="auvp-serif">Conversas que continuam</h3>
+          <p>O grupo não termina no embarque de volta. As conexões seguem — e é aí que costuma nascer o negócio.</p>
+        </article>
       </div>
-      <p class="auvp-hscroll__hint"><span aria-hidden="true"></span> Arraste para o lado</p>
+      <p class="auvp-hint"><span aria-hidden="true"></span> Arraste para o lado</p>
     </div>
   </section>
 
-  <!-- ============================================================
-       6. EXPERIÊNCIA
-       ============================================================ -->
+  <!-- ============ 7. EXPERIÊNCIA ============
+       Abas em CSS puro: os radios abaixo controlam a lista e o painel. -->
   <section class="auvp-section" id="experiencia">
-    <div class="auvp-shell auvp-care__grid">
-      <div>
-        <p class="auvp-eyebrow" data-reveal>05 — Experiência</p>
-        <h2 class="auvp-display" data-split style="margin:1.25rem 0 2.5rem;max-width:16ch">
-          Conforto existe para permitir foco. Cuidaremos de <em>tudo</em> para você.
-        </h2>
+    <div class="auvp-shell auvp-care">
+      <input type="radio" name="auvp-exp" id="auvp-e1" checked>
+      <input type="radio" name="auvp-exp" id="auvp-e2">
+      <input type="radio" name="auvp-exp" id="auvp-e3">
+      <input type="radio" name="auvp-exp" id="auvp-e4">
 
-        <div class="auvp-care__list">
-          <button class="auvp-care__item" type="button" aria-expanded="true">
-            <span class="auvp-num">01</span>
-            <span>
-              <h3 class="auvp-serif">Hospedagem</h3>
-              <span class="auvp-care__text"><p>Você fica em locais selecionados estrategicamente, com conforto, localização e estrutura alinhados ao padrão da experiência, para focar no que realmente importa.</p></span>
-            </span>
-          </button>
+      <div class="auvp-care__grid">
+        <div>
+          <p class="auvp-eyebrow auvp-sobe">05 — Experiência</p>
+          <h2 class="auvp-display auvp-sobe" style="margin:1.25rem 0 2.5rem;max-width:16ch">
+            Conforto existe para permitir foco. Cuidaremos de <em>tudo</em> para você.
+          </h2>
 
-          <button class="auvp-care__item" type="button" aria-expanded="false">
-            <span class="auvp-num">02</span>
-            <span>
-              <h3 class="auvp-serif">Logística organizada</h3>
-              <span class="auvp-care__text"><p>Deslocamentos, acessos e detalhes operacionais já estão resolvidos. Você não perde tempo com fricção, só com o que gera valor.</p></span>
-            </span>
-          </button>
-
-          <button class="auvp-care__item" type="button" aria-expanded="false">
-            <span class="auvp-num">03</span>
-            <span>
-              <h3 class="auvp-serif">Concierge</h3>
-              <span class="auvp-care__text"><p>Suporte dedicado durante toda a imersão. Desde ajustes pontuais até demandas específicas, você tem com quem contar em qualquer momento.</p></span>
-            </span>
-          </button>
-
-          <button class="auvp-care__item" type="button" aria-expanded="false">
-            <span class="auvp-num">04</span>
-            <span>
-              <h3 class="auvp-serif">Agenda estruturada</h3>
-              <span class="auvp-care__text"><p>Cada dia é planejado para equilibrar conteúdo, conexões e experiência. Um fluxo pensado para extrair o máximo de cada destino, sem sobrecarga e sem desperdício de tempo.</p></span>
-            </span>
-          </button>
+          <div class="auvp-care__list">
+            <label class="auvp-care__item" for="auvp-e1">
+              <span class="auvp-num">01</span>
+              <span>
+                <h3>Hospedagem</h3>
+                <span class="auvp-care__text"><p>Você fica em locais selecionados estrategicamente, com conforto, localização e estrutura alinhados ao padrão da experiência, para focar no que realmente importa.</p></span>
+              </span>
+            </label>
+            <label class="auvp-care__item" for="auvp-e2">
+              <span class="auvp-num">02</span>
+              <span>
+                <h3>Logística organizada</h3>
+                <span class="auvp-care__text"><p>Deslocamentos, acessos e detalhes operacionais já estão resolvidos. Você não perde tempo com fricção, só com o que gera valor.</p></span>
+              </span>
+            </label>
+            <label class="auvp-care__item" for="auvp-e3">
+              <span class="auvp-num">03</span>
+              <span>
+                <h3>Concierge</h3>
+                <span class="auvp-care__text"><p>Suporte dedicado durante toda a imersão. Desde ajustes pontuais até demandas específicas, você tem com quem contar em qualquer momento.</p></span>
+              </span>
+            </label>
+            <label class="auvp-care__item" for="auvp-e4">
+              <span class="auvp-num">04</span>
+              <span>
+                <h3>Agenda estruturada</h3>
+                <span class="auvp-care__text"><p>Cada dia é planejado para equilibrar conteúdo, conexões e experiência. Um fluxo pensado para extrair o máximo de cada destino, sem sobrecarga e sem desperdício de tempo.</p></span>
+              </span>
+            </label>
+          </div>
         </div>
-      </div>
 
-      <div class="auvp-care__stage" aria-hidden="true">
-        <svg class="auvp-care__rings" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#c9a15b">
-          <circle cx="200" cy="250" r="90" stroke-width="0.6" opacity="0.35"/>
-          <circle cx="200" cy="250" r="140" stroke-width="0.6" opacity="0.25"/>
-          <circle cx="200" cy="250" r="196" stroke-width="0.6" opacity="0.16"/>
-          <circle cx="200" cy="250" r="258" stroke-width="0.6" opacity="0.1"/>
-          <line x1="0" y1="250" x2="400" y2="250" stroke-width="0.5" opacity="0.12"/>
-          <line x1="200" y1="0" x2="200" y2="500" stroke-width="0.5" opacity="0.12"/>
-        </svg>
-        <div class="auvp-care__plate auvp-is-on"><figure>01</figure><p>Hospedagem selecionada, no ponto certo da cidade.</p></div>
-        <div class="auvp-care__plate"><figure>02</figure><p>Deslocamentos e acessos resolvidos antes de você chegar.</p></div>
-        <div class="auvp-care__plate"><figure>03</figure><p>Alguém disponível do primeiro ao último dia.</p></div>
-        <div class="auvp-care__plate"><figure>04</figure><p>Uma agenda densa, sem ser sufocante.</p></div>
+        <div class="auvp-care__stage" aria-hidden="true">
+          <svg class="auvp-care__rings" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#c9a15b">
+            <circle cx="200" cy="250" r="90" stroke-width=".6" opacity=".35"/>
+            <circle cx="200" cy="250" r="140" stroke-width=".6" opacity=".25"/>
+            <circle cx="200" cy="250" r="196" stroke-width=".6" opacity=".16"/>
+            <circle cx="200" cy="250" r="258" stroke-width=".6" opacity=".1"/>
+            <line x1="0" y1="250" x2="400" y2="250" stroke-width=".5" opacity=".12"/>
+            <line x1="200" y1="0" x2="200" y2="500" stroke-width=".5" opacity=".12"/>
+          </svg>
+          <div class="auvp-care__plate"><b>01</b><p>Hospedagem selecionada, no ponto certo da cidade.</p></div>
+          <div class="auvp-care__plate"><b>02</b><p>Deslocamentos e acessos resolvidos antes de você chegar.</p></div>
+          <div class="auvp-care__plate"><b>03</b><p>Alguém disponível do primeiro ao último dia.</p></div>
+          <div class="auvp-care__plate"><b>04</b><p>Uma agenda densa, sem ser sufocante.</p></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       7. FAQ
-       ============================================================ -->
+  <!-- ============ 8. FAQ ============ -->
   <section class="auvp-section" id="faq">
     <div class="auvp-shell auvp-faq__grid">
       <div class="auvp-faq__aside">
-        <p class="auvp-eyebrow" data-reveal>06 — Perguntas</p>
-        <h2 class="auvp-title" data-split>Antes de aplicar,<br>vale alinhar.</h2>
-        <p class="auvp-muted auvp-measure-sm" data-reveal data-delay="150">
+        <p class="auvp-eyebrow auvp-sobe">06 — Perguntas</p>
+        <h2 class="auvp-title auvp-sobe">Antes de aplicar,<br>vale alinhar.</h2>
+        <p class="auvp-muted auvp-measure-sm auvp-sobe">
           Ficou algo de fora? Escreva para a nossa equipe pelo formulário abaixo.
         </p>
       </div>
 
-      <div class="auvp-acc" data-acc="single" data-reveal>
-        <div class="auvp-acc__item">
-          <button class="auvp-acc__trigger" type="button" aria-expanded="false">
-            <h3>É passeio turístico?</h3>
-            <span class="auvp-acc__sign" aria-hidden="true"></span>
-          </button>
-          <div class="auvp-acc__panel"><div><p>Não. Se quiser ver pontos turísticos, saiba que esse não é o programa para você. Aqui o foco é negócios, indústria e entender a economia real.</p></div></div>
-        </div>
-
-        <div class="auvp-acc__item">
-          <button class="auvp-acc__trigger" type="button" aria-expanded="false">
-            <h3>Preciso ser aluno AUVP?</h3>
-            <span class="auvp-acc__sign" aria-hidden="true"></span>
-          </button>
-          <div class="auvp-acc__panel"><div><p>Não precisa.</p></div></div>
-        </div>
-
-        <div class="auvp-acc__item">
-          <button class="auvp-acc__trigger" type="button" aria-expanded="false">
-            <h3>O valor da imersão inclui passagens e hospedagem?</h3>
-            <span class="auvp-acc__sign" aria-hidden="true"></span>
-          </button>
-          <div class="auvp-acc__panel"><div><p>Cada missão possui um pacote específico. Geralmente, focamos em oferecer a experiência completa (hospedagem premium, deslocamentos internos e acessos exclusivos), permitindo que você se preocupe apenas com o seu aprendizado e suas conexões. Os detalhes ficam disponíveis na página de cada destino.</p></div></div>
-        </div>
-
-        <div class="auvp-acc__item">
-          <button class="auvp-acc__trigger" type="button" aria-expanded="false">
-            <h3>Como é feita a curadoria das empresas visitadas?</h3>
-            <span class="auvp-acc__sign" aria-hidden="true"></span>
-          </button>
-          <div class="auvp-acc__panel"><div><p>Nossa equipe analisa criteriosamente quais setores e companhias estão liderando a economia global no momento. Escolhemos organizações que ofereçam lições valiosas de eficiência, escala e inovação, garantindo que cada visita seja uma aula exclusiva para o nosso grupo.</p></div></div>
-        </div>
-
-        <div class="auvp-acc__item">
-          <button class="auvp-acc__trigger" type="button" aria-expanded="false">
-            <h3>A imersão é para mim?</h3>
-            <span class="auvp-acc__sign" aria-hidden="true"></span>
-          </button>
-          <div class="auvp-acc__panel"><div><p>Buscamos participantes que já possuam uma mentalidade de investidor ou empreendedor. O foco da AUVP Experience é o aprendizado prático e o networking de alto nível, por isso, estar alinhado com os princípios de valor e longo prazo é fundamental para aproveitar a jornada ao máximo.</p></div></div>
-        </div>
+      <div class="auvp-acc">
+        <details class="auvp-acc__item" name="auvp-faq">
+          <summary><h3>É passeio turístico?</h3><span class="auvp-acc__sign" aria-hidden="true"></span></summary>
+          <p>Não. Se quiser ver pontos turísticos, saiba que esse não é o programa para você. Aqui o foco é negócios, indústria e entender a economia real.</p>
+        </details>
+        <details class="auvp-acc__item" name="auvp-faq">
+          <summary><h3>Preciso ser aluno AUVP?</h3><span class="auvp-acc__sign" aria-hidden="true"></span></summary>
+          <p>Não precisa.</p>
+        </details>
+        <details class="auvp-acc__item" name="auvp-faq">
+          <summary><h3>O valor da imersão inclui passagens e hospedagem?</h3><span class="auvp-acc__sign" aria-hidden="true"></span></summary>
+          <p>Cada missão possui um pacote específico. Geralmente, focamos em oferecer a experiência completa (hospedagem premium, deslocamentos internos e acessos exclusivos), permitindo que você se preocupe apenas com o seu aprendizado e suas conexões. Os detalhes ficam disponíveis na página de cada destino.</p>
+        </details>
+        <details class="auvp-acc__item" name="auvp-faq">
+          <summary><h3>Como é feita a curadoria das empresas visitadas?</h3><span class="auvp-acc__sign" aria-hidden="true"></span></summary>
+          <p>Nossa equipe analisa criteriosamente quais setores e companhias estão liderando a economia global no momento. Escolhemos organizações que ofereçam lições valiosas de eficiência, escala e inovação, garantindo que cada visita seja uma aula exclusiva para o nosso grupo.</p>
+        </details>
+        <details class="auvp-acc__item" name="auvp-faq">
+          <summary><h3>A imersão é para mim?</h3><span class="auvp-acc__sign" aria-hidden="true"></span></summary>
+          <p>Buscamos participantes que já possuam uma mentalidade de investidor ou empreendedor. O foco da AUVP Experience é o aprendizado prático e o networking de alto nível, por isso, estar alinhado com os princípios de valor e longo prazo é fundamental para aproveitar a jornada ao máximo.</p>
+        </details>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       8. CANDIDATURA
-       ============================================================ -->
+  <!-- ============ 9. CANDIDATURA ============ -->
   <section class="auvp-section auvp-apply" id="aplicar">
     <div class="auvp-shell auvp-apply__grid">
       <div>
-        <p class="auvp-eyebrow" data-reveal>07 — Candidatura</p>
-        <h2 class="auvp-apply__title" data-split>A próxima imersão não é para todo mundo. Talvez seja <em>para você</em>.</h2>
+        <p class="auvp-eyebrow auvp-sobe">07 — Candidatura</p>
+        <h2 class="auvp-apply__title auvp-sobe">A próxima imersão não é para todo mundo. Talvez seja <em>para você</em>.</h2>
 
         <ul class="auvp-apply__points">
-          <li data-reveal>Grupo reduzido, para manter o nível das conversas e o acesso real às empresas.</li>
-          <li data-reveal data-delay="90">Não é passeio: é agenda de negócios, com curadoria estratégica da AUVP.</li>
-          <li data-reveal data-delay="180">Perfil dos participantes: empresários, investidores e executivos com visão de longo prazo.</li>
-          <li data-reveal data-delay="270">Após o envio, nossa equipe entra em contato para entender seu momento.</li>
+          <li class="auvp-sobe">Grupo reduzido, para manter o nível das conversas e o acesso real às empresas.</li>
+          <li class="auvp-sobe">Não é passeio: é agenda de negócios, com curadoria estratégica da AUVP.</li>
+          <li class="auvp-sobe">Perfil dos participantes: empresários, investidores e executivos com visão de longo prazo.</li>
+          <li class="auvp-sobe">Após o envio, nossa equipe entra em contato para entender seu momento.</li>
         </ul>
       </div>
 
       <div>
-        <form class="auvp-form" data-form data-tipo="candidatura" data-subject="Candidatura — AUVP Experience" data-success="apply-success" data-reveal>
+        <!-- ====================================================================
+             COMO LIGAR O FORMULÁRIO (escolha uma opção)
+
+             1. Serviço de formulário (mais simples): crie um formulário em
+                Formspree, Getform ou similar e cole a URL no action="" abaixo.
+                Funciona sem JavaScript e sem plugin.
+
+             2. Elementor Pro: apague este <form> e arraste o widget "Formulário"
+                do Elementor no lugar, replicando os campos.
+
+             3. Enquanto nada disso for feito, o botão não envia nada. Troque
+                por um link de contato se preferir:
+                <a class="auvp-btn auvp-btn--solid" href="https://wa.me/55SEUNUMERO">Falar com a equipe</a>
+             ==================================================================== -->
+        <form class="auvp-form auvp-sobe" method="post" action="">
+          <input type="text" name="_isca" class="auvp-isca" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="hidden" name="assunto" value="Candidatura — AUVP Experience">
+
           <div class="auvp-form__row">
             <div class="auvp-field">
               <label for="ap-nome">Nome completo</label>
               <input id="ap-nome" name="nome" type="text" autocomplete="name" required>
-              <span class="auvp-field__error"></span>
             </div>
             <div class="auvp-field">
               <label for="ap-email">E-mail</label>
               <input id="ap-email" name="email" type="email" autocomplete="email" required>
-              <span class="auvp-field__error"></span>
             </div>
           </div>
 
@@ -534,7 +1480,6 @@
             <div class="auvp-field">
               <label for="ap-tel">WhatsApp</label>
               <input id="ap-tel" name="whatsapp" type="tel" autocomplete="tel" placeholder="(00) 00000-0000" required>
-              <span class="auvp-field__error"></span>
             </div>
             <div class="auvp-field">
               <label for="ap-perfil">Seu perfil</label>
@@ -546,7 +1491,6 @@
                 <option>Fundador</option>
                 <option>Outro</option>
               </select>
-              <span class="auvp-field__error"></span>
             </div>
           </div>
 
@@ -559,28 +1503,18 @@
               <option>Próximos destinos</option>
               <option>Ainda decidindo</option>
             </select>
-            <span class="auvp-field__error"></span>
           </div>
 
           <div class="auvp-field">
             <label for="ap-motivo">Em uma frase, o que você quer extrair da imersão?</label>
             <textarea id="ap-motivo" name="motivo" rows="3" required></textarea>
-            <span class="auvp-field__error"></span>
           </div>
 
           <div style="display:grid;gap:1rem;justify-items:start">
-            <button class="auvp-btn auvp-btn--solid" type="submit" data-magnetic="0.2">
-              Enviar candidatura <span class="auvp-btn__arrow" aria-hidden="true">→</span>
-            </button>
-            <span class="auvp-form__status" role="status"></span>
+            <button class="auvp-btn auvp-btn--solid" type="submit">Enviar candidatura <i aria-hidden="true">&rarr;</i></button>
             <p class="auvp-form__note">Suas informações são usadas apenas para o contato sobre a imersão.</p>
           </div>
         </form>
-
-        <div class="auvp-form__success" id="apply-success">
-          <h3 class="auvp-serif">Recebemos sua candidatura.</h3>
-          <p>Nossa equipe vai analisar seu perfil e entrar em contato com os próximos passos e os detalhes da imersão.</p>
-        </div>
       </div>
     </div>
   </section>
@@ -594,9 +1528,9 @@
       <div class="auvp-footer__col">
         <h4>Imersões</h4>
         <ul>
-          <li><a href="imersoes/china.html">China</a></li>
-          <li><a href="imersoes/chile.html">Chile</a></li>
-          <li><a href="#imersoes" data-vote-open>Próximos destinos</a></li>
+          <li><a href="#imersoes">China</a></li>
+          <li><a href="#imersoes">Chile</a></li>
+          <li><a href="#imersoes">Próximos destinos</a></li>
         </ul>
       </div>
       <div class="auvp-footer__col">
@@ -612,7 +1546,7 @@
         <h4>Contato</h4>
         <ul>
           <li><a href="#aplicar">Aplicar para a próxima imersão</a></li>
-          <!-- TODO: substituir pelos perfis oficiais -->
+          <!-- TODO: trocar pelos perfis oficiais -->
           <li><a href="#" rel="noopener">Instagram</a></li>
           <li><a href="#" rel="noopener">LinkedIn</a></li>
         </ul>
@@ -622,12 +1556,14 @@
     <p class="auvp-footer__word" aria-hidden="true">Experience</p>
 
     <div class="auvp-footer__bar">
-      <span>© <span data-year>2026</span> AUVP Experience Co.</span>
+      <span>&copy; 2026 AUVP Experience Co.</span>
       <span>Imersões estratégicas globais</span>
     </div>
   </div>
 </footer>
 
-<script src="assets/js/app.js"></script>
+</div>
+<!-- ============ fim do bloco para colar ============ -->
+
 </body>
 </html>
