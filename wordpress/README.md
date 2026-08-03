@@ -1,36 +1,50 @@
 # AUVP Experience no WordPress / Elementor
 
-Sem plugin. O código é colado direto no WordPress.
+Sem plugin. O código é colado direto numa página.
 
-Os arquivos prontos estão em **`saida/`** — eles são gerados a partir do site
-estático da raiz do repositório, não edite à mão.
+O **`index.html` da raiz do repositório é o arquivo que se cola** — ele é ao
+mesmo tempo o site estático e o bloco para o Elementor. Estilo, script, fontes
+e imagens estão todos embutidos nele.
 
 ---
 
-## Caminho mais curto: um único bloco
+## Colar no Elementor
 
 1. **Páginas → Adicionar nova**.
 2. Nos atributos da página, escolha o template **Elementor Canvas**
    (página em branco). É o que preserva o design: o site tem menu fixo e
    rodapé próprios, e eles brigariam com o cabeçalho do tema.
 3. **Editar com Elementor** → arraste o widget **HTML**.
-4. Abra `saida/pagina-completa.html`, copie **tudo** e cole no widget.
+4. Abra `index.html`, **selecione tudo, copie e cole** no widget.
 5. Publique.
 
-Pronto. Esse arquivo carrega sozinho: estilo, script, fontes e imagens já
-estão embutidos. Nenhum upload, nenhum plugin, nenhuma requisição a
-serviços de terceiros.
+Pronto. Não precisa de plugin, upload de arquivo nem CDN externo.
 
-> No editor do Elementor a prévia pode aparecer estranha (ele injeta o
-> próprio CSS na área de edição). Confira sempre na página publicada.
+O `<head>` do arquivo é ignorado ao colar — o navegador descarta `<title>` e
+`<meta>` fora do documento. Se preferir copiar só o essencial, o arquivo tem
+marcações: copie do comentário **"TUDO O QUE PRECISA SER COLADO"** até o
+**`</div>`** com o comentário "fim do bloco para colar".
+
+> No editor do Elementor a prévia pode aparecer estranha (ele injeta o próprio
+> CSS na área de edição). Confira sempre na página publicada.
+
+### Editar os textos
+
+Abra o `index.html` e edite direto no markup, entre os dois blocos marcados
+com `data-auvp` (o `<style>` no começo e o `<script>` no fim). Esses dois são
+gerados — não mexa dentro deles. Todo o resto é a fonte da verdade.
+
+Depois de editar, é só copiar e colar de novo no widget.
+
+**Não mexa nas classes `auvp-*` nem nos atributos `data-*`**: é por eles que o
+script encontra os elementos.
 
 ---
 
-## Caminho por seção: para editar textos no Elementor
+## Alternativa: uma seção por widget
 
-Se a equipe for mexer nos textos com frequência, vale montar seção a seção —
-cada bloco vira um widget HTML separado, e dá para reordenar e editar sem
-caçar no meio de um arquivo gigante.
+Se a equipe for reordenar seções com frequência, `saida/` traz o site
+fatiado — cada bloco num arquivo, para virar um widget HTML separado.
 
 **Uma vez, na página:**
 
@@ -60,10 +74,6 @@ caçar no meio de um arquivo gigante.
 Cada widget deve ficar **sozinho** em sua seção/container do Elementor, com
 **largura total** e **padding zero** — o espaçamento já vem de dentro do
 componente.
-
-Os textos ficam visíveis no HTML de cada arquivo; é só editar dentro do
-widget. Não mexa nas classes `auvp-*` nem nos atributos `data-*`: é por eles
-que o script encontra os elementos.
 
 ### Usar o cabeçalho e o rodapé do tema
 
@@ -125,7 +135,7 @@ Duas camadas:
 1. **Todas as classes CSS são prefixadas com `auvp-`.** Nomes genéricos como
    `.btn`, `.card`, `.nav` e `.title` colidiriam com praticamente qualquer
    tema; `.auvp-btn` não colide com nada.
-2. **Todo seletor é escopado em `.auvp-x`**, o wrapper que envolve cada bloco
+2. **Todo seletor é escopado em `.auvp-x`**, o wrapper que envolve o bloco
    colado. Isso impede que o nosso reset (`*`, `h1`, `p`, `button`) vaze para
    o tema, e faz nossas regras vencerem as do tema por especificidade.
 
@@ -139,23 +149,25 @@ wrapper filho direto do `<body>` assim que a página carrega.
 
 ---
 
-## Regerar os arquivos
+## Regerar
 
-A fonte da verdade é o site estático na raiz do repositório. Depois de mexer
-em qualquer HTML, CSS ou JS de lá:
+Depois de mexer em `assets/css/*`, `assets/js/app.js` ou `assets/img/*`:
 
 ```bash
 node wordpress/build.js
 ```
 
-O script recorta os blocos de `index.html`, escopa o CSS, embute as imagens e
-as fontes em base64 e reescreve `saida/`.
+O script reescreve, **dentro do próprio `index.html`**, os blocos
+`<style data-auvp="estilos">` e `<script data-auvp="script">` e o `src` das
+imagens marcadas com `data-auvp-src`. O markup entre eles não é tocado. Rodar
+duas vezes seguidas produz o mesmo resultado.
 
-Ele também gera `saida/_previa-local.html` (fora do Git): a página completa
-dentro de um container com `transform`, contra um "tema hostil" que estiliza
-`.btn`, `.card`, `.title`, `h1`, `h2` e `h3` com cores berrantes. Abra num
-navegador — o site tem de sair intacto e o bloco do tema tem de continuar
-feio. É esse teste que garante o isolamento nos dois sentidos.
+Ele também reescreve `saida/` e gera `saida/_previa-local.html` (fora do Git):
+o bloco colado dentro de um container com `transform`, contra um "tema
+hostil" que estiliza `.btn`, `.card`, `.title`, `h1`, `h2` e `h3` com cores
+berrantes. Abra num navegador — o site tem de sair intacto e o bloco do tema
+tem de continuar feio. É esse teste que garante o isolamento nos dois
+sentidos.
 
 ---
 
@@ -163,16 +175,20 @@ feio. É esse teste que garante o isolamento nos dois sentidos.
 
 - **Não foi testado numa instalação real de WordPress.** O ambiente onde isso
   foi escrito não tinha acesso a wordpress.org. A verificação feita foi:
-  `php -l` no snippet, renderização da página completa dentro de um container
-  com `transform` contra um tema hostil, e teste das interações no resultado
-  (painel de destinos, validação dos formulários, acordeão, abas, arraste).
-  Antes de ir para produção, publique numa página de homologação e confira.
-- **Não cole o mesmo bloco duas vezes na mesma página.** Os `id` vêm do HTML
-  estático (`#hero`, `#faq`, `#vote`…) e duplicá-los quebra as âncoras do menu.
-- **`estilos.css` tem 210 KB** porque as fontes vão embutidas em base64. É o
+  `php -l` no snippet, renderização do bloco dentro de um container com
+  `transform` contra um tema hostil, e teste das interações no resultado
+  (painel de destinos, validação dos formulários, acordeão, abas, arraste),
+  em desktop e mobile. Antes de ir para produção, publique numa página de
+  homologação e confira.
+- **Não cole o mesmo bloco duas vezes na mesma página.** Os `id` são fixos
+  (`#hero`, `#faq`, `#vote`…) e duplicá-los quebra as âncoras do menu.
+- **O `index.html` tem ~320 KB** porque as fontes vão embutidas em base64. É o
   preço de não depender de upload nem de CDN externo. Se preferir mais leve,
   suba os `.woff2` de `assets/fonts/` para o servidor e troque os
-  `@font-face` do topo do arquivo por `url()` apontando para eles.
-- As páginas de destino (China e Chile) continuam como HTML estático na raiz
-  do repositório. Para publicá-las no WordPress, crie duas páginas novas e
-  cole o conteúdo delas do mesmo jeito — elas não estão em `saida/`.
+  `@font-face` do topo do `<style>` por `url()` apontando para eles.
+- A tag `og:image` do `<head>` ainda aponta para um caminho relativo. Ao
+  publicar, troque por uma URL absoluta — é o que o compartilhamento em redes
+  sociais usa.
+- As páginas de destino (China e Chile) continuam usando CSS e JS externos,
+  como site estático comum. Para colá-las no WordPress também, avise que eu
+  aplico o mesmo tratamento nelas.

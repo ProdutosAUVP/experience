@@ -1,21 +1,28 @@
 #!/usr/bin/env node
 /**
- * Gera os arquivos prontos para colar no WordPress/Elementor.
+ * Deixa o index.html autocontido e gera os blocos por seção.
  *
  *   node wordpress/build.js
  *
- * A fonte da verdade continua sendo o site estático na raiz do repositório.
- * Este script recorta os blocos de index.html, escopa o CSS e embute
- * imagens e fontes, de modo que o resultado funcione sozinho — sem plugin,
- * sem upload de arquivo e sem requisição a serviços de terceiros.
+ * O index.html é ao mesmo tempo o site estático e o que se cola no
+ * Elementor. Este script preenche, dentro dele:
  *
- * Saída em wordpress/saida/.
+ *   <style  data-auvp="estilos">  CSS escopado + fontes em base64
+ *   <script data-auvp="script">   o app.js
+ *   <img data-auvp-src="...">     a imagem convertida em data URI
+ *
+ * O markup entre esses blocos não é tocado — é lá que se edita a copy.
+ * A operação é idempotente: rodar de novo apenas atualiza os blocos.
+ *
+ * Também escreve wordpress/saida/ com um arquivo por seção, para quem
+ * preferir montar a página bloco a bloco no Elementor.
  */
 
 const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
+const INDEX = path.join(ROOT, 'index.html');
 const OUT = path.join(__dirname, 'saida');
 const SCOPE = '.auvp-x';
 
@@ -68,6 +75,10 @@ function scopeOne(raw) {
   if (sel === '*') return `${SCOPE}, ${SCOPE} *`;
 
   return `${SCOPE} ${sel}`;
+}
+
+function scopeSelector(sel) {
+  return splitSelectors(sel).map(scopeOne).join(', ');
 }
 
 function scopeBlock(css) {
@@ -130,20 +141,64 @@ function scopeBlock(css) {
   return out;
 }
 
-function scopeSelector(sel) {
-  return splitSelectors(sel).map(scopeOne).join(', ');
+/* =========================================================
+   2. Recursos embutidos
+   ========================================================= */
+
+function dataUri(file, mime) {
+  return 'data:' + mime + ';base64,' + fs.readFileSync(file).toString('base64');
+}
+
+/** @font-face com o woff2 em base64. Só o subset latin: cobre o português. */
+function fontFaces() {
+  const arquivos = [
+    ['Cormorant Garamond', 'normal', 'cormorant-garamond-latin.woff2'],
+    ['Cormorant Garamond', 'italic', 'cormorant-garamond-italic-latin.woff2'],
+    ['Inter', 'normal', 'inter-latin.woff2'],
+  ];
+
+  return arquivos
+    .map(([family, style, arquivo]) => {
+      const uri = dataUri(path.join(ROOT, 'assets/fonts', arquivo), 'font/woff2');
+      return `@font-face{font-family:"${family}";font-style:${style};font-weight:300 500;font-display:swap;src:url(${uri}) format("woff2")}`;
+    })
+    .join('\n');
+}
+
+/** Troca o src de todo elemento com data-auvp-src pelo data URI do arquivo. */
+function embedImages(html) {
+  return html.replace(
+    /data-auvp-src="([^"]+)"([^>]*?)\s(src|href)="[^"]*"/g,
+    (match, rel, meio, attr) => {
+      const arquivo = path.join(ROOT, rel);
+      if (!fs.existsSync(arquivo)) {
+        console.warn('  ! imagem não encontrada:', rel);
+        return match;
+      }
+      return `data-auvp-src="${rel}"${meio} ${attr}="${dataUri(arquivo, 'image/svg+xml')}"`;
+    }
+  );
+}
+
+/**
+ * Substitui o conteúdo de <tag data-auvp="nome">…</tag>.
+ *
+ * A substituição é feita por função, e não por string: numa string de
+ * replace, `$$` vira `$` e `$1` vira um grupo capturado. O app.js usa
+ * `$$(seletor)` o tempo todo — com string, todos virariam `$(seletor)`.
+ */
+function fillBlock(html, tag, nome, conteudo) {
+  const re = new RegExp(`(<${tag} data-auvp="${nome}"[^>]*>)[\\s\\S]*?(</${tag}>)`);
+  if (!re.test(html)) throw new Error(`Bloco <${tag} data-auvp="${nome}"> não encontrado no index.html`);
+  return html.replace(re, (match, abre, fecha) => abre + '\n' + conteudo + '\n' + fecha);
 }
 
 /* =========================================================
-   2. Recorte dos blocos do index.html
+   3. Recorte dos blocos
    ========================================================= */
 
 const VOID_TAGS = new Set(['img', 'br', 'hr', 'input', 'meta', 'link', 'source']);
 
-/**
- * Devolve o HTML do elemento que começa em `start`, casando a tag de
- * fechamento correspondente (conta aninhamento da mesma tag).
- */
 function elementAt(html, start) {
   const tag = /^<([a-zA-Z][\w-]*)/.exec(html.slice(start))[1];
   if (VOID_TAGS.has(tag.toLowerCase())) {
@@ -183,69 +238,13 @@ function blockAt(html, anchor) {
 }
 
 /* =========================================================
-   3. Embutir imagens e fontes
-   ========================================================= */
-
-function dataUri(file, mime) {
-  return 'data:' + mime + ';base64,' + fs.readFileSync(file).toString('base64');
-}
-
-function inlineImages(html) {
-  return html.replace(/(src|href)="((?:\.\.\/)*assets\/img\/[^"]+)"/g, (m, attr, rel) => {
-    const file = path.join(ROOT, rel.replace(/^(\.\.\/)+/, ''));
-    if (!fs.existsSync(file)) return m;
-    return `${attr}="${dataUri(file, 'image/svg+xml')}"`;
-  });
-}
-
-function fontFaces() {
-  /* Só o subset latin: cobre o português e evita dobrar o peso. */
-  const files = [
-    ['Cormorant Garamond', 'normal', 'cormorant-garamond-latin.woff2'],
-    ['Cormorant Garamond', 'italic', 'cormorant-garamond-italic-latin.woff2'],
-    ['Inter', 'normal', 'inter-latin.woff2'],
-  ];
-
-  return files
-    .map(([family, style, file]) => {
-      const uri = dataUri(path.join(ROOT, 'assets/fonts', file), 'font/woff2');
-      return `@font-face{font-family:"${family}";font-style:${style};font-weight:300 500;font-display:swap;src:url(${uri}) format("woff2")}`;
-    })
-    .join('\n');
-}
-
-/* =========================================================
    4. Build
    ========================================================= */
 
-const indexHtml = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-
-/* Blocos, na ordem da página. A navegação reúne overlays, menu fixo,
-   menu em tela cheia e índice lateral num pedaço só. */
-const grainStart = indexHtml.indexOf('<div class="auvp-grain"');
-const dotnav = blockAt(indexHtml, '<nav class="auvp-dotnav"');
-const dotnavEnd = indexHtml.indexOf(dotnav) + dotnav.length;
-
-const BLOCKS = [
-  ['navegacao', indexHtml.slice(grainStart, dotnavEnd)],
-  ['hero', blockAt(indexHtml, '<section class="auvp-hero"')],
-  ['posicionamento', blockAt(indexHtml, '<section class="auvp-section" id="posicionamento"')],
-  ['imersoes', blockAt(indexHtml, '<section class="auvp-section" id="imersoes"')],
-  ['diferencial', blockAt(indexHtml, '<section class="auvp-section auvp-edge" id="diferencial"')],
-  [
-    'faixa',
-    blockAt(indexHtml, '<div class="auvp-marquee"') + '\n' + blockAt(indexHtml, '<p class="auvp-sr-only">'),
-  ],
-  ['networking', blockAt(indexHtml, '<section class="auvp-section auvp-net" id="networking"')],
-  ['experiencia', blockAt(indexHtml, '<section class="auvp-section" id="experiencia"')],
-  ['faq', blockAt(indexHtml, '<section class="auvp-section" id="faq"')],
-  ['candidatura', blockAt(indexHtml, '<section class="auvp-section auvp-apply" id="aplicar"')],
-  ['rodape', blockAt(indexHtml, '<footer class="auvp-footer">')],
-].map(([slug, html]) => [slug, inlineImages(html)]);
-
-/* --- CSS --- */
+/* --- 4.1 CSS e JS --- */
 const mainCss = fs.readFileSync(path.join(ROOT, 'assets/css/main.css'), 'utf8');
 const sectionsCss = fs.readFileSync(path.join(ROOT, 'assets/css/sections.css'), 'utf8');
+const js = fs.readFileSync(path.join(ROOT, 'assets/js/app.js'), 'utf8');
 
 let css = scopeBlock(mainCss) + '\n' + scopeBlock(sectionsCss);
 
@@ -254,76 +253,72 @@ let css = scopeBlock(mainCss) + '\n' + scopeBlock(sectionsCss);
    `clip` corta igual sem criar o contexto de rolagem. */
 css = css.replace(/overflow-x:\s*hidden/g, 'overflow-x: clip');
 
-const cssHeader = `/* =============================================================
-   AUVP EXPERIENCE — folha de estilo para colar no WordPress
-   GERADO POR wordpress/build.js — NÃO EDITE À MÃO.
-   Fonte: assets/css/{main,sections}.css
+const cabecalhoCss = `/* GERADO POR wordpress/build.js — NÃO EDITE AQUI DENTRO.
+   Fonte: assets/css/{main,sections}.css e assets/fonts/
+   Todos os seletores são escopados em ${SCOPE}: nada daqui alcança o
+   tema do WordPress, e nada do tema alcança o site. */`;
 
-   Todos os seletores são escopados em ${SCOPE}, o wrapper que envolve
-   cada bloco colado. Nada daqui alcança o tema.
-   As fontes vão embutidas em base64: nenhum upload, nenhuma
-   requisição a serviços de terceiros.
-   ============================================================= */
+const cssFinal = `${cabecalhoCss}\n\n${fontFaces()}\n\n${css}`;
 
-`;
+/* --- 4.2 index.html --- */
+let index = fs.readFileSync(INDEX, 'utf8');
 
-const cssFinal = cssHeader + fontFaces() + '\n\n' + css;
+index = fillBlock(index, 'style', 'estilos', cssFinal);
+index = fillBlock(index, 'script', 'script', js);
+index = embedImages(index);
 
-/* --- JS --- */
-const js = fs.readFileSync(path.join(ROOT, 'assets/js/app.js'), 'utf8');
+fs.writeFileSync(INDEX, index);
 
-/* --- escrita --- */
+/* --- 4.3 blocos por seção --- */
+const grainStart = index.indexOf('<div class="auvp-grain"');
+const dotnav = blockAt(index, '<nav class="auvp-dotnav"');
+const dotnavEnd = index.indexOf(dotnav) + dotnav.length;
+
+const BLOCOS = [
+  ['navegacao', index.slice(grainStart, dotnavEnd)],
+  ['hero', blockAt(index, '<section class="auvp-hero"')],
+  ['posicionamento', blockAt(index, '<section class="auvp-section" id="posicionamento"')],
+  ['imersoes', blockAt(index, '<section class="auvp-section" id="imersoes"')],
+  ['diferencial', blockAt(index, '<section class="auvp-section auvp-edge" id="diferencial"')],
+  [
+    'faixa',
+    blockAt(index, '<div class="auvp-marquee"') + '\n' + blockAt(index, '<p class="auvp-sr-only">'),
+  ],
+  ['networking', blockAt(index, '<section class="auvp-section auvp-net" id="networking"')],
+  ['experiencia', blockAt(index, '<section class="auvp-section" id="experiencia"')],
+  ['faq', blockAt(index, '<section class="auvp-section" id="faq"')],
+  ['candidatura', blockAt(index, '<section class="auvp-section auvp-apply" id="aplicar"')],
+  ['rodape', blockAt(index, '<footer class="auvp-footer">')],
+];
+
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(path.join(OUT, 'secoes'), { recursive: true });
 
-fs.writeFileSync(path.join(OUT, 'estilos.css'), cssFinal);
+fs.writeFileSync(path.join(OUT, 'estilos.css'), cssFinal + '\n');
 fs.writeFileSync(path.join(OUT, 'script.js'), js);
 
-BLOCKS.forEach(([slug, html], i) => {
-  const header = `<!-- AUVP Experience — bloco ${String(i + 1).padStart(2, '0')}: ${slug}
+BLOCOS.forEach(([slug, html], i) => {
+  const n = String(i + 1).padStart(2, '0');
+  const cabecalho = `<!-- AUVP Experience — bloco ${n}: ${slug}
      Cole num widget HTML do Elementor.
      Requer estilos.css e script.js aplicados uma vez na página. -->\n`;
   fs.writeFileSync(
-    path.join(OUT, 'secoes', `${String(i + 1).padStart(2, '0')}-${slug}.html`),
-    header + '<div class="auvp-x">\n' + html + '\n</div>\n'
+    path.join(OUT, 'secoes', `${n}-${slug}.html`),
+    cabecalho + '<div class="auvp-x">\n' + html + '\n</div>\n'
   );
 });
 
-/* Página completa: um único bloco, com CSS e JS embutidos. */
-const paginaCompleta = `<!-- =============================================================
-     AUVP EXPERIENCE — página completa
-     GERADO POR wordpress/build.js — NÃO EDITE À MÃO.
-
-     Cole este arquivo inteiro num widget HTML do Elementor (ou no
-     bloco "HTML personalizado" do editor padrão). Não precisa de mais
-     nada: estilo, script, fontes e imagens já estão aqui dentro.
-     ============================================================= -->
-<style>
-${cssFinal}
-</style>
-
-<div class="auvp-x">
-${BLOCKS.map(([, html]) => html).join('\n\n')}
-</div>
-
-<script>
-${js}
-</script>
-`;
-
-fs.writeFileSync(path.join(OUT, 'pagina-completa.html'), paginaCompleta);
-
-/* Snippet opcional de PHP, copiado como está. */
 fs.copyFileSync(
   path.join(__dirname, 'formulario-opcional.php'),
   path.join(OUT, 'formulario-opcional.php')
 );
 
-/* Prévia local: simula um tema hostil e um container do Elementor com
-   transform — o cenário que quebra position:fixed. Não vai para o Git. */
+/* --- 4.4 prévia local (fora do Git) --- */
+const corpo = /<div class="auvp-x">[\s\S]*<\/div>\s*<!-- fim do bloco para colar -->/.exec(index)[0];
+
 const previa = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Prévia local — AUVP Experience</title>
+<title>Prévia — o bloco colado dentro de um tema hostil</title>
 <style>
   body { margin: 0; background: #fff; color: #111; font-family: Georgia, serif; }
   .btn, .card, .title, .nav, .menu, .section, .field, .form, .chip {
@@ -333,11 +328,12 @@ const previa = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
   h1, h2, h3 { color: #f0f; font-family: "Comic Sans MS", cursive; }
   a { color: #00f; text-decoration: underline; }
   .tema { padding: 24px; font-family: system-ui, sans-serif; }
+  /* container do Elementor com transform: o cenário que quebra position:fixed */
   .elementor-container { transform: translateZ(0); will-change: transform; }
 </style></head><body>
 <div class="tema"><h2 class="title">Cabeçalho do tema</h2><a class="btn" href="#">Botão do tema</a></div>
 <div class="elementor-container">
-${paginaCompleta}
+${corpo}
 </div>
 <div class="tema"><h2 class="title">Rodapé do tema</h2><p>Deve continuar feio.</p></div>
 </body></html>
@@ -347,7 +343,7 @@ fs.writeFileSync(path.join(OUT, '_previa-local.html'), previa);
 
 /* --- relatório --- */
 const kb = (n) => (n / 1024).toFixed(1) + ' KB';
-console.log('blocos:', BLOCKS.map(([s]) => s).join(', '));
-console.log('estilos.css        ', kb(cssFinal.length));
-console.log('script.js          ', kb(js.length));
-console.log('pagina-completa.html', kb(paginaCompleta.length));
+console.log('index.html         ', kb(index.length), '(autocontido, pronto para colar)');
+console.log('  css embutido     ', kb(cssFinal.length));
+console.log('  js embutido      ', kb(js.length));
+console.log('blocos por seção   ', BLOCOS.map(([s]) => s).join(', '));

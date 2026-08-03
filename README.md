@@ -15,7 +15,7 @@ ser fácil de editar por qualquer pessoa da equipe e publicar em qualquer lugar
 (GitHub Pages, Vercel, Netlify, S3) sem pipeline.
 
 ```
-index.html                  página principal
+index.html                  página principal — autocontida (ver abaixo)
 imersoes/china.html         página de destino
 imersoes/chile.html         página de destino
 assets/css/fonts.css        @font-face das fontes auto-hospedadas
@@ -24,34 +24,40 @@ assets/css/sections.css     estilos por seção
 assets/js/app.js            todas as interações (~700 linhas, comentado)
 assets/fonts/               Cormorant Garamond + Inter (OFL 1.1)
 assets/img/                 arte vetorial gerada para o projeto
-wordpress/                  plugin WordPress + Elementor (ver abaixo)
+wordpress/                  build e materiais para WordPress (ver abaixo)
 ```
+
+### O index.html é autocontido
+
+Estilo, script, fontes e imagens ficam **embutidos** no próprio `index.html`,
+dentro de dois blocos marcados com `data-auvp`. Isso serve a dois propósitos:
+a página abre até por `file://`, e o arquivo inteiro pode ser colado num
+widget HTML do Elementor.
+
+Os arquivos em `assets/` continuam sendo a fonte de edição de CSS e JS. Depois
+de mexer em qualquer um deles:
+
+```bash
+node wordpress/build.js     # reescreve os blocos dentro do index.html
+```
+
+O markup entre os blocos não é tocado — é lá que se edita a copy, direto no
+`index.html`.
 
 ## WordPress / Elementor
 
-Sem plugin: o código é colado direto numa página. Os arquivos prontos estão em
-`wordpress/saida/` e o passo a passo em
-**[`wordpress/README.md`](wordpress/README.md)**.
+Sem plugin: copie o `index.html` inteiro e cole num widget HTML. Passo a passo,
+alternativa por seção e o snippet opcional que grava as candidaturas no painel
+em **[`wordpress/README.md`](wordpress/README.md)**.
 
-O caminho mais curto é copiar `wordpress/saida/pagina-completa.html` inteiro
-para um widget HTML do Elementor — estilo, script, fontes e imagens já vão
-embutidos ali. Também há um arquivo por seção, para quem preferir montar bloco
-a bloco, e um snippet opcional de `functions.php` que grava as candidaturas no
-painel.
-
-```bash
-node wordpress/build.js    # regenera wordpress/saida/ a partir daqui
-```
-
-A fonte da verdade é o site estático desta raiz — depois de mexer em qualquer
-HTML, CSS ou JS, rode o build antes de colar.
-
-Todas as classes CSS são prefixadas com `auvp-` e, na saída para WordPress,
-escopadas em `.auvp-x`. É o que impede colisão com o tema nos dois sentidos.
+Todas as classes CSS são prefixadas com `auvp-` e escopadas em `.auvp-x`. É o
+que impede colisão com o tema nos dois sentidos.
 
 ## Rodar localmente
 
-Precisa de um servidor HTTP — abrir com `file://` quebra o carregamento das fontes.
+O `index.html` abre direto no navegador, sem servidor — tudo o que ele precisa
+está embutido. As páginas de destino usam CSS e JS externos, então para
+navegar entre elas vale subir um servidor:
 
 ```bash
 npx http-server -p 8000
