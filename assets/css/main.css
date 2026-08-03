@@ -111,6 +111,10 @@ input, select, textarea { font: inherit; color: inherit; }
   outline-offset: 4px;
 }
 
+/* Wrapper criado pelo JS para segurar os elementos fixos no <body>.
+   Não ocupa espaço: tudo que vive dentro dele é fixed. */
+.auvp-overlays { display: contents; }
+
 /* ---------- 3. Grão / textura global ---------- */
 .auvp-grain {
   position: fixed;

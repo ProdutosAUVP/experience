@@ -29,18 +29,25 @@ wordpress/                  plugin WordPress + Elementor (ver abaixo)
 
 ## WordPress / Elementor
 
-Existe um plugin que entrega o site como widgets do Elementor, com formulários
-gravando no painel. Instruções completas em **[`wordpress/README.md`](wordpress/README.md)**.
+Sem plugin: o código é colado direto numa página. Os arquivos prontos estão em
+`wordpress/saida/` e o passo a passo em
+**[`wordpress/README.md`](wordpress/README.md)**.
+
+O caminho mais curto é copiar `wordpress/saida/pagina-completa.html` inteiro
+para um widget HTML do Elementor — estilo, script, fontes e imagens já vão
+embutidos ali. Também há um arquivo por seção, para quem preferir montar bloco
+a bloco, e um snippet opcional de `functions.php` que grava as candidaturas no
+painel.
 
 ```bash
-bash wordpress/package.sh    # gera dist/auvp-experience-1.0.0.zip
+node wordpress/build.js    # regenera wordpress/saida/ a partir daqui
 ```
 
-Os assets do plugin são **gerados** a partir de `assets/` — depois de mexer em
-qualquer CSS ou JS aqui na raiz, rode `node wordpress/build.js`.
+A fonte da verdade é o site estático desta raiz — depois de mexer em qualquer
+HTML, CSS ou JS, rode o build antes de colar.
 
-Todas as classes CSS são prefixadas com `auvp-` e, no plugin, escopadas em
-`.auvp-x`. É o que impede colisão com o tema hospedeiro nos dois sentidos.
+Todas as classes CSS são prefixadas com `auvp-` e, na saída para WordPress,
+escopadas em `.auvp-x`. É o que impede colisão com o tema nos dois sentidos.
 
 ## Rodar localmente
 
@@ -60,7 +67,7 @@ Estes pontos estão marcados no código e **precisam de decisão da equipe**:
 
 | O quê | Onde | Situação |
 |---|---|---|
-| Endpoint do formulário | `assets/js/app.js` → `CONFIG.formEndpoint` | vazio; sem ele o formulário abre o cliente de e-mail. **No WordPress isso é automático** — o plugin injeta a rota REST |
+| Endpoint do formulário | `assets/js/app.js` → `CONFIG.formEndpoint` | vazio; sem ele o formulário abre o cliente de e-mail. No WordPress, o snippet opcional de `functions.php` cria a rota e o JS a detecta sozinho |
 | E-mail de contato | `assets/js/app.js` → `CONFIG.contactEmail` | `experience@auvp.com.br` — **confirmar** |
 | Links de Instagram / LinkedIn | rodapé de todas as páginas (`<!-- TODO -->`) | apontando para `#` |
 | Datas, investimento e roteiro | `imersoes/*.html` | marcados como "A confirmar" |

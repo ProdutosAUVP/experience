@@ -155,6 +155,35 @@
   }
 
   /* -----------------------------------------------------------
+     3b. Overlays presos ao viewport
+
+     position:fixed deixa de valer se algum ancestral tiver transform,
+     filter ou perspective — e containers do Elementor costumam ter.
+     Por isso o menu, o cursor, o grão e a barra de progresso são movidos
+     para um wrapper filho direto de <body>. No site estático eles já
+     nascem lá e nada acontece.
+     ----------------------------------------------------------- */
+  function relocateOverlays() {
+    var sel = ".auvp-grain, .auvp-cursor, .auvp-cursor-ring, .auvp-progress," +
+      " .auvp-preloader, .auvp-nav, .auvp-menu, .auvp-dotnav, .auvp-skip-link";
+
+    var loose = $$(sel).filter(function (el) {
+      return el.parentElement && el.parentElement !== document.body;
+    });
+    if (!loose.length) return;
+
+    var host = $("body > .auvp-overlays");
+    if (!host) {
+      host = document.createElement("div");
+      // mantém o escopo do CSS: sem .auvp-x nenhuma regra se aplica
+      host.className = "auvp-x auvp-overlays";
+      document.body.appendChild(host);
+    }
+
+    loose.forEach(function (el) { host.appendChild(el); });
+  }
+
+  /* -----------------------------------------------------------
      4. Navegação: fundo sólido, auto-hide e menu fullscreen
      ----------------------------------------------------------- */
   function navigation() {
@@ -588,6 +617,11 @@
 
       form.setAttribute("novalidate", "novalidate");
 
+      // Carimba o momento em que o formulário ficou disponível. O servidor
+      // recusa envios instantâneos, que denunciam preenchimento automático.
+      var ts = form.elements._ts;
+      if (ts) ts.value = String(Math.floor(Date.now() / 1000));
+
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         if (!validate(form)) {
@@ -714,6 +748,7 @@
    * O editor do Elementor re-renderiza widgets a cada alteração.
    */
   function boot() {
+    relocateOverlays();
     splitWords();
     navigation();
     accordion();

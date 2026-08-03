@@ -1,4 +1,4 @@
 dist/
 node_modules/
 .DS_Store
-wordpress/tools/preview.html
+wordpress/saida/_previa-local.html

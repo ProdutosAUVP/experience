@@ -257,6 +257,10 @@
 
               <input type="hidden" name="destinos_marcados" data-vote-selected value="">
 
+              <!-- antispam: campo-isca invisível + carimbo de tempo (preenchido pelo JS) -->
+              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+              <input type="hidden" name="_ts" value="0">
+
               <div class="auvp-field">
                 <label for="vote-sugestao">Sua sugestão</label>
                 <input id="vote-sugestao" name="sugestao" type="text" placeholder="Destino e o que você gostaria de ver lá" required>
@@ -517,6 +521,10 @@
 
       <div>
         <form class="auvp-form" data-form data-tipo="candidatura" data-subject="Candidatura — AUVP Experience" data-success="apply-success" data-reveal>
+
+          <!-- antispam: campo-isca invisível + carimbo de tempo (preenchido pelo JS) -->
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+          <input type="hidden" name="_ts" value="0">
           <div class="auvp-form__row">
             <div class="auvp-field">
               <label for="ap-nome">Nome completo</label>

@@ -1,0 +1,92 @@
+<!-- AUVP Experience — bloco 10: candidatura
+     Cole num widget HTML do Elementor.
+     Requer estilos.css e script.js aplicados uma vez na página. -->
+<div class="auvp-x">
+<section class="auvp-section auvp-apply" id="aplicar">
+    <div class="auvp-shell auvp-apply__grid">
+      <div>
+        <p class="auvp-eyebrow" data-reveal>07 — Candidatura</p>
+        <h2 class="auvp-apply__title" data-split>A próxima imersão não é para todo mundo. Talvez seja <em>para você</em>.</h2>
+
+        <ul class="auvp-apply__points">
+          <li data-reveal>Grupo reduzido, para manter o nível das conversas e o acesso real às empresas.</li>
+          <li data-reveal data-delay="90">Não é passeio: é agenda de negócios, com curadoria estratégica da AUVP.</li>
+          <li data-reveal data-delay="180">Perfil dos participantes: empresários, investidores e executivos com visão de longo prazo.</li>
+          <li data-reveal data-delay="270">Após o envio, nossa equipe entra em contato para entender seu momento.</li>
+        </ul>
+      </div>
+
+      <div>
+        <form class="auvp-form" data-form data-tipo="candidatura" data-subject="Candidatura — AUVP Experience" data-success="apply-success" data-reveal>
+
+          <!-- antispam: campo-isca invisível + carimbo de tempo (preenchido pelo JS) -->
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+          <input type="hidden" name="_ts" value="0">
+          <div class="auvp-form__row">
+            <div class="auvp-field">
+              <label for="ap-nome">Nome completo</label>
+              <input id="ap-nome" name="nome" type="text" autocomplete="name" required>
+              <span class="auvp-field__error"></span>
+            </div>
+            <div class="auvp-field">
+              <label for="ap-email">E-mail</label>
+              <input id="ap-email" name="email" type="email" autocomplete="email" required>
+              <span class="auvp-field__error"></span>
+            </div>
+          </div>
+
+          <div class="auvp-form__row">
+            <div class="auvp-field">
+              <label for="ap-tel">WhatsApp</label>
+              <input id="ap-tel" name="whatsapp" type="tel" autocomplete="tel" placeholder="(00) 00000-0000" required>
+              <span class="auvp-field__error"></span>
+            </div>
+            <div class="auvp-field">
+              <label for="ap-perfil">Seu perfil</label>
+              <select id="ap-perfil" name="perfil" required>
+                <option value="">Selecione</option>
+                <option>Empresário</option>
+                <option>Investidor</option>
+                <option>Executivo</option>
+                <option>Fundador</option>
+                <option>Outro</option>
+              </select>
+              <span class="auvp-field__error"></span>
+            </div>
+          </div>
+
+          <div class="auvp-field">
+            <label for="ap-destino">Destino de interesse</label>
+            <select id="ap-destino" name="destino" required>
+              <option value="">Selecione</option>
+              <option>China</option>
+              <option>Chile</option>
+              <option>Próximos destinos</option>
+              <option>Ainda decidindo</option>
+            </select>
+            <span class="auvp-field__error"></span>
+          </div>
+
+          <div class="auvp-field">
+            <label for="ap-motivo">Em uma frase, o que você quer extrair da imersão?</label>
+            <textarea id="ap-motivo" name="motivo" rows="3" required></textarea>
+            <span class="auvp-field__error"></span>
+          </div>
+
+          <div style="display:grid;gap:1rem;justify-items:start">
+            <button class="auvp-btn auvp-btn--solid" type="submit" data-magnetic="0.2">
+              Enviar candidatura <span class="auvp-btn__arrow" aria-hidden="true">→</span>
+            </button>
+            <span class="auvp-form__status" role="status"></span>
+            <p class="auvp-form__note">Suas informações são usadas apenas para o contato sobre a imersão.</p>
+          </div>
+        </form>
+
+        <div class="auvp-form__success" id="apply-success">
+          <h3 class="auvp-serif">Recebemos sua candidatura.</h3>
+          <p>Nossa equipe vai analisar seu perfil e entrar em contato com os próximos passos e os detalhes da imersão.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
