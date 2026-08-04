@@ -78,7 +78,7 @@
   --fs-micro: 0.6875rem;
 
   --gutter: clamp(1.25rem, 5vw, 5rem);
-  --section-y: clamp(4.5rem, 9vw, 9rem);
+  --section-y: clamp(2.5rem, 5vw, 5rem);
   --max-w: 1560px;
   --nav-h: 76px;
 
@@ -92,7 +92,7 @@
   color: var(--ink);
   font-family: var(--corpo);
   font-size: var(--fs-body);
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -126,7 +126,7 @@
 .auvp-x h1, .auvp-x h2, .auvp-x h3, .auvp-x h4 {
   margin: 0;
   font-family: var(--display);
-  font-weight: 500;
+  font-weight: 300;
   font-style: normal;
   line-height: 1.06;
   letter-spacing: -0.025em;
@@ -145,7 +145,7 @@
 .auvp-x [id] { scroll-margin-top: calc(var(--nav-h) + 24px); }
 
 /* destaque dentro de títulos: a cor pontual */
-.auvp-x em { color: var(--verde); font-style: normal; font-weight: 600; }
+.auvp-x em { color: var(--verde); font-style: normal; font-weight: 400; }
 
 /* ---------- 3. Layout e utilitários ---------- */
 .auvp-x .auvp-shell {
@@ -163,7 +163,7 @@
   gap: 0.7em;
   font-family: var(--display);
   font-size: var(--fs-micro);
-  font-weight: 500;
+  font-weight: 300;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--verde);
@@ -188,7 +188,7 @@
 .auvp-x .auvp-num {
   font-family: var(--display);
   font-size: var(--fs-micro);
-  font-weight: 500;
+  font-weight: 300;
   letter-spacing: 0.18em;
   color: var(--verde);
   font-variant-numeric: tabular-nums;
@@ -258,7 +258,7 @@
   padding: 1.05em 2.1em;
   font-family: var(--display);
   font-size: var(--fs-micro);
-  font-weight: 500;
+  font-weight: 300;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   border: 1px solid var(--verde-30);
@@ -316,20 +316,20 @@
   gap: 0.55rem;
   font-family: var(--display);
   font-size: var(--fs-micro);
-  font-weight: 600;
+  font-weight: 300;
   letter-spacing: 0.26em;
   text-transform: uppercase;
   white-space: nowrap;
 }
-.auvp-x .auvp-brand strong { font-weight: 600; color: var(--verde); }
-.auvp-x .auvp-brand span { color: var(--ink-45); font-weight: 400; }
+.auvp-x .auvp-brand strong { font-weight: 400; color: var(--verde); }
+.auvp-x .auvp-brand span { color: var(--ink-45); font-weight: 300; }
 
 .auvp-x .auvp-nav__links { display: flex; align-items: center; gap: clamp(1.25rem, 2.4vw, 2.6rem); }
 .auvp-x .auvp-nav__link {
   position: relative;
   font-family: var(--display);
   font-size: var(--fs-micro);
-  font-weight: 500;
+  font-weight: 300;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-60);
@@ -354,7 +354,7 @@
   gap: 0.65rem;
   font-family: var(--display);
   font-size: var(--fs-micro);
-  font-weight: 500;
+  font-weight: 300;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-80);
@@ -384,7 +384,7 @@
 .auvp-x .auvp-menu__body { display: grid; align-content: center; gap: clamp(0.4rem, 1.4vw, 0.9rem); padding-block: 2rem; }
 .auvp-x .auvp-menu__link {
   font-family: var(--display);
-  font-weight: 500;
+  font-weight: 300;
   font-size: clamp(2rem, 7.5vw, 3.8rem);
   line-height: 1.15;
   letter-spacing: -0.02em;
@@ -436,49 +436,13 @@
   margin-top: clamp(1.75rem, 3.5vw, 3rem);
 }
 .auvp-x .auvp-hero__lede { max-width: 44ch; color: var(--ink-80); font-size: clamp(1.05rem, 1.4vw, 1.3rem); line-height: 1.6; }
-.auvp-x .auvp-hero__lede strong { font-weight: 600; color: var(--ink); }
-.auvp-x .auvp-hero__foot {
-  position: relative; z-index: 2;
-  display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
-  padding-block: 1.15rem;
-  border-top: 1px solid var(--line-soft);
-  font-family: var(--display);
-  font-size: var(--fs-micro);
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink-45);
-}
-.auvp-x .auvp-cue { display: inline-flex; align-items: center; gap: 0.75rem; }
-.auvp-x .auvp-cue span { position: relative; display: block; width: 46px; height: 1px; background: var(--line); overflow: hidden; }
-.auvp-x .auvp-cue span::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: var(--verde);
-  animation: auvp-cue 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-}
-@keyframes auvp-cue {
-  0% { transform: scaleX(0); transform-origin: left; }
-  45% { transform: scaleX(1); transform-origin: left; }
-  55% { transform: scaleX(1); transform-origin: right; }
-  100% { transform: scaleX(0); transform-origin: right; }
-}
-.auvp-x .auvp-hero__meta { display: flex; gap: clamp(1rem, 3vw, 2.5rem); }
-.auvp-x .auvp-hero__meta span { display: inline-flex; align-items: center; gap: 0.55rem; }
-.auvp-x .auvp-hero__meta span::before { content: ""; width: 4px; height: 4px; background: var(--verde); border-radius: 50%; }
-
+.auvp-x .auvp-hero__lede strong { font-weight: 400; color: var(--ink); }
 @media (max-width: 760px) {
   .auvp-x .auvp-hero__row { grid-template-columns: 1fr; align-items: start; }
-  .auvp-x .auvp-hero__meta span:not(:first-child) { display: none; }
 }
-@media (max-width: 620px) { .auvp-x .auvp-hero__meta { display: none; } }
 
 /* ---------- 8. Posicionamento ---------- */
 .auvp-x .auvp-proof__head {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: clamp(1.5rem, 4vw, 4rem);
-  align-items: end;
   padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
 }
 .auvp-x .auvp-proof__statement {
@@ -487,7 +451,6 @@
   max-width: 22ch;
   margin-top: clamp(1.5rem, 3vw, 2.5rem);
 }
-.auvp-x .auvp-proof__aside { color: var(--ink-60); max-width: 40ch; }
 
 .auvp-x .auvp-pillars {
   display: grid;
@@ -554,8 +517,8 @@
   isolation: isolate;
 }
 .auvp-x .auvp-card__media { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
-.auvp-x .auvp-card__media svg { transition: transform 1.4s var(--ease); }
-.auvp-x .auvp-card:hover .auvp-card__media svg { transform: scale(1.07); }
+.auvp-x .auvp-card__media img, .auvp-x .auvp-card__media svg { transition: transform 1.4s var(--ease); }
+.auvp-x .auvp-card:hover .auvp-card__media img, .auvp-x .auvp-card:hover .auvp-card__media svg { transform: scale(1.07); }
 .auvp-x .auvp-card__face::before {
   content: "";
   position: absolute; inset: 0; z-index: -1;
@@ -567,7 +530,7 @@
   left: clamp(1.5rem, 2.2vw, 2.4rem);
   font-family: var(--display);
   font-size: var(--fs-micro);
-  font-weight: 500;
+  font-weight: 300;
   letter-spacing: 0.2em;
   color: var(--ink-45);
 }
@@ -584,7 +547,7 @@
   margin-top: clamp(1.25rem, 2vw, 1.9rem);
   font-family: var(--display);
   font-size: var(--fs-micro);
-  font-weight: 500;
+  font-weight: 300;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
@@ -619,7 +582,7 @@
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: var(--fs-micro);
-  font-weight: 500;
+  font-weight: 300;
   padding-top: 0.35em;
 }
 .auvp-x .auvp-facts dd { font-size: 1.05rem; }
@@ -680,7 +643,7 @@
   border-radius: 100px;
   font-family: var(--display);
   font-size: var(--fs-micro);
-  font-weight: 500;
+  font-weight: 300;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-60);
@@ -693,7 +656,7 @@
 /* ---------- 11. Faixa deslizante ---------- */
 .auvp-x .auvp-marquee {
   position: relative;
-  padding-block: clamp(1.5rem, 3vw, 2.6rem);
+  padding-block: clamp(0.75rem, 1.4vw, 1.2rem);
   border-block: 1px solid var(--line-soft);
   background: var(--paper-2);
   overflow: hidden;
@@ -711,16 +674,16 @@
   gap: clamp(1.5rem, 3vw, 3rem);
   padding-right: clamp(1.5rem, 3vw, 3rem);
   font-family: var(--display);
-  font-weight: 500;
-  font-size: clamp(1.7rem, 4.4vw, 4rem);
+  font-weight: 300;
+  font-size: clamp(1rem, 2.2vw, 1.75rem);
   letter-spacing: -0.025em;
   line-height: 1.15;
   white-space: nowrap;
 }
 .auvp-x .auvp-marquee__item::after {
   content: "";
-  width: clamp(7px, 0.7vw, 10px);
-  height: clamp(7px, 0.7vw, 10px);
+  width: clamp(5px, 0.5vw, 7px);
+  height: clamp(5px, 0.5vw, 7px);
   border-radius: 50%;
   background: var(--verde);
   flex: none;
@@ -766,7 +729,7 @@
   margin-top: 1rem;
   font-family: var(--display);
   font-size: var(--fs-micro);
-  font-weight: 500;
+  font-weight: 300;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ink-30);
@@ -833,7 +796,7 @@
 }
 .auvp-x .auvp-care__plate b {
   font-family: var(--display);
-  font-weight: 500;
+  font-weight: 300;
   font-size: clamp(5rem, 13vw, 11rem);
   line-height: 1;
   letter-spacing: -0.04em;
@@ -941,7 +904,7 @@
 .auvp-x .auvp-field label {
   font-family: var(--display);
   font-size: var(--fs-micro);
-  font-weight: 500;
+  font-weight: 300;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-45);
@@ -954,7 +917,7 @@
   border-bottom: 1px solid var(--line);
   border-radius: 0;
   font-size: 1.05rem;
-  font-weight: 400;
+  font-weight: 300;
   transition: border-color 0.4s var(--ease);
   appearance: none;
 }
@@ -984,7 +947,7 @@
 .auvp-x .auvp-footer__col h4 {
   font-family: var(--display);
   font-size: var(--fs-micro);
-  font-weight: 500;
+  font-weight: 300;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--ink-45);
@@ -995,7 +958,7 @@
 .auvp-x .auvp-footer__col a:hover { color: var(--verde); }
 .auvp-x .auvp-footer__word {
   font-family: var(--display);
-  font-weight: 500;
+  font-weight: 300;
   font-size: clamp(2.6rem, 12.5vw, 12rem);
   line-height: 0.9;
   letter-spacing: -0.04em;
@@ -1135,15 +1098,6 @@
         </div>
       </div>
     </div>
-
-    <div class="auvp-shell auvp-hero__foot">
-      <span class="auvp-cue"><span aria-hidden="true"></span> Role para descobrir</span>
-      <span class="auvp-hero__meta">
-        <span>Grupo reduzido</span>
-        <span>Processo seletivo</span>
-        <span>Agenda de negócios</span>
-      </span>
-    </div>
   </section>
 
   <!-- ============ 2. POSICIONAMENTO ============ -->
@@ -1151,15 +1105,11 @@
     <div class="auvp-shell">
       <div class="auvp-proof__head">
         <div>
-          <p class="auvp-eyebrow auvp-sobe">01 — Posicionamento</p>
+          <p class="auvp-eyebrow auvp-sobe">Posicionamento</p>
           <h2 class="auvp-proof__statement auvp-sobe">
             AUVP Experience promove uma imersão nos bastidores de economias que estão <em>moldando o futuro</em>.
           </h2>
         </div>
-        <p class="auvp-proof__aside auvp-sobe">
-          Quatro pilares sustentam cada imersão. Nenhum deles é acessório —
-          é o que separa estar no país de estar dentro do mercado.
-        </p>
       </div>
     </div>
 
@@ -1196,19 +1146,16 @@
     <div class="auvp-shell">
       <div class="auvp-dest__head">
         <div>
-          <p class="auvp-eyebrow auvp-sobe">02 — Destinos</p>
+          <p class="auvp-eyebrow auvp-sobe">Destinos</p>
           <h2 class="auvp-display auvp-sobe">Nossas imersões</h2>
         </div>
-        <p class="auvp-muted auvp-measure-sm auvp-sobe">
-          Cada destino é escolhido por um motivo econômico, não turístico.
-        </p>
       </div>
 
       <div class="auvp-dest__grid">
 
         <details class="auvp-card auvp-sobe">
           <summary class="auvp-card__face">
-            <span class="auvp-card__media" aria-hidden="true"><svg class="auvp-art" viewBox="0 0 1000 1250" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><defs><linearGradient id="cs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8f6f2"/><stop offset="1" stop-color="#e6e1d8"/></linearGradient><pattern id="jn" width="46" height="58" patternUnits="userSpaceOnUse"><rect x="5" y="7" width="4" height="7" fill="#8d8778"/><rect x="28" y="21" width="4" height="7" fill="#8d8778"/><rect x="16" y="40" width="4" height="7" fill="#8d8778"/><rect x="37" y="49" width="4" height="7" fill="#8d8778"/></pattern></defs><rect width="1000" height="1250" fill="url(#cs)"/><path d="M-30 1020V883H40V1020ZM45 1020V877H88V1020ZM94 1020V792H171V1020ZM180 1020V748H239V1020ZM246 1020V892H314V1020ZM316 1020V861H352V1020ZM361 1020V846H399V1020ZM405 1020V817H451V1020ZM457 1020V807L466 754H499L508 807V1020ZM516 1020V918L526 892H563L573 918V1020ZM577 1020V875H638V1020ZM646 1020V874H695V1020ZM703 1020V815H748V1020ZM753 1020V809H796V1020ZM801 1020V770H850V1020ZM824 770h4V715h-4ZM859 1020V763H919V1020ZM927 1020V776H984V1020ZM988 1020V852H1067V1020Z" fill="#dcd7cd"/><path d="M-30 1080V810H71V1080ZM79 1080V824H159V1080ZM168 1080V653H256V1080ZM259 1080V690H366V1080ZM371 1080V814L383 747H428L440 814V1080ZM443 1080V884L460 835H519L536 884V1080ZM488 835h4V781h-4ZM544 1080V896L565 850H640L661 896V1080ZM664 1080V863H784V1080ZM722 863h4V815h-4ZM789 1080V642H856V1080ZM863 1080V879L884 829H961L982 879V1080ZM991 1080V876H1081V1080ZM1034 876h4V831h-4ZM540 1080V496L548 350H578L586 496V1080ZM561 350h4V189h-4Z" fill="#bcb5a6"/><path d="M-30 1080V810H71V1080ZM79 1080V824H159V1080ZM168 1080V653H256V1080ZM259 1080V690H366V1080ZM371 1080V814L383 747H428L440 814V1080ZM443 1080V884L460 835H519L536 884V1080ZM488 835h4V781h-4ZM544 1080V896L565 850H640L661 896V1080ZM664 1080V863H784V1080ZM722 863h4V815h-4ZM789 1080V642H856V1080ZM863 1080V879L884 829H961L982 879V1080ZM991 1080V876H1081V1080ZM1034 876h4V831h-4ZM540 1080V496L548 350H578L586 496V1080ZM561 350h4V189h-4Z" fill="url(#jn)" opacity=".3"/><rect y="1080" width="1000" height="170" fill="#d5cfc3"/></svg></span>
+            <span class="auvp-card__media" aria-hidden="true"><img class="auvp-art" src="https://images.pexels.com/photos/37343128/pexels-photo-37343128.jpeg" alt="" loading="lazy"></span>
             <span class="auvp-card__index">01 / Ásia</span>
             <h3 class="auvp-card__title">China</h3>
             <p class="auvp-card__sub">O maior laboratório de negócios do mundo</p>
@@ -1232,7 +1179,7 @@
 
         <details class="auvp-card auvp-sobe">
           <summary class="auvp-card__face">
-            <span class="auvp-card__media" aria-hidden="true"><svg class="auvp-art" viewBox="0 0 1000 1250" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><defs><linearGradient id="ls" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8f6f2"/><stop offset="1" stop-color="#e6e1d8"/></linearGradient></defs><rect width="1000" height="1250" fill="url(#ls)"/><path d="M-20 990L-20 660L0 691L63 700L125 638L188 580L250 497L313 463L375 424L438 436L500 377L563 347L625 383L688 469L750 512L813 626L875 706L938 711L1000 709L1020 990Z" fill="#ded9d0"/><path d="M-20 1060L-20 760L0 827L77 775L154 691L231 626L308 603L385 555L462 548L538 552L615 567L692 582L769 681L846 742L923 830L1000 830L1020 1060Z" fill="#bfb8a9"/><rect y="860" width="1000" height="390" fill="#d6d0c4"/><ellipse cx="500" cy="1020" rx="390" ry="100" fill="none" stroke="#a8a294" stroke-width="1.2" opacity="0.70"/><ellipse cx="500" cy="1050" rx="332" ry="87" fill="none" stroke="#a8a294" stroke-width="1.2" opacity="0.61"/><ellipse cx="500" cy="1080" rx="274" ry="74" fill="none" stroke="#a8a294" stroke-width="1.2" opacity="0.52"/><ellipse cx="500" cy="1110" rx="216" ry="61" fill="none" stroke="#a8a294" stroke-width="1.2" opacity="0.43"/><ellipse cx="500" cy="1140" rx="158" ry="48" fill="none" stroke="#a8a294" stroke-width="1.2" opacity="0.34"/><ellipse cx="500" cy="1170" rx="100" ry="35" fill="none" stroke="#a8a294" stroke-width="1.2" opacity="0.25"/></svg></span>
+            <span class="auvp-card__media" aria-hidden="true"><img class="auvp-art" src="https://images.pexels.com/photos/36585242/pexels-photo-36585242.jpeg" alt="" loading="lazy"></span>
             <span class="auvp-card__index">02 / América Latina</span>
             <h3 class="auvp-card__title">Chile</h3>
             <p class="auvp-card__sub">O coração mineiro da América Latina</p>
@@ -1256,7 +1203,7 @@
 
         <details class="auvp-card auvp-card--next auvp-sobe">
           <summary class="auvp-card__face">
-            <span class="auvp-card__media" aria-hidden="true"><svg class="auvp-art" viewBox="0 0 1000 1250" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><defs><linearGradient id="ns" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8f6f2"/><stop offset="1" stop-color="#e9e5dd"/></linearGradient></defs><rect width="1000" height="1250" fill="url(#ns)"/><circle cx="500" cy="560" r="330" fill="none" stroke="#9a9486" stroke-width="1.2" opacity=".85"/><ellipse cx="500" cy="313" rx="218" ry="35" fill="none" stroke="#a8a294" stroke-width="1" opacity="0.40"/><ellipse cx="500" cy="395" rx="286" ry="46" fill="none" stroke="#a8a294" stroke-width="1" opacity="0.45"/><ellipse cx="500" cy="478" rx="320" ry="51" fill="none" stroke="#a8a294" stroke-width="1" opacity="0.50"/><ellipse cx="500" cy="560" rx="330" ry="53" fill="none" stroke="#a8a294" stroke-width="1" opacity="0.55"/><ellipse cx="500" cy="643" rx="320" ry="51" fill="none" stroke="#a8a294" stroke-width="1" opacity="0.50"/><ellipse cx="500" cy="725" rx="286" ry="46" fill="none" stroke="#a8a294" stroke-width="1" opacity="0.45"/><ellipse cx="500" cy="808" rx="218" ry="35" fill="none" stroke="#a8a294" stroke-width="1" opacity="0.40"/><ellipse cx="500" cy="560" rx="330" ry="330" fill="none" stroke="#a8a294" stroke-width="1" opacity=".4"/><ellipse cx="500" cy="560" rx="220" ry="330" fill="none" stroke="#a8a294" stroke-width="1" opacity=".4"/><ellipse cx="500" cy="560" rx="110" ry="330" fill="none" stroke="#a8a294" stroke-width="1" opacity=".4"/><ellipse cx="500" cy="560" rx="0" ry="330" fill="none" stroke="#a8a294" stroke-width="1" opacity=".4"/><ellipse cx="500" cy="560" rx="110" ry="330" fill="none" stroke="#a8a294" stroke-width="1" opacity=".4"/><ellipse cx="500" cy="560" rx="220" ry="330" fill="none" stroke="#a8a294" stroke-width="1" opacity=".4"/><ellipse cx="500" cy="560" rx="330" ry="330" fill="none" stroke="#a8a294" stroke-width="1" opacity=".4"/><circle cx="556" cy="737" r="2.6" fill="#023620" opacity=".9"/><circle cx="598" cy="779" r="2.0" fill="#8d8778" opacity="0.67"/><circle cx="307" cy="374" r="3.0" fill="#8d8778" opacity="0.50"/><circle cx="403" cy="573" r="2.0" fill="#8d8778" opacity="0.66"/><circle cx="659" cy="456" r="2.8" fill="#023620" opacity=".9"/><circle cx="501" cy="807" r="2.5" fill="#8d8778" opacity="0.40"/><circle cx="312" cy="725" r="3.5" fill="#8d8778" opacity="0.65"/><circle cx="389" cy="696" r="2.6" fill="#8d8778" opacity="0.40"/><circle cx="785" cy="518" r="3.2" fill="#023620" opacity=".9"/><circle cx="556" cy="409" r="2.1" fill="#8d8778" opacity="0.51"/><circle cx="668" cy="355" r="3.2" fill="#8d8778" opacity="0.69"/><circle cx="665" cy="443" r="3.0" fill="#8d8778" opacity="0.54"/><circle cx="374" cy="748" r="3.0" fill="#023620" opacity=".9"/><circle cx="217" cy="489" r="3.3" fill="#8d8778" opacity="0.54"/></svg></span>
+            <span class="auvp-card__media" aria-hidden="true"><img class="auvp-art" src="https://images.pexels.com/photos/35085680/pexels-photo-35085680.jpeg" alt="" loading="lazy"></span>
             <span class="auvp-card__index">03 / A definir</span>
             <h3 class="auvp-card__title">Próximos destinos</h3>
             <p class="auvp-card__sub">Decida com a gente — para onde vamos depois?</p>
@@ -1306,7 +1253,7 @@
   <section class="auvp-section" id="diferencial">
     <div class="auvp-shell auvp-edge__grid">
       <div class="auvp-edge__sticky">
-        <p class="auvp-eyebrow auvp-sobe">03 — Diferencial</p>
+        <p class="auvp-eyebrow auvp-sobe">Diferencial</p>
         <h2 class="auvp-edge__title auvp-sobe">
           O valor da Experience não está só no destino. Está no <em>acesso</em>.
         </h2>
@@ -1354,7 +1301,7 @@
   <!-- ============ 6. NETWORKING ============ -->
   <section class="auvp-section" id="networking">
     <div class="auvp-shell">
-      <p class="auvp-eyebrow auvp-sobe">04 — Networking</p>
+      <p class="auvp-eyebrow auvp-sobe">Networking</p>
       <h2 class="auvp-net__statement auvp-sobe">Você não vai sozinho. E isso <em>muda tudo</em>.</h2>
       <p class="auvp-net__complement auvp-sobe">
         Empresários, investidores e executivos que estão jogando o mesmo jogo que você.
@@ -1404,7 +1351,7 @@
 
       <div class="auvp-care__grid">
         <div>
-          <p class="auvp-eyebrow auvp-sobe">05 — Experiência</p>
+          <p class="auvp-eyebrow auvp-sobe">Experiência</p>
           <h2 class="auvp-display auvp-sobe" style="margin:1.25rem 0 2.5rem;max-width:16ch">
             Conforto existe para permitir foco. Cuidaremos de <em>tudo</em> para você.
           </h2>
@@ -1463,7 +1410,7 @@
   <section class="auvp-section" id="faq">
     <div class="auvp-shell auvp-faq__grid">
       <div class="auvp-faq__aside">
-        <p class="auvp-eyebrow auvp-sobe">06 — Perguntas</p>
+        <p class="auvp-eyebrow auvp-sobe">Perguntas</p>
         <h2 class="auvp-title auvp-sobe">Antes de aplicar,<br>vale alinhar.</h2>
         <p class="auvp-muted auvp-measure-sm auvp-sobe">
           Ficou algo de fora? Escreva para a nossa equipe pelo formulário abaixo.
@@ -1499,7 +1446,7 @@
   <section class="auvp-section auvp-apply" id="aplicar">
     <div class="auvp-shell auvp-apply__grid">
       <div>
-        <p class="auvp-eyebrow auvp-sobe">07 — Candidatura</p>
+        <p class="auvp-eyebrow auvp-sobe">Candidatura</p>
         <h2 class="auvp-apply__title auvp-sobe">A próxima imersão não é para todo mundo. Talvez seja <em>para você</em>.</h2>
 
         <ul class="auvp-apply__points">
