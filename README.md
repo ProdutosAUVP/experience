@@ -97,15 +97,41 @@ explica cada opção.
 
 ### Fontes
 
-Cormorant Garamond e Inter vêm do Google Fonts, por `@import` no topo do
-`<style>`. Se o Google Fonts estiver indisponível, a página cai para Georgia e
-a fonte de sistema — continua legível e com a mesma diagramação.
+Duas famílias, carregadas por `@import` no topo do `<style>`:
+
+- **General Sans** (Fontshare) — títulos, botões e rótulos de interface
+- **Rokkitt** (Google Fonts) — texto corrido
+
+Se algum dos dois serviços estiver indisponível, a página cai para a fonte de
+sistema e Georgia — continua legível e com a mesma diagramação (testado).
+
+> A **General Sans não pôde ser carregada no ambiente onde o site foi feito**
+> (o Fontshare estava bloqueado pela política de rede). A URL usada é a oficial
+> da API deles; a diagramação foi conferida com uma grotesca equivalente no
+> lugar. Confira a renderização final ao publicar.
+
+Para auto-hospedar as fontes e não depender de serviço externo, baixe os
+`.woff2` das duas, suba para o servidor e troque os dois `@import` por blocos
+`@font-face` apontando para os arquivos.
+
+### Cores
+
+Tudo em neutros de papel e tinta. O verde **#023620** é pontual — aparece só
+em chapéus, números de seção, a palavra destacada de cada título, estados
+ativos, botões e marcas pequenas.
+
+Todas as cores são variáveis no início do `<style>`. Para trocar o acento,
+mude uma linha:
+
+```css
+--verde: #023620;
+```
 
 ### Imagens
 
 Não havia banco de imagens, então a arte (skylines, cordilheira com mina,
-malha de meridianos) foi **desenhada em SVG para o projeto** e está embutida no
-arquivo. Para trocar por fotografia, substitua cada `<svg class="auvp-art">`
+malha de meridianos) foi **desenhada em SVG para o projeto**, em tons neutros,
+e está embutida no arquivo. Para trocar por fotografia, substitua cada `<svg class="auvp-art">`
 por um `<img class="auvp-art" src="URL-DA-IMAGEM" alt="…">` — as imagens
 precisam estar hospedadas (por exemplo, na biblioteca de mídia do WordPress).
 
@@ -125,9 +151,13 @@ precisam estar hospedadas (por exemplo, na biblioteca de mídia do WordPress).
 ## O que foi verificado
 
 Renderização e interações com **JavaScript desativado**, dentro de um container
-com `transform`, contra um tema que estiliza `.btn`, `.card`, `.title`, `h1`,
-`h2`, `h3` e `p` com cores berrantes — em desktop e mobile. Também com o Google
-Fonts bloqueado.
+com `transform`, contra um tema hostil que estiliza `.btn`, `.card`, `.title`,
+`h1`, `h2`, `h3`, `p`, `summary` e `details` com cores berrantes — em desktop e
+mobile. Também com os dois serviços de fonte bloqueados.
+
+O teste do tema hostil encontrou um vazamento real (`summary { background }` do
+tema atravessando os acordeões) e o site ganhou uma barreira de reset por
+elemento para isso.
 
 **Não foi testado numa instalação real de WordPress** (o ambiente onde o site
 foi feito não tinha acesso a wordpress.org). Vale colar numa página de
