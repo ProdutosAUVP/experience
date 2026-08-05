@@ -791,96 +791,148 @@
   .auvp-x .auvp-net__row::after, .auvp-x .auvp-net__row:nth-child(even)::after { left: calc(var(--gut) / -2 - 4.5px); right: auto; }
 }
 
-/* ---------- 13. Experiência (abas em CSS puro) ---------- */
-.auvp-x .auvp-care__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: start;
-}
-.auvp-x .auvp-care input { position: absolute; opacity: 0; pointer-events: none; }
-.auvp-x .auvp-care__list { border-top: 1px solid var(--line); }
-.auvp-x .auvp-care__item {
+/* ---------- 13. Experiência ----------
+   Um único painel em foto: o tópico ativo ocupa o card grande embaixo
+   e domina o título/legenda no topo; os outros ficam recolhidos como
+   abas. Clicar numa aba fecha a atual, abre a nova e troca o fundo —
+   tudo por :checked em radios, sem JavaScript. */
+.auvp-x .auvp-exp input { position: absolute; opacity: 0; pointer-events: none; }
+.auvp-x .auvp-exp__panel {
   position: relative;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 1.25rem;
-  padding: clamp(1.35rem, 2.2vw, 1.9rem) 0;
-  border-bottom: 1px solid var(--line);
-  cursor: pointer;
-  transition: padding-left 0.55s var(--ease);
-}
-.auvp-x .auvp-care__item::before {
-  content: "";
-  position: absolute;
-  left: 0; bottom: -1px;
-  width: 100%; height: 2px;
-  background: var(--verde);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.65s var(--ease);
-}
-.auvp-x .auvp-care__item h3 {
-  font-size: clamp(1.2rem, 1.8vw, 1.7rem);
-  line-height: 1.2;
-  color: var(--ink-45);
-  transition: color 0.45s var(--ease);
-}
-.auvp-x .auvp-care__item .auvp-num { padding-top: 0.55em; }
-.auvp-x .auvp-care__text { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.6s var(--ease); }
-.auvp-x .auvp-care__text p { overflow: hidden; font-size: var(--fs-small); color: var(--ink-60); line-height: 1.7; max-width: 46ch; }
-
-.auvp-x .auvp-care__stage {
-  position: sticky;
-  top: calc(var(--nav-h) + 10vh);
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 16 / 9;
+  min-height: clamp(420px, 62vw, 640px);
   border: 1px solid var(--line-soft);
   overflow: hidden;
-  display: grid;
-  place-items: center;
-  background: var(--paper-2);
+  isolation: isolate;
 }
-.auvp-x .auvp-care__rings { position: absolute; inset: 0; opacity: 0.5; }
-.auvp-x .auvp-care__plate {
-  position: absolute; inset: 0;
-  display: grid; place-content: center; justify-items: center;
-  gap: 1.25rem; padding: 2rem; text-align: center;
-  opacity: 0;
-  transform: scale(1.04);
-  transition: opacity 0.7s var(--ease), transform 0.9s var(--ease);
+
+.auvp-x .auvp-exp__media { position: absolute; inset: 0; z-index: 0; }
+.auvp-x .auvp-exp__bg { position: absolute; inset: 0; opacity: 0; transition: opacity 1s var(--ease); }
+.auvp-x .auvp-exp__bg--1 { background: radial-gradient(130% 150% at 18% 8%, var(--paper-3) 0%, var(--ink-30) 55%, var(--ink) 100%); }
+.auvp-x .auvp-exp__bg--2 { background: radial-gradient(130% 150% at 85% 10%, var(--paper-3) 0%, var(--verde-60) 52%, var(--ink) 100%); }
+.auvp-x .auvp-exp__bg--3 { background: radial-gradient(130% 150% at 22% 90%, var(--paper-3) 0%, var(--ink-30) 55%, var(--ink) 100%); }
+.auvp-x .auvp-exp__bg--4 { background: radial-gradient(130% 150% at 82% 88%, var(--paper-3) 0%, var(--verde-60) 52%, var(--ink) 100%); }
+.auvp-x .auvp-exp__scrim {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to top, rgba(28, 27, 24, 0.82) 0%, rgba(28, 27, 24, 0.32) 40%, rgba(28, 27, 24, 0.05) 62%, transparent 100%);
 }
-.auvp-x .auvp-care__plate b {
+
+.auvp-x .auvp-exp__intro {
+  position: absolute;
+  z-index: 2;
+  top: clamp(1.5rem, 3vw, 2.75rem);
+  left: clamp(1.5rem, 3vw, 2.75rem);
+  right: clamp(1.5rem, 3vw, 2.75rem);
+  color: var(--paper);
+}
+.auvp-x .auvp-exp__headline {
+  position: absolute; inset: 0 auto auto 0;
   font-family: var(--display);
-  font-weight: 300;
-  font-size: clamp(5rem, 13vw, 11rem);
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(2, 54, 32, 0.38);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 3.2vw, 2.75rem);
+  line-height: 1.1;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
 }
-.auvp-x .auvp-care__plate p {
-  font-size: clamp(1.1rem, 1.8vw, 1.6rem);
-  color: var(--ink-80);
-  max-width: 20ch;
-  line-height: 1.4;
+.auvp-x .auvp-exp__tagline {
+  position: absolute; inset: auto auto auto 0;
+  top: clamp(3.2rem, 5.6vw, 4.6rem);
+  font-size: var(--fs-small);
+  font-weight: 300;
+  color: rgba(247, 245, 241, 0.82);
+  max-width: 34ch;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.6s var(--ease) 0.05s, transform 0.6s var(--ease) 0.05s;
+}
+
+.auvp-x .auvp-exp__cards {
+  position: absolute;
+  z-index: 2;
+  left: clamp(1.25rem, 2vw, 1.75rem);
+  right: clamp(1.25rem, 2vw, 1.75rem);
+  bottom: clamp(1.25rem, 2vw, 1.75rem);
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+}
+.auvp-x .auvp-exp__card {
+  position: relative;
+  cursor: pointer;
+  flex: 1 1 0%;
+  min-width: 0;
+  min-height: clamp(90px, 12vw, 120px);
+  padding: clamp(1rem, 1.6vw, 1.5rem);
+  background: rgba(28, 27, 24, 0.38);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--paper);
+  display: grid;
+  align-content: space-between;
+  gap: 0.75rem;
+  overflow: hidden;
+  transition: flex-grow 0.6s var(--ease), background-color 0.5s var(--ease);
+}
+.auvp-x .auvp-exp__card:hover { background: rgba(28, 27, 24, 0.55); }
+.auvp-x .auvp-exp__card-top { display: flex; align-items: center; gap: 0.75rem; }
+.auvp-x .auvp-exp__card .auvp-num { color: var(--paper); opacity: 0.7; }
+.auvp-x .auvp-exp__card-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: var(--fs-small);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.auvp-x .auvp-exp__card-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.6s var(--ease); }
+.auvp-x .auvp-exp__card-body > * { overflow: hidden; }
+.auvp-x .auvp-exp__card-text { font-size: var(--fs-small); line-height: 1.6; color: rgba(247, 245, 241, 0.86); max-width: 42ch; }
+.auvp-x .auvp-exp__card-cta {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  margin-top: 0.75rem;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 /* estado ativo de cada aba */
-.auvp-x #auvp-e1:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(1), .auvp-x #auvp-e2:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(2), .auvp-x #auvp-e3:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(3), .auvp-x #auvp-e4:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(4) { padding-left: 0.9rem; }
+.auvp-x #auvp-e1:checked ~ .auvp-exp__media .auvp-exp__bg--1,
+.auvp-x #auvp-e2:checked ~ .auvp-exp__media .auvp-exp__bg--2,
+.auvp-x #auvp-e3:checked ~ .auvp-exp__media .auvp-exp__bg--3,
+.auvp-x #auvp-e4:checked ~ .auvp-exp__media .auvp-exp__bg--4 { opacity: 1; }
 
-.auvp-x #auvp-e1:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(1)::before, .auvp-x #auvp-e2:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(2)::before, .auvp-x #auvp-e3:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(3)::before, .auvp-x #auvp-e4:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(4)::before { transform: scaleX(1); }
+.auvp-x #auvp-e1:checked ~ .auvp-exp__intro .auvp-exp__headline--1,
+.auvp-x #auvp-e2:checked ~ .auvp-exp__intro .auvp-exp__headline--2,
+.auvp-x #auvp-e3:checked ~ .auvp-exp__intro .auvp-exp__headline--3,
+.auvp-x #auvp-e4:checked ~ .auvp-exp__intro .auvp-exp__headline--4,
+.auvp-x #auvp-e1:checked ~ .auvp-exp__intro .auvp-exp__tagline--1,
+.auvp-x #auvp-e2:checked ~ .auvp-exp__intro .auvp-exp__tagline--2,
+.auvp-x #auvp-e3:checked ~ .auvp-exp__intro .auvp-exp__tagline--3,
+.auvp-x #auvp-e4:checked ~ .auvp-exp__intro .auvp-exp__tagline--4 { opacity: 1; transform: none; }
 
-.auvp-x #auvp-e1:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(1) h3, .auvp-x #auvp-e2:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(2) h3, .auvp-x #auvp-e3:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(3) h3, .auvp-x #auvp-e4:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(4) h3 { color: var(--ink); }
+.auvp-x #auvp-e1:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(1),
+.auvp-x #auvp-e2:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(2),
+.auvp-x #auvp-e3:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(3),
+.auvp-x #auvp-e4:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(4) {
+  flex-grow: 2.6;
+  background: var(--verde);
+}
+.auvp-x #auvp-e1:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(1) .auvp-num,
+.auvp-x #auvp-e2:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(2) .auvp-num,
+.auvp-x #auvp-e3:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(3) .auvp-num,
+.auvp-x #auvp-e4:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(4) .auvp-num { opacity: 1; }
+.auvp-x #auvp-e1:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(1) .auvp-exp__card-body,
+.auvp-x #auvp-e2:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(2) .auvp-exp__card-body,
+.auvp-x #auvp-e3:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(3) .auvp-exp__card-body,
+.auvp-x #auvp-e4:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(4) .auvp-exp__card-body { grid-template-rows: 1fr; }
 
-.auvp-x #auvp-e1:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(1) .auvp-care__text, .auvp-x #auvp-e2:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(2) .auvp-care__text, .auvp-x #auvp-e3:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(3) .auvp-care__text, .auvp-x #auvp-e4:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(4) .auvp-care__text { grid-template-rows: 1fr; }
-
-.auvp-x #auvp-e1:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(1) .auvp-care__text p, .auvp-x #auvp-e2:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(2) .auvp-care__text p, .auvp-x #auvp-e3:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(3) .auvp-care__text p, .auvp-x #auvp-e4:checked ~ .auvp-care__grid .auvp-care__item:nth-of-type(4) .auvp-care__text p { padding-top: 0.85rem; }
-
-.auvp-x #auvp-e1:checked ~ .auvp-care__grid .auvp-care__plate:nth-of-type(1), .auvp-x #auvp-e2:checked ~ .auvp-care__grid .auvp-care__plate:nth-of-type(2), .auvp-x #auvp-e3:checked ~ .auvp-care__grid .auvp-care__plate:nth-of-type(3), .auvp-x #auvp-e4:checked ~ .auvp-care__grid .auvp-care__plate:nth-of-type(4) { opacity: 1; transform: none; }
-
-@media (max-width: 900px) {
-  .auvp-x .auvp-care__grid { grid-template-columns: 1fr; }
-  .auvp-x .auvp-care__stage { display: none; }
+@media (max-width: 760px) {
+  .auvp-x .auvp-exp__panel { aspect-ratio: 3 / 4; min-height: clamp(560px, 150vw, 760px); }
+  .auvp-x .auvp-exp__cards { flex-direction: column; }
+  .auvp-x .auvp-exp__card { min-height: auto; }
+  .auvp-x .auvp-exp__headline { font-size: clamp(1.5rem, 6vw, 2rem); }
 }
 
 /* ---------- 14. FAQ ---------- */
@@ -927,33 +979,8 @@
   .auvp-x .auvp-faq__aside { position: static; }
 }
 
-/* ---------- 15. Candidatura ---------- */
-.auvp-x .auvp-apply {
-  position: relative;
-  overflow: hidden;
-  background: var(--paper-2);
-  border-top: 1px solid var(--line-soft);
-}
-.auvp-x .auvp-apply__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(2.5rem, 6vw, 6rem);
-  align-items: start;
-}
-.auvp-x .auvp-apply__title { font-size: clamp(2rem, 4.2vw, 4rem); line-height: 1.06; max-width: 14ch; margin-top: clamp(1.25rem, 2.5vw, 2rem); }
-.auvp-x .auvp-apply__points { display: grid; gap: 1rem; margin-top: clamp(1.75rem, 3vw, 2.5rem); }
-.auvp-x .auvp-apply__points li {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 0.9rem;
-  font-size: var(--fs-small);
-  color: var(--ink-60);
-  line-height: 1.65;
-}
-.auvp-x .auvp-apply__points li::before { content: "—"; color: var(--verde); }
-
+/* ---------- 15. Formulários ---------- */
 .auvp-x .auvp-form { display: grid; gap: clamp(1.25rem, 2vw, 1.75rem); }
-.auvp-x .auvp-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.25rem, 2vw, 1.75rem); }
 
 .auvp-x .auvp-field { display: grid; gap: 0.5rem; }
 .auvp-x .auvp-field label {
@@ -988,13 +1015,7 @@
 .auvp-x .auvp-field input::placeholder, .auvp-x .auvp-field textarea::placeholder { color: var(--ink-30); }
 .auvp-x .auvp-field input:user-invalid, .auvp-x .auvp-field textarea:user-invalid { border-bottom-color: #a33; }
 
-.auvp-x .auvp-form__note { font-size: var(--fs-small); color: var(--ink-45); }
 .auvp-x .auvp-isca { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-
-@media (max-width: 860px) {
-  .auvp-x .auvp-apply__grid { grid-template-columns: 1fr; }
-  .auvp-x .auvp-form__row { grid-template-columns: 1fr; }
-}
 
 /* ---------- 16. Rodapé ---------- */
 .auvp-x .auvp-footer { border-top: 1px solid var(--line-soft); padding-block: clamp(3rem, 6vw, 5rem) 2rem; }
@@ -1062,7 +1083,12 @@
     .auvp-x .auvp-hero__title {
       animation: auvp-sobe linear both;
       animation-timeline: scroll(root block);
-      animation-range: 0 60svh;
+      animation-range: 0 44svh;
+    }
+    .auvp-x .auvp-hero__row {
+      animation: auvp-sobe linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 16svh 60svh;
     }
     .auvp-x .auvp-progress i {
       animation: auvp-progresso linear both;
@@ -1110,7 +1136,7 @@
       <a class="auvp-nav__link" href="#networking">Networking</a>
       <a class="auvp-nav__link" href="#experiencia">Experiência</a>
       <a class="auvp-nav__link" href="#faq">FAQ</a>
-      <a class="auvp-btn auvp-btn--sm" href="#aplicar">Aplicar</a>
+      <a class="auvp-btn auvp-btn--sm" href="https://wa.me/55SEUNUMERO">Fale com a gente</a>
     </nav>
 
     <a class="auvp-burger" href="#menu">Menu <i aria-hidden="true"></i></a>
@@ -1129,7 +1155,7 @@
     <a class="auvp-menu__link" href="#networking"><i>03</i>Networking</a>
     <a class="auvp-menu__link" href="#experiencia"><i>04</i>Experiência</a>
     <a class="auvp-menu__link" href="#faq"><i>05</i>FAQ</a>
-    <a class="auvp-menu__link auvp-gold" href="#aplicar"><i>06</i>Aplicar</a>
+    <a class="auvp-menu__link auvp-gold" href="https://wa.me/55SEUNUMERO"><i>06</i>Fale com a gente</a>
   </div>
   <div class="auvp-shell auvp-menu__foot">
     <span>AUVP Experience Co.</span>
@@ -1158,7 +1184,7 @@
           Não como turista. Como alguém que quer entender, conectar e crescer.
         </p>
         <div>
-          <a class="auvp-btn" href="#aplicar">Quero participar da próxima imersão <i aria-hidden="true">&rarr;</i></a>
+          <a class="auvp-btn" href="https://wa.me/55SEUNUMERO">Quero participar da próxima imersão <i aria-hidden="true">&rarr;</i></a>
         </div>
       </div>
     </div>
@@ -1236,7 +1262,7 @@
             <p>Nenhum outro lugar do mundo permite ver, em poucos dias, tanta coisa acontecendo ao mesmo tempo: manufatura avançada, comércio digital, logística, energia e capital circulando em outra velocidade.</p>
             <p>Shanghai mostra o mercado financeiro e o consumo. Shenzhen mostra a engenharia e a indústria de hardware. Hangzhou mostra o comércio digital e a tecnologia aplicada.</p>
             <p class="auvp-nota">A confirmar: datas da próxima edição, investimento, o que está incluso no pacote e o roteiro dia a dia.</p>
-            <a class="auvp-btn auvp-btn--sm" href="#aplicar">Quero participar <i aria-hidden="true">&rarr;</i></a>
+            <a class="auvp-btn auvp-btn--sm" href="https://wa.me/55SEUNUMERO">Quero participar <i aria-hidden="true">&rarr;</i></a>
           </div>
         </details>
 
@@ -1260,7 +1286,7 @@
             <p>Negócios, internacionalização e oportunidades no mercado latino-americano — a partir do país que ocupa uma posição central na cadeia global de minerais críticos.</p>
             <p>Entender o Chile é entender como um país organiza uma economia em torno de recursos naturais: regulação, infraestrutura, capital estrangeiro e a disputa por quem processa o que se extrai.</p>
             <p class="auvp-nota">O briefing trazia este card rotulado como “Portugal”, mas o título descrevia o Chile. A página foi escrita para o Chile — confirmar. A confirmar também: datas, cidades do roteiro, investimento e empresas visitadas.</p>
-            <a class="auvp-btn auvp-btn--sm" href="#aplicar">Quero participar <i aria-hidden="true">&rarr;</i></a>
+            <a class="auvp-btn auvp-btn--sm" href="https://wa.me/55SEUNUMERO">Quero participar <i aria-hidden="true">&rarr;</i></a>
           </div>
         </details>
 
@@ -1415,63 +1441,79 @@
   <!-- ============ 7. EXPERIÊNCIA ============
        Abas em CSS puro: os radios abaixo controlam a lista e o painel. -->
   <section class="auvp-section" id="experiencia">
-    <div class="auvp-shell auvp-care">
-      <input type="radio" name="auvp-exp" id="auvp-e1" checked>
-      <input type="radio" name="auvp-exp" id="auvp-e2">
-      <input type="radio" name="auvp-exp" id="auvp-e3">
-      <input type="radio" name="auvp-exp" id="auvp-e4">
+    <div class="auvp-shell">
+      <h2 class="auvp-display auvp-sobe" style="margin-bottom:2.5rem;max-width:16ch">
+        Conforto existe para permitir foco. Cuidaremos de <em>tudo</em> para você.
+      </h2>
+    </div>
 
-      <div class="auvp-care__grid">
-        <div>
-          <h2 class="auvp-display auvp-sobe" style="margin:1.25rem 0 2.5rem;max-width:16ch">
-            Conforto existe para permitir foco. Cuidaremos de <em>tudo</em> para você.
-          </h2>
+    <div class="auvp-shell">
+      <div class="auvp-exp__panel">
+        <input type="radio" name="auvp-exp" id="auvp-e1" checked>
+        <input type="radio" name="auvp-exp" id="auvp-e2">
+        <input type="radio" name="auvp-exp" id="auvp-e3">
+        <input type="radio" name="auvp-exp" id="auvp-e4">
 
-          <div class="auvp-care__list">
-            <label class="auvp-care__item" for="auvp-e1">
-              <span class="auvp-num">01</span>
-              <span>
-                <h3>Hospedagem</h3>
-                <span class="auvp-care__text"><p>Você fica em locais selecionados estrategicamente, com conforto, localização e estrutura alinhados ao padrão da experiência, para focar no que realmente importa.</p></span>
-              </span>
-            </label>
-            <label class="auvp-care__item" for="auvp-e2">
-              <span class="auvp-num">02</span>
-              <span>
-                <h3>Logística organizada</h3>
-                <span class="auvp-care__text"><p>Deslocamentos, acessos e detalhes operacionais já estão resolvidos. Você não perde tempo com fricção, só com o que gera valor.</p></span>
-              </span>
-            </label>
-            <label class="auvp-care__item" for="auvp-e3">
-              <span class="auvp-num">03</span>
-              <span>
-                <h3>Concierge</h3>
-                <span class="auvp-care__text"><p>Suporte dedicado durante toda a imersão. Desde ajustes pontuais até demandas específicas, você tem com quem contar em qualquer momento.</p></span>
-              </span>
-            </label>
-            <label class="auvp-care__item" for="auvp-e4">
-              <span class="auvp-num">04</span>
-              <span>
-                <h3>Agenda estruturada</h3>
-                <span class="auvp-care__text"><p>Cada dia é planejado para equilibrar conteúdo, conexões e experiência. Um fluxo pensado para extrair o máximo de cada destino, sem sobrecarga e sem desperdício de tempo.</p></span>
-              </span>
-            </label>
-          </div>
+        <div class="auvp-exp__media" aria-hidden="true">
+          <span class="auvp-exp__bg auvp-exp__bg--1"></span>
+          <span class="auvp-exp__bg auvp-exp__bg--2"></span>
+          <span class="auvp-exp__bg auvp-exp__bg--3"></span>
+          <span class="auvp-exp__bg auvp-exp__bg--4"></span>
+          <span class="auvp-exp__scrim"></span>
         </div>
 
-        <div class="auvp-care__stage" aria-hidden="true">
-          <svg class="auvp-care__rings" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#c9a15b">
-            <circle cx="200" cy="250" r="90" stroke-width=".6" opacity=".35"/>
-            <circle cx="200" cy="250" r="140" stroke-width=".6" opacity=".25"/>
-            <circle cx="200" cy="250" r="196" stroke-width=".6" opacity=".16"/>
-            <circle cx="200" cy="250" r="258" stroke-width=".6" opacity=".1"/>
-            <line x1="0" y1="250" x2="400" y2="250" stroke-width=".5" opacity=".12"/>
-            <line x1="200" y1="0" x2="200" y2="500" stroke-width=".5" opacity=".12"/>
-          </svg>
-          <div class="auvp-care__plate"><b>01</b><p>Hospedagem selecionada, no ponto certo da cidade.</p></div>
-          <div class="auvp-care__plate"><b>02</b><p>Deslocamentos e acessos resolvidos antes de você chegar.</p></div>
-          <div class="auvp-care__plate"><b>03</b><p>Alguém disponível do primeiro ao último dia.</p></div>
-          <div class="auvp-care__plate"><b>04</b><p>Uma agenda densa, sem ser sufocante.</p></div>
+        <div class="auvp-exp__intro" aria-hidden="true">
+          <p class="auvp-exp__headline auvp-exp__headline--1">Hospedagem</p>
+          <p class="auvp-exp__headline auvp-exp__headline--2">Logística organizada</p>
+          <p class="auvp-exp__headline auvp-exp__headline--3">Concierge</p>
+          <p class="auvp-exp__headline auvp-exp__headline--4">Agenda estruturada</p>
+          <p class="auvp-exp__tagline auvp-exp__tagline--1">Hospedagem selecionada, no ponto certo da cidade.</p>
+          <p class="auvp-exp__tagline auvp-exp__tagline--2">Deslocamentos e acessos resolvidos antes de você chegar.</p>
+          <p class="auvp-exp__tagline auvp-exp__tagline--3">Alguém disponível do primeiro ao último dia.</p>
+          <p class="auvp-exp__tagline auvp-exp__tagline--4">Uma agenda densa, sem ser sufocante.</p>
+        </div>
+
+        <div class="auvp-exp__cards" role="tablist" aria-label="Como cuidamos da sua experiência">
+          <label class="auvp-exp__card" for="auvp-e1" role="tab">
+            <span class="auvp-exp__card-top">
+              <span class="auvp-num">01</span>
+              <span class="auvp-exp__card-title">Hospedagem</span>
+            </span>
+            <span class="auvp-exp__card-body">
+              <span class="auvp-exp__card-text">Você fica em locais selecionados estrategicamente, com conforto, localização e estrutura alinhados ao padrão da experiência, para focar no que realmente importa.</span>
+              <span class="auvp-exp__card-cta">Saiba mais <i aria-hidden="true">&rarr;</i></span>
+            </span>
+          </label>
+          <label class="auvp-exp__card" for="auvp-e2" role="tab">
+            <span class="auvp-exp__card-top">
+              <span class="auvp-num">02</span>
+              <span class="auvp-exp__card-title">Logística organizada</span>
+            </span>
+            <span class="auvp-exp__card-body">
+              <span class="auvp-exp__card-text">Deslocamentos, acessos e detalhes operacionais já estão resolvidos. Você não perde tempo com fricção, só com o que gera valor.</span>
+              <span class="auvp-exp__card-cta">Saiba mais <i aria-hidden="true">&rarr;</i></span>
+            </span>
+          </label>
+          <label class="auvp-exp__card" for="auvp-e3" role="tab">
+            <span class="auvp-exp__card-top">
+              <span class="auvp-num">03</span>
+              <span class="auvp-exp__card-title">Concierge</span>
+            </span>
+            <span class="auvp-exp__card-body">
+              <span class="auvp-exp__card-text">Suporte dedicado durante toda a imersão. Desde ajustes pontuais até demandas específicas, você tem com quem contar em qualquer momento.</span>
+              <span class="auvp-exp__card-cta">Saiba mais <i aria-hidden="true">&rarr;</i></span>
+            </span>
+          </label>
+          <label class="auvp-exp__card" for="auvp-e4" role="tab">
+            <span class="auvp-exp__card-top">
+              <span class="auvp-num">04</span>
+              <span class="auvp-exp__card-title">Agenda estruturada</span>
+            </span>
+            <span class="auvp-exp__card-body">
+              <span class="auvp-exp__card-text">Cada dia é planejado para equilibrar conteúdo, conexões e experiência. Um fluxo pensado para extrair o máximo de cada destino, sem sobrecarga e sem desperdício de tempo.</span>
+              <span class="auvp-exp__card-cta">Saiba mais <i aria-hidden="true">&rarr;</i></span>
+            </span>
+          </label>
         </div>
       </div>
     </div>
@@ -1483,8 +1525,11 @@
       <div class="auvp-faq__aside">
         <h2 class="auvp-title auvp-sobe">Antes de aplicar,<br>vale alinhar.</h2>
         <p class="auvp-muted auvp-measure-sm auvp-sobe">
-          Ficou algo de fora? Escreva para a nossa equipe pelo formulário abaixo.
+          Ficou algo de fora? Fale com a nossa equipe.
         </p>
+        <div class="auvp-sobe">
+          <a class="auvp-btn auvp-btn--sm" href="https://wa.me/55SEUNUMERO">Falar com a equipe <i aria-hidden="true">&rarr;</i></a>
+        </div>
       </div>
 
       <div class="auvp-acc">
@@ -1508,93 +1553,6 @@
           <summary><h3>A imersão é para mim?</h3><span class="auvp-acc__sign" aria-hidden="true"></span></summary>
           <p>Buscamos participantes que já possuam uma mentalidade de investidor ou empreendedor. O foco da AUVP Experience é o aprendizado prático e o networking de alto nível, por isso, estar alinhado com os princípios de valor e longo prazo é fundamental para aproveitar a jornada ao máximo.</p>
         </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 9. CANDIDATURA ============ -->
-  <section class="auvp-section auvp-apply" id="aplicar">
-    <div class="auvp-shell auvp-apply__grid">
-      <div>
-        <h2 class="auvp-apply__title auvp-sobe">A próxima imersão não é para todo mundo. Talvez seja <em>para você</em>.</h2>
-
-        <ul class="auvp-apply__points">
-          <li class="auvp-sobe">Grupo reduzido, para manter o nível das conversas e o acesso real às empresas.</li>
-          <li class="auvp-sobe">Não é passeio: é agenda de negócios, com curadoria estratégica da AUVP.</li>
-          <li class="auvp-sobe">Perfil dos participantes: empresários, investidores e executivos com visão de longo prazo.</li>
-          <li class="auvp-sobe">Após o envio, nossa equipe entra em contato para entender seu momento.</li>
-        </ul>
-      </div>
-
-      <div>
-        <!-- ====================================================================
-             COMO LIGAR O FORMULÁRIO (escolha uma opção)
-
-             1. Serviço de formulário (mais simples): crie um formulário em
-                Formspree, Getform ou similar e cole a URL no action="" abaixo.
-                Funciona sem JavaScript e sem plugin.
-
-             2. Elementor Pro: apague este <form> e arraste o widget "Formulário"
-                do Elementor no lugar, replicando os campos.
-
-             3. Enquanto nada disso for feito, o botão não envia nada. Troque
-                por um link de contato se preferir:
-                <a class="auvp-btn auvp-btn--solid" href="https://wa.me/55SEUNUMERO">Falar com a equipe</a>
-             ==================================================================== -->
-        <form class="auvp-form auvp-sobe" method="post" action="">
-          <input type="text" name="_isca" class="auvp-isca" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <input type="hidden" name="assunto" value="Candidatura — AUVP Experience">
-
-          <div class="auvp-form__row">
-            <div class="auvp-field">
-              <label for="ap-nome">Nome completo</label>
-              <input id="ap-nome" name="nome" type="text" autocomplete="name" required>
-            </div>
-            <div class="auvp-field">
-              <label for="ap-email">E-mail</label>
-              <input id="ap-email" name="email" type="email" autocomplete="email" required>
-            </div>
-          </div>
-
-          <div class="auvp-form__row">
-            <div class="auvp-field">
-              <label for="ap-tel">WhatsApp</label>
-              <input id="ap-tel" name="whatsapp" type="tel" autocomplete="tel" placeholder="(00) 00000-0000" required>
-            </div>
-            <div class="auvp-field">
-              <label for="ap-perfil">Seu perfil</label>
-              <select id="ap-perfil" name="perfil" required>
-                <option value="">Selecione</option>
-                <option>Empresário</option>
-                <option>Investidor</option>
-                <option>Executivo</option>
-                <option>Fundador</option>
-                <option>Outro</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="auvp-field">
-            <label for="ap-destino">Destino de interesse</label>
-            <select id="ap-destino" name="destino" required>
-              <option value="">Selecione</option>
-              <option>China</option>
-              <option>Chile</option>
-              <option>Próximos destinos</option>
-              <option>Ainda decidindo</option>
-            </select>
-          </div>
-
-          <div class="auvp-field">
-            <label for="ap-motivo">Em uma frase, o que você quer extrair da imersão?</label>
-            <textarea id="ap-motivo" name="motivo" rows="3" required></textarea>
-          </div>
-
-          <div style="display:grid;gap:1rem;justify-items:start">
-            <button class="auvp-btn auvp-btn--solid" type="submit">Enviar candidatura <i aria-hidden="true">&rarr;</i></button>
-            <p class="auvp-form__note">Suas informações são usadas apenas para o contato sobre a imersão.</p>
-          </div>
-        </form>
       </div>
     </div>
   </section>
@@ -1625,7 +1583,7 @@
       <div class="auvp-footer__col">
         <h4>Contato</h4>
         <ul>
-          <li><a href="#aplicar">Aplicar para a próxima imersão</a></li>
+          <li><a href="https://wa.me/55SEUNUMERO">Falar com a equipe no WhatsApp</a></li>
           <!-- TODO: trocar pelos perfis oficiais -->
           <li><a href="#" rel="noopener">Instagram</a></li>
           <li><a href="#" rel="noopener">LinkedIn</a></li>
