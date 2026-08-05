@@ -156,6 +156,7 @@
 }
 
 .auvp-x .auvp-section { position: relative; padding-block: var(--section-y); }
+.auvp-x .auvp-section--flush { padding-block: 0; }
 
 .auvp-x .auvp-display { font-size: var(--fs-display); }
 .auvp-x .auvp-title { font-size: var(--fs-title); }
@@ -792,55 +793,61 @@
 }
 
 /* ---------- 13. Experiência ----------
-   Um único painel em foto: o tópico ativo ocupa o card grande embaixo
-   e domina o título/legenda no topo; os outros ficam recolhidos como
-   abas. Clicar numa aba fecha a atual, abre a nova e troca o fundo —
-   tudo por :checked em radios, sem JavaScript. */
+   Painel em tela cheia (sangra as bordas do .auvp-shell de propósito):
+   uma foto por tópico, o título da dobra sobreposto à imagem e, embaixo,
+   as abas — a ativa aberta com texto, as outras recolhidas. Clicar numa
+   aba fecha a atual, abre a nova e troca a foto — tudo por :checked em
+   radios, sem JavaScript. */
 .auvp-x .auvp-exp input { position: absolute; opacity: 0; pointer-events: none; }
 .auvp-x .auvp-exp__panel {
   position: relative;
-  aspect-ratio: 16 / 9;
-  min-height: clamp(420px, 62vw, 640px);
-  border: 1px solid var(--line-soft);
+  width: 100%;
+  min-height: 100svh;
+  border-block: 1px solid var(--line-soft);
   overflow: hidden;
   isolation: isolate;
 }
 
 .auvp-x .auvp-exp__media { position: absolute; inset: 0; z-index: 0; }
-.auvp-x .auvp-exp__bg { position: absolute; inset: 0; opacity: 0; transition: opacity 1s var(--ease); }
-.auvp-x .auvp-exp__bg--1 { background: radial-gradient(130% 150% at 18% 8%, var(--paper-3) 0%, var(--ink-30) 55%, var(--ink) 100%); }
-.auvp-x .auvp-exp__bg--2 { background: radial-gradient(130% 150% at 85% 10%, var(--paper-3) 0%, var(--verde-60) 52%, var(--ink) 100%); }
-.auvp-x .auvp-exp__bg--3 { background: radial-gradient(130% 150% at 22% 90%, var(--paper-3) 0%, var(--ink-30) 55%, var(--ink) 100%); }
-.auvp-x .auvp-exp__bg--4 { background: radial-gradient(130% 150% at 82% 88%, var(--paper-3) 0%, var(--verde-60) 52%, var(--ink) 100%); }
+.auvp-x .auvp-exp__bg {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.1s var(--ease);
+}
+.auvp-x .auvp-exp__bg--1 { background-image: url("https://images.pexels.com/photos/18285946/pexels-photo-18285946.jpeg"); }
+.auvp-x .auvp-exp__bg--2 { background-image: url("https://images.pexels.com/photos/12391911/pexels-photo-12391911.jpeg"); }
+.auvp-x .auvp-exp__bg--3 { background-image: url("https://images.pexels.com/photos/16731630/pexels-photo-16731630.jpeg"); }
+.auvp-x .auvp-exp__bg--4 { background-image: url("https://images.pexels.com/photos/6476808/pexels-photo-6476808.jpeg"); }
 .auvp-x .auvp-exp__scrim {
   position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(to top, rgba(28, 27, 24, 0.82) 0%, rgba(28, 27, 24, 0.32) 40%, rgba(28, 27, 24, 0.05) 62%, transparent 100%);
+  background:
+    linear-gradient(to top, rgba(28, 27, 24, 0.85) 0%, rgba(28, 27, 24, 0.4) 32%, rgba(28, 27, 24, 0.08) 58%, rgba(28, 27, 24, 0.2) 100%),
+    linear-gradient(to right, rgba(28, 27, 24, 0.55) 0%, rgba(28, 27, 24, 0) 55%);
 }
 
 .auvp-x .auvp-exp__intro {
   position: absolute;
   z-index: 2;
-  top: clamp(1.5rem, 3vw, 2.75rem);
-  left: clamp(1.5rem, 3vw, 2.75rem);
-  right: clamp(1.5rem, 3vw, 2.75rem);
+  top: clamp(2rem, 6vw, 4.5rem);
+  left: clamp(1.25rem, 5vw, 5rem);
+  right: clamp(1.25rem, 5vw, 5rem);
   color: var(--paper);
 }
-.auvp-x .auvp-exp__headline {
-  position: absolute; inset: 0 auto auto 0;
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: clamp(1.8rem, 3.2vw, 2.75rem);
-  line-height: 1.1;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+.auvp-x .auvp-exp__intro h2 {
+  font-size: clamp(2.1rem, 4.4vw, 4rem);
+  line-height: 1.08;
+  max-width: 16ch;
 }
+.auvp-x .auvp-exp__intro h2 em { color: var(--paper); text-decoration: underline; text-decoration-color: var(--verde-60); text-underline-offset: 0.12em; }
 .auvp-x .auvp-exp__tagline {
   position: absolute; inset: auto auto auto 0;
-  top: clamp(3.2rem, 5.6vw, 4.6rem);
-  font-size: var(--fs-small);
+  top: 100%;
+  margin-top: clamp(0.9rem, 1.6vw, 1.4rem);
+  font-size: var(--fs-sub);
   font-weight: 300;
-  color: rgba(247, 245, 241, 0.82);
+  color: rgba(247, 245, 241, 0.85);
   max-width: 34ch;
   opacity: 0;
   transform: translateY(8px);
@@ -850,9 +857,9 @@
 .auvp-x .auvp-exp__cards {
   position: absolute;
   z-index: 2;
-  left: clamp(1.25rem, 2vw, 1.75rem);
-  right: clamp(1.25rem, 2vw, 1.75rem);
-  bottom: clamp(1.25rem, 2vw, 1.75rem);
+  left: clamp(1.25rem, 5vw, 5rem);
+  right: clamp(1.25rem, 5vw, 5rem);
+  bottom: clamp(1.5rem, 4vw, 3rem);
   display: flex;
   align-items: stretch;
   gap: 2px;
@@ -887,15 +894,6 @@
 .auvp-x .auvp-exp__card-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.6s var(--ease); }
 .auvp-x .auvp-exp__card-body > * { overflow: hidden; }
 .auvp-x .auvp-exp__card-text { font-size: var(--fs-small); line-height: 1.6; color: rgba(247, 245, 241, 0.86); max-width: 42ch; }
-.auvp-x .auvp-exp__card-cta {
-  display: inline-flex; align-items: center; gap: 0.6rem;
-  margin-top: 0.75rem;
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: var(--fs-micro);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
 
 /* estado ativo de cada aba */
 .auvp-x #auvp-e1:checked ~ .auvp-exp__media .auvp-exp__bg--1,
@@ -903,10 +901,6 @@
 .auvp-x #auvp-e3:checked ~ .auvp-exp__media .auvp-exp__bg--3,
 .auvp-x #auvp-e4:checked ~ .auvp-exp__media .auvp-exp__bg--4 { opacity: 1; }
 
-.auvp-x #auvp-e1:checked ~ .auvp-exp__intro .auvp-exp__headline--1,
-.auvp-x #auvp-e2:checked ~ .auvp-exp__intro .auvp-exp__headline--2,
-.auvp-x #auvp-e3:checked ~ .auvp-exp__intro .auvp-exp__headline--3,
-.auvp-x #auvp-e4:checked ~ .auvp-exp__intro .auvp-exp__headline--4,
 .auvp-x #auvp-e1:checked ~ .auvp-exp__intro .auvp-exp__tagline--1,
 .auvp-x #auvp-e2:checked ~ .auvp-exp__intro .auvp-exp__tagline--2,
 .auvp-x #auvp-e3:checked ~ .auvp-exp__intro .auvp-exp__tagline--3,
@@ -929,10 +923,8 @@
 .auvp-x #auvp-e4:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(4) .auvp-exp__card-body { grid-template-rows: 1fr; }
 
 @media (max-width: 760px) {
-  .auvp-x .auvp-exp__panel { aspect-ratio: 3 / 4; min-height: clamp(560px, 150vw, 760px); }
   .auvp-x .auvp-exp__cards { flex-direction: column; }
   .auvp-x .auvp-exp__card { min-height: auto; }
-  .auvp-x .auvp-exp__headline { font-size: clamp(1.5rem, 6vw, 2rem); }
 }
 
 /* ---------- 14. FAQ ---------- */
@@ -1440,81 +1432,66 @@
 
   <!-- ============ 7. EXPERIÊNCIA ============
        Abas em CSS puro: os radios abaixo controlam a lista e o painel. -->
-  <section class="auvp-section" id="experiencia">
-    <div class="auvp-shell">
-      <h2 class="auvp-display auvp-sobe" style="margin-bottom:2.5rem;max-width:16ch">
-        Conforto existe para permitir foco. Cuidaremos de <em>tudo</em> para você.
-      </h2>
-    </div>
+  <section class="auvp-section auvp-section--flush" id="experiencia">
+    <div class="auvp-exp__panel">
+      <input type="radio" name="auvp-exp" id="auvp-e1" checked>
+      <input type="radio" name="auvp-exp" id="auvp-e2">
+      <input type="radio" name="auvp-exp" id="auvp-e3">
+      <input type="radio" name="auvp-exp" id="auvp-e4">
 
-    <div class="auvp-shell">
-      <div class="auvp-exp__panel">
-        <input type="radio" name="auvp-exp" id="auvp-e1" checked>
-        <input type="radio" name="auvp-exp" id="auvp-e2">
-        <input type="radio" name="auvp-exp" id="auvp-e3">
-        <input type="radio" name="auvp-exp" id="auvp-e4">
+      <div class="auvp-exp__media" aria-hidden="true">
+        <span class="auvp-exp__bg auvp-exp__bg--1"></span>
+        <span class="auvp-exp__bg auvp-exp__bg--2"></span>
+        <span class="auvp-exp__bg auvp-exp__bg--3"></span>
+        <span class="auvp-exp__bg auvp-exp__bg--4"></span>
+        <span class="auvp-exp__scrim"></span>
+      </div>
 
-        <div class="auvp-exp__media" aria-hidden="true">
-          <span class="auvp-exp__bg auvp-exp__bg--1"></span>
-          <span class="auvp-exp__bg auvp-exp__bg--2"></span>
-          <span class="auvp-exp__bg auvp-exp__bg--3"></span>
-          <span class="auvp-exp__bg auvp-exp__bg--4"></span>
-          <span class="auvp-exp__scrim"></span>
-        </div>
+      <div class="auvp-exp__intro">
+        <h2 class="auvp-sobe">Conforto existe para permitir foco. Cuidaremos de <em>tudo</em> para você.</h2>
+        <p class="auvp-exp__tagline auvp-exp__tagline--1" aria-hidden="true">Hospedagem selecionada, no ponto certo da cidade.</p>
+        <p class="auvp-exp__tagline auvp-exp__tagline--2" aria-hidden="true">Deslocamentos e acessos resolvidos antes de você chegar.</p>
+        <p class="auvp-exp__tagline auvp-exp__tagline--3" aria-hidden="true">Alguém disponível do primeiro ao último dia.</p>
+        <p class="auvp-exp__tagline auvp-exp__tagline--4" aria-hidden="true">Uma agenda densa, sem ser sufocante.</p>
+      </div>
 
-        <div class="auvp-exp__intro" aria-hidden="true">
-          <p class="auvp-exp__headline auvp-exp__headline--1">Hospedagem</p>
-          <p class="auvp-exp__headline auvp-exp__headline--2">Logística organizada</p>
-          <p class="auvp-exp__headline auvp-exp__headline--3">Concierge</p>
-          <p class="auvp-exp__headline auvp-exp__headline--4">Agenda estruturada</p>
-          <p class="auvp-exp__tagline auvp-exp__tagline--1">Hospedagem selecionada, no ponto certo da cidade.</p>
-          <p class="auvp-exp__tagline auvp-exp__tagline--2">Deslocamentos e acessos resolvidos antes de você chegar.</p>
-          <p class="auvp-exp__tagline auvp-exp__tagline--3">Alguém disponível do primeiro ao último dia.</p>
-          <p class="auvp-exp__tagline auvp-exp__tagline--4">Uma agenda densa, sem ser sufocante.</p>
-        </div>
-
-        <div class="auvp-exp__cards" role="tablist" aria-label="Como cuidamos da sua experiência">
-          <label class="auvp-exp__card" for="auvp-e1" role="tab">
-            <span class="auvp-exp__card-top">
-              <span class="auvp-num">01</span>
-              <span class="auvp-exp__card-title">Hospedagem</span>
-            </span>
-            <span class="auvp-exp__card-body">
-              <span class="auvp-exp__card-text">Você fica em locais selecionados estrategicamente, com conforto, localização e estrutura alinhados ao padrão da experiência, para focar no que realmente importa.</span>
-              <span class="auvp-exp__card-cta">Saiba mais <i aria-hidden="true">&rarr;</i></span>
-            </span>
-          </label>
-          <label class="auvp-exp__card" for="auvp-e2" role="tab">
-            <span class="auvp-exp__card-top">
-              <span class="auvp-num">02</span>
-              <span class="auvp-exp__card-title">Logística organizada</span>
-            </span>
-            <span class="auvp-exp__card-body">
-              <span class="auvp-exp__card-text">Deslocamentos, acessos e detalhes operacionais já estão resolvidos. Você não perde tempo com fricção, só com o que gera valor.</span>
-              <span class="auvp-exp__card-cta">Saiba mais <i aria-hidden="true">&rarr;</i></span>
-            </span>
-          </label>
-          <label class="auvp-exp__card" for="auvp-e3" role="tab">
-            <span class="auvp-exp__card-top">
-              <span class="auvp-num">03</span>
-              <span class="auvp-exp__card-title">Concierge</span>
-            </span>
-            <span class="auvp-exp__card-body">
-              <span class="auvp-exp__card-text">Suporte dedicado durante toda a imersão. Desde ajustes pontuais até demandas específicas, você tem com quem contar em qualquer momento.</span>
-              <span class="auvp-exp__card-cta">Saiba mais <i aria-hidden="true">&rarr;</i></span>
-            </span>
-          </label>
-          <label class="auvp-exp__card" for="auvp-e4" role="tab">
-            <span class="auvp-exp__card-top">
-              <span class="auvp-num">04</span>
-              <span class="auvp-exp__card-title">Agenda estruturada</span>
-            </span>
-            <span class="auvp-exp__card-body">
-              <span class="auvp-exp__card-text">Cada dia é planejado para equilibrar conteúdo, conexões e experiência. Um fluxo pensado para extrair o máximo de cada destino, sem sobrecarga e sem desperdício de tempo.</span>
-              <span class="auvp-exp__card-cta">Saiba mais <i aria-hidden="true">&rarr;</i></span>
-            </span>
-          </label>
-        </div>
+      <div class="auvp-exp__cards" role="tablist" aria-label="Como cuidamos da sua experiência">
+        <label class="auvp-exp__card" for="auvp-e1" role="tab">
+          <span class="auvp-exp__card-top">
+            <span class="auvp-num">01</span>
+            <span class="auvp-exp__card-title">Hospedagem</span>
+          </span>
+          <span class="auvp-exp__card-body">
+            <span class="auvp-exp__card-text">Você fica em locais selecionados estrategicamente, com conforto, localização e estrutura alinhados ao padrão da experiência, para focar no que realmente importa.</span>
+          </span>
+        </label>
+        <label class="auvp-exp__card" for="auvp-e2" role="tab">
+          <span class="auvp-exp__card-top">
+            <span class="auvp-num">02</span>
+            <span class="auvp-exp__card-title">Logística organizada</span>
+          </span>
+          <span class="auvp-exp__card-body">
+            <span class="auvp-exp__card-text">Deslocamentos, acessos e detalhes operacionais já estão resolvidos. Você não perde tempo com fricção, só com o que gera valor.</span>
+          </span>
+        </label>
+        <label class="auvp-exp__card" for="auvp-e3" role="tab">
+          <span class="auvp-exp__card-top">
+            <span class="auvp-num">03</span>
+            <span class="auvp-exp__card-title">Concierge</span>
+          </span>
+          <span class="auvp-exp__card-body">
+            <span class="auvp-exp__card-text">Suporte dedicado durante toda a imersão. Desde ajustes pontuais até demandas específicas, você tem com quem contar em qualquer momento.</span>
+          </span>
+        </label>
+        <label class="auvp-exp__card" for="auvp-e4" role="tab">
+          <span class="auvp-exp__card-top">
+            <span class="auvp-num">04</span>
+            <span class="auvp-exp__card-title">Agenda estruturada</span>
+          </span>
+          <span class="auvp-exp__card-body">
+            <span class="auvp-exp__card-text">Cada dia é planejado para equilibrar conteúdo, conexões e experiência. Um fluxo pensado para extrair o máximo de cada destino, sem sobrecarga e sem desperdício de tempo.</span>
+          </span>
+        </label>
       </div>
     </div>
   </section>
