@@ -390,8 +390,14 @@
 }
 
 /* ---------- 7. Hero ---------- */
+/* --hero-pin: quanto de rolagem extra fica "presa" no hero antes de
+   liberar o resto da página — o mesmo intervalo usado no reveal do
+   título (ver seção 17). O truque é só CSS: um invólucro mais alto
+   que a tela, com o hero de verdade grudado (sticky) dentro dele. */
+.auvp-x .auvp-hero-pin { position: relative; height: 100svh; }
 .auvp-x .auvp-hero {
-  position: relative;
+  position: sticky;
+  top: 0;
   min-height: 100svh;
   display: grid;
   grid-template-rows: 1fr auto;
@@ -627,60 +633,53 @@
   overflow: hidden;
 }
 
-/* Globo giratório em CSS 3D puro — sem canvas, sem JavaScript. Cada
-   anel é um círculo inclinado no espaço; o conjunto gira em torno do
-   eixo vertical. Onde não houver suporte a transform 3D, o globo some
-   e sobra só a moldura — nunca fica um buraco em branco. */
+/* Globo terrestre em CSS puro — sem canvas, sem JavaScript, sem
+   contorno de arame: uma esfera sombreada com "continentes" que
+   atravessam a face dela (crescem e encolhem de largura enquanto
+   deslizam), simulando a curva de um planeta girando. */
 .auvp-x .auvp-globe {
   width: 100%;
   height: 100%;
   display: grid;
   place-items: center;
-  perspective: 1400px;
 }
-.auvp-x .auvp-globe__sphere {
-  --gd: clamp(160px, 20vw, 260px);
+.auvp-x .auvp-globe__ball {
   position: relative;
-  width: var(--gd);
-  height: var(--gd);
-  transform-style: preserve-3d;
-  animation: auvp-globe-spin 20s linear infinite;
+  width: clamp(160px, 20vw, 260px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  isolation: isolate;
+  background: radial-gradient(circle at 34% 30%, var(--paper) 0%, var(--paper-3) 55%, var(--ink-30) 100%);
+  box-shadow:
+    inset -18px -18px 46px rgba(28, 27, 24, 0.28),
+    inset 10px 10px 22px rgba(255, 255, 255, 0.5);
+}
+.auvp-x .auvp-globe__land {
+  position: absolute;
+  left: -34%;
+  background: var(--verde);
+  opacity: 0;
+  animation: auvp-globe-drift linear infinite;
+}
+.auvp-x .auvp-globe__land--faint { background: var(--ink-45); }
+.auvp-x .auvp-globe__land--1 { top: 14%; width: 34%; height: 20%; border-radius: 42% 58% 60% 40% / 55% 45% 55% 45%; animation-duration: 11s; }
+.auvp-x .auvp-globe__land--2 { top: 34%; width: 24%; height: 15%; border-radius: 60% 40% 45% 55% / 50% 60% 40% 50%; animation-duration: 11s; animation-delay: -3.7s; }
+.auvp-x .auvp-globe__land--3 { top: 56%; width: 38%; height: 22%; border-radius: 50% 50% 40% 60% / 45% 55% 45% 55%; animation-duration: 11s; animation-delay: -7.3s; }
+.auvp-x .auvp-globe__land--4 { top: 10%; width: 15%; height: 12%; border-radius: 50%; animation-duration: 8s; animation-delay: -1.6s; }
+.auvp-x .auvp-globe__land--5 { top: 72%; width: 20%; height: 13%; border-radius: 55% 45% 50% 50% / 40% 60% 40% 60%; animation-duration: 8s; animation-delay: -5.2s; }
+.auvp-x .auvp-globe__land--6 { top: 46%; width: 13%; height: 10%; border-radius: 50%; animation-duration: 14s; animation-delay: -9.4s; }
+.auvp-x .auvp-globe__land--7 { top: 24%; width: 22%; height: 14%; border-radius: 48% 52% 55% 45% / 50% 50% 50% 50%; animation-duration: 14s; animation-delay: -2.3s; }
+@keyframes auvp-globe-drift {
+  0%   { left: -34%; transform: scaleX(0.32); opacity: 0; }
+  14%  { transform: scaleX(0.68); opacity: 0.82; }
+  50%  { left: 50%; transform: scaleX(1); opacity: 1; }
+  86%  { transform: scaleX(0.68); opacity: 0.82; }
+  100% { left: 134%; transform: scaleX(0.32); opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .auvp-x .auvp-globe__sphere { animation-duration: 90s; }
+  .auvp-x .auvp-globe__land { animation-play-state: paused; left: 50%; transform: translateX(-50%) scaleX(1); opacity: 0.85; }
 }
-.auvp-x .auvp-globe__meridian {
-  position: absolute;
-  inset: 0;
-  border: 1px solid var(--verde-30);
-  border-radius: 50%;
-}
-.auvp-x .auvp-globe__meridian:nth-child(1) { transform: rotateY(0deg); }
-.auvp-x .auvp-globe__meridian:nth-child(2) { transform: rotateY(30deg); }
-.auvp-x .auvp-globe__meridian:nth-child(3) { transform: rotateY(60deg); }
-.auvp-x .auvp-globe__meridian:nth-child(4) { transform: rotateY(90deg); border-color: var(--verde-60); }
-.auvp-x .auvp-globe__meridian:nth-child(5) { transform: rotateY(120deg); }
-.auvp-x .auvp-globe__meridian:nth-child(6) { transform: rotateY(150deg); }
-.auvp-x .auvp-globe__lat {
-  position: absolute;
-  inset: 0;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-}
-.auvp-x .auvp-globe__lat--eq { transform: rotateX(90deg); border-color: var(--verde-30); }
-.auvp-x .auvp-globe__lat--n { width: 78%; height: 78%; inset: 11%; transform: translateY(-16%) rotateX(90deg); }
-.auvp-x .auvp-globe__lat--s { width: 78%; height: 78%; inset: 11%; transform: translateY(16%) rotateX(90deg); }
-.auvp-x .auvp-globe__dot {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--verde);
-}
-.auvp-x .auvp-globe__dot--faint { background: var(--ink-45); width: 4px; height: 4px; }
-@keyframes auvp-globe-spin { to { transform: rotateY(360deg); } }
 .auvp-x .auvp-edge__tags { display: flex; flex-wrap: wrap; gap: 0.5rem 0.65rem; }
 .auvp-x .auvp-edge__tags li {
   padding: 0.5em 1em;
@@ -738,51 +737,58 @@
 .auvp-x .auvp-net__statement { font-size: clamp(2rem, 5.4vw, 5.6rem); line-height: 1.03; letter-spacing: -0.035em; max-width: 16ch; }
 .auvp-x .auvp-net__complement { max-width: 46ch; margin-top: clamp(1.5rem, 3vw, 2.4rem); color: var(--ink-80); font-size: var(--fs-sub); line-height: 1.55; }
 
-.auvp-x .auvp-net__grid {
+/* Linha do tempo em zigue-zague: cada perfil alterna de lado numa
+   espinha central, ligado por um marcador — troca a rolagem horizontal
+   por algo que se revela conforme a rolagem normal da página. */
+.auvp-x .auvp-net__timeline {
+  --gut: clamp(2rem, 4vw, 3rem);
+  position: relative;
   margin-top: clamp(2.5rem, 5vw, 4.5rem);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--line-soft);
-  border-block: 1px solid var(--line-soft);
+  grid-template-columns: 1fr var(--gut) 1fr;
 }
-.auvp-x .auvp-net__item {
-  position: relative;
-  background: var(--paper);
-  padding: clamp(2rem, 3vw, 3rem) clamp(1.5rem, 2vw, 2.25rem) clamp(2.5rem, 3.5vw, 3.25rem);
-  display: grid;
-  gap: 0.85rem;
-  align-content: start;
-  overflow: hidden;
-  isolation: isolate;
-  transition: background-color 0.6s var(--ease);
-}
-.auvp-x .auvp-net__item:hover { background: var(--paper-2); }
-.auvp-x .auvp-net__item h3 { font-size: clamp(1.2rem, 1.7vw, 1.6rem); line-height: 1.2; }
-.auvp-x .auvp-net__item p { font-size: var(--fs-small); color: var(--ink-60); line-height: 1.65; max-width: 32ch; }
-.auvp-x .auvp-net__ghost {
+.auvp-x .auvp-net__timeline::before {
+  content: "";
   position: absolute;
-  z-index: -1;
-  right: -0.15em;
-  bottom: -0.28em;
-  font-family: var(--display);
-  font-weight: 500;
-  font-size: clamp(4.5rem, 9vw, 8rem);
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: var(--ink);
-  opacity: 0.05;
+  left: 50%; top: 0; bottom: 0;
+  width: 1px;
+  background: var(--line);
+  transform: translateX(-50%);
 }
-.auvp-x .auvp-net__item--wide { grid-column: 1 / -1; }
-.auvp-x .auvp-net__item--wide p { max-width: 60ch; }
+.auvp-x .auvp-net__row {
+  position: relative;
+  padding-block: clamp(1.5rem, 2.4vw, 2.25rem);
+  transition: transform 0.6s var(--ease);
+}
+.auvp-x .auvp-net__row:hover { transform: translateY(-4px); }
+.auvp-x .auvp-net__row:nth-child(odd) { grid-column: 1; text-align: right; }
+.auvp-x .auvp-net__row:nth-child(even) { grid-column: 3; text-align: left; }
+.auvp-x .auvp-net__row > * { max-width: 38ch; }
+.auvp-x .auvp-net__row:nth-child(odd) > * { margin-left: auto; }
+.auvp-x .auvp-net__row:nth-child(even) > * { margin-right: auto; }
+.auvp-x .auvp-net__row .auvp-num { display: block; margin-bottom: 0.4rem; }
+.auvp-x .auvp-net__row h3 { font-size: clamp(1.2rem, 1.7vw, 1.6rem); line-height: 1.2; margin-bottom: 0.5rem; }
+.auvp-x .auvp-net__row p { font-size: var(--fs-small); color: var(--ink-60); line-height: 1.65; }
+.auvp-x .auvp-net__row::after {
+  content: "";
+  position: absolute;
+  top: calc(clamp(1.5rem, 2.4vw, 2.25rem) + 0.3rem);
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--verde);
+  box-shadow: 0 0 0 5px var(--paper);
+  transition: transform 0.4s var(--ease);
+}
+.auvp-x .auvp-net__row:hover::after { transform: scale(1.35); }
+.auvp-x .auvp-net__row:nth-child(odd)::after { right: calc(var(--gut) / -2 - 4.5px); }
+.auvp-x .auvp-net__row:nth-child(even)::after { left: calc(var(--gut) / -2 - 4.5px); }
 
-@media (max-width: 900px) {
-  .auvp-x .auvp-net__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .auvp-x .auvp-net__item--wide { grid-column: 1 / -1; }
-}
-@media (max-width: 560px) {
-  .auvp-x .auvp-net__grid { grid-template-columns: 1fr; }
-  .auvp-x .auvp-net__item--wide { grid-column: auto; }
+@media (max-width: 720px) {
+  .auvp-x .auvp-net__timeline { --gut: 1.4rem; grid-template-columns: var(--gut) 1fr; }
+  .auvp-x .auvp-net__timeline::before { left: var(--gut); transform: none; }
+  .auvp-x .auvp-net__row, .auvp-x .auvp-net__row:nth-child(even) { grid-column: 2; text-align: left; }
+  .auvp-x .auvp-net__row > *, .auvp-x .auvp-net__row:nth-child(even) > * { margin-left: 0; margin-right: auto; max-width: 46ch; }
+  .auvp-x .auvp-net__row::after, .auvp-x .auvp-net__row:nth-child(even)::after { left: calc(var(--gut) / -2 - 4.5px); right: auto; }
 }
 
 /* ---------- 13. Experiência (abas em CSS puro) ---------- */
@@ -1047,15 +1053,16 @@
       animation-timeline: view();
       animation-range: entry 5% cover 38%;
     }
+    .auvp-x .auvp-hero-pin { height: calc(100svh + 60svh); }
     .auvp-x .auvp-hero__media {
       animation: auvp-parallax linear both;
       animation-timeline: scroll(root block);
-      animation-range: 0 100svh;
+      animation-range: 60svh 160svh;
     }
     .auvp-x .auvp-hero__title {
       animation: auvp-sobe linear both;
       animation-timeline: scroll(root block);
-      animation-range: 0 42svh;
+      animation-range: 0 60svh;
     }
     .auvp-x .auvp-progress i {
       animation: auvp-progresso linear both;
@@ -1132,8 +1139,13 @@
 
 <main id="conteudo">
 
-  <!-- ============ 1. HERO ============ -->
-  <section class="auvp-hero" id="hero">
+  <!-- ============ 1. HERO ============
+       A seção fica dentro de um invólucro mais alto que a tela
+       (auvp-hero-pin). O hero em si é sticky: some pegado no topo
+       enquanto essa altura extra é rolada, então a frase termina de
+       aparecer antes que o resto da página se mova. -->
+  <section class="auvp-hero-pin" id="hero">
+  <div class="auvp-hero">
     <div class="auvp-hero__media" aria-hidden="true"><svg class="auvp-art" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><defs><linearGradient id="hs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#faf8f5"/><stop offset=".55" stop-color="#f2efe9"/><stop offset="1" stop-color="#e7e2d9"/></linearGradient><pattern id="jn" width="46" height="58" patternUnits="userSpaceOnUse"><rect x="5" y="7" width="4" height="7" fill="#8d8778"/><rect x="28" y="21" width="4" height="7" fill="#8d8778"/><rect x="16" y="40" width="4" height="7" fill="#8d8778"/><rect x="37" y="49" width="4" height="7" fill="#8d8778"/></pattern></defs><rect width="1600" height="900" fill="url(#hs)"/><path d="M-30 720V561H38V720ZM47 720V628H117V720ZM122 720V513H188V720ZM196 720V613H245V720ZM250 720V621H322V720ZM327 720V559L342 519H398L413 559V720ZM421 720V650L431 632H465L475 650V720ZM446 632h4V613h-4ZM479 720V528H527V720ZM534 720V639L550 619H605L621 639V720ZM576 619h4V597h-4ZM625 720V646L632 628H659L666 646V720ZM673 720V596L683 565H718L728 596V720ZM735 720V573H777V720ZM754 573h4V541h-4ZM783 720V587H849V720ZM854 720V595H936V720ZM944 720V622H993V720ZM996 720V610L1007 583H1045L1056 610V720ZM1024 583h4V553h-4ZM1063 720V502H1126V720ZM1130 720V655L1142 639H1186L1198 655V720ZM1204 720V646L1212 628H1243L1251 646V720ZM1257 720V556H1303V720ZM1278 556h4V520h-4ZM1312 720V549H1385V720ZM1388 720V578L1402 542H1450L1464 578V720ZM1467 720V578L1476 543H1506L1515 578V720ZM1524 720V526H1585V720ZM1589 720V566H1666V720Z" fill="#ded9d0"/><path d="M-30 760V556H90V760ZM96 760V412H218V760ZM225 760V561H305V760ZM311 760V381H419V760ZM427 760V554H561V760ZM492 554h4V509h-4ZM569 760V409H690V760ZM628 409h4V332h-4ZM700 760V572H788V760ZM790 760V431H886V760ZM892 760V450H1015V760ZM1019 760V548L1045 495H1135L1161 548V760ZM1165 760V572H1304V760ZM1309 760V438L1329 358H1400L1420 438V760ZM1428 760V570H1515V760ZM1523 760V585L1544 541H1617L1638 585V760ZM304 760V312L313 200H347L356 312V760ZM328 200h4V77h-4ZM1008 760V360L1015 260H1041L1048 360V760ZM1026 260h4V150h-4Z" fill="#c8c2b6"/><path d="M-30 760V556H90V760ZM96 760V412H218V760ZM225 760V561H305V760ZM311 760V381H419V760ZM427 760V554H561V760ZM492 554h4V509h-4ZM569 760V409H690V760ZM628 409h4V332h-4ZM700 760V572H788V760ZM790 760V431H886V760ZM892 760V450H1015V760ZM1019 760V548L1045 495H1135L1161 548V760ZM1165 760V572H1304V760ZM1309 760V438L1329 358H1400L1420 438V760ZM1428 760V570H1515V760ZM1523 760V585L1544 541H1617L1638 585V760ZM304 760V312L313 200H347L356 312V760ZM328 200h4V77h-4ZM1008 760V360L1015 260H1041L1048 360V760ZM1026 260h4V150h-4Z" fill="url(#jn)" opacity=".28"/><rect y="760" width="1600" height="140" fill="#d8d2c7"/></svg></div>
     <div class="auvp-hero__scrim" aria-hidden="true"></div>
 
@@ -1150,6 +1162,7 @@
         </div>
       </div>
     </div>
+  </div>
   </section>
 
   <!-- ============ 2. POSICIONAMENTO ============ -->
@@ -1316,21 +1329,14 @@
 
         <figure class="auvp-edge__figure auvp-abre" aria-hidden="true">
           <div class="auvp-globe">
-            <div class="auvp-globe__sphere">
-              <span class="auvp-globe__meridian"></span>
-              <span class="auvp-globe__meridian"></span>
-              <span class="auvp-globe__meridian"></span>
-              <span class="auvp-globe__meridian"></span>
-              <span class="auvp-globe__meridian"></span>
-              <span class="auvp-globe__meridian"></span>
-              <span class="auvp-globe__lat auvp-globe__lat--eq"></span>
-              <span class="auvp-globe__lat auvp-globe__lat--n"></span>
-              <span class="auvp-globe__lat auvp-globe__lat--s"></span>
-              <span class="auvp-globe__dot" style="transform: rotateY(35deg) rotateX(15deg) translateZ(calc(var(--gd) / 2))"></span>
-              <span class="auvp-globe__dot" style="transform: rotateY(110deg) rotateX(-25deg) translateZ(calc(var(--gd) / 2))"></span>
-              <span class="auvp-globe__dot auvp-globe__dot--faint" style="transform: rotateY(200deg) rotateX(30deg) translateZ(calc(var(--gd) / 2))"></span>
-              <span class="auvp-globe__dot auvp-globe__dot--faint" style="transform: rotateY(260deg) rotateX(-10deg) translateZ(calc(var(--gd) / 2))"></span>
-              <span class="auvp-globe__dot" style="transform: rotateY(320deg) rotateX(20deg) translateZ(calc(var(--gd) / 2))"></span>
+            <div class="auvp-globe__ball">
+              <span class="auvp-globe__land auvp-globe__land--1"></span>
+              <span class="auvp-globe__land auvp-globe__land--2 auvp-globe__land--faint"></span>
+              <span class="auvp-globe__land auvp-globe__land--3"></span>
+              <span class="auvp-globe__land auvp-globe__land--4 auvp-globe__land--faint"></span>
+              <span class="auvp-globe__land auvp-globe__land--5"></span>
+              <span class="auvp-globe__land auvp-globe__land--6 auvp-globe__land--faint"></span>
+              <span class="auvp-globe__land auvp-globe__land--7"></span>
             </div>
           </div>
         </figure>
@@ -1376,33 +1382,28 @@
     </div>
 
     <div class="auvp-shell">
-      <div class="auvp-net__grid auvp-sobe" role="list" aria-label="Perfis que participam">
-        <article class="auvp-net__item" role="listitem">
-          <span class="auvp-net__ghost" aria-hidden="true">01</span>
+      <div class="auvp-net__timeline" role="list" aria-label="Perfis que participam">
+        <article class="auvp-net__row auvp-sobe" role="listitem">
           <span class="auvp-num">01</span>
           <h3 class="auvp-serif">Empresários</h3>
           <p>Quem já opera um negócio e busca referência de escala, eficiência e expansão fora do Brasil.</p>
         </article>
-        <article class="auvp-net__item" role="listitem">
-          <span class="auvp-net__ghost" aria-hidden="true">02</span>
+        <article class="auvp-net__row auvp-sobe" role="listitem">
           <span class="auvp-num">02</span>
           <h3 class="auvp-serif">Investidores</h3>
           <p>Quem aloca capital e quer entender, na fonte, as economias que definem os próximos ciclos.</p>
         </article>
-        <article class="auvp-net__item" role="listitem">
-          <span class="auvp-net__ghost" aria-hidden="true">03</span>
+        <article class="auvp-net__row auvp-sobe" role="listitem">
           <span class="auvp-num">03</span>
           <h3 class="auvp-serif">Executivos</h3>
           <p>Quem toma decisão dentro de grandes estruturas e precisa de repertório internacional real.</p>
         </article>
-        <article class="auvp-net__item" role="listitem">
-          <span class="auvp-net__ghost" aria-hidden="true">04</span>
+        <article class="auvp-net__row auvp-sobe" role="listitem">
           <span class="auvp-num">04</span>
           <h3 class="auvp-serif">Fundadores</h3>
           <p>Quem está construindo e quer ver de perto como empresas globais resolveram os mesmos problemas.</p>
         </article>
-        <article class="auvp-net__item auvp-net__item--wide" role="listitem">
-          <span class="auvp-net__ghost" aria-hidden="true">05</span>
+        <article class="auvp-net__row auvp-sobe" role="listitem">
           <span class="auvp-num">05</span>
           <h3 class="auvp-serif">Conversas que continuam</h3>
           <p>O grupo não termina no embarque de volta. As conexões seguem — e é aí que costuma nascer o negócio.</p>
