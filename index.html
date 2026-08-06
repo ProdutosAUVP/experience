@@ -525,7 +525,7 @@
 }
 .auvp-x .auvp-card__title { font-size: clamp(2rem, 3.3vw, 3.3rem); line-height: 1; margin-bottom: 0.55rem; }
 .auvp-x .auvp-card__sub {
-  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+  font-size: clamp(0.9rem, 1.05vw, 1.05rem);
   color: var(--paper);
   line-height: 1.35;
   margin-bottom: 0.9rem;
@@ -935,11 +935,12 @@
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   color: var(--paper);
+  border: 1px solid rgba(247, 245, 241, 0.55);
   display: grid;
   align-content: space-between;
   gap: 0.75rem;
   overflow: hidden;
-  transition: flex-grow 0.6s var(--ease), background-color 0.5s var(--ease);
+  transition: flex-grow 0.6s var(--ease), background-color 0.5s var(--ease), border-color 0.5s var(--ease);
 }
 .auvp-x .auvp-exp__card:hover { background: rgba(28, 27, 24, 0.55); }
 .auvp-x .auvp-exp__card-top { display: flex; align-items: center; gap: 0.75rem; }
@@ -972,6 +973,7 @@
 .auvp-x #auvp-e4:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(4) {
   flex-grow: 2.6;
   background: var(--verde);
+  border-color: transparent;
 }
 .auvp-x #auvp-e1:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(1) .auvp-num,
 .auvp-x #auvp-e2:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(2) .auvp-num,
@@ -1151,6 +1153,16 @@
       animation-timeline: view();
       animation-range: cover 0% cover 100%;
     }
+    .auvp-x .auvp-net__numeral {
+      animation: auvp-net-numeral-fill linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+    .auvp-x .auvp-net__copy h3 {
+      animation: auvp-net-topic-weight linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
   }
 }
 
@@ -1168,6 +1180,16 @@
   0%   { opacity: 0.3; transform: scale(0.92); }
   50%  { opacity: 1; transform: scale(1); }
   100% { opacity: 0.3; transform: scale(0.92); }
+}
+@keyframes auvp-net-numeral-fill {
+  0%   { color: transparent; -webkit-text-stroke-color: var(--verde-30); }
+  50%  { color: var(--verde); -webkit-text-stroke-color: var(--verde); }
+  100% { color: transparent; -webkit-text-stroke-color: var(--verde-30); }
+}
+@keyframes auvp-net-topic-weight {
+  0%   { font-weight: 300; }
+  50%  { font-weight: 700; }
+  100% { font-weight: 300; }
 }
 
 /* ---------- 18. Preferência por menos movimento ---------- */
