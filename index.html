@@ -894,19 +894,6 @@
   max-width: 16ch;
 }
 .auvp-x .auvp-exp__intro h2 em { color: var(--paper); text-decoration: underline; text-decoration-color: var(--verde-60); text-underline-offset: 0.12em; }
-.auvp-x .auvp-exp__tagline {
-  position: absolute; inset: auto auto auto 0;
-  top: 100%;
-  margin-top: clamp(0.9rem, 1.6vw, 1.4rem);
-  font-size: var(--fs-sub);
-  font-weight: 300;
-  color: rgba(247, 245, 241, 0.85);
-  max-width: 34ch;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.6s var(--ease) 0.05s, transform 0.6s var(--ease) 0.05s;
-}
-
 .auvp-x .auvp-exp__cards {
   position: absolute;
   z-index: 2;
@@ -953,11 +940,6 @@
 .auvp-x #auvp-e2:checked ~ .auvp-exp__media .auvp-exp__bg--2,
 .auvp-x #auvp-e3:checked ~ .auvp-exp__media .auvp-exp__bg--3,
 .auvp-x #auvp-e4:checked ~ .auvp-exp__media .auvp-exp__bg--4 { opacity: 1; }
-
-.auvp-x #auvp-e1:checked ~ .auvp-exp__intro .auvp-exp__tagline--1,
-.auvp-x #auvp-e2:checked ~ .auvp-exp__intro .auvp-exp__tagline--2,
-.auvp-x #auvp-e3:checked ~ .auvp-exp__intro .auvp-exp__tagline--3,
-.auvp-x #auvp-e4:checked ~ .auvp-exp__intro .auvp-exp__tagline--4 { opacity: 1; transform: none; }
 
 .auvp-x #auvp-e1:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(1),
 .auvp-x #auvp-e2:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(2),
@@ -1531,9 +1513,6 @@
 
         <div class="auvp-exp__intro">
           <h2 class="auvp-sobe">Conforto existe para permitir foco. Cuidaremos de <em>tudo</em> para você.</h2>
-          <p class="auvp-exp__tagline auvp-exp__tagline--2" aria-hidden="true">Deslocamentos e acessos resolvidos antes de você chegar.</p>
-          <p class="auvp-exp__tagline auvp-exp__tagline--3" aria-hidden="true">Alguém disponível do primeiro ao último dia.</p>
-          <p class="auvp-exp__tagline auvp-exp__tagline--4" aria-hidden="true">Uma agenda densa, sem ser sufocante.</p>
         </div>
 
         <div class="auvp-exp__cards" role="tablist" aria-label="Como cuidamos da sua experiência">
