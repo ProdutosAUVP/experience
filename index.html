@@ -615,14 +615,13 @@
 .auvp-x .auvp-chip input:focus-visible + span { outline: 2px solid var(--verde); outline-offset: 3px; }
 
 /* ---------- 10. Diferencial ----------
-   Globo realista: um mapa-múndi (foto de satélite, domínio público)
-   deitado numa esfera, girando por um pan contínuo e sem costura do
-   próprio recorte circular — sem canvas, sem WebGL, sem JavaScript.
-   Fica centralizado verticalmente e levemente deslocado para a
-   direita; o texto cresce e fica alinhado à esquerda, longe da esfera. */
+   O texto atravessa o globo de propósito, igual à referência: uma
+   parede de palavras grandes por cima da esfera. Um véu radial claro
+   (mesma cor do papel) fica entre o globo e o texto só na área da
+   esfera, então a leitura não depende do que está por baixo. */
 .auvp-x .auvp-edge {
   position: relative;
-  min-height: clamp(480px, 78vh, 760px);
+  min-height: clamp(520px, 86vh, 820px);
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -631,20 +630,41 @@
   position: absolute;
   z-index: 0;
   top: 50%;
-  right: clamp(-6%, 4vw, 8%);
+  right: clamp(-10%, 1vw, 2%);
   transform: translateY(-50%);
+  width: clamp(340px, 46vw, 640px);
+  aspect-ratio: 1;
   pointer-events: none;
 }
-.auvp-x .auvp-edge__content {
-  position: relative;
+.auvp-x .auvp-edge__globe::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(247, 245, 241, 0.88) 0%, rgba(247, 245, 241, 0.62) 42%, rgba(247, 245, 241, 0) 72%);
   z-index: 1;
-  max-width: 46ch;
-  margin-inline: 0;
-  text-align: left;
-  padding-block: clamp(3rem, 6vw, 5rem);
 }
-.auvp-x .auvp-edge__title { font-size: clamp(2rem, 3.9vw, 3.6rem); line-height: 1.1; margin-bottom: 1.1rem; }
-.auvp-x .auvp-edge__lede { color: var(--ink-60); font-size: var(--fs-sub); line-height: 1.55; }
+.auvp-x .auvp-edge__content { position: relative; z-index: 2; width: 100%; padding-block: clamp(3rem, 6vw, 5rem); }
+.auvp-x .auvp-edge__title {
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  font-weight: 300;
+  color: var(--ink-70, var(--ink-80));
+  max-width: 36ch;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+.auvp-x .auvp-edge__stack { display: grid; }
+.auvp-x .auvp-edge__stack span {
+  display: block;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(2rem, 7vw, 5.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line-soft);
+  padding-block: 0.08em;
+}
 
 /* Esfera com textura de mapa-múndi real (NASA Blue Marble via
    Wikimedia Commons, domínio público). O truque: a imagem se repete
@@ -653,8 +673,9 @@
    contínua — sem precisar de 3D de verdade. */
 .auvp-x .auvp-globe-real {
   position: relative;
-  width: clamp(300px, 40vw, 560px);
-  aspect-ratio: 1;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   isolation: isolate;
@@ -683,11 +704,11 @@
 }
 
 @media (max-width: 900px) {
-  .auvp-x .auvp-edge__globe { right: -12%; opacity: 0.55; }
-  .auvp-x .auvp-edge__content { max-width: 40ch; }
+  .auvp-x .auvp-edge__globe { right: -18%; }
+  .auvp-x .auvp-edge__stack span { font-size: clamp(1.7rem, 8vw, 3rem); }
 }
 @media (max-width: 620px) {
-  .auvp-x .auvp-edge__globe { right: -30%; opacity: 0.4; }
+  .auvp-x .auvp-edge__globe { right: -34%; width: clamp(280px, 78vw, 420px); }
 }
 
 /* ---------- 11. Faixa deslizante ---------- */
@@ -727,77 +748,75 @@
 }
 
 /* ---------- 12. Networking ----------
-   Linha do tempo vertical: uma haste corre por trás dos perfis, um
-   traço verde "preenche" ela conforme a página rola, e o ponto de
-   cada perfil só aparece quando aquele perfil entra na tela — nada
-   fica visível antes da hora. Fundo claro, igual ao resto do site. */
+   Dobra compacta, em zigue-zague numa espinha central — cada perfil
+   intercala de lado. Funciona como uma roleta: o item ganha foco
+   (opacidade e escala plenas) só enquanto cruza o centro da tela,
+   e esmaece nas pontas — destacando um de cada vez conforme rola. */
 .auvp-x .auvp-net__intro { text-align: center; }
-.auvp-x .auvp-net__statement { font-size: clamp(2rem, 5.4vw, 5.6rem); line-height: 1.03; letter-spacing: -0.035em; max-width: 16ch; margin-inline: auto; }
-.auvp-x .auvp-net__complement { max-width: 46ch; margin-inline: auto; margin-top: clamp(1.5rem, 3vw, 2.4rem); color: var(--ink-80); font-size: var(--fs-sub); line-height: 1.55; }
+.auvp-x .auvp-net__statement { font-size: clamp(1.75rem, 4.4vw, 4rem); line-height: 1.05; letter-spacing: -0.035em; max-width: 16ch; margin-inline: auto; }
+.auvp-x .auvp-net__complement { max-width: 40ch; margin-inline: auto; margin-top: clamp(1rem, 2vw, 1.5rem); color: var(--ink-80); font-size: var(--fs-body); line-height: 1.55; }
 
 .auvp-x .auvp-net__list {
-  --rail: clamp(0.9rem, 1.6vw, 1.15rem);
+  --gut: clamp(1.5rem, 3vw, 2.5rem);
   position: relative;
-  max-width: 640px;
+  max-width: 620px;
   margin-inline: auto;
-  margin-top: clamp(3rem, 6vw, 5rem);
-  padding-left: clamp(2.5rem, 5vw, 3.75rem);
+  margin-top: clamp(2rem, 4vw, 3rem);
+  display: grid;
+  grid-template-columns: 1fr var(--gut) 1fr;
 }
 .auvp-x .auvp-net__list::before {
   content: "";
   position: absolute;
-  left: var(--rail);
-  top: 0.4em; bottom: 0.4em;
+  left: 50%; top: 0.4em; bottom: 0.4em;
   width: 1px;
   background: var(--line);
-}
-.auvp-x .auvp-net__progress {
-  position: absolute;
-  left: var(--rail);
-  top: 0.4em; bottom: 0.4em;
-  width: 1px;
-  background: var(--verde);
-  transform-origin: top;
+  transform: translateX(-50%);
 }
 .auvp-x .auvp-net__item {
   position: relative;
-  padding-block: clamp(1.75rem, 3vw, 2.5rem);
-  border-bottom: 1px solid var(--line);
-  transition: padding-left 0.6s var(--ease);
+  padding-block: clamp(1.1rem, 2vw, 1.6rem);
 }
-.auvp-x .auvp-net__item:hover { padding-left: 0.6rem; }
+.auvp-x .auvp-net__item:nth-child(odd) { grid-column: 1; text-align: right; }
+.auvp-x .auvp-net__item:nth-child(even) { grid-column: 2 / -1; text-align: left; }
+.auvp-x .auvp-net__item > * { max-width: 28ch; }
+.auvp-x .auvp-net__item:nth-child(odd) > * { margin-left: auto; }
+.auvp-x .auvp-net__item:nth-child(even) > * { margin-right: auto; }
 .auvp-x .auvp-net__dot {
   position: absolute;
-  left: calc(-1 * clamp(2.5rem, 5vw, 3.75rem) + var(--rail) - 5px);
-  top: clamp(2.2rem, 3.6vw, 3rem);
-  width: 11px; height: 11px;
+  top: clamp(1.4rem, 2.4vw, 1.9rem);
+  width: 8px; height: 8px;
   border-radius: 50%;
   background: var(--verde);
   box-shadow: 0 0 0 4px var(--paper);
 }
+.auvp-x .auvp-net__item:nth-child(odd) .auvp-net__dot { right: calc(var(--gut) / -2 - 4px); }
+.auvp-x .auvp-net__item:nth-child(even) .auvp-net__dot { left: calc(var(--gut) / -2 - 4px); }
 .auvp-x .auvp-net__numeral {
   display: block;
   font-family: var(--display);
   font-weight: 300;
-  font-size: clamp(2.25rem, 5vw, 4rem);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
   line-height: 1;
   color: transparent;
-  -webkit-text-stroke: 1.5px var(--verde-30);
-  margin-bottom: 0.5rem;
-  transition: -webkit-text-stroke-color 0.5s var(--ease);
+  -webkit-text-stroke: 1.3px var(--verde-30);
+  margin-bottom: 0.35rem;
 }
-.auvp-x .auvp-net__item:hover .auvp-net__numeral { -webkit-text-stroke-color: var(--verde); }
 .auvp-x .auvp-net__copy h3 {
   font-family: var(--corpo);
   font-style: italic;
   font-weight: 300;
-  font-size: clamp(1.3rem, 2.1vw, 1.8rem);
-  margin-bottom: 0.5rem;
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  margin-bottom: 0.35rem;
 }
-.auvp-x .auvp-net__copy p { font-size: var(--fs-small); color: var(--ink-60); line-height: 1.7; max-width: 46ch; }
+.auvp-x .auvp-net__copy p { font-size: var(--fs-micro); color: var(--ink-60); line-height: 1.6; }
 
 @media (max-width: 620px) {
-  .auvp-x .auvp-net__numeral { font-size: clamp(1.9rem, 10vw, 2.75rem); }
+  .auvp-x .auvp-net__list { --gut: 1rem; grid-template-columns: 1rem 1fr; }
+  .auvp-x .auvp-net__list::before { left: 1rem; transform: none; }
+  .auvp-x .auvp-net__item, .auvp-x .auvp-net__item:nth-child(even) { grid-column: 2; text-align: left; }
+  .auvp-x .auvp-net__item > *, .auvp-x .auvp-net__item:nth-child(even) > * { margin-left: 0; margin-right: auto; max-width: 34ch; }
+  .auvp-x .auvp-net__item .auvp-net__dot, .auvp-x .auvp-net__item:nth-child(even) .auvp-net__dot { left: -1rem; right: auto; }
 }
 
 /* ---------- 13. Experiência ----------
@@ -1094,15 +1113,10 @@
       animation: auvp-progresso linear both;
       animation-timeline: scroll(root block);
     }
-    .auvp-x .auvp-net__progress {
-      animation: auvp-net-fill linear both;
+    .auvp-x .auvp-net__item {
+      animation: auvp-net-focus linear both;
       animation-timeline: view();
-      animation-range: entry 0% cover 92%;
-    }
-    .auvp-x .auvp-net__dot {
-      animation: auvp-net-pop linear both;
-      animation-timeline: view();
-      animation-range: entry 25% cover 48%;
+      animation-range: cover 0% cover 100%;
     }
   }
 }
@@ -1117,13 +1131,10 @@
 }
 @keyframes auvp-parallax { to { transform: translateY(12%); } }
 @keyframes auvp-progresso { to { transform: scaleX(1); } }
-@keyframes auvp-net-fill {
-  from { transform: scaleY(0); }
-  to { transform: scaleY(1); }
-}
-@keyframes auvp-net-pop {
-  from { transform: scale(0); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+@keyframes auvp-net-focus {
+  0%   { opacity: 0.3; transform: scale(0.92); }
+  50%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0.3; transform: scale(0.92); }
 }
 
 /* ---------- 18. Preferência por menos movimento ---------- */
@@ -1371,13 +1382,17 @@
 
     <div class="auvp-shell auvp-edge__content">
       <h2 class="auvp-edge__title auvp-sobe">
-        O valor da Experience não está só no destino. Está no <em>acesso</em>.
+        O valor da Experience não está só no destino. Está no acesso — negócios nascem da cultura,
+        dos hábitos e da forma como as pessoas vivem.
       </h2>
-      <p class="auvp-edge__lede auvp-sobe">
-        Negócios nascem da cultura, dos hábitos e da forma como as pessoas vivem — por isso, cada imersão
-        também é um mergulho no contexto local. Gastronomia, rotina, comportamento, arquitetura e dinâmica
-        social: tudo ajuda a entender como aquele mercado pensa, consome e cresce.
-      </p>
+      <div class="auvp-edge__stack auvp-sobe" aria-hidden="true">
+        <span>Gastronomia</span>
+        <span>Rotina</span>
+        <span>Comportamento</span>
+        <span>Arquitetura</span>
+        <span>Dinâmica social</span>
+      </div>
+      <p class="auvp-sr">Gastronomia, rotina, comportamento, arquitetura e dinâmica social.</p>
     </div>
   </section>
 
@@ -1407,8 +1422,7 @@
 
     <div class="auvp-shell">
       <div class="auvp-net__list" role="list" aria-label="Perfis que participam">
-        <span class="auvp-net__progress" aria-hidden="true"></span>
-        <article class="auvp-net__item auvp-sobe" role="listitem">
+        <article class="auvp-net__item" role="listitem">
           <span class="auvp-net__dot" aria-hidden="true"></span>
           <span class="auvp-net__numeral" aria-hidden="true">I</span>
           <div class="auvp-net__copy">
@@ -1416,7 +1430,7 @@
             <p>Quem já opera um negócio e busca referência de escala, eficiência e expansão fora do Brasil.</p>
           </div>
         </article>
-        <article class="auvp-net__item auvp-sobe" role="listitem">
+        <article class="auvp-net__item" role="listitem">
           <span class="auvp-net__dot" aria-hidden="true"></span>
           <span class="auvp-net__numeral" aria-hidden="true">II</span>
           <div class="auvp-net__copy">
@@ -1424,7 +1438,7 @@
             <p>Quem aloca capital e quer entender, na fonte, as economias que definem os próximos ciclos.</p>
           </div>
         </article>
-        <article class="auvp-net__item auvp-sobe" role="listitem">
+        <article class="auvp-net__item" role="listitem">
           <span class="auvp-net__dot" aria-hidden="true"></span>
           <span class="auvp-net__numeral" aria-hidden="true">III</span>
           <div class="auvp-net__copy">
@@ -1432,7 +1446,7 @@
             <p>Quem toma decisão dentro de grandes estruturas e precisa de repertório internacional real.</p>
           </div>
         </article>
-        <article class="auvp-net__item auvp-sobe" role="listitem">
+        <article class="auvp-net__item" role="listitem">
           <span class="auvp-net__dot" aria-hidden="true"></span>
           <span class="auvp-net__numeral" aria-hidden="true">IV</span>
           <div class="auvp-net__copy">
@@ -1440,7 +1454,7 @@
             <p>Quem está construindo e quer ver de perto como empresas globais resolveram os mesmos problemas.</p>
           </div>
         </article>
-        <article class="auvp-net__item auvp-sobe" role="listitem">
+        <article class="auvp-net__item" role="listitem">
           <span class="auvp-net__dot" aria-hidden="true"></span>
           <span class="auvp-net__numeral" aria-hidden="true">V</span>
           <div class="auvp-net__copy">
