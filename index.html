@@ -41,7 +41,7 @@
    ========================================================================== */
 
 @import url("https://api.fontshare.com/v2/css?f%5B%5D=general-sans@300,400,500,600,700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Rokkitt:wght@300..600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 /* ---------- 1. Tokens ---------- */
 .auvp-x {
@@ -67,7 +67,7 @@
 
   /* tipografia */
   --display: "General Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --corpo: "Rokkitt", Rockwell, Georgia, "Times New Roman", serif;
+  --corpo: "Courier Prime", "Courier New", Courier, monospace;
 
   --fs-hero: clamp(2.7rem, 7vw, 7.6rem);
   --fs-display: clamp(2.1rem, 4.8vw, 4.8rem);
@@ -659,7 +659,7 @@
   position: absolute;
   z-index: 0;
   top: 50%;
-  right: clamp(-10%, 1vw, 2%);
+  right: clamp(6%, 14vw, 22%);
   transform: translateY(-50%);
   width: clamp(340px, 46vw, 640px);
   aspect-ratio: 1;
@@ -809,7 +809,7 @@
 }
 .auvp-x .auvp-net__item:nth-child(odd) { margin-right: auto; text-align: right; }
 .auvp-x .auvp-net__item:nth-child(even) { margin-left: auto; text-align: left; }
-.auvp-x .auvp-net__item > * { max-width: 28ch; }
+.auvp-x .auvp-net__item > * { max-width: 32ch; }
 .auvp-x .auvp-net__item:nth-child(odd) > * { margin-left: auto; }
 .auvp-x .auvp-net__item:nth-child(even) > * { margin-right: auto; }
 .auvp-x .auvp-net__dot {
@@ -826,20 +826,20 @@
   display: block;
   font-family: var(--display);
   font-weight: 300;
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-size: clamp(1.9rem, 4vw, 3rem);
   line-height: 1;
   color: transparent;
-  -webkit-text-stroke: 1.3px var(--verde-30);
-  margin-bottom: 0.35rem;
+  -webkit-text-stroke: 1.5px var(--verde-30);
+  margin-bottom: 0.4rem;
 }
 .auvp-x .auvp-net__copy h3 {
   font-family: var(--corpo);
   font-style: italic;
   font-weight: 300;
-  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
-  margin-bottom: 0.35rem;
+  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+  margin-bottom: 0.4rem;
 }
-.auvp-x .auvp-net__copy p { font-size: var(--fs-micro); color: var(--ink-60); line-height: 1.6; }
+.auvp-x .auvp-net__copy p { font-size: var(--fs-small); color: var(--ink-60); line-height: 1.65; }
 
 @media (max-width: 620px) {
   .auvp-x .auvp-net__list::before { left: 0.4rem; transform: none; }
@@ -1318,7 +1318,7 @@
             <h3 class="auvp-card__title">China</h3>
             <p class="auvp-card__sub">O maior laboratório de negócios do mundo</p>
             <p class="auvp-card__desc">Shanghai, Shenzhen e Hangzhou. Tecnologia, escala e execução em nível global.</p>
-            <span class="auvp-card__cta"><span class="auvp-abrir">Ver detalhes</span><span class="auvp-fechar">Fechar</span> <i aria-hidden="true">&rarr;</i></span>
+            <span class="auvp-card__cta"><span class="auvp-abrir">Ver detalhes</span><span class="auvp-fechar">Fechar</span></span>
           </summary>
 
           <div class="auvp-card__panel">
@@ -1342,7 +1342,7 @@
             <h3 class="auvp-card__title">Chile</h3>
             <p class="auvp-card__sub">O coração mineiro da América Latina</p>
             <p class="auvp-card__desc">Negócios, internacionalização e oportunidades no mercado latino-americano.</p>
-            <span class="auvp-card__cta"><span class="auvp-abrir">Ver detalhes</span><span class="auvp-fechar">Fechar</span> <i aria-hidden="true">&rarr;</i></span>
+            <span class="auvp-card__cta"><span class="auvp-abrir">Ver detalhes</span><span class="auvp-fechar">Fechar</span></span>
           </summary>
 
           <div class="auvp-card__panel">
