@@ -1040,11 +1040,25 @@
 .auvp-x .auvp-footer {
   --f-texto: rgba(255, 255, 255, 0.62);
   --f-linha: rgba(255, 255, 255, 0.12);
+  position: relative;
+  isolation: isolate;
   background: #000;
   color: var(--f-texto);
   font-family: var(--display);
   font-weight: 400;
   padding-block: clamp(3.5rem, 7vw, 6rem) 2.5rem;
+}
+/* Enquanto o rodapé era transparente, o fundo do tema não incomodava.
+   Agora ele precisa ser preto — e muitos temas pintam `footer` com
+   !important, que ganha de qualquer especificidade. Esta camada é
+   desenhada atrás do conteúdo e por cima do fundo do próprio elemento,
+   então o preto sobrevive mesmo quando o tema vence a linha acima. */
+.auvp-x .auvp-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #000;
 }
 .auvp-x .auvp-footer__grid {
   display: grid;
