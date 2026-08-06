@@ -530,16 +530,45 @@
   line-height: 1.35;
   margin-bottom: 0.9rem;
 }
-.auvp-x .auvp-card__desc { font-size: var(--fs-small); color: rgba(247, 245, 241, 0.75); max-width: 34ch; line-height: 1.65; }
+/* Descrição e CTA só aparecem no hover (ou quando o card está aberto,
+   para quem navega por toque/teclado sem hover) — o card fechado
+   mostra só título e subtítulo. */
+.auvp-x .auvp-card__desc {
+  font-size: var(--fs-small);
+  color: rgba(247, 245, 241, 0.75);
+  max-width: 34ch;
+  line-height: 1.65;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  transition: max-height 0.5s var(--ease), opacity 0.4s var(--ease), margin-top 0.5s var(--ease);
+}
+.auvp-x .auvp-card:hover .auvp-card__desc,
+.auvp-x .auvp-card[open] .auvp-card__desc {
+  max-height: 10em;
+  opacity: 1;
+  margin-top: 0.35rem;
+}
 .auvp-x .auvp-card__cta {
   display: inline-flex; align-items: center; gap: 0.7rem;
-  margin-top: clamp(1.25rem, 2vw, 1.9rem);
+  margin-top: 0;
   font-family: var(--display);
   font-size: var(--fs-micro);
   font-weight: 300;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--paper);
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.5s var(--ease), opacity 0.4s var(--ease), margin-top 0.5s var(--ease);
+}
+.auvp-x .auvp-card:hover .auvp-card__cta,
+.auvp-x .auvp-card[open] .auvp-card__cta {
+  max-height: 3rem;
+  opacity: 1;
+  margin-top: clamp(1.25rem, 2vw, 1.9rem);
 }
 .auvp-x .auvp-card__cta i {
   display: grid; place-items: center;
@@ -621,7 +650,7 @@
    esfera, então a leitura não depende do que está por baixo. */
 .auvp-x .auvp-edge {
   position: relative;
-  min-height: clamp(520px, 86vh, 820px);
+  min-height: clamp(440px, 70vh, 680px);
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -657,13 +686,12 @@
   display: block;
   font-family: var(--display);
   font-weight: 500;
-  font-size: clamp(2rem, 7vw, 5.5rem);
-  line-height: 1.05;
+  font-size: clamp(1.7rem, 6vw, 4.6rem);
+  line-height: 1.08;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--ink);
-  border-bottom: 1px solid var(--line-soft);
-  padding-block: 0.08em;
+  padding-block: 0.05em;
 }
 
 /* Esfera com textura de mapa-múndi real (NASA Blue Marble via
@@ -762,8 +790,6 @@
   max-width: 620px;
   margin-inline: auto;
   margin-top: clamp(2rem, 4vw, 3rem);
-  display: grid;
-  grid-template-columns: 1fr var(--gut) 1fr;
 }
 .auvp-x .auvp-net__list::before {
   content: "";
@@ -773,12 +799,16 @@
   background: var(--line);
   transform: translateX(-50%);
 }
+/* Cada item é um bloco normal (um por linha, sem risco de grid
+   empurrar dois para a mesma fileira) — a largura de 50% menos meio
+   vão, com margem automática de um lado só, é o que intercala. */
 .auvp-x .auvp-net__item {
   position: relative;
+  width: calc(50% - var(--gut) / 2);
   padding-block: clamp(1.1rem, 2vw, 1.6rem);
 }
-.auvp-x .auvp-net__item:nth-child(odd) { grid-column: 1; text-align: right; }
-.auvp-x .auvp-net__item:nth-child(even) { grid-column: 2 / -1; text-align: left; }
+.auvp-x .auvp-net__item:nth-child(odd) { margin-right: auto; text-align: right; }
+.auvp-x .auvp-net__item:nth-child(even) { margin-left: auto; text-align: left; }
 .auvp-x .auvp-net__item > * { max-width: 28ch; }
 .auvp-x .auvp-net__item:nth-child(odd) > * { margin-left: auto; }
 .auvp-x .auvp-net__item:nth-child(even) > * { margin-right: auto; }
@@ -812,9 +842,13 @@
 .auvp-x .auvp-net__copy p { font-size: var(--fs-micro); color: var(--ink-60); line-height: 1.6; }
 
 @media (max-width: 620px) {
-  .auvp-x .auvp-net__list { --gut: 1rem; grid-template-columns: 1rem 1fr; }
-  .auvp-x .auvp-net__list::before { left: 1rem; transform: none; }
-  .auvp-x .auvp-net__item, .auvp-x .auvp-net__item:nth-child(even) { grid-column: 2; text-align: left; }
+  .auvp-x .auvp-net__list::before { left: 0.4rem; transform: none; }
+  .auvp-x .auvp-net__item, .auvp-x .auvp-net__item:nth-child(even) {
+    width: 100%;
+    margin-left: 1.4rem;
+    margin-right: 0;
+    text-align: left;
+  }
   .auvp-x .auvp-net__item > *, .auvp-x .auvp-net__item:nth-child(even) > * { margin-left: 0; margin-right: auto; max-width: 34ch; }
   .auvp-x .auvp-net__item .auvp-net__dot, .auvp-x .auvp-net__item:nth-child(even) .auvp-net__dot { left: -1rem; right: auto; }
 }
@@ -1165,7 +1199,6 @@
       <a class="auvp-nav__link" href="#networking">Networking</a>
       <a class="auvp-nav__link" href="#experiencia">Experiência</a>
       <a class="auvp-nav__link" href="#faq">FAQ</a>
-      <a class="auvp-btn auvp-btn--sm" href="https://wa.me/55SEUNUMERO">Fale com a gente</a>
     </nav>
 
     <a class="auvp-burger" href="#menu">Menu <i aria-hidden="true"></i></a>
