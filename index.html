@@ -278,9 +278,9 @@
   z-index: 800;
   width: 100%;
   margin-bottom: calc(var(--nav-h) * -1);
-  background: rgba(247, 245, 241, 0.82);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(247, 245, 241, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line-soft);
 }
 .auvp-x .auvp-nav__inner {
@@ -615,61 +615,71 @@
 .auvp-x .auvp-chip input:focus-visible + span { outline: 2px solid var(--verde); outline-offset: 3px; }
 
 /* ---------- 10. Diferencial ----------
-   Foto real da Terra à noite ao fundo. As palavras (os mesmos cinco
-   temas de antes) formam uma parede de tipografia gigante por cima —
-   duas cópias do mesmo texto empilhadas: uma apagada, sempre visível,
-   e uma clara, recortada por uma máscara circular que a esconde bem
-   onde o planeta está, revelando a cópia apagada por baixo. Nenhuma
-   imagem por trás precisa combinar pixel a pixel — é só tipografia. */
-.auvp-x .auvp-planet {
+   Globo girando (CSS puro, sem imagem) como pano de fundo, com o
+   título direto sobre ele — igual pedido. Um brilho radial suave atrás
+   do texto garante leitura sem esconder o globo, que continua visível
+   girando ao redor. Fundo claro, igual ao resto do site. */
+.auvp-x .auvp-edge {
   position: relative;
-  min-height: 100svh;
-  display: flex;
-  align-items: center;
-  background: #08080a;
+  min-height: clamp(480px, 78vh, 760px);
+  display: grid;
+  place-items: center;
   overflow: hidden;
+  text-align: center;
 }
-.auvp-x .auvp-planet__bg {
-  position: absolute; inset: 0;
-  background-image: url("https://images.pexels.com/photos/12990385/pexels-photo-12990385.jpeg");
-  background-size: cover;
-  background-position: 78% center;
+.auvp-x .auvp-edge__globe { position: absolute; inset: 0; z-index: 0; display: grid; place-items: center; }
+.auvp-x .auvp-edge__glow {
+  position: absolute;
+  z-index: 1;
+  width: min(88%, 760px);
+  aspect-ratio: 1;
+  background: radial-gradient(circle, var(--paper) 0%, rgba(247, 245, 241, 0.88) 42%, rgba(247, 245, 241, 0) 70%);
+  pointer-events: none;
 }
-.auvp-x .auvp-planet__scrim {
-  position: absolute; inset: 0;
-  background:
-    repeating-linear-gradient(to bottom, rgba(247, 245, 241, 0.035) 0, rgba(247, 245, 241, 0.035) 1px, transparent 1px, transparent 74px),
-    linear-gradient(to right, rgba(8, 8, 10, 0.88) 0%, rgba(8, 8, 10, 0.5) 42%, rgba(8, 8, 10, 0.1) 74%);
-}
-.auvp-x .auvp-planet__inner { position: relative; z-index: 1; padding-block: clamp(3rem, 8vw, 6rem); width: 100%; }
-.auvp-x .auvp-planet__title { color: var(--paper); font-size: clamp(1.5rem, 2.8vw, 2.2rem); max-width: 22ch; margin-bottom: 0.75rem; }
-.auvp-x .auvp-planet__title em { color: var(--paper); text-decoration: underline; text-decoration-color: var(--verde-60); text-underline-offset: 0.12em; }
-.auvp-x .auvp-planet__lede { color: rgba(247, 245, 241, 0.55); max-width: 44ch; font-size: var(--fs-small); margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+.auvp-x .auvp-edge__content { position: relative; z-index: 2; max-width: 30ch; padding-inline: 1rem; }
+.auvp-x .auvp-edge__title { font-size: clamp(1.9rem, 3.6vw, 3.2rem); line-height: 1.1; margin-bottom: 1rem; }
+.auvp-x .auvp-edge__lede { color: var(--ink-60); font-size: var(--fs-sub); line-height: 1.55; }
 
-.auvp-x .auvp-planet__stack { display: grid; }
-.auvp-x .auvp-planet__dim, .auvp-x .auvp-planet__bright { grid-area: 1 / 1; }
-.auvp-x .auvp-planet__dim span, .auvp-x .auvp-planet__bright span {
-  display: block;
-  font-family: var(--display);
-  font-weight: 500;
-  font-size: clamp(2rem, 7.4vw, 6rem);
-  line-height: 1.04;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  border-bottom: 1px solid rgba(247, 245, 241, 0.08);
-  padding-block: 0.06em;
+/* Globo terrestre em CSS puro — sem canvas, sem JavaScript, sem
+   contorno de arame: uma esfera sombreada com "continentes" que
+   atravessam a face dela (crescem e encolhem de largura enquanto
+   deslizam), simulando a curva de um planeta girando. */
+.auvp-x .auvp-globe__ball {
+  position: relative;
+  width: clamp(360px, 54vw, 760px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  isolation: isolate;
+  background: radial-gradient(circle at 34% 30%, var(--paper) 0%, var(--paper-3) 55%, var(--ink-30) 100%);
+  box-shadow:
+    inset -18px -18px 46px rgba(28, 27, 24, 0.28),
+    inset 10px 10px 22px rgba(255, 255, 255, 0.5);
 }
-.auvp-x .auvp-planet__dim span { color: rgba(247, 245, 241, 0.1); }
-.auvp-x .auvp-planet__bright {
-  color: var(--paper);
-  -webkit-mask-image: radial-gradient(circle at 80% 45%, transparent 0%, transparent 26%, #000 40%);
-  mask-image: radial-gradient(circle at 80% 45%, transparent 0%, transparent 26%, #000 40%);
+.auvp-x .auvp-globe__land {
+  position: absolute;
+  left: -34%;
+  background: var(--verde);
+  opacity: 0;
+  animation: auvp-globe-drift linear infinite;
 }
-.auvp-x .auvp-planet__more { color: rgba(247, 245, 241, 0.3) !important; letter-spacing: 0.4em; border-bottom: none !important; }
-
-@media (max-width: 700px) {
-  .auvp-x .auvp-planet__bg { background-position: 88% center; }
-  .auvp-x .auvp-planet__dim span, .auvp-x .auvp-planet__bright span { font-size: clamp(1.6rem, 9vw, 2.6rem); }
+.auvp-x .auvp-globe__land--faint { background: var(--ink-45); }
+.auvp-x .auvp-globe__land--1 { top: 14%; width: 34%; height: 20%; border-radius: 42% 58% 60% 40% / 55% 45% 55% 45%; animation-duration: 11s; }
+.auvp-x .auvp-globe__land--2 { top: 34%; width: 24%; height: 15%; border-radius: 60% 40% 45% 55% / 50% 60% 40% 50%; animation-duration: 11s; animation-delay: -3.7s; }
+.auvp-x .auvp-globe__land--3 { top: 56%; width: 38%; height: 22%; border-radius: 50% 50% 40% 60% / 45% 55% 45% 55%; animation-duration: 11s; animation-delay: -7.3s; }
+.auvp-x .auvp-globe__land--4 { top: 10%; width: 15%; height: 12%; border-radius: 50%; animation-duration: 8s; animation-delay: -1.6s; }
+.auvp-x .auvp-globe__land--5 { top: 72%; width: 20%; height: 13%; border-radius: 55% 45% 50% 50% / 40% 60% 40% 60%; animation-duration: 8s; animation-delay: -5.2s; }
+.auvp-x .auvp-globe__land--6 { top: 46%; width: 13%; height: 10%; border-radius: 50%; animation-duration: 14s; animation-delay: -9.4s; }
+.auvp-x .auvp-globe__land--7 { top: 24%; width: 22%; height: 14%; border-radius: 48% 52% 55% 45% / 50% 50% 50% 50%; animation-duration: 14s; animation-delay: -2.3s; }
+@keyframes auvp-globe-drift {
+  0%   { left: -34%; transform: scaleX(0.32); opacity: 0; }
+  14%  { transform: scaleX(0.68); opacity: 0.82; }
+  50%  { left: 50%; transform: scaleX(1); opacity: 1; }
+  86%  { transform: scaleX(0.68); opacity: 0.82; }
+  100% { left: 134%; transform: scaleX(0.32); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .auvp-x .auvp-globe__land { animation-play-state: paused; left: 50%; transform: translateX(-50%) scaleX(1); opacity: 0.85; }
 }
 
 /* ---------- 11. Faixa deslizante ---------- */
@@ -709,60 +719,74 @@
 }
 
 /* ---------- 12. Networking ----------
-   Seção em modo escuro para um contraste editorial: os tokens de
-   papel/tinta são invertidos só aqui, dentro do escopo de #networking,
-   então título, texto e números herdam o novo fundo sem regra repetida. */
-.auvp-x #networking {
-  --paper: #161512;
-  --paper-2: #201f1b;
-  --paper-3: #292722;
-  --ink: #f7f5f1;
-  --ink-80: rgba(247, 245, 241, 0.82);
-  --ink-60: rgba(247, 245, 241, 0.6);
-  --ink-45: rgba(247, 245, 241, 0.45);
-  --ink-30: rgba(247, 245, 241, 0.3);
-  --line: rgba(247, 245, 241, 0.16);
-  --line-soft: rgba(247, 245, 241, 0.09);
-  background: var(--paper);
-}
+   Linha do tempo vertical: uma haste corre por trás dos perfis, um
+   traço verde "preenche" ela conforme a página rola, e o ponto de
+   cada perfil só aparece quando aquele perfil entra na tela — nada
+   fica visível antes da hora. Fundo claro, igual ao resto do site. */
 .auvp-x .auvp-net__statement { font-size: clamp(2rem, 5.4vw, 5.6rem); line-height: 1.03; letter-spacing: -0.035em; max-width: 16ch; }
 .auvp-x .auvp-net__complement { max-width: 46ch; margin-top: clamp(1.5rem, 3vw, 2.4rem); color: var(--ink-80); font-size: var(--fs-sub); line-height: 1.55; }
 
-.auvp-x .auvp-net__list { margin-top: clamp(3rem, 6vw, 5rem); border-top: 1px solid var(--line); }
+.auvp-x .auvp-net__list {
+  --rail: clamp(0.9rem, 1.6vw, 1.15rem);
+  position: relative;
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding-left: clamp(2.5rem, 5vw, 3.75rem);
+}
+.auvp-x .auvp-net__list::before {
+  content: "";
+  position: absolute;
+  left: var(--rail);
+  top: 0.4em; bottom: 0.4em;
+  width: 1px;
+  background: var(--line);
+}
+.auvp-x .auvp-net__progress {
+  position: absolute;
+  left: var(--rail);
+  top: 0.4em; bottom: 0.4em;
+  width: 1px;
+  background: var(--verde);
+  transform-origin: top;
+}
 .auvp-x .auvp-net__item {
   position: relative;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(1.5rem, 4vw, 3.5rem);
-  padding-block: clamp(1.75rem, 3vw, 2.75rem);
+  padding-block: clamp(1.75rem, 3vw, 2.5rem);
   border-bottom: 1px solid var(--line);
-  transition: padding-left 0.6s var(--ease), background-color 0.6s var(--ease);
+  transition: padding-left 0.6s var(--ease);
 }
-.auvp-x .auvp-net__item:hover { padding-left: 0.9rem; background: var(--paper-2); }
+.auvp-x .auvp-net__item:hover { padding-left: 0.6rem; }
+.auvp-x .auvp-net__dot {
+  position: absolute;
+  left: calc(-1 * clamp(2.5rem, 5vw, 3.75rem) + var(--rail) - 5px);
+  top: clamp(2.2rem, 3.6vw, 3rem);
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--verde);
+  box-shadow: 0 0 0 4px var(--paper);
+}
 .auvp-x .auvp-net__numeral {
+  display: block;
   font-family: var(--display);
   font-weight: 300;
-  font-size: clamp(2.75rem, 6.6vw, 5.5rem);
+  font-size: clamp(2.25rem, 5vw, 4rem);
   line-height: 1;
   color: transparent;
-  -webkit-text-stroke: 1.5px var(--ink-30);
+  -webkit-text-stroke: 1.5px var(--verde-30);
+  margin-bottom: 0.5rem;
   transition: -webkit-text-stroke-color 0.5s var(--ease);
 }
-.auvp-x .auvp-net__item:hover .auvp-net__numeral { -webkit-text-stroke-color: var(--verde-60); }
+.auvp-x .auvp-net__item:hover .auvp-net__numeral { -webkit-text-stroke-color: var(--verde); }
 .auvp-x .auvp-net__copy h3 {
   font-family: var(--corpo);
   font-style: italic;
   font-weight: 300;
-  font-size: clamp(1.4rem, 2.4vw, 2.1rem);
-  color: var(--ink);
-  margin-bottom: 0.6rem;
+  font-size: clamp(1.3rem, 2.1vw, 1.8rem);
+  margin-bottom: 0.5rem;
 }
 .auvp-x .auvp-net__copy p { font-size: var(--fs-small); color: var(--ink-60); line-height: 1.7; max-width: 46ch; }
 
 @media (max-width: 620px) {
-  .auvp-x .auvp-net__item { grid-template-columns: 1fr; gap: 0.5rem; }
-  .auvp-x .auvp-net__numeral { font-size: clamp(2rem, 12vw, 3rem); }
+  .auvp-x .auvp-net__numeral { font-size: clamp(1.9rem, 10vw, 2.75rem); }
 }
 
 /* ---------- 13. Experiência ----------
@@ -789,10 +813,10 @@
   opacity: 0;
   transition: opacity 1.1s var(--ease);
 }
-.auvp-x .auvp-exp__bg--1 { background-image: url("https://images.pexels.com/photos/18285946/pexels-photo-18285946.jpeg"); }
-.auvp-x .auvp-exp__bg--2 { background-image: url("https://images.pexels.com/photos/12391911/pexels-photo-12391911.jpeg"); }
-.auvp-x .auvp-exp__bg--3 { background-image: url("https://images.pexels.com/photos/16731630/pexels-photo-16731630.jpeg"); }
-.auvp-x .auvp-exp__bg--4 { background-image: url("https://images.pexels.com/photos/6476808/pexels-photo-6476808.jpeg"); }
+.auvp-x .auvp-exp__bg--1 { background-image: url("https://images.pexels.com/photos/18285946/pexels-photo-18285946.jpeg?auto=compress&cs=tinysrgb&w=1600"); }
+.auvp-x .auvp-exp__bg--2 { background-image: url("https://images.pexels.com/photos/12391911/pexels-photo-12391911.jpeg?auto=compress&cs=tinysrgb&w=1600"); }
+.auvp-x .auvp-exp__bg--3 { background-image: url("https://images.pexels.com/photos/16731630/pexels-photo-16731630.jpeg?auto=compress&cs=tinysrgb&w=1600"); }
+.auvp-x .auvp-exp__bg--4 { background-image: url("https://images.pexels.com/photos/6476808/pexels-photo-6476808.jpeg?auto=compress&cs=tinysrgb&w=1600"); }
 .auvp-x .auvp-exp__scrim {
   position: absolute; inset: 0; z-index: 1;
   background:
@@ -1059,6 +1083,16 @@
       animation: auvp-progresso linear both;
       animation-timeline: scroll(root block);
     }
+    .auvp-x .auvp-net__progress {
+      animation: auvp-net-fill linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 92%;
+    }
+    .auvp-x .auvp-net__dot {
+      animation: auvp-net-pop linear both;
+      animation-timeline: view();
+      animation-range: entry 25% cover 48%;
+    }
   }
 }
 
@@ -1072,6 +1106,14 @@
 }
 @keyframes auvp-parallax { to { transform: translateY(12%); } }
 @keyframes auvp-progresso { to { transform: scaleX(1); } }
+@keyframes auvp-net-fill {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+@keyframes auvp-net-pop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
 /* ---------- 18. Preferência por menos movimento ---------- */
 @media (prefers-reduced-motion: reduce) {
@@ -1140,7 +1182,7 @@
     <div class="auvp-hero__media" aria-hidden="true">
       <!-- Vídeo institucional (viagens/experiência). Se a fonte não carregar,
            o poster (foto) cobre o mesmo espaço — a dobra nunca fica em branco. -->
-      <video class="auvp-art" autoplay muted loop playsinline preload="auto" poster="https://images.pexels.com/photos/4055678/pexels-photo-4055678.jpeg">
+      <video class="auvp-art" autoplay muted loop playsinline preload="auto" poster="https://images.pexels.com/photos/4055678/pexels-photo-4055678.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1920">
         <source src="https://videos.pexels.com/video-files/13879887/13879887-uhd_2560_1440_25fps.mp4" type="video/mp4">
         <source src="https://videos.pexels.com/video-files/13879887/13879887-hd_1920_1080_25fps.mp4" type="video/mp4">
       </video>
@@ -1216,7 +1258,7 @@
 
         <details class="auvp-card auvp-sobe">
           <summary class="auvp-card__face">
-            <span class="auvp-card__media" aria-hidden="true"><img class="auvp-art" src="https://images.pexels.com/photos/37343128/pexels-photo-37343128.jpeg" alt="" loading="lazy"></span>
+            <span class="auvp-card__media" aria-hidden="true"><img class="auvp-art" src="https://images.pexels.com/photos/37343128/pexels-photo-37343128.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="" loading="lazy" decoding="async"></span>
             <span class="auvp-card__index">01 / Ásia</span>
             <h3 class="auvp-card__title">China</h3>
             <p class="auvp-card__sub">O maior laboratório de negócios do mundo</p>
@@ -1240,7 +1282,7 @@
 
         <details class="auvp-card auvp-sobe">
           <summary class="auvp-card__face">
-            <span class="auvp-card__media" aria-hidden="true"><img class="auvp-art" src="https://images.pexels.com/photos/36585242/pexels-photo-36585242.jpeg" alt="" loading="lazy"></span>
+            <span class="auvp-card__media" aria-hidden="true"><img class="auvp-art" src="https://images.pexels.com/photos/36585242/pexels-photo-36585242.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="" loading="lazy" decoding="async"></span>
             <span class="auvp-card__index">02 / América Latina</span>
             <h3 class="auvp-card__title">Chile</h3>
             <p class="auvp-card__sub">O coração mineiro da América Latina</p>
@@ -1264,7 +1306,7 @@
 
         <details class="auvp-card auvp-card--next auvp-sobe">
           <summary class="auvp-card__face">
-            <span class="auvp-card__media" aria-hidden="true"><img class="auvp-art" src="https://images.pexels.com/photos/35085680/pexels-photo-35085680.jpeg" alt="" loading="lazy"></span>
+            <span class="auvp-card__media" aria-hidden="true"><img class="auvp-art" src="https://images.pexels.com/photos/35085680/pexels-photo-35085680.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="" loading="lazy" decoding="async"></span>
             <span class="auvp-card__index">03 / A definir</span>
             <h3 class="auvp-card__title">Próximos destinos</h3>
             <p class="auvp-card__sub">Decida com a gente — para onde vamos depois?</p>
@@ -1311,38 +1353,29 @@
   </section>
 
   <!-- ============ 4. DIFERENCIAL ============ -->
-  <section class="auvp-planet" id="diferencial">
-    <div class="auvp-planet__bg" aria-hidden="true"></div>
-    <div class="auvp-planet__scrim" aria-hidden="true"></div>
+  <section class="auvp-section auvp-edge" id="diferencial">
+    <div class="auvp-edge__globe" aria-hidden="true">
+      <div class="auvp-globe__ball">
+        <span class="auvp-globe__land auvp-globe__land--1"></span>
+        <span class="auvp-globe__land auvp-globe__land--2 auvp-globe__land--faint"></span>
+        <span class="auvp-globe__land auvp-globe__land--3"></span>
+        <span class="auvp-globe__land auvp-globe__land--4 auvp-globe__land--faint"></span>
+        <span class="auvp-globe__land auvp-globe__land--5"></span>
+        <span class="auvp-globe__land auvp-globe__land--6 auvp-globe__land--faint"></span>
+        <span class="auvp-globe__land auvp-globe__land--7"></span>
+      </div>
+    </div>
+    <div class="auvp-edge__glow" aria-hidden="true"></div>
 
-    <div class="auvp-shell auvp-planet__inner">
-      <h2 class="auvp-planet__title auvp-sobe">
+    <div class="auvp-shell auvp-edge__content">
+      <h2 class="auvp-edge__title auvp-sobe">
         O valor da Experience não está só no destino. Está no <em>acesso</em>.
       </h2>
-      <p class="auvp-planet__lede auvp-sobe">
+      <p class="auvp-edge__lede auvp-sobe">
         Negócios nascem da cultura, dos hábitos e da forma como as pessoas vivem — por isso, cada imersão
-        também é um mergulho no contexto local.
+        também é um mergulho no contexto local. Gastronomia, rotina, comportamento, arquitetura e dinâmica
+        social: tudo ajuda a entender como aquele mercado pensa, consome e cresce.
       </p>
-
-      <div class="auvp-planet__stack auvp-sobe" aria-hidden="true">
-        <div class="auvp-planet__dim">
-          <span>Gastronomia</span>
-          <span>Rotina</span>
-          <span>Comportamento</span>
-          <span>Arquitetura</span>
-          <span>Dinâmica social</span>
-          <span class="auvp-planet__more">···</span>
-        </div>
-        <div class="auvp-planet__bright">
-          <span>Gastronomia</span>
-          <span>Rotina</span>
-          <span>Comportamento</span>
-          <span>Arquitetura</span>
-          <span>Dinâmica social</span>
-          <span class="auvp-planet__more">···</span>
-        </div>
-      </div>
-      <p class="auvp-sr">Gastronomia, rotina, comportamento, arquitetura e dinâmica social.</p>
     </div>
   </section>
 
@@ -1372,7 +1405,9 @@
 
     <div class="auvp-shell">
       <div class="auvp-net__list" role="list" aria-label="Perfis que participam">
+        <span class="auvp-net__progress" aria-hidden="true"></span>
         <article class="auvp-net__item auvp-sobe" role="listitem">
+          <span class="auvp-net__dot" aria-hidden="true"></span>
           <span class="auvp-net__numeral" aria-hidden="true">I</span>
           <div class="auvp-net__copy">
             <h3>Empresários</h3>
@@ -1380,6 +1415,7 @@
           </div>
         </article>
         <article class="auvp-net__item auvp-sobe" role="listitem">
+          <span class="auvp-net__dot" aria-hidden="true"></span>
           <span class="auvp-net__numeral" aria-hidden="true">II</span>
           <div class="auvp-net__copy">
             <h3>Investidores</h3>
@@ -1387,6 +1423,7 @@
           </div>
         </article>
         <article class="auvp-net__item auvp-sobe" role="listitem">
+          <span class="auvp-net__dot" aria-hidden="true"></span>
           <span class="auvp-net__numeral" aria-hidden="true">III</span>
           <div class="auvp-net__copy">
             <h3>Executivos</h3>
@@ -1394,6 +1431,7 @@
           </div>
         </article>
         <article class="auvp-net__item auvp-sobe" role="listitem">
+          <span class="auvp-net__dot" aria-hidden="true"></span>
           <span class="auvp-net__numeral" aria-hidden="true">IV</span>
           <div class="auvp-net__copy">
             <h3>Fundadores</h3>
@@ -1401,6 +1439,7 @@
           </div>
         </article>
         <article class="auvp-net__item auvp-sobe" role="listitem">
+          <span class="auvp-net__dot" aria-hidden="true"></span>
           <span class="auvp-net__numeral" aria-hidden="true">V</span>
           <div class="auvp-net__copy">
             <h3>Conversas que continuam</h3>
