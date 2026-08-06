@@ -51,8 +51,8 @@
   --paper-3: #e8e4dc;
 
   --ink: #1c1b18;
-  --ink-80: rgba(28, 27, 24, 0.8);
-  --ink-60: rgba(28, 27, 24, 0.6);
+  --ink-80: rgba(28, 27, 24, 0.9);
+  --ink-60: rgba(28, 27, 24, 0.74);
   --ink-45: rgba(28, 27, 24, 0.45);
   --ink-30: rgba(28, 27, 24, 0.3);
 
@@ -525,10 +525,13 @@
 }
 .auvp-x .auvp-card__title { font-size: clamp(2rem, 3.3vw, 3.3rem); line-height: 1; margin-bottom: 0.55rem; }
 .auvp-x .auvp-card__sub {
-  font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+  font-size: clamp(0.72rem, 0.85vw, 0.85rem);
   color: var(--paper);
   line-height: 1.35;
   margin-bottom: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 /* Descrição e CTA só aparecem no hover (ou quando o card está aberto,
    para quem navega por toque/teclado sem hover) — o card fechado
@@ -570,16 +573,6 @@
   opacity: 1;
   margin-top: clamp(1.25rem, 2vw, 1.9rem);
 }
-.auvp-x .auvp-card__cta i {
-  display: grid; place-items: center;
-  width: 34px; height: 34px;
-  border: 1px solid rgba(247, 245, 241, 0.35);
-  border-radius: 50%;
-  font-style: normal;
-  transition: background-color 0.5s var(--ease), color 0.5s var(--ease), transform 0.5s var(--ease);
-}
-.auvp-x .auvp-card:hover .auvp-card__cta i { background: var(--verde); color: var(--paper); }
-.auvp-x .auvp-card[open] .auvp-card__cta i { transform: rotate(-90deg); background: var(--verde); color: var(--paper); }
 .auvp-x .auvp-card__cta .auvp-fechar { display: none; }
 .auvp-x .auvp-card[open] .auvp-card__cta .auvp-abrir { display: none; }
 .auvp-x .auvp-card[open] .auvp-card__cta .auvp-fechar { display: inline; }
@@ -935,12 +928,11 @@
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   color: var(--paper);
-  border: 1px solid rgba(247, 245, 241, 0.55);
   display: grid;
   align-content: space-between;
   gap: 0.75rem;
   overflow: hidden;
-  transition: flex-grow 0.6s var(--ease), background-color 0.5s var(--ease), border-color 0.5s var(--ease);
+  transition: flex-grow 0.6s var(--ease), background-color 0.5s var(--ease);
 }
 .auvp-x .auvp-exp__card:hover { background: rgba(28, 27, 24, 0.55); }
 .auvp-x .auvp-exp__card-top { display: flex; align-items: center; gap: 0.75rem; }
@@ -973,7 +965,6 @@
 .auvp-x #auvp-e4:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(4) {
   flex-grow: 2.6;
   background: var(--verde);
-  border-color: transparent;
 }
 .auvp-x #auvp-e1:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(1) .auvp-num,
 .auvp-x #auvp-e2:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(2) .auvp-num,
@@ -1188,7 +1179,7 @@
 }
 @keyframes auvp-net-topic-weight {
   0%   { font-weight: 300; }
-  50%  { font-weight: 700; }
+  50%  { font-weight: 500; }
   100% { font-weight: 300; }
 }
 
@@ -1387,7 +1378,7 @@
             <h3 class="auvp-card__title">Próximos destinos</h3>
             <p class="auvp-card__sub">Decida com a gente — para onde vamos depois?</p>
             <p class="auvp-card__desc">A AUVP Experience evolui com quem está dentro. Participe da escolha dos próximos destinos.</p>
-            <span class="auvp-card__cta"><span class="auvp-abrir">Sugerir destino</span><span class="auvp-fechar">Fechar</span> <i aria-hidden="true">&rarr;</i></span>
+            <span class="auvp-card__cta"><span class="auvp-abrir">Sugerir destino</span><span class="auvp-fechar">Fechar</span></span>
           </summary>
 
           <div class="auvp-card__panel">
