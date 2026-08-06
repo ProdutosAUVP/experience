@@ -292,7 +292,7 @@
 }
 
 .auvp-x .auvp-brand { display: inline-flex; align-items: center; }
-.auvp-x .auvp-brand img { display: block; height: clamp(22px, 3vw, 30px); width: auto; }
+.auvp-x .auvp-brand img { display: block; height: clamp(34px, 4.4vw, 46px); width: auto; }
 
 .auvp-x .auvp-nav__links { display: flex; align-items: center; gap: clamp(1.25rem, 2.4vw, 2.6rem); }
 .auvp-x .auvp-nav__link {
@@ -1035,7 +1035,32 @@
 
 /* ---------- 16. Rodapé ---------- */
 .auvp-x .auvp-footer { border-top: 1px solid var(--line-soft); padding-block: clamp(3rem, 6vw, 5rem) 2rem; }
-.auvp-x .auvp-footer__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 2.5rem; }
+.auvp-x .auvp-footer__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(2.25rem, 4vw, 3rem);
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+/* A marca ocupa metade da grade; os dois blocos de links dividem o resto. */
+.auvp-x .auvp-footer__col--marca { grid-column: span 2; }
+
+.auvp-x .auvp-footer__logo { display: block; margin-bottom: 1.25rem; }
+.auvp-x .auvp-footer__logo img { display: block; height: clamp(30px, 3.6vw, 40px); width: auto; }
+.auvp-x .auvp-footer__nota {
+  font-size: var(--fs-small);
+  color: var(--ink-60);
+  margin: 0 0 1.5rem;
+}
+.auvp-x .auvp-footer__legal {
+  font-family: var(--display);
+  font-size: var(--fs-micro);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  line-height: 1.9;
+  color: var(--ink-45);
+  margin: 0;
+}
+
 .auvp-x .auvp-footer__col h4 {
   font-family: var(--display);
   font-size: var(--fs-micro);
@@ -1048,27 +1073,30 @@
 .auvp-x .auvp-footer__col li + li { margin-top: 0.6rem; }
 .auvp-x .auvp-footer__col a { font-size: var(--fs-small); color: var(--ink-80); transition: color 0.35s var(--ease); }
 .auvp-x .auvp-footer__col a:hover { color: var(--verde); }
-.auvp-x .auvp-footer__word {
-  font-family: var(--display);
-  font-weight: 300;
-  font-size: clamp(2.6rem, 12.5vw, 12rem);
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  color: var(--ink);
-  opacity: 0.08;
-  white-space: nowrap;
-  margin-block: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.5rem);
-}
+
+/* "Outros Produtos" vem em duas colunas de links, como no layout original. */
+.auvp-x .auvp-footer__duplo { display: flex; gap: clamp(1.5rem, 3vw, 2.75rem); }
+.auvp-x .auvp-footer__duplo a { white-space: nowrap; }
+
 .auvp-x .auvp-footer__bar {
-  display: flex; flex-wrap: wrap;
-  gap: 0.6rem 2rem;
-  justify-content: space-between;
+  display: flex;
+  justify-content: center;
   padding-top: 2rem;
   border-top: 1px solid var(--line-soft);
   font-family: var(--display);
   font-size: var(--fs-micro);
   letter-spacing: 0.08em;
   color: var(--ink-30);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .auvp-x .auvp-footer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .auvp-x .auvp-footer__col--marca { grid-column: span 2; }
+}
+@media (max-width: 560px) {
+  .auvp-x .auvp-footer__grid { grid-template-columns: minmax(0, 1fr); }
+  .auvp-x .auvp-footer__col--marca { grid-column: span 1; }
 }
 
 /* ==========================================================================
@@ -1587,39 +1615,44 @@
 <footer class="auvp-footer">
   <div class="auvp-shell">
     <div class="auvp-footer__grid">
+      <div class="auvp-footer__col auvp-footer__col--marca">
+        <span class="auvp-footer__logo">
+          <img src="https://raw.githubusercontent.com/ProdutosAUVP/experience/main/AUVP%20EXPERIENCE-%20HORIZONTAL%20PRETA.svg" alt="AUVP Experience">
+        </span>
+        <p class="auvp-footer__nota">Orgulhosamente feito sob o sol escaldante de Goiás &nbsp;&#9728;&#65039;</p>
+        <p class="auvp-footer__legal">
+          AUVP CONSULTORIA FINANCEIRA DE INVESTIMENTOS LTDA<br>
+          CNPJ: 49.479.036/0001-99
+        </p>
+      </div>
+
       <div class="auvp-footer__col">
-        <h4>Imersões</h4>
+        <h4>Nossos Canais</h4>
         <ul>
-          <li><a href="#imersoes">China</a></li>
-          <li><a href="#imersoes">Chile</a></li>
-          <li><a href="#imersoes">Próximos destinos</a></li>
+          <li><a href="https://comunidade.auvp.com.br/" target="_blank" rel="noopener">Comunidade</a></li>
+          <li><a href="https://www.youtube.com/@investidorsardinha" target="_blank" rel="noopener">YouTube</a></li>
+          <li><a href="https://www.instagram.com/oraulsena/?hl=pt" target="_blank" rel="noopener">Instagram</a></li>
         </ul>
       </div>
+
       <div class="auvp-footer__col">
-        <h4>Navegar</h4>
-        <ul>
-          <li><a href="#diferencial">Diferencial</a></li>
-          <li><a href="#networking">Networking</a></li>
-          <li><a href="#experiencia">Experiência</a></li>
-          <li><a href="#faq">FAQ</a></li>
-        </ul>
-      </div>
-      <div class="auvp-footer__col">
-        <h4>Contato</h4>
-        <ul>
-          <li><a href="https://wa.me/55SEUNUMERO">Falar com a equipe no WhatsApp</a></li>
-          <!-- TODO: trocar pelos perfis oficiais -->
-          <li><a href="#" rel="noopener">Instagram</a></li>
-          <li><a href="#" rel="noopener">LinkedIn</a></li>
-        </ul>
+        <h4>Outros Produtos</h4>
+        <div class="auvp-footer__duplo">
+          <ul>
+            <li><a href="https://auvpcapital.com.br/" target="_blank" rel="noopener">AUVP Capital</a></li>
+            <li><a href="https://www.auvp.com.br/" target="_blank" rel="noopener">AUVP Escola</a></li>
+            <li><a href="https://analitica.auvp.com.br/" target="_blank" rel="noopener">AUVP Analítica</a></li>
+          </ul>
+          <ul>
+            <li><a href="https://auvpcapital.com.br/wealth" target="_blank" rel="noopener">AUVP Wealth</a></li>
+            <li><a href="https://auvpnews.com.br/" target="_blank" rel="noopener">AUVP News</a></li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    <p class="auvp-footer__word" aria-hidden="true">Experience</p>
-
     <div class="auvp-footer__bar">
-      <span>&copy; 2026 AUVP Experience Co.</span>
-      <span>Imersões estratégicas globais</span>
+      <span>&copy; 2026 Todos os direitos reservados.</span>
     </div>
   </div>
 </footer>

@@ -77,7 +77,6 @@ Não mexa nas classes `auvp-*`: são elas que ligam o conteúdo ao estilo.
 | O quê | Onde |
 |---|---|
 | Ligar os formulários | comentário **“COMO LIGAR O FORMULÁRIO”**, na seção de candidatura |
-| Links de Instagram e LinkedIn | rodapé, marcados com `TODO` |
 | Datas, investimento e roteiro | dentro dos cards China e Chile, marcados como “A confirmar” |
 | Destino do card 2 | ver observação abaixo |
 
