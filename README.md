@@ -134,6 +134,10 @@ e está embutida no arquivo. Para trocar por fotografia, substitua cada `<svg cl
 por um `<img class="auvp-art" src="URL-DA-IMAGEM" alt="…">` — as imagens
 precisam estar hospedadas (por exemplo, na biblioteca de mídia do WordPress).
 
+O fundo da primeira dobra é a foto `DSC00333.jpg`, deste repositório, servida
+pelo `raw.githubusercontent.com`. Para trocar a foto, troque essa URL no
+`<img class="auvp-art">` dentro de `.auvp-hero__media`.
+
 ---
 
 ## Divergências no briefing
