@@ -20,7 +20,7 @@
 .auvp-num {
   font-family: var(--display);
   font-size: var(--fs-micro);
-  font-weight: 300;
+  font-weight: 500;
   letter-spacing: 0.18em;
   color: var(--verde);
   font-variant-numeric: tabular-nums;

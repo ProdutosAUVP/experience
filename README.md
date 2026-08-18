@@ -95,8 +95,7 @@ hipótese a página fica em branco.**
 | O quê | Onde |
 |---|---|
 | Ligar os dois formulários | comentário **“COMO LIGAR ESTE FORMULÁRIO”**, um em cada página |
-| Vídeo do Raul na China | `missao-china.html`, dobra da culinária — ver abaixo |
-| Fotos reais da Missão China | carrossel do `missao-china.html` — ver abaixo |
+| Foto de abertura da Missão China | `missao-china.html`, `.auvp-capa__media` — hoje usa a mesma foto da home |
 | Datas, investimento e roteiro | dentro dos cards China e Chile, marcados como “A confirmar” |
 | Destino do card 2 | ver observação abaixo |
 
@@ -111,22 +110,17 @@ Como não há JavaScript, o `<form>` precisa de um destino:
 Enquanto nenhum for feito, o botão não envia nada. O comentário no arquivo
 explica as opções.
 
-### Missão China: o que falta
+### Missão China
 
-A página está pronta, com duas pendências de material:
+A dobra de abertura é uma foto ocupando a tela inteira, com o título no alto
+e a copy da viagem em cards na base — mesma gramática da dobra Experiência da
+home. Para trocar a foto, troque o `src` do `<img class="auvp-art">` dentro
+de `.auvp-capa__media`; é a única imagem da página.
 
-**O vídeo.** A dobra da culinária tem o player montado e um `poster`
-provisório, mas o arquivo ainda não existe. Suba o vídeo como
-`assets/video/raul-comida-china.mp4` e ele passa a tocar. Se o vídeo estiver
-no YouTube, o comentário no HTML mostra a linha que substitui o bloco
-`<video>` por um `<iframe>` — o container já é 16:9 e responsivo nos dois
-casos.
-
-**As fotos do carrossel.** Só a primeira é real (a foto do grupo); as outras
-quatro são as imagens de banco usadas na home, de lugar-tenente. Troque cada
-`src` pelas fotos da viagem em `assets/img/`. Para acrescentar ou remover
-slides, copie ou apague um `<figure>`: o encaixe e a rolagem se ajustam
-sozinhos, sem tocar no CSS.
+O vídeo da dobra da culinária é o do YouTube, embutido pelo domínio
+`youtube-nocookie.com`, que não deixa cookie de rastreio em quem só passa
+pela página sem dar play. Para trocar o vídeo, troque o ID na URL do
+`<iframe>`.
 
 ### Fontes
 
@@ -142,7 +136,7 @@ Para auto-hospedar e não depender de serviço externo, baixe os `.woff2` das
 duas, coloque em `assets/fonts/` e troque os dois `<link>` por `@font-face`
 no `01-tokens.css`.
 
-### Cores
+### Cores e legibilidade
 
 Tudo em neutros de papel e tinta. O verde **#023620** é pontual — aparece só
 em chapéus, números de seção, a palavra destacada de cada título, estados
@@ -154,6 +148,14 @@ uma linha:
 ```css
 --verde: #023620;
 ```
+
+Os tons de tinta foram calibrados por contraste medido, não por aparência.
+Todo texto do site fica acima de 4.5:1 sobre o papel — o mínimo da WCAG para
+texto normal. Se for criar um tom novo, meça antes: `--ink-45` já foi 2.82:1
+e `--ink-30` já foi 1.91:1, e era exatamente o que deixava rótulos e legendas
+ilegíveis. O único tom abaixo da linha é o `--ink-30` (3.44:1), reservado a
+placeholder de campo, que não carrega informação — quem carrega é o `<label>`
+ao lado.
 
 ### Imagens
 
