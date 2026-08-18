@@ -37,6 +37,8 @@ assets/
   img/
     auvp-experience-horizontal.svg
     hero-imersao.jpg        fundo da 1ª dobra
+    china.svg               mapa da dobra Canton Fair
+    canton-fair.svg         logo que marca Guangzhou no mapa
 ```
 
 Os arquivos **01 a 06, 15, 16 e 17** são compartilhados pelas duas páginas.
@@ -96,7 +98,6 @@ hipótese a página fica em branco.**
 |---|---|
 | Ligar os dois formulários | comentário **“COMO LIGAR ESTE FORMULÁRIO”**, um em cada página |
 | Foto de abertura da Missão China | `missao-china.html`, `.auvp-capa__media` — hoje usa a mesma foto da home |
-| Logo da Canton Fair | marcador do mapinha em `missao-china.html` — ver abaixo |
 | Datas, investimento e roteiro | dentro dos cards China e Chile, marcados como “A confirmar” |
 | Destino do card 2 | ver observação abaixo |
 
@@ -131,19 +132,18 @@ miniatura. O `loading="lazy"` faz o vídeo carregar quando a dobra se
 aproxima, não no carregamento da página. Para trocar o vídeo, troque o ID na
 URL do `<iframe>`.
 
-**O mapinha da Canton Fair** é um SVG desenhado a partir de coordenadas
-geográficas: o `viewBox` são graus (71°–136° E, 17°–54° N), então o marcador
-cai no lugar certo só com a latitude e a longitude da cidade. Para marcar
-outra cidade, use as coordenadas dela na mesma conta — está tudo num
-comentário no HTML. A silhueta é generalizada de propósito: serve de
-referência visual, não é mapa de precisão.
+**O mapa da Canton Fair** é o `assets/img/china.svg`, entrando como `<img>`.
+O cinza mora dentro do próprio arquivo (`#a8a6a1`) em vez de no CSS, para não
+existirem duas cópias dos contornos — para escurecer ou clarear o mapa, mude
+a cor lá.
 
-O marcador foi feito para receber **a logo da Canton Fair**, que não está no
-repositório. Enquanto ela não chega, o distintivo aparece com um ponto verde.
-Para usar a logo: suba `assets/img/canton-fair.svg` e troque o
-`<span class="auvp-mapa__ponto">` por
-`<img src="assets/img/canton-fair.svg" alt="Canton Fair">` — o distintivo já
-recorta e centraliza a imagem.
+A logo (`assets/img/canton-fair.svg`) fica por cima, posicionada em
+porcentagem sobre o desenho — `left: 68%; top: 86%`, que é onde cai
+Guangzhou. Ela gira devagar para a esquerda, uma volta a cada 30 segundos.
+Quem posiciona é o `<span>` de fora e quem gira é a `<img>` de dentro: se as
+duas transformações ficassem no mesmo elemento, a rotação apagaria a
+centralização e a logo sairia do lugar. Sob `prefers-reduced-motion`, o giro
+para junto com o resto das animações do site.
 
 ### Fontes
 

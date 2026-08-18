@@ -174,82 +174,75 @@
 
 /* ---- Canton Fair ---- */
 .auvp-canton { background: var(--paper-2); border-block: 1px solid var(--line-soft); }
+
+/* Título e os dois parágrafos de fato ficam ao lado do mapa — é ele que
+   ilustra o "acontece em Guangzhou". O argumento vem depois, na largura
+   inteira, onde ganha peso. */
 .auvp-canton__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.78fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
 }
-.auvp-canton__corpo { display: grid; gap: 1.35rem; }
-.auvp-canton__corpo p { color: var(--ink-60); }
+.auvp-canton__intro { display: grid; gap: 1.35rem; align-content: start; }
+.auvp-canton__intro .auvp-title { margin-bottom: 0.5rem; }
+.auvp-canton__intro p { color: var(--ink-60); }
+
+/* O fecho atravessa a largura inteira em duas colunas: a virada de um
+   lado, a explicação do outro. Empilhado, deixava metade da dobra vazia
+   ao lado do mapa. */
+.auvp-canton__fecho {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: start;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--line-soft);
+}
+.auvp-canton__fecho p { color: var(--ink-60); max-width: 54ch; }
 /* A virada do argumento — de preço para repertório — ganha peso de
    citação para não passar como mais um parágrafo. */
-.auvp-canton__virada {
+.auvp-canton__fecho .auvp-canton__virada {
   font-family: var(--display);
   font-size: clamp(1.25rem, 2.2vw, 1.9rem);
   line-height: 1.3;
   letter-spacing: -0.02em;
-  color: var(--ink);
   border-left: 2px solid var(--verde);
   padding-left: clamp(1rem, 1.8vw, 1.6rem);
 }
-/* Mapinha de localização. O SVG guarda a silhueta; o marcador é um
-   elemento posicionado por cima, em porcentagem, para que a logo da
-   Canton Fair possa entrar como <img> sem virar parte do desenho. */
-.auvp-mapa {
-  position: relative;
-  margin: clamp(2rem, 4vw, 3rem) 0 0;
-  max-width: 420px;
-}
-.auvp-mapa svg { width: 100%; height: auto; display: block; overflow: visible; }
-.auvp-mapa__terra {
-  fill: var(--paper-3);
-  stroke: var(--ink-30);
-  stroke-width: 0.25;
-  stroke-linejoin: round;
-}
-/* Duas ondas concêntricas marcam a região sem competir com a logo. */
-.auvp-mapa__eco { fill: var(--verde); opacity: 0.12; }
-.auvp-mapa__eco--2 { opacity: 0.2; }
+
+/* ---- Mapa ----
+   O mapa é o assets/img/china.svg; o cinza mora no próprio arquivo, para
+   não haver duas cópias dos contornos. A logo é um elemento por cima,
+   posicionado em porcentagem sobre o desenho. */
+.auvp-mapa { position: relative; margin: 0; }
+.auvp-mapa__img { width: 100%; height: auto; display: block; }
 
 .auvp-mapa__marca {
   position: absolute;
+  left: 68%;
+  top: 86%;
+  width: clamp(52px, 11%, 96px);
   transform: translate(-50%, -50%);
-  display: grid;
-  place-items: center;
-  width: clamp(38px, 9vw, 52px);
-  height: clamp(38px, 9vw, 52px);
-  padding: 6px;
-  border-radius: 50%;
-  background: var(--paper);
-  box-shadow: 0 6px 18px -6px rgba(28, 27, 24, 0.45);
-  place-items: center;
+  filter: drop-shadow(0 4px 12px rgba(28, 27, 24, 0.35));
 }
+.auvp-mapa__logo {
+  width: 100%;
+  height: auto;
+  display: block;
+  transform-origin: 50% 50%;
+  animation: auvp-girar 30s linear infinite;
+}
+/* Giro lento para a esquerda, sem sair do lugar: quem posiciona é o
+   invólucro, quem gira é a imagem. */
+@keyframes auvp-girar { to { transform: rotate(-360deg); } }
 
-.auvp-mapa__marca img { width: 100%; height: 100%; object-fit: contain; }
-/* Marcador provisório, no lugar da logo. */
-.auvp-mapa__ponto {
-  width: 12px; height: 12px;
-  border-radius: 50%;
-  background: var(--verde);
-  box-shadow: 0 0 0 4px var(--verde-10);
+@media (max-width: 860px) {
+  .auvp-canton__grid { grid-template-columns: 1fr; }
+  .auvp-canton__fecho { grid-template-columns: 1fr; }
+  .auvp-mapa { max-width: 460px; margin-inline: auto; }
 }
-/* O rótulo acompanha o marcador em vez de virar legenda solta embaixo:
-   quem olha precisa ligar o nome ao ponto sem procurar. */
-.auvp-mapa__rot {
-  position: absolute;
-  top: 100%;
-  margin-top: 0.45rem;
-  font-family: var(--display);
-  font-size: var(--fs-micro);
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: var(--ink-45);
-}
-
-@media (max-width: 860px) { .auvp-canton__grid { grid-template-columns: 1fr; } }
 
 /* ---- Chamada final e formulário ---- */
 .auvp-jornada__head { text-align: center; padding-bottom: clamp(2.5rem, 5vw, 4rem); }
