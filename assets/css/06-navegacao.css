@@ -1,0 +1,112 @@
+/* Navegação */
+/* sticky, e não fixed: a barra acompanha a rolagem sem sair do fluxo,
+   então não precisa de compensação de altura em nenhuma dobra. A margem
+   negativa é o que a mantém sobreposta ao hero. */
+.auvp-nav {
+  position: sticky;
+  top: 0;
+  z-index: 800;
+  width: 100%;
+  margin-bottom: calc(var(--nav-h) * -1);
+  background: rgba(247, 245, 241, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line-soft);
+}
+.auvp-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  height: var(--nav-h);
+}
+
+.auvp-brand { display: inline-flex; align-items: center; }
+.auvp-brand img { display: block; height: clamp(34px, 4.4vw, 46px); width: auto; }
+
+.auvp-nav__links { display: flex; align-items: center; gap: clamp(1.25rem, 2.4vw, 2.6rem); }
+.auvp-nav__link {
+  position: relative;
+  font-family: var(--display);
+  font-size: var(--fs-micro);
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+  transition: color 0.4s var(--ease);
+}
+.auvp-nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -6px;
+  width: 100%; height: 1px;
+  background: var(--verde);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--ease);
+}
+.auvp-nav__link:hover { color: var(--verde); }
+.auvp-nav__link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.auvp-burger {
+  display: none;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--display);
+  font-size: var(--fs-micro);
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-80);
+}
+/* O "Fechar" do menu em tela cheia aparece em qualquer largura: quem
+   chegou lá abriu o menu de propósito e precisa de saída. */
+.auvp-burger--fechar { display: inline-flex; }
+.auvp-burger i { display: block; width: 22px; height: 1px; background: currentColor; position: relative; }
+.auvp-burger i::before { content: ""; position: absolute; inset: -5px 0 auto 0; height: 1px; background: currentColor; }
+
+@media (max-width: 900px) {
+  .auvp-nav__links { display: none; }
+  .auvp-burger { display: inline-flex; }
+}
+
+/* O menu entra no fluxo em vez de usar position:fixed — assim funciona
+   mesmo dentro de um container com transform. O :target já rola até ele. */
+.auvp-menu {
+  display: none;
+  scroll-margin-top: 0;
+  min-height: 100svh;
+  background: var(--paper-2);
+  grid-template-rows: var(--nav-h) 1fr auto;
+  position: relative;
+  z-index: 900;
+}
+.auvp-menu:target { display: grid; }
+
+.auvp-menu__top { display: flex; align-items: center; justify-content: space-between; }
+.auvp-menu__body { display: grid; align-content: center; gap: clamp(0.4rem, 1.4vw, 0.9rem); padding-block: 2rem; }
+.auvp-menu__link {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(2rem, 7.5vw, 3.8rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  transition: color 0.4s var(--ease);
+}
+.auvp-menu__link:hover { color: var(--verde); }
+.auvp-menu__link i {
+  font-style: normal;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.2em;
+  color: var(--verde);
+  vertical-align: super;
+  margin-right: 0.6rem;
+}
+.auvp-menu__foot {
+  display: flex; flex-wrap: wrap; gap: 1rem 2rem;
+  justify-content: space-between; align-items: center;
+  padding-block: 2rem;
+  border-top: 1px solid var(--line-soft);
+  font-size: var(--fs-small);
+  color: var(--ink-45);
+}

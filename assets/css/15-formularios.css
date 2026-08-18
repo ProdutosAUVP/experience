@@ -1,0 +1,37 @@
+/* Formulários */
+.auvp-form { display: grid; gap: clamp(1.25rem, 2vw, 1.75rem); }
+
+.auvp-field { display: grid; gap: 0.5rem; }
+.auvp-field label {
+  font-family: var(--display);
+  font-size: var(--fs-micro);
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+}
+.auvp-field input, .auvp-field select, .auvp-field textarea {
+  width: 100%;
+  padding: 0.85rem 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  font-size: 1.05rem;
+  font-weight: 300;
+  transition: border-color 0.4s var(--ease);
+  appearance: none;
+}
+.auvp-field textarea { min-height: 92px; resize: vertical; }
+.auvp-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23023620' fill='none' stroke-width='1.4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 2px center;
+  cursor: pointer;
+}
+.auvp-field select option { background: var(--paper); color: var(--ink); }
+.auvp-field input:focus, .auvp-field select:focus, .auvp-field textarea:focus { outline: none; border-bottom-color: var(--verde); }
+.auvp-field input::placeholder, .auvp-field textarea::placeholder { color: var(--ink-30); }
+.auvp-field input:user-invalid, .auvp-field textarea:user-invalid { border-bottom-color: #a33; }
+
+.auvp-isca { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }

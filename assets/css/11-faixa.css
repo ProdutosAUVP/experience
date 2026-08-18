@@ -1,0 +1,35 @@
+/* Faixa deslizante */
+.auvp-marquee {
+  position: relative;
+  padding-block: clamp(0.75rem, 1.4vw, 1.2rem);
+  border-block: 1px solid var(--line-soft);
+  background: var(--paper-2);
+  overflow: hidden;
+  user-select: none;
+}
+.auvp-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: auvp-slide 34s linear infinite;
+}
+@keyframes auvp-slide { to { transform: translateX(-50%); } }
+.auvp-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  padding-right: clamp(1.5rem, 3vw, 3rem);
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(1rem, 2.2vw, 1.75rem);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.auvp-marquee__item::after {
+  content: "";
+  width: clamp(5px, 0.5vw, 7px);
+  height: clamp(5px, 0.5vw, 7px);
+  border-radius: 50%;
+  background: var(--verde);
+  flex: none;
+}
