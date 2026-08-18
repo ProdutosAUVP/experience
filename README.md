@@ -12,7 +12,8 @@ para o ar.
 ## Estrutura
 
 ```
-index.html                  markup da página inteira
+index.html                  home
+missao-china.html           página da Missão China
 assets/
   css/
     01-tokens.css           paleta, escala tipográfica, medidas
@@ -32,10 +33,16 @@ assets/
     15-formularios.css      campos, chips e o formulário de sugestão
     16-rodape.css
     17-animacao.css         animações de rolagem e @keyframes
+    18-missao-china.css     só a página da Missão China
   img/
     auvp-experience-horizontal.svg
     hero-imersao.jpg        fundo da 1ª dobra
 ```
+
+Os arquivos **01 a 06, 15, 16 e 17** são compartilhados pelas duas páginas.
+Os de **07 a 14** desenham as dobras da home e só entram no `index.html`; o
+**18** é da Missão China e só entra no `missao-china.html`. Cada página
+carrega o que usa, e nada mais.
 
 Os arquivos de CSS são carregados por `<link>` no `<head>`, **na ordem
 numérica**. A ordem é parte do desenho: tokens e base primeiro, cada dobra
@@ -87,7 +94,9 @@ hipótese a página fica em branco.**
 
 | O quê | Onde |
 |---|---|
-| Ligar o formulário | comentário **“COMO LIGAR O FORMULÁRIO”**, na dobra de imersões |
+| Ligar os dois formulários | comentário **“COMO LIGAR ESTE FORMULÁRIO”**, um em cada página |
+| Vídeo do Raul na China | `missao-china.html`, dobra da culinária — ver abaixo |
+| Fotos reais da Missão China | carrossel do `missao-china.html` — ver abaixo |
 | Datas, investimento e roteiro | dentro dos cards China e Chile, marcados como “A confirmar” |
 | Destino do card 2 | ver observação abaixo |
 
@@ -101,6 +110,23 @@ Como não há JavaScript, o `<form>` precisa de um destino:
 
 Enquanto nenhum for feito, o botão não envia nada. O comentário no arquivo
 explica as opções.
+
+### Missão China: o que falta
+
+A página está pronta, com duas pendências de material:
+
+**O vídeo.** A dobra da culinária tem o player montado e um `poster`
+provisório, mas o arquivo ainda não existe. Suba o vídeo como
+`assets/video/raul-comida-china.mp4` e ele passa a tocar. Se o vídeo estiver
+no YouTube, o comentário no HTML mostra a linha que substitui o bloco
+`<video>` por um `<iframe>` — o container já é 16:9 e responsivo nos dois
+casos.
+
+**As fotos do carrossel.** Só a primeira é real (a foto do grupo); as outras
+quatro são as imagens de banco usadas na home, de lugar-tenente. Troque cada
+`src` pelas fotos da viagem em `assets/img/`. Para acrescentar ou remover
+slides, copie ou apague um `<figure>`: o encaixe e a rolagem se ajustam
+sozinhos, sem tocar no CSS.
 
 ### Fontes
 

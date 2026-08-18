@@ -139,20 +139,3 @@
   .auvp-card--next { grid-column: auto; }
   .auvp-facts div { grid-template-columns: 1fr; gap: 0.2rem; }
 }
-
-/* Chips: caixas de seleção reais, para o formulário levar a escolha */
-.auvp-chips { display: flex; flex-wrap: wrap; gap: 0.55rem; }
-.auvp-chip input { position: absolute; opacity: 0; pointer-events: none; }
-.auvp-chip span {
-  display: block;
-  padding: 0.55em 1.15em;
-  border: 1px solid var(--line);
-  border-radius: 100px;
-  font-size: var(--fs-small);
-  color: var(--ink-60);
-  cursor: pointer;
-  transition: border-color 0.35s var(--ease), color 0.35s var(--ease), background-color 0.35s var(--ease);
-}
-.auvp-chip span:hover { border-color: var(--verde-30); color: var(--verde); }
-.auvp-chip input:checked + span { background: var(--verde); border-color: var(--verde); color: var(--paper); }
-.auvp-chip input:focus-visible + span { outline: 2px solid var(--verde); outline-offset: 3px; }
