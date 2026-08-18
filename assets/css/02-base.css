@@ -50,6 +50,8 @@ button, input, select, textarea {
    traria também o line-height 1.7 do corpo e esticaria a altura de cada
    um — eles ficam com o line-height normal do navegador. */
 button { font: inherit; cursor: pointer; }
+fieldset { margin: 0; padding: 0; border: 0; }
+legend { padding: 0; }
 
 summary { list-style: none; cursor: pointer; }
 summary::-webkit-details-marker { display: none; }

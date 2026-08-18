@@ -35,3 +35,22 @@
 .auvp-field input:user-invalid, .auvp-field textarea:user-invalid { border-bottom-color: #a33; }
 
 .auvp-isca { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+/* Chips: caixas de seleção reais, para o formulário levar a escolha.
+   Servem tanto aos destinos da home quanto às respostas de sim/não da
+   Missão China — por isso moraram aqui, e não na dobra de imersões. */
+.auvp-chips { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+.auvp-chip input { position: absolute; opacity: 0; pointer-events: none; }
+.auvp-chip span {
+  display: block;
+  padding: 0.55em 1.15em;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  font-size: var(--fs-small);
+  color: var(--ink-60);
+  cursor: pointer;
+  transition: border-color 0.35s var(--ease), color 0.35s var(--ease), background-color 0.35s var(--ease);
+}
+.auvp-chip span:hover { border-color: var(--verde-30); color: var(--verde); }
+.auvp-chip input:checked + span { background: var(--verde); border-color: var(--verde); color: var(--paper); }
+.auvp-chip input:focus-visible + span { outline: 2px solid var(--verde); outline-offset: 3px; }
