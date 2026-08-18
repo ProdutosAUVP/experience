@@ -50,6 +50,7 @@
   gap: clamp(0.5rem, 1vw, 1rem);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  align-items: end;
   scroll-padding-inline: var(--gutter);
   padding-inline: var(--gutter);
   padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
@@ -74,6 +75,25 @@
   margin-bottom: 0.7rem;
   color: var(--paper);
 }
+.auvp-capa__card h3 { margin-bottom: 0; transition: margin-bottom 0.5s var(--ease); }
+
+/* Fechado, o card mostra só a frase de abertura. No hover — ou com foco
+   pelo teclado — o corpo abre. Como a régua está ancorada na base
+   (align-items: end), o card cresce para cima: a borda de baixo não sai
+   do lugar e nada abaixo dele se mexe. O truque é animar
+   grid-template-rows de 0fr para 1fr, o único jeito de transicionar
+   "até a altura do conteúdo" sem saber a altura de antemão. */
+.auvp-capa__card-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s var(--ease);
+}
+.auvp-capa__card-body > p { overflow: hidden; }
+.auvp-capa__card:hover .auvp-capa__card-body,
+.auvp-capa__card:focus-within .auvp-capa__card-body { grid-template-rows: 1fr; }
+.auvp-capa__card:hover h3,
+.auvp-capa__card:focus-within h3 { margin-bottom: 0.7rem; }
+
 .auvp-capa__card p {
   font-size: var(--fs-small);
   line-height: 1.7;
@@ -173,13 +193,81 @@
   border-left: 2px solid var(--verde);
   padding-left: clamp(1rem, 1.8vw, 1.6rem);
 }
+/* Mapinha de localização. O SVG guarda a silhueta; o marcador é um
+   elemento posicionado por cima, em porcentagem, para que a logo da
+   Canton Fair possa entrar como <img> sem virar parte do desenho. */
+.auvp-mapa {
+  position: relative;
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  max-width: 420px;
+}
+.auvp-mapa svg { width: 100%; height: auto; display: block; overflow: visible; }
+.auvp-mapa__terra {
+  fill: var(--paper-3);
+  stroke: var(--ink-30);
+  stroke-width: 0.25;
+  stroke-linejoin: round;
+}
+/* Duas ondas concêntricas marcam a região sem competir com a logo. */
+.auvp-mapa__eco { fill: var(--verde); opacity: 0.12; }
+.auvp-mapa__eco--2 { opacity: 0.2; }
+
+.auvp-mapa__marca {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: clamp(38px, 9vw, 52px);
+  height: clamp(38px, 9vw, 52px);
+  padding: 6px;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: 0 6px 18px -6px rgba(28, 27, 24, 0.45);
+  place-items: center;
+}
+
+.auvp-mapa__marca img { width: 100%; height: 100%; object-fit: contain; }
+/* Marcador provisório, no lugar da logo. */
+.auvp-mapa__ponto {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--verde);
+  box-shadow: 0 0 0 4px var(--verde-10);
+}
+/* O rótulo acompanha o marcador em vez de virar legenda solta embaixo:
+   quem olha precisa ligar o nome ao ponto sem procurar. */
+.auvp-mapa__rot {
+  position: absolute;
+  top: 100%;
+  margin-top: 0.45rem;
+  font-family: var(--display);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink-45);
+}
+
 @media (max-width: 860px) { .auvp-canton__grid { grid-template-columns: 1fr; } }
 
 /* ---- Chamada final e formulário ---- */
 .auvp-jornada__head { text-align: center; padding-bottom: clamp(2.5rem, 5vw, 4rem); }
 .auvp-jornada__title { font-size: clamp(1.8rem, 4vw, 3.4rem); line-height: 1.08; max-width: 20ch; margin-inline: auto; }
-.auvp-jornada__form { max-width: 720px; margin-inline: auto; }
-.auvp-jornada__form .auvp-form { gap: clamp(1.5rem, 2.4vw, 2rem); }
+/* Formulário em duas colunas: as sete perguntas cabem em quatro linhas
+   em vez de sete, e a dobra deixa de ser uma coluna estreita e alta. Os
+   campos longos — endereço, a pergunta aberta e o grupo de sim/não —
+   atravessam a linha inteira. */
+.auvp-jornada__form { max-width: 1040px; margin-inline: auto; }
+.auvp-jornada__form .auvp-form {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 2.4vw, 2rem) clamp(1.5rem, 3vw, 2.75rem);
+  align-items: start;
+}
+.auvp-jornada__form .auvp-form > .auvp-largo { grid-column: 1 / -1; }
+@media (max-width: 720px) {
+  .auvp-jornada__form .auvp-form { grid-template-columns: 1fr; }
+}
 
 /* Pergunta com respostas fixas: mesmo desenho dos chips de destino da
    home, com radio no lugar do checkbox. */
@@ -194,11 +282,3 @@
 }
 .auvp-escolha__opcoes { display: flex; flex-wrap: wrap; gap: 0.55rem; }
 
-/* Dois campos curtos dividindo a linha, para o formulário de sete
-   perguntas não virar uma coluna interminável. */
-.auvp-dupla {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1rem, 2vw, 1.5rem);
-}
-@media (max-width: 620px) { .auvp-dupla { grid-template-columns: 1fr; } }

@@ -96,6 +96,7 @@ hipótese a página fica em branco.**
 |---|---|
 | Ligar os dois formulários | comentário **“COMO LIGAR ESTE FORMULÁRIO”**, um em cada página |
 | Foto de abertura da Missão China | `missao-china.html`, `.auvp-capa__media` — hoje usa a mesma foto da home |
+| Logo da Canton Fair | marcador do mapinha em `missao-china.html` — ver abaixo |
 | Datas, investimento e roteiro | dentro dos cards China e Chile, marcados como “A confirmar” |
 | Destino do card 2 | ver observação abaixo |
 
@@ -117,10 +118,32 @@ e a copy da viagem em cards na base — mesma gramática da dobra Experiência d
 home. Para trocar a foto, troque o `src` do `<img class="auvp-art">` dentro
 de `.auvp-capa__media`; é a única imagem da página.
 
+Os cards da base mostram só a frase de abertura e abrem o resto do texto no
+hover — ou com foco pelo teclado. Como a régua está ancorada embaixo, o card
+cresce **para cima**: a borda de baixo não sai do lugar e nada abaixo dele se
+mexe.
+
 O vídeo da dobra da culinária é o do YouTube, embutido pelo domínio
 `youtube-nocookie.com`, que não deixa cookie de rastreio em quem só passa
-pela página sem dar play. Para trocar o vídeo, troque o ID na URL do
-`<iframe>`.
+pela página sem dar play. Ele começa sozinho e **mudo** — navegador nenhum
+permite autoplay com som, então o `mute=1` é o preço de não ficar só a
+miniatura. O `loading="lazy"` faz o vídeo carregar quando a dobra se
+aproxima, não no carregamento da página. Para trocar o vídeo, troque o ID na
+URL do `<iframe>`.
+
+**O mapinha da Canton Fair** é um SVG desenhado a partir de coordenadas
+geográficas: o `viewBox` são graus (71°–136° E, 17°–54° N), então o marcador
+cai no lugar certo só com a latitude e a longitude da cidade. Para marcar
+outra cidade, use as coordenadas dela na mesma conta — está tudo num
+comentário no HTML. A silhueta é generalizada de propósito: serve de
+referência visual, não é mapa de precisão.
+
+O marcador foi feito para receber **a logo da Canton Fair**, que não está no
+repositório. Enquanto ela não chega, o distintivo aparece com um ponto verde.
+Para usar a logo: suba `assets/img/canton-fair.svg` e troque o
+`<span class="auvp-mapa__ponto">` por
+`<img src="assets/img/canton-fair.svg" alt="Canton Fair">` — o distintivo já
+recorta e centraliza a imagem.
 
 ### Fontes
 
