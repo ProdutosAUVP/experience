@@ -8,14 +8,18 @@
   --paper-2: #f1eee8;
   --paper-3: #e8e4dc;
 
-  --ink: #1c1b18;
-  --ink-80: rgba(28, 27, 24, 0.9);
-  --ink-60: rgba(28, 27, 24, 0.74);
-  --ink-45: rgba(28, 27, 24, 0.45);
-  --ink-30: rgba(28, 27, 24, 0.3);
+  /* Os nomes guardam a escala original; os alfas foram corrigidos para
+     passar no contraste mínimo da WCAG sobre o papel (4.5:1 para texto).
+     Antes, --ink-45 dava 2.82:1 e --ink-30 dava 1.91:1 — reprovavam, e
+     era o que deixava rótulos e legendas ilegíveis. */
+  --ink: #1c1b18;              /* 15.8:1 */
+  --ink-80: rgba(28, 27, 24, 0.92);  /* 12.5:1 */
+  --ink-60: rgba(28, 27, 24, 0.82);  /*  8.9:1 */
+  --ink-45: rgba(28, 27, 24, 0.66);  /*  5.3:1 */
+  --ink-30: rgba(28, 27, 24, 0.52);  /*  3.4:1 — só ornamento e placeholder */
 
-  --line: rgba(28, 27, 24, 0.16);
-  --line-soft: rgba(28, 27, 24, 0.09);
+  --line: rgba(28, 27, 24, 0.22);
+  --line-soft: rgba(28, 27, 24, 0.13);
 
   /* acento — único ponto de cor do site */
   --verde: #023620;

@@ -86,7 +86,9 @@
 
 <main id="conteudo">
 
-  <!-- ============ CAPA ============ -->
+  <!-- ============ ABERTURA ============
+       TROCAR A FOTO DE FUNDO: é a única imagem da dobra. Suba a foto da
+       viagem em assets/img/ e troque o src abaixo. -->
   <section class="auvp-capa" id="missao-china">
     <div class="auvp-capa__media" aria-hidden="true">
       <img class="auvp-art" src="assets/img/hero-imersao.jpg" alt="" fetchpriority="high" decoding="async">
@@ -97,6 +99,21 @@
       <span class="auvp-num auvp-capa__eyebrow">Imersão realizada</span>
       <h1 class="auvp-capa__title">Missão China</h1>
       <p class="auvp-capa__lede">Uma imersão única, que já ficou gravada na história de todos os participantes.</p>
+    </div>
+
+    <div class="auvp-capa__cards">
+      <article class="auvp-capa__card">
+        <h3>A primeira coisa que a China fez foi mudar nossa percepção de tamanho.</h3>
+        <p>Descemos do avião e descobrimos que os prédios, o metrô, os shoppings, os espetáculos… Nada ali foi construído para ser mínimo. Tudo é megalomaníaco com propósito. E funciona.</p>
+      </article>
+      <article class="auvp-capa__card">
+        <h3>O país que todo mundo precisa conhecer.</h3>
+        <p>Os chineses foram receptivos de um jeito que nos desarmou. A maioria falava inglês, e mesmo quando não falavam, faziam questão de nos entender.</p>
+      </article>
+      <article class="auvp-capa__card">
+        <h3>Você sai na frente dos concorrentes.</h3>
+        <p>Uma grande queixa por parte dos empresários é a falta de inovação e diferencial competitivo no mercado brasileiro. E conhecer a China expandiu a mente dos participantes, que voltaram com mais conhecimento para investir no crescimento de seus negócios.</p>
+      </article>
     </div>
   </section>
 
@@ -113,40 +130,6 @@
     </div>
   </section>
 
-  <!-- ============ 1. O QUE A CHINA MOSTROU ============
-       TROCAR AS FOTOS DO CARROSSEL: as imagens abaixo são provisórias —
-       são as mesmas de banco usadas na home. Substitua cada src pelas
-       fotos reais da viagem em assets/img/ (formato paisagem, largura de
-       1600px resolve). Para acrescentar ou remover slides, basta copiar
-       ou apagar um <figure> — o encaixe e a rolagem se ajustam sozinhos. -->
-  <section class="auvp-section" id="registro">
-    <div class="auvp-carrossel" tabindex="0" role="group" aria-label="Fotos da Missão China">
-      <figure><img src="assets/img/hero-imersao.jpg" alt="O grupo da AUVP Experience reunido durante a imersão" loading="lazy" decoding="async"></figure>
-      <figure><img src="https://images.pexels.com/photos/37343128/pexels-photo-37343128.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="" loading="lazy" decoding="async"></figure>
-      <figure><img src="https://images.pexels.com/photos/18285946/pexels-photo-18285946.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="" loading="lazy" decoding="async"></figure>
-      <figure><img src="https://images.pexels.com/photos/12391911/pexels-photo-12391911.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="" loading="lazy" decoding="async"></figure>
-      <figure><img src="https://images.pexels.com/photos/16731630/pexels-photo-16731630.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="" loading="lazy" decoding="async"></figure>
-    </div>
-    <p class="auvp-carrossel__dica" aria-hidden="true">Arraste para o lado &rarr;</p>
-
-    <div class="auvp-shell">
-      <div class="auvp-relato">
-        <div class="auvp-relato__item auvp-sobe">
-          <h3>A primeira coisa que a China fez foi mudar nossa percepção de tamanho.</h3>
-          <p>Descemos do avião e descobrimos que os prédios, o metrô, os shoppings, os espetáculos… Nada ali foi construído para ser mínimo. Tudo é megalomaníaco com propósito. E funciona.</p>
-        </div>
-        <div class="auvp-relato__item auvp-sobe">
-          <h3>O país que todo mundo precisa conhecer.</h3>
-          <p>Os chineses foram receptivos de um jeito que nos desarmou. A maioria falava inglês, e mesmo quando não falavam, faziam questão de nos entender.</p>
-        </div>
-        <div class="auvp-relato__item auvp-sobe">
-          <h3>Você sai na frente dos concorrentes.</h3>
-          <p>Uma grande queixa por parte dos empresários é a falta de inovação e diferencial competitivo no mercado brasileiro. E conhecer a China expandiu a mente dos participantes, que voltaram com mais conhecimento para investir no crescimento de seus negócios.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ 2. CULINÁRIA ============ -->
   <section class="auvp-section" id="culinaria">
     <div class="auvp-shell">
@@ -159,18 +142,12 @@
         </div>
       </div>
 
-      <!-- O VÍDEO AINDA PRECISA SER COLOCADO.
-           Suba o arquivo como assets/video/raul-comida-china.mp4 e ele
-           passa a tocar aqui. Se o vídeo estiver no YouTube, troque o
-           bloco <video> inteiro por:
-           <iframe src="https://www.youtube.com/embed/ID_DO_VIDEO"
-                   title="Raul Sena prova a comida de rua na China"
-                   allowfullscreen loading="lazy"></iframe>
-           O container já é 16:9 e responsivo nos dois casos. -->
       <div class="auvp-video__frame">
-        <video controls playsinline preload="none" poster="assets/img/hero-imersao.jpg">
-          <source src="assets/video/raul-comida-china.mp4" type="video/mp4">
-        </video>
+        <iframe src="https://www.youtube-nocookie.com/embed/BIzCHAmJ788"
+                title="Raul Sena prova a comida de rua na China"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                referrerpolicy="strict-origin-when-cross-origin"
+                loading="lazy" allowfullscreen></iframe>
       </div>
       <p class="auvp-video__legenda">Confira o vídeo onde o Raul Sena prova a comida de rua e se surpreende com cada mordida.</p>
     </div>
@@ -198,9 +175,6 @@
     <div class="auvp-shell">
       <div class="auvp-jornada__head">
         <h2 class="auvp-jornada__title auvp-sobe">O próximo destino já está sendo traçado. Seja um dos primeiros a saber.</h2>
-        <div class="auvp-jornada__acao auvp-sobe">
-          <a class="auvp-btn" href="#candidatura">Participe da próxima jornada. <i aria-hidden="true">&rarr;</i></a>
-        </div>
       </div>
 
       <div class="auvp-jornada__form" id="candidatura">
