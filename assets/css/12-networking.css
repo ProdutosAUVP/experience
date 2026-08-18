@@ -1,0 +1,75 @@
+/* Networking
+   Dobra compacta, em zigue-zague numa espinha central — cada perfil
+   intercala de lado. Funciona como uma roleta: o item ganha foco
+   (opacidade e escala plenas) só enquanto cruza o centro da tela,
+   e esmaece nas pontas — destacando um de cada vez conforme rola. */
+.auvp-net__intro { text-align: center; }
+.auvp-net__statement { font-size: clamp(1.75rem, 4.4vw, 4rem); line-height: 1.05; letter-spacing: -0.035em; max-width: 16ch; margin-inline: auto; }
+.auvp-net__complement { max-width: 40ch; margin-inline: auto; margin-top: clamp(1rem, 2vw, 1.5rem); color: var(--ink-80); font-size: var(--fs-body); line-height: 1.55; }
+
+.auvp-net__list {
+  --gut: clamp(1.5rem, 3vw, 2.5rem);
+  position: relative;
+  max-width: 620px;
+  margin-inline: auto;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+.auvp-net__list::before {
+  content: "";
+  position: absolute;
+  left: 50%; top: 0.4em; bottom: 0.4em;
+  width: 1px;
+  background: var(--line);
+  transform: translateX(-50%);
+}
+/* Cada item é um bloco normal (um por linha, sem risco de grid
+   empurrar dois para a mesma fileira) — a largura de 50% menos meio
+   vão, com margem automática de um lado só, é o que intercala. */
+.auvp-net__item {
+  position: relative;
+  width: calc(50% - var(--gut) / 2);
+  padding-block: clamp(1.1rem, 2vw, 1.6rem);
+}
+.auvp-net__item:nth-child(odd) { margin-right: auto; text-align: right; }
+.auvp-net__item:nth-child(even) { margin-left: auto; text-align: left; }
+.auvp-net__item > * { max-width: 32ch; }
+.auvp-net__item:nth-child(odd) > * { margin-left: auto; }
+.auvp-net__item:nth-child(even) > * { margin-right: auto; }
+.auvp-net__dot {
+  position: absolute;
+  top: clamp(1.4rem, 2.4vw, 1.9rem);
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--verde);
+  box-shadow: 0 0 0 4px var(--paper);
+}
+.auvp-net__item:nth-child(odd) .auvp-net__dot { right: calc(var(--gut) / -2 - 4px); }
+.auvp-net__item:nth-child(even) .auvp-net__dot { left: calc(var(--gut) / -2 - 4px); }
+.auvp-net__numeral {
+  display: block;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--verde-30);
+  margin-bottom: 0.4rem;
+}
+.auvp-net__copy h3 {
+  font-family: var(--display);
+  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+  margin-bottom: 0.4rem;
+}
+.auvp-net__copy p { font-size: var(--fs-small); color: var(--ink-60); line-height: 1.65; }
+
+@media (max-width: 620px) {
+  .auvp-net__list::before { left: 0.4rem; transform: none; }
+  .auvp-net__item, .auvp-net__item:nth-child(even) {
+    width: 100%;
+    margin-left: 1.4rem;
+    margin-right: 0;
+    text-align: left;
+  }
+  .auvp-net__item > *, .auvp-net__item:nth-child(even) > * { margin-left: 0; margin-right: auto; max-width: 34ch; }
+  .auvp-net__item .auvp-net__dot, .auvp-net__item:nth-child(even) .auvp-net__dot { left: -1rem; right: auto; }
+}

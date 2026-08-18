@@ -1,0 +1,90 @@
+/* Animação ligada à rolagem
+
+   Feita com scroll-driven animations do CSS. Onde não houver suporte, o
+   bloco @supports inteiro é ignorado e o conteúdo aparece normalmente —
+   nunca há risco de a página ficar em branco. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .auvp-sobe {
+      animation: auvp-sobe linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 32%;
+    }
+    .auvp-abre {
+      animation: auvp-abre linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 38%;
+    }
+    .auvp-hero-pin { height: calc(100svh + 60svh); }
+    .auvp-hero__media {
+      animation: auvp-parallax linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 60svh 160svh;
+    }
+    .auvp-hero__title {
+      animation: auvp-sobe linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 44svh;
+    }
+    .auvp-hero__row {
+      animation: auvp-sobe linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 16svh 60svh;
+    }
+    .auvp-progress i {
+      animation: auvp-progresso linear both;
+      animation-timeline: scroll(root block);
+    }
+    .auvp-net__item {
+      animation: auvp-net-focus linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+    .auvp-net__numeral {
+      animation: auvp-net-numeral-fill linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+    .auvp-net__copy h3 {
+      animation: auvp-net-topic-weight linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
+@keyframes auvp-sobe {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes auvp-abre {
+  from { clip-path: inset(0 0 100% 0); transform: scale(1.08); }
+  to { clip-path: inset(0 0 0 0); transform: none; }
+}
+@keyframes auvp-parallax { to { transform: translateY(12%); } }
+@keyframes auvp-progresso { to { transform: scaleX(1); } }
+@keyframes auvp-net-focus {
+  0%   { opacity: 0.3; transform: scale(0.92); }
+  50%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0.3; transform: scale(0.92); }
+}
+@keyframes auvp-net-numeral-fill {
+  0%   { color: transparent; -webkit-text-stroke-color: var(--verde-30); }
+  50%  { color: var(--verde); -webkit-text-stroke-color: var(--verde); }
+  100% { color: transparent; -webkit-text-stroke-color: var(--verde-30); }
+}
+@keyframes auvp-net-topic-weight {
+  0%   { font-weight: 300; }
+  50%  { font-weight: 500; }
+  100% { font-weight: 300; }
+}
+
+/* Preferência por menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .auvp-marquee__track { animation: none; }
+}

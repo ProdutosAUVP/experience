@@ -1,0 +1,44 @@
+/* Tokens
+   Toda a paleta, a escala tipográfica e as medidas do site.
+   Nenhum valor de cor ou de tamanho deve aparecer solto nos outros
+   arquivos: se precisar de um novo, ele nasce aqui. */
+:root {
+  /* neutros */
+  --paper: #f7f5f1;
+  --paper-2: #f1eee8;
+  --paper-3: #e8e4dc;
+
+  --ink: #1c1b18;
+  --ink-80: rgba(28, 27, 24, 0.9);
+  --ink-60: rgba(28, 27, 24, 0.74);
+  --ink-45: rgba(28, 27, 24, 0.45);
+  --ink-30: rgba(28, 27, 24, 0.3);
+
+  --line: rgba(28, 27, 24, 0.16);
+  --line-soft: rgba(28, 27, 24, 0.09);
+
+  /* acento — único ponto de cor do site */
+  --verde: #023620;
+  --verde-60: rgba(2, 54, 32, 0.6);
+  --verde-30: rgba(2, 54, 32, 0.3);
+  --verde-10: rgba(2, 54, 32, 0.1);
+
+  /* tipografia */
+  --display: "General Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --corpo: "Red Hat Mono", "Courier New", monospace;
+
+  --fs-hero: clamp(1.85rem, 4.4vw, 4.6rem);
+  --fs-display: clamp(2.1rem, 4.8vw, 4.8rem);
+  --fs-title: clamp(1.65rem, 3vw, 2.9rem);
+  --fs-sub: clamp(1.15rem, 1.7vw, 1.6rem);
+  --fs-body: clamp(1rem, 1.1vw, 1.15rem);
+  --fs-small: 0.9375rem;
+  --fs-micro: 0.6875rem;
+
+  --gutter: clamp(1.25rem, 5vw, 5rem);
+  --section-y: clamp(2.5rem, 5vw, 5rem);
+  --max-w: 1560px;
+  --nav-h: 76px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}

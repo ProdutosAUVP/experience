@@ -1,0 +1,64 @@
+/* Base
+   Reset e padrões do documento.
+
+   Na versão anterior este arquivo era uma barreira defensiva: o site
+   vivia colado dentro de um widget do WordPress e precisava desfazer, um
+   a um, os estilos que o tema aplicava por elemento. Fora do WordPress
+   nada disso é necessário — sobrou o reset de verdade. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--corpo);
+  font-size: var(--fs-body);
+  font-weight: 300;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+/* Títulos e rótulos de interface na General Sans; texto corrido na mono. */
+h1, h2, h3, h4 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 300;
+  font-style: normal;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  text-transform: none;
+}
+
+p, figure, dl, dd { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+img, svg, video { display: block; max-width: 100%; }
+
+/* Controles de formulário chegam com moldura e fundo do navegador.
+   O 15-formularios.css desenha os campos do zero, então aqui eles são zerados. */
+button, input, select, textarea {
+  color: inherit;
+  font-family: inherit;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+/* Só o botão herda a tipografia inteira. Nos campos, o `font` completo
+   traria também o line-height 1.7 do corpo e esticaria a altura de cada
+   um — eles ficam com o line-height normal do navegador. */
+button { font: inherit; cursor: pointer; }
+
+summary { list-style: none; cursor: pointer; }
+summary::-webkit-details-marker { display: none; }
+
+::selection { background: var(--verde); color: var(--paper); }
+:focus-visible { outline: 2px solid var(--verde); outline-offset: 3px; }
+
+/* Âncoras param abaixo do cabeçalho fixo, nunca atrás dele. */
+[id] { scroll-margin-top: calc(var(--nav-h) + 24px); }
+
+/* destaque dentro de títulos: a cor pontual */
+em { color: var(--verde); font-style: normal; font-weight: 400; }
