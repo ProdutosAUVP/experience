@@ -4,120 +4,137 @@
    nessa página e não afeta a home. */
 
 /* ---- Abertura ----
-   Foto ocupando a dobra inteira, título no alto e a copy em cards na
-   base. É a mesma gramática da dobra Experiência da home: véu escuro
-   por cima da imagem e cartões de vidro fosco embaixo. */
-.auvp-capa {
+   Faixa de foto com o chapéu por cima; título e frase de abertura vêm
+   embaixo, no papel. A foto deixou de ocupar a tela inteira: como ela se
+   repete na roleta logo abaixo, duas telas de imagem seguidas
+   empurravam o texto para longe demais. */
+.auvp-capa__faixa {
   position: relative;
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  min-height: 100svh;
+  place-items: center;
+  height: clamp(240px, 38vh, 420px);
+  margin-top: calc(var(--nav-h) * -1);
   padding-top: var(--nav-h);
   overflow: hidden;
   isolation: isolate;
-  color: var(--paper);
 }
-.auvp-capa__media { position: absolute; inset: 0; z-index: -2; }
+.auvp-capa__faixa .auvp-art { z-index: -2; }
 .auvp-capa__scrim {
   position: absolute; inset: 0; z-index: -1;
-  background:
-    linear-gradient(to bottom, rgba(20,19,17,0.72) 0%, rgba(20,19,17,0.34) 34%, rgba(20,19,17,0.8) 100%),
-    linear-gradient(to right, rgba(20,19,17,0.7) 0%, rgba(20,19,17,0.1) 62%);
+  background: linear-gradient(to bottom, rgba(20,19,17,0.6) 0%, rgba(20,19,17,0.42) 45%, rgba(20,19,17,0.55) 100%);
 }
-.auvp-capa__content {
-  grid-row: 1;
-  width: 100%;
-  padding-top: clamp(2rem, 5vw, 4rem);
+/* O chapéu é a única coisa sobre a foto — precisa de corpo para
+   sobreviver a uma imagem cheia de detalhe. */
+.auvp-capa__eyebrow {
+  position: relative;
+  color: var(--paper);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 14px rgba(20, 19, 17, 0.7);
 }
-.auvp-capa__eyebrow { color: var(--paper); opacity: 0.75; margin-bottom: clamp(1rem, 2vw, 1.5rem); }
+
+.auvp-capa__texto {
+  text-align: center;
+  padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 3vw, 2.5rem);
+}
 .auvp-capa__title {
-  font-size: clamp(2.6rem, 8vw, 7rem);
-  line-height: 0.94;
+  font-size: clamp(2.4rem, 7vw, 6rem);
+  line-height: 0.96;
   letter-spacing: -0.035em;
 }
 .auvp-capa__lede {
   max-width: 46ch;
-  margin-top: clamp(1.25rem, 2.4vw, 2rem);
+  margin: clamp(1.25rem, 2.4vw, 1.75rem) auto 0;
   font-size: clamp(1rem, 1.25vw, 1.2rem);
   line-height: 1.6;
-  color: rgba(247, 245, 241, 0.92);
+  color: var(--ink-60);
 }
 
-/* Cards da base: a copy da viagem, não miniaturas de foto. */
-.auvp-capa__cards {
-  grid-row: 3;
-  display: flex;
-  gap: clamp(0.5rem, 1vw, 1rem);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  align-items: end;
-  scroll-padding-inline: var(--gutter);
-  padding-inline: var(--gutter);
-  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
-  scrollbar-width: none;
+/* ---- Roleta de fotos ----
+   Três colunas correndo para cima em velocidades diferentes. Cada fita
+   traz a mesma lista duas vezes e desliza exatamente 50%: ao terminar, o
+   quadro é idêntico ao do começo, então o laço não tem emenda visível.
+   Sem JavaScript — é o mesmo princípio da faixa deslizante da home. */
+.auvp-roleta {
+  --vao: clamp(0.4rem, 0.8vw, 0.75rem);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--vao);
+  height: clamp(300px, 46vh, 520px);
+  overflow: hidden;
+  background: var(--paper-2);
 }
-.auvp-capa__cards::-webkit-scrollbar { display: none; }
-.auvp-capa__card {
-  flex: 1 1 0%;
-  min-width: min(78vw, 300px);
-  scroll-snap-align: start;
-  padding: clamp(1.1rem, 1.8vw, 1.6rem);
-  background: rgba(20, 19, 17, 0.52);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-top: 2px solid var(--verde);
-  transition: background-color 0.5s var(--ease);
+.auvp-roleta__col { overflow: hidden; }
+.auvp-roleta__fita {
+  /* flow-root para a margem da última foto contar na altura da fita: sem
+     isso ela colapsa com a margem do bloco e a metade fica um vão mais
+     curta que o ciclo — 5,8px de descompasso a cada volta. */
+  display: flow-root;
+  will-change: transform;
+  animation: auvp-roleta linear infinite;
 }
-.auvp-capa__card:hover { background: rgba(20, 19, 17, 0.72); }
-.auvp-capa__card h3 {
+/* O respiro é margem de cada foto, não `gap` da fita: com `gap`, a fita
+   fica com N imagens e N-1 vãos, e metade da altura não cai exatamente
+   num começo de ciclo — a emenda aparece como um pedaço vazio a cada
+   volta. Com margem, cada item mede foto+vão e o -50% bate no ponto. */
+.auvp-roleta__fita img {
+  display: block;
+  width: 100%;
+  height: clamp(200px, 30vh, 340px);
+  margin-bottom: var(--vao);
+  object-fit: cover;
+}
+/* Velocidades diferentes: em sincronia, as três colunas viram um bloco
+   só se movendo, e o efeito de roleta some. */
+.auvp-roleta__fita--1 { animation-duration: 26s; }
+.auvp-roleta__fita--2 { animation-duration: 34s; animation-delay: -6s; }
+.auvp-roleta__fita--3 { animation-duration: 30s; animation-delay: -14s; }
+@keyframes auvp-roleta {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+/* Bloco de cor logo abaixo das fotos, sem respiro entre os dois. */
+.auvp-registro__texto {
+  background: var(--verde);
+  color: var(--paper);
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+}
+.auvp-relato {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2rem, 3.5vw, 3.5rem);
+}
+.auvp-relato__item h3 {
   font-size: clamp(1.05rem, 1.5vw, 1.35rem);
-  line-height: 1.22;
-  margin-bottom: 0.7rem;
+  line-height: 1.25;
+  margin-bottom: 0.9rem;
   color: var(--paper);
 }
-.auvp-capa__card h3 { margin-bottom: 0; transition: margin-bottom 0.5s var(--ease); }
-
-/* Fechado, o card mostra só a frase de abertura. No hover — ou com foco
-   pelo teclado — o corpo abre. Como a régua está ancorada na base
-   (align-items: end), o card cresce para cima: a borda de baixo não sai
-   do lugar e nada abaixo dele se mexe. O truque é animar
-   grid-template-rows de 0fr para 1fr, o único jeito de transicionar
-   "até a altura do conteúdo" sem saber a altura de antemão. */
-.auvp-capa__card-body {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.5s var(--ease);
-}
-.auvp-capa__card-body > p { overflow: hidden; }
-.auvp-capa__card:hover .auvp-capa__card-body,
-.auvp-capa__card:focus-within .auvp-capa__card-body { grid-template-rows: 1fr; }
-.auvp-capa__card:hover h3,
-.auvp-capa__card:focus-within h3 { margin-bottom: 0.7rem; }
-
-.auvp-capa__card p {
+.auvp-relato__item p {
   font-size: var(--fs-small);
-  line-height: 1.7;
-  color: rgba(247, 245, 241, 0.82);
-}
-@media (max-width: 900px) {
-  .auvp-capa { min-height: auto; padding-bottom: 0; }
-  .auvp-capa__content { padding-bottom: clamp(2.5rem, 8vw, 4rem); }
+  line-height: 1.75;
+  color: rgba(247, 245, 241, 0.86);
 }
 
-/* ---- Números da viagem ---- */
-/* A frase "12 dias, 9 cidades, 9 empresas, 1 grupo" vira placar: o
-   número puxa o olho e a legenda explica, sem perder nenhuma palavra. */
+@media (max-width: 900px) {
+  .auvp-roleta { grid-template-columns: repeat(3, minmax(0, 1fr)); height: clamp(220px, 34vh, 320px); }
+  .auvp-roleta__fita img { height: clamp(140px, 22vh, 200px); }
+  .auvp-relato { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* ---- Números da viagem ----
+   Cada número centralizado sobre o próprio rótulo, sem as linhas que
+   separavam as colunas. */
 .auvp-placar {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--line-soft);
-  border-block: 1px solid var(--line-soft);
+  gap: clamp(2rem, 4vw, 3rem);
+  text-align: center;
 }
-.auvp-placar__item {
-  background: var(--paper);
-  padding: clamp(1.5rem, 2.6vw, 2.5rem) clamp(1rem, 1.8vw, 2rem);
-}
+.auvp-placar__item { padding-block: clamp(1rem, 2vw, 1.5rem); }
 .auvp-placar__n {
   display: block;
   font-family: var(--display);
@@ -129,23 +146,26 @@
 }
 .auvp-placar__rot {
   display: block;
-  margin-top: 0.5rem;
+  margin-top: 0.6rem;
   font-family: var(--display);
   font-size: var(--fs-micro);
+  font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ink-45);
 }
 @media (max-width: 760px) { .auvp-placar { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-/* ---- Dobra do vídeo ---- */
-.auvp-video__head {
+/* ---- Dobra do vídeo ----
+   Texto e player lado a lado. Na largura inteira, um 16:9 ocupava uma
+   tela sozinho e a dobra virava só o vídeo. */
+.auvp-video__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
   gap: clamp(2rem, 4vw, 4rem);
-  align-items: end;
-  padding-bottom: clamp(2rem, 4vw, 3rem);
+  align-items: center;
 }
+.auvp-video__head { display: grid; gap: 1.25rem; align-content: center; }
 .auvp-video__frame {
   position: relative;
   aspect-ratio: 16 / 9;
@@ -153,24 +173,14 @@
   border: 1px solid var(--line-soft);
   overflow: hidden;
 }
-.auvp-video__frame video,
 .auvp-video__frame iframe {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   border: 0;
-  object-fit: cover;
 }
-.auvp-video__legenda {
-  margin-top: 1rem;
-  font-family: var(--display);
-  font-size: var(--fs-micro);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-45);
-}
-@media (max-width: 860px) { .auvp-video__head { grid-template-columns: 1fr; align-items: start; } }
+@media (max-width: 860px) { .auvp-video__grid { grid-template-columns: 1fr; } }
 
 /* ---- Canton Fair ---- */
 .auvp-canton { background: var(--paper-2); border-block: 1px solid var(--line-soft); }
@@ -232,7 +242,7 @@
   height: auto;
   display: block;
   transform-origin: 50% 50%;
-  animation: auvp-girar 30s linear infinite;
+  animation: auvp-girar 18s linear infinite;
 }
 /* Giro lento para a esquerda, sem sair do lugar: quem posiciona é o
    invólucro, quem gira é a imagem. */

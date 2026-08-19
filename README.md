@@ -82,6 +82,8 @@ CSS puro:
 | Abas da Experiência | `<input type="radio">` + `<label>` |
 | Chips de destino | `<input type="checkbox">` — vão junto no formulário |
 | Faixa deslizante | `@keyframes` |
+| Roleta de fotos da Missão China | `@keyframes` vertical, com a fita duplicada |
+| Logo girando sobre o mapa | `@keyframes` |
 | Perfis de networking | rolagem horizontal nativa, com encaixe |
 | Revelação ao rolar | `animation-timeline: view()` |
 | Barra de progresso | `animation-timeline: scroll()` |
@@ -97,7 +99,8 @@ hipótese a página fica em branco.**
 | O quê | Onde |
 |---|---|
 | Ligar os dois formulários | comentário **“COMO LIGAR ESTE FORMULÁRIO”**, um em cada página |
-| Foto de abertura da Missão China | `missao-china.html`, `.auvp-capa__media` — hoje usa a mesma foto da home |
+| Foto da faixa de abertura da Missão China | `missao-china.html`, `.auvp-capa__faixa` — hoje usa a mesma foto da home |
+| Fotos da roleta da Missão China | `.auvp-roleta` — hoje são as de banco da home |
 | Datas, investimento e roteiro | dentro dos cards China e Chile, marcados como “A confirmar” |
 | Destino do card 2 | ver observação abaixo |
 
@@ -114,15 +117,24 @@ explica as opções.
 
 ### Missão China
 
-A dobra de abertura é uma foto ocupando a tela inteira, com o título no alto
-e a copy da viagem em cards na base — mesma gramática da dobra Experiência da
-home. Para trocar a foto, troque o `src` do `<img class="auvp-art">` dentro
-de `.auvp-capa__media`; é a única imagem da página.
+A abertura é uma faixa de foto com o chapéu por cima; o título e a frase de
+abertura vêm embaixo, no papel. A faixa é baixa de propósito: a roleta logo
+abaixo já é imagem, e duas telas cheias de foto seguidas empurravam o texto
+para longe demais.
 
-Os cards da base mostram só a frase de abertura e abrem o resto do texto no
-hover — ou com foco pelo teclado. Como a régua está ancorada embaixo, o card
-cresce **para cima**: a borda de baixo não sai do lugar e nada abaixo dele se
-mexe.
+**A roleta** são três colunas de fotos correndo para cima em velocidades
+diferentes, com o bloco verde e os três textos logo abaixo, sem respiro entre
+os dois. Cada coluna repete a mesma lista de fotos **duas vezes** e desliza
+exatamente 50%: ao terminar, o quadro é idêntico ao do começo e o laço não tem
+emenda. Ao trocar as fotos, **troque as duas cópias juntas** — se as listas
+divergirem, a emenda aparece.
+
+Dois detalhes que o laço exige, e que quebram em silêncio se alguém mexer: o
+respiro entre as fotos é `margin-bottom` de cada imagem, não `gap` da fita
+(com `gap` a fita fica com N imagens e N−1 vãos, e metade da altura não cai
+num começo de ciclo); e a fita é `display: flow-root`, para a margem da última
+foto contar na altura — sem isso ela colapsa e sobra um vão de descompasso a
+cada volta.
 
 O vídeo da dobra da culinária é o do YouTube, embutido pelo domínio
 `youtube-nocookie.com`, que não deixa cookie de rastreio em quem só passa
@@ -139,7 +151,7 @@ a cor lá.
 
 A logo (`assets/img/canton-fair.svg`) fica por cima, posicionada em
 porcentagem sobre o desenho — `left: 68%; top: 86%`, que é onde cai
-Guangzhou. Ela gira devagar para a esquerda, uma volta a cada 30 segundos.
+Guangzhou. Ela gira devagar para a esquerda, uma volta a cada 18 segundos.
 Quem posiciona é o `<span>` de fora e quem gira é a `<img>` de dentro: se as
 duas transformações ficassem no mesmo elemento, a rotação apagaria a
 centralização e a logo sairia do lugar. Sob `prefers-reduced-motion`, o giro
