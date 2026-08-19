@@ -77,12 +77,12 @@ CSS puro:
 | Interação | Como funciona |
 |---|---|
 | Menu em tela cheia | âncora `#menu` + `:target` — fecha sozinho ao navegar |
-| Cards de destino | `<details>` — abrem os detalhes na própria página |
+| Cards de destino | `<input type="checkbox">` + `<label>` — o card gira e mostra o verso |
 | FAQ | `<details name="…">` — abre um e fecha o outro |
 | Abas da Experiência | `<input type="radio">` + `<label>` |
 | Chips de destino | `<input type="checkbox">` — vão junto no formulário |
 | Faixa deslizante | `@keyframes` |
-| Roleta de fotos da Missão China | `@keyframes` vertical, com a fita duplicada |
+| Mosaico de fotos da Missão China | `@keyframes` alternando a opacidade |
 | Logo girando sobre o mapa | `@keyframes` |
 | Perfis de networking | rolagem horizontal nativa, com encaixe |
 | Revelação ao rolar | `animation-timeline: view()` |
@@ -100,7 +100,7 @@ hipótese a página fica em branco.**
 |---|---|
 | Ligar os dois formulários | comentário **“COMO LIGAR ESTE FORMULÁRIO”**, um em cada página |
 | Foto da faixa de abertura da Missão China | `missao-china.html`, `.auvp-capa__faixa` — hoje usa a mesma foto da home |
-| Fotos da roleta da Missão China | `.auvp-roleta` — hoje são as de banco da home |
+| Fotos do mosaico da Missão China | `.auvp-mosaico` — hoje são as de banco da home |
 | Datas, investimento e roteiro | dentro dos cards China e Chile, marcados como “A confirmar” |
 | Destino do card 2 | ver observação abaixo |
 
@@ -122,19 +122,13 @@ abertura vêm embaixo, no papel. A faixa é baixa de propósito: a roleta logo
 abaixo já é imagem, e duas telas cheias de foto seguidas empurravam o texto
 para longe demais.
 
-**A roleta** são três colunas de fotos correndo para cima em velocidades
-diferentes, com o bloco verde e os três textos logo abaixo, sem respiro entre
-os dois. Cada coluna repete a mesma lista de fotos **duas vezes** e desliza
-exatamente 50%: ao terminar, o quadro é idêntico ao do começo e o laço não tem
-emenda. Ao trocar as fotos, **troque as duas cópias juntas** — se as listas
-divergirem, a emenda aparece.
-
-Dois detalhes que o laço exige, e que quebram em silêncio se alguém mexer: o
-respiro entre as fotos é `margin-bottom` de cada imagem, não `gap` da fita
-(com `gap` a fita fica com N imagens e N−1 vãos, e metade da altura não cai
-num começo de ciclo); e a fita é `display: flow-root`, para a margem da última
-foto contar na altura — sem isso ela colapsa e sobra um vão de descompasso a
-cada volta.
+**O mosaico** são três quadros parados que trocam a foto por dentro, com
+fade — não é uma esteira rolando. As fotos de um quadro ficam empilhadas no
+mesmo lugar e só a opacidade se alterna, com atrasos negativos dividindo o
+ciclo entre elas. As janelas de fade se sobrepõem de propósito: se apenas se
+encostassem, sobraria um piscar de fundo entre uma foto e a seguinte. Cada
+quadro anda num passo diferente, senão as três colunas trocam ao mesmo tempo
+e o conjunto pisca como um bloco só.
 
 O vídeo da dobra da culinária é o do YouTube, embutido pelo domínio
 `youtube-nocookie.com`, que não deixa cookie de rastreio em quem só passa

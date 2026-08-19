@@ -5,108 +5,111 @@
   gap: 1.5rem 3rem;
   padding-bottom: clamp(2.25rem, 4vw, 3.5rem);
 }
+/* Dois destinos, dois cards — maiores, porque agora carregam a
+   chamada inteira na frente. */
 .auvp-dest__grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(0.75rem, 1.4vw, 1.4rem);
   align-items: start;
 }
 
-.auvp-card { border: 1px solid var(--line-soft); transition: border-color 0.6s var(--ease); }
-.auvp-card[open], .auvp-card:hover { border-color: var(--verde-30); }
+/* O card gira: frente com a foto e a chamada, verso com os detalhes.
+   O estado mora num checkbox escondido e os <label> são o que se
+   clica — o mesmo recurso das abas da dobra Experiência, sem
+   JavaScript. */
+.auvp-card { perspective: 1600px; }
 
-.auvp-card__face {
+.auvp-card__flip {
+  position: relative;
+  display: grid;
+  min-height: clamp(460px, 68vh, 660px);
+  transform-style: preserve-3d;
+  transition: transform 0.85s var(--ease);
+}
+.auvp-card__gatilho:checked ~ .auvp-card__flip { transform: rotateY(180deg); }
+/* O checkbox continua alcançável pelo teclado (é .auvp-sr, não
+   display:none), então o foco precisa aparecer em algum lugar. */
+.auvp-card__gatilho:focus-visible ~ .auvp-card__flip {
+  outline: 2px solid var(--verde);
+  outline-offset: 4px;
+}
+
+.auvp-card__frente,
+.auvp-card__verso {
+  grid-area: 1 / 1;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1px solid var(--line-soft);
+}
+.auvp-card__frente {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: clamp(380px, 62vh, 620px);
   padding: clamp(1.5rem, 2.2vw, 2.4rem);
   overflow: hidden;
   isolation: isolate;
   color: var(--paper);
 }
 .auvp-card__media { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
-.auvp-card__media img, .auvp-card__media svg { transition: transform 1.4s var(--ease); }
-.auvp-card:hover .auvp-card__media img, .auvp-card:hover .auvp-card__media svg { transform: scale(1.07); }
-.auvp-card__face::before {
+.auvp-card__media img { transition: transform 1.4s var(--ease); }
+.auvp-card:hover .auvp-card__media img { transform: scale(1.07); }
+.auvp-card__frente::before {
   content: "";
   position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(to top, rgba(28,27,24,0.94) 26%, rgba(28,27,24,0.55) 58%, rgba(28,27,24,0) 100%);
+  background: linear-gradient(to top, rgba(28,27,24,0.94) 30%, rgba(28,27,24,0.55) 62%, rgba(28,27,24,0) 100%);
 }
-.auvp-card__index {
-  position: absolute;
-  top: clamp(1.25rem, 2vw, 2rem);
-  left: clamp(1.5rem, 2.2vw, 2.4rem);
-  font-family: var(--display);
-  font-size: var(--fs-micro);
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  color: rgba(247, 245, 241, 0.55);
-}
-.auvp-card__title { font-size: clamp(2rem, 3.3vw, 3.3rem); line-height: 1; margin-bottom: 0.55rem; }
+.auvp-card__title { font-size: clamp(2.2rem, 3.6vw, 3.6rem); line-height: 1; margin-bottom: 0.55rem; }
 .auvp-card__sub {
-  font-size: clamp(0.72rem, 0.85vw, 0.85rem);
+  font-size: var(--fs-small);
   color: var(--paper);
-  line-height: 1.35;
-  margin-bottom: 0.9rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
 }
-/* Descrição e CTA só aparecem no hover (ou quando o card está aberto,
-   para quem navega por toque/teclado sem hover) — o card fechado
-   mostra só título e subtítulo. */
+/* Descrição e chamada ficam sempre visíveis. Antes só apareciam no
+   hover, o que deixava o toque sem saída: no celular não há hover e o
+   card não anunciava que virava. */
 .auvp-card__desc {
   font-size: var(--fs-small);
-  color: rgba(247, 245, 241, 0.75);
-  max-width: 34ch;
+  color: rgba(247, 245, 241, 0.82);
+  max-width: 38ch;
   line-height: 1.65;
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  margin-top: 0;
-  transition: max-height 0.5s var(--ease), opacity 0.4s var(--ease), margin-top 0.5s var(--ease);
 }
-.auvp-card:hover .auvp-card__desc,
-.auvp-card[open] .auvp-card__desc {
-  max-height: 10em;
-  opacity: 1;
-  margin-top: 0.35rem;
-}
-.auvp-card__cta {
+.auvp-card__cta,
+.auvp-card__voltar {
   display: inline-flex; align-items: center; gap: 0.7rem;
-  margin-top: 0;
+  align-self: flex-start;
+  cursor: pointer;
   font-family: var(--display);
   font-size: var(--fs-micro);
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--paper);
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 0.5s var(--ease), opacity 0.4s var(--ease), margin-top 0.5s var(--ease);
+  transition: gap 0.4s var(--ease);
 }
-.auvp-card:hover .auvp-card__cta,
-.auvp-card[open] .auvp-card__cta {
-  max-height: 3rem;
-  opacity: 1;
+.auvp-card__cta {
   margin-top: clamp(1.25rem, 2vw, 1.9rem);
+  padding: 0.85em 1.5em;
+  border: 1px solid rgba(247, 245, 241, 0.5);
+  color: var(--paper);
 }
-.auvp-card__cta .auvp-fechar { display: none; }
-.auvp-card[open] .auvp-card__cta .auvp-abrir { display: none; }
-.auvp-card[open] .auvp-card__cta .auvp-fechar { display: inline; }
+.auvp-card__cta:hover { gap: 1.1rem; border-color: var(--paper); }
 
-.auvp-card__panel {
-  padding: clamp(1.5rem, 2.2vw, 2.4rem);
-  border-top: 1px solid var(--line-soft);
+.auvp-card__verso {
+  transform: rotateY(180deg);
   display: grid;
-  gap: 1.5rem;
+  align-content: start;
+  gap: 1.35rem;
+  padding: clamp(1.5rem, 2.2vw, 2.4rem);
   background: var(--paper-2);
+  overflow-y: auto;
 }
-.auvp-card__panel h4 { font-size: 1.15rem; }
-.auvp-card__panel p { font-size: var(--fs-small); color: var(--ink-60); line-height: 1.7; }
+.auvp-card__verso h4 { font-size: 1.15rem; }
+.auvp-card__verso p { font-size: var(--fs-small); color: var(--ink-60); line-height: 1.7; }
+.auvp-card__voltar { color: var(--verde); margin-top: 0.5rem; }
+.auvp-card__voltar:hover { gap: 1.1rem; }
+
 .auvp-facts { display: grid; gap: 0.75rem; }
 .auvp-facts div { display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: 1rem; font-size: var(--fs-small); }
 .auvp-facts dt {
@@ -129,13 +132,10 @@
   line-height: 1.7;
 }
 
-@media (max-width: 980px) {
-  .auvp-dest__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .auvp-card--next { grid-column: 1 / -1; }
-  .auvp-card--next .auvp-card__face { min-height: 340px; }
+@media (max-width: 860px) {
+  .auvp-dest__grid { grid-template-columns: 1fr; }
+  .auvp-card__flip { min-height: clamp(420px, 76vh, 560px); }
 }
 @media (max-width: 640px) {
-  .auvp-dest__grid { grid-template-columns: 1fr; }
-  .auvp-card--next { grid-column: auto; }
   .auvp-facts div { grid-template-columns: 1fr; gap: 0.2rem; }
 }
