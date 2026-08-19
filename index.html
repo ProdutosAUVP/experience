@@ -159,8 +159,9 @@
   </section>
 
   <!-- ============ 3. IMERSÕES ============
-       Os cards são <details>: clicar abre os detalhes do destino na
-       própria página, sem JavaScript e sem página separada. -->
+       Os cards viram: a frente traz a foto e a chamada, o verso traz os
+       detalhes. O giro é um checkbox escondido com <label> por cima —
+       o mesmo recurso das abas da dobra Experiência, sem JavaScript. -->
   <section class="auvp-section" id="imersoes">
     <div class="auvp-shell">
       <div class="auvp-dest__head">
@@ -171,100 +172,82 @@
 
       <div class="auvp-dest__grid">
 
-        <details class="auvp-card auvp-sobe">
-          <summary class="auvp-card__face">
-            <span class="auvp-card__media" aria-hidden="true"><img class="auvp-art" src="https://images.pexels.com/photos/37343128/pexels-photo-37343128.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="" loading="lazy" decoding="async"></span>
-            <span class="auvp-card__index">01 / Ásia</span>
-            <h3 class="auvp-card__title">China</h3>
-            <p class="auvp-card__sub">O maior laboratório de negócios do mundo</p>
-            <p class="auvp-card__desc">Shanghai, Shenzhen e Hangzhou. Tecnologia, escala e execução em nível global.</p>
-            <span class="auvp-card__cta"><span class="auvp-abrir">Ver detalhes</span><span class="auvp-fechar">Fechar</span></span>
-          </summary>
+        <div class="auvp-card auvp-sobe">
+          <input type="checkbox" id="virar-china" class="auvp-card__gatilho auvp-sr">
+          <div class="auvp-card__flip">
+            <div class="auvp-card__frente">
+              <span class="auvp-card__media" aria-hidden="true"><img class="auvp-art" src="https://images.pexels.com/photos/37343128/pexels-photo-37343128.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="" loading="lazy" decoding="async"></span>
+              <h3 class="auvp-card__title">China</h3>
+              <p class="auvp-card__sub">O maior laboratório de negócios do mundo</p>
+              <p class="auvp-card__desc">Shanghai, Shenzhen e Hangzhou. Tecnologia, escala e execução em nível global.</p>
+              <label class="auvp-card__cta" for="virar-china">Ver detalhes <i aria-hidden="true">&rarr;</i></label>
+            </div>
 
-          <div class="auvp-card__panel">
+            <div class="auvp-card__verso">
             <dl class="auvp-facts">
-              <div><dt>Cidades</dt><dd>Shanghai, Shenzhen e Hangzhou</dd></div>
-              <div><dt>Foco</dt><dd>Tecnologia, escala e execução</dd></div>
-              <div><dt>Formato</dt><dd>Agenda de negócios</dd></div>
-              <div><dt>Grupo</dt><dd>Reduzido, por seleção</dd></div>
+            <div><dt>Cidades</dt><dd>Shanghai, Shenzhen e Hangzhou</dd></div>
+            <div><dt>Foco</dt><dd>Tecnologia, escala e execução</dd></div>
+            <div><dt>Formato</dt><dd>Agenda de negócios</dd></div>
+            <div><dt>Grupo</dt><dd>Reduzido, por seleção</dd></div>
             </dl>
             <p>Nenhum outro lugar do mundo permite ver, em poucos dias, tanta coisa acontecendo ao mesmo tempo: manufatura avançada, comércio digital, logística, energia e capital circulando em outra velocidade.</p>
             <p>Shanghai mostra o mercado financeiro e o consumo. Shenzhen mostra a engenharia e a indústria de hardware. Hangzhou mostra o comércio digital e a tecnologia aplicada.</p>
             <p class="auvp-nota">A confirmar: datas da próxima edição, investimento, o que está incluso no pacote e o roteiro dia a dia.</p>
             <a class="auvp-btn auvp-btn--sm" href="https://wa.me/55SEUNUMERO">Quero participar <i aria-hidden="true">&rarr;</i></a>
+              <label class="auvp-card__voltar" for="virar-china">&larr; Voltar</label>
+            </div>
           </div>
-        </details>
+        </div>
 
-        <details class="auvp-card auvp-sobe">
-          <summary class="auvp-card__face">
-            <span class="auvp-card__media" aria-hidden="true"><img class="auvp-art" src="https://images.pexels.com/photos/36585242/pexels-photo-36585242.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="" loading="lazy" decoding="async"></span>
-            <span class="auvp-card__index">02 / América Latina</span>
-            <h3 class="auvp-card__title">Chile</h3>
-            <p class="auvp-card__sub">O coração mineiro da América Latina</p>
-            <p class="auvp-card__desc">Negócios, internacionalização e oportunidades no mercado latino-americano.</p>
-            <span class="auvp-card__cta"><span class="auvp-abrir">Ver detalhes</span><span class="auvp-fechar">Fechar</span></span>
-          </summary>
+        <div class="auvp-card auvp-sobe">
+          <input type="checkbox" id="virar-proximos" class="auvp-card__gatilho auvp-sr">
+          <div class="auvp-card__flip">
+            <div class="auvp-card__frente">
+              <span class="auvp-card__media" aria-hidden="true"><img class="auvp-art" src="https://images.pexels.com/photos/35085680/pexels-photo-35085680.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="" loading="lazy" decoding="async"></span>
+              <h3 class="auvp-card__title">Próximos destinos</h3>
+              <p class="auvp-card__sub">Decida com a gente — para onde vamos depois?</p>
+              <p class="auvp-card__desc">A AUVP Experience evolui com quem está dentro. Participe da escolha dos próximos destinos.</p>
+              <label class="auvp-card__cta" for="virar-proximos">Sugerir destino <i aria-hidden="true">&rarr;</i></label>
+            </div>
 
-          <div class="auvp-card__panel">
-            <dl class="auvp-facts">
-              <div><dt>Região</dt><dd>América Latina</dd></div>
-              <div><dt>Foco</dt><dd>Mineração e economia real</dd></div>
-              <div><dt>Formato</dt><dd>Agenda de negócios</dd></div>
-              <div><dt>Grupo</dt><dd>Reduzido, por seleção</dd></div>
-            </dl>
-            <p>Negócios, internacionalização e oportunidades no mercado latino-americano — a partir do país que ocupa uma posição central na cadeia global de minerais críticos.</p>
-            <p>Entender o Chile é entender como um país organiza uma economia em torno de recursos naturais: regulação, infraestrutura, capital estrangeiro e a disputa por quem processa o que se extrai.</p>
-            <p class="auvp-nota">O briefing trazia este card rotulado como “Portugal”, mas o título descrevia o Chile. A página foi escrita para o Chile — confirmar. A confirmar também: datas, cidades do roteiro, investimento e empresas visitadas.</p>
-            <a class="auvp-btn auvp-btn--sm" href="https://wa.me/55SEUNUMERO">Quero participar <i aria-hidden="true">&rarr;</i></a>
-          </div>
-        </details>
-
-        <details class="auvp-card auvp-card--next auvp-sobe">
-          <summary class="auvp-card__face">
-            <span class="auvp-card__media" aria-hidden="true"><img class="auvp-art" src="https://images.pexels.com/photos/35085680/pexels-photo-35085680.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="" loading="lazy" decoding="async"></span>
-            <span class="auvp-card__index">03 / A definir</span>
-            <h3 class="auvp-card__title">Próximos destinos</h3>
-            <p class="auvp-card__sub">Decida com a gente — para onde vamos depois?</p>
-            <p class="auvp-card__desc">A AUVP Experience evolui com quem está dentro. Participe da escolha dos próximos destinos.</p>
-            <span class="auvp-card__cta"><span class="auvp-abrir">Sugerir destino</span><span class="auvp-fechar">Fechar</span></span>
-          </summary>
-
-          <div class="auvp-card__panel">
+            <div class="auvp-card__verso">
             <p>Marque os destinos que fariam você embarcar — e diga o que quer ver por lá. As sugestões entram na curadoria dos próximos roteiros.</p>
 
             <!-- COMO LIGAR ESTE FORMULÁRIO
-                 Não há JavaScript no site, então o envio precisa de um
-                 destino no action="": a URL de um serviço de formulário
-                 (Formspree, Getform ou similar). Enquanto estiver vazio, o
-                 botão não envia nada. O README detalha as opções. -->
+            Não há JavaScript no site, então o envio precisa de um
+            destino no action="": a URL de um serviço de formulário
+            (Formspree, Getform ou similar). Enquanto estiver vazio, o
+            botão não envia nada. O README detalha as opções. -->
             <form class="auvp-form" method="post" action="">
-              <input type="text" name="_isca" class="auvp-isca" tabindex="-1" autocomplete="off" aria-hidden="true">
-              <input type="hidden" name="assunto" value="Sugestão de destino — AUVP Experience">
+            <input type="text" name="_isca" class="auvp-isca" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <input type="hidden" name="assunto" value="Sugestão de destino — AUVP Experience">
 
-              <div class="auvp-chips">
-                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Japão"><span>Japão</span></label>
-                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Estados Unidos"><span>Estados Unidos</span></label>
-                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Emirados Árabes"><span>Emirados Árabes</span></label>
-                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Índia"><span>Índia</span></label>
-                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Coreia do Sul"><span>Coreia do Sul</span></label>
-                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Alemanha"><span>Alemanha</span></label>
-                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Singapura"><span>Singapura</span></label>
-                <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="México"><span>México</span></label>
-              </div>
+            <div class="auvp-chips">
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Japão"><span>Japão</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Estados Unidos"><span>Estados Unidos</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Emirados Árabes"><span>Emirados Árabes</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Índia"><span>Índia</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Coreia do Sul"><span>Coreia do Sul</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Alemanha"><span>Alemanha</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Singapura"><span>Singapura</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="México"><span>México</span></label>
+            </div>
 
-              <div class="auvp-field">
-                <label for="sug-destino">Sua sugestão</label>
-                <input id="sug-destino" name="sugestao" type="text" placeholder="Destino e o que você gostaria de ver lá" required>
-              </div>
-              <div class="auvp-field">
-                <label for="sug-email">E-mail</label>
-                <input id="sug-email" name="email" type="email" placeholder="voce@empresa.com" required>
-              </div>
+            <div class="auvp-field">
+            <label for="sug-destino">Sua sugestão</label>
+            <input id="sug-destino" name="sugestao" type="text" placeholder="Destino e o que você gostaria de ver lá" required>
+            </div>
+            <div class="auvp-field">
+            <label for="sug-email">E-mail</label>
+            <input id="sug-email" name="email" type="email" placeholder="voce@empresa.com" required>
+            </div>
 
-              <div><button class="auvp-btn" type="submit">Enviar sugestão <i aria-hidden="true">&rarr;</i></button></div>
+            <div><button class="auvp-btn" type="submit">Enviar sugestão <i aria-hidden="true">&rarr;</i></button></div>
             </form>
+              <label class="auvp-card__voltar" for="virar-proximos">&larr; Voltar</label>
+            </div>
           </div>
-        </details>
+        </div>
 
       </div>
     </div>

@@ -35,9 +35,11 @@
   text-shadow: 0 2px 14px rgba(20, 19, 17, 0.7);
 }
 
+/* Respiro igual em cima e embaixo: o texto fica solto entre a faixa e a
+   roleta, sem parecer preso a nenhuma das duas. */
 .auvp-capa__texto {
   text-align: center;
-  padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 3vw, 2.5rem);
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
 }
 .auvp-capa__title {
   font-size: clamp(2.4rem, 7vw, 6rem);
@@ -52,49 +54,49 @@
   color: var(--ink-60);
 }
 
-/* ---- Roleta de fotos ----
-   Três colunas correndo para cima em velocidades diferentes. Cada fita
-   traz a mesma lista duas vezes e desliza exatamente 50%: ao terminar, o
-   quadro é idêntico ao do começo, então o laço não tem emenda visível.
-   Sem JavaScript — é o mesmo princípio da faixa deslizante da home. */
-.auvp-roleta {
-  --vao: clamp(0.4rem, 0.8vw, 0.75rem);
+/* ---- Mosaico de fotos ----
+   Cada quadro fica parado e troca a foto por dentro, com fade — não é
+   uma esteira rolando. As três fotos de um quadro ficam empilhadas no
+   mesmo lugar e só a opacidade se alterna. */
+.auvp-mosaico {
+  --ciclo: 12s;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--vao);
-  height: clamp(300px, 46vh, 520px);
-  overflow: hidden;
+  gap: clamp(0.4rem, 0.8vw, 0.75rem);
   background: var(--paper-2);
 }
-.auvp-roleta__col { overflow: hidden; }
-.auvp-roleta__fita {
-  /* flow-root para a margem da última foto contar na altura da fita: sem
-     isso ela colapsa com a margem do bloco e a metade fica um vão mais
-     curta que o ciclo — 5,8px de descompasso a cada volta. */
-  display: flow-root;
-  will-change: transform;
-  animation: auvp-roleta linear infinite;
+.auvp-mosaico__quadro {
+  position: relative;
+  height: clamp(300px, 46vh, 520px);
+  overflow: hidden;
 }
-/* O respiro é margem de cada foto, não `gap` da fita: com `gap`, a fita
-   fica com N imagens e N-1 vãos, e metade da altura não cai exatamente
-   num começo de ciclo — a emenda aparece como um pedaço vazio a cada
-   volta. Com margem, cada item mede foto+vão e o -50% bate no ponto. */
-.auvp-roleta__fita img {
-  display: block;
+.auvp-mosaico__foto {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: clamp(200px, 30vh, 340px);
-  margin-bottom: var(--vao);
+  height: 100%;
   object-fit: cover;
+  opacity: 0;
+  animation: auvp-troca var(--ciclo) linear infinite;
 }
-/* Velocidades diferentes: em sincronia, as três colunas viram um bloco
-   só se movendo, e o efeito de roleta some. */
-.auvp-roleta__fita--1 { animation-duration: 26s; }
-.auvp-roleta__fita--2 { animation-duration: 34s; animation-delay: -6s; }
-.auvp-roleta__fita--3 { animation-duration: 30s; animation-delay: -14s; }
-@keyframes auvp-roleta {
-  from { transform: translateY(0); }
-  to { transform: translateY(-50%); }
+/* Os atrasos negativos dividem o ciclo em três: a foto 2 entra com um
+   terço de adiantamento, a 3 com dois terços. As janelas de fade se
+   sobrepõem de propósito — se apenas se encostassem, sobraria um
+   piscar de fundo entre uma foto e a seguinte. */
+.auvp-mosaico__foto--1 { animation-delay: 0s; }
+.auvp-mosaico__foto--2 { animation-delay: calc(var(--ciclo) / -3); }
+.auvp-mosaico__foto--3 { animation-delay: calc(var(--ciclo) / -3 * 2); }
+@keyframes auvp-troca {
+  0%   { opacity: 1; }
+  28%  { opacity: 1; }
+  36%  { opacity: 0; }
+  92%  { opacity: 0; }
+  100% { opacity: 1; }
 }
+/* Cada quadro anda no seu passo, senão as três colunas trocam de foto
+   ao mesmo tempo e o conjunto pisca como um bloco só. */
+.auvp-mosaico__quadro--2 .auvp-mosaico__foto { animation-duration: calc(var(--ciclo) + 3s); }
+.auvp-mosaico__quadro--3 .auvp-mosaico__foto { animation-duration: calc(var(--ciclo) + 6s); }
 
 /* Bloco de cor logo abaixo das fotos, sem respiro entre os dois. */
 .auvp-registro__texto {
@@ -120,8 +122,7 @@
 }
 
 @media (max-width: 900px) {
-  .auvp-roleta { grid-template-columns: repeat(3, minmax(0, 1fr)); height: clamp(220px, 34vh, 320px); }
-  .auvp-roleta__fita img { height: clamp(140px, 22vh, 200px); }
+  .auvp-mosaico__quadro { height: clamp(200px, 30vh, 300px); }
   .auvp-relato { grid-template-columns: 1fr; gap: 2rem; }
 }
 
