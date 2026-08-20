@@ -22,27 +22,27 @@
   opacity: 0;
   transition: opacity 1.1s var(--ease);
 }
-/* TROCAR AS QUATRO FOTOS DESTA DOBRA.
-   As atuais são de banco e nenhuma casa com o rótulo que carregam — a
-   de Agenda estruturada é um monitor escrito "digital marketing".
+/* As quatro fotos da dobra. Vêm do Pexels por URL do CDN, montada a
+   partir do id que está no fim do endereço da página da foto. */
+.auvp-exp__bg--1 { background-image: url("https://images.pexels.com/photos/6466290/pexels-photo-6466290.jpeg?auto=compress&cs=tinysrgb&w=1600"); }   /* hospedagem */
+.auvp-exp__bg--2 { background-image: url("https://images.pexels.com/photos/5705068/pexels-photo-5705068.jpeg?auto=compress&cs=tinysrgb&w=1600"); }   /* malas */
+.auvp-exp__bg--3 { background-image: url("https://images.pexels.com/photos/6474521/pexels-photo-6474521.jpeg?auto=compress&cs=tinysrgb&w=1600"); }   /* concierge */
+.auvp-exp__bg--4 { background-image: url("https://images.pexels.com/photos/20232078/pexels-photo-20232078.jpeg?auto=compress&cs=tinysrgb&w=1600"); }  /* mapa */
 
-   O que cada uma precisa mostrar, em fotografia sóbria de luxo (a
-   referência é Rosewood, não resort com dourado):
-     bg--1  Hospedagem            quarto ou lobby de hotel de luxo
-     bg--2  Logística organizada  carrinho de hotel com malas
-     bg--3  Concierge             atendimento de concierge
-     bg--4  Agenda estruturada    algo que leia como luxo, não escritório
+/* A foto das malas entra aproximada, para o corte deixar os saltos fora
+   do quadro. O zoom é feito por transform, e não por background-size,
+   porque partindo de `cover` a escala só pode sobrar — com porcentagem
+   em background-size a imagem pode encolher abaixo da altura do quadro e
+   abrir faixa vazia.
 
-   Requisitos técnicos: horizontal, a partir de 1600px de largura, e sem
-   assunto importante no canto inferior esquerdo — é onde ficam as abas.
-   A dobra cobre a foto com um véu escuro, então imagem já escura e de
-   pouco contraste funciona melhor que imagem clara e saturada.
+   Dois botões para ajustar: `scale` aproxima mais ou menos, e o segundo
+   valor de `transform-origin` escolhe a altura que fica parada — quanto
+   menor, mais o corte come de baixo. */
+.auvp-exp__bg--2 {
+  transform: scale(1.45);
+  transform-origin: center 22%;
+}
 
-   Para trocar por arquivo do repositório: url("../img/nome.jpg"). */
-.auvp-exp__bg--1 { background-image: url("https://images.pexels.com/photos/18285946/pexels-photo-18285946.jpeg?auto=compress&cs=tinysrgb&w=1600"); }
-.auvp-exp__bg--2 { background-image: url("https://images.pexels.com/photos/12391911/pexels-photo-12391911.jpeg?auto=compress&cs=tinysrgb&w=1600"); }
-.auvp-exp__bg--3 { background-image: url("https://images.pexels.com/photos/16731630/pexels-photo-16731630.jpeg?auto=compress&cs=tinysrgb&w=1600"); }
-.auvp-exp__bg--4 { background-image: url("https://images.pexels.com/photos/6476808/pexels-photo-6476808.jpeg?auto=compress&cs=tinysrgb&w=1600"); }
 .auvp-exp__scrim {
   position: absolute; inset: 0; z-index: 1;
   background:

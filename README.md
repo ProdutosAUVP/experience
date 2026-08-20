@@ -101,7 +101,7 @@ hipótese a página fica em branco.**
 |---|---|
 | Ligar os dois formulários | comentário **“COMO LIGAR ESTE FORMULÁRIO”**, um em cada página |
 | Foto da faixa de abertura da Missão China | `missao-china.html`, `.auvp-capa__faixa` — hoje usa a mesma foto da home |
-| Quatro fotos da dobra Experiência | `13-experiencia.css`, `.auvp-exp__bg--1` a `--4` — as de banco não casam com os rótulos |
+| Conferir as fotos da dobra Experiência | `13-experiencia.css` — as URLs do CDN foram montadas sem poder abrir o Pexels daqui |
 | Datas, investimento e roteiro | dentro dos cards China e Chile, marcados como “A confirmar” |
 | Destino do card 2 | ver observação abaixo |
 
@@ -164,6 +164,24 @@ Quem posiciona é o `<span>` de fora e quem gira é a `<img>` de dentro: se as
 duas transformações ficassem no mesmo elemento, a rotação apagaria a
 centralização e a logo sairia do lugar. Sob `prefers-reduced-motion`, o giro
 para junto com o resto das animações do site.
+
+### Fotos da dobra Experiência
+
+As quatro entram por URL do CDN do Pexels. O endereço se monta a partir do id
+que aparece no fim do link da página da foto:
+
+```
+página  pexels.com/pt-br/foto/…-6466290/
+CDN     images.pexels.com/photos/6466290/pexels-photo-6466290.jpeg?auto=compress&cs=tinysrgb&w=1600
+```
+
+A foto das malas entra aproximada, para o corte deixar os saltos fora do
+quadro. O zoom é `transform: scale()`, não `background-size`: partindo de
+`cover`, a escala só pode sobrar — com porcentagem em `background-size` a
+imagem pode encolher abaixo da altura do quadro e abrir faixa vazia. Para
+ajustar, há dois botões: `scale` aproxima mais ou menos, e o segundo valor de
+`transform-origin` escolhe a altura que fica parada — quanto menor, mais o
+corte come de baixo.
 
 ### Fontes
 
