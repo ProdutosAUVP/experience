@@ -37,6 +37,7 @@ assets/
   img/
     auvp-experience-horizontal.svg
     hero-imersao.jpg        fundo da 1ª dobra
+    DSC*.jpg                sete fotos da Missão China, no mosaico
     china.svg               mapa da dobra Canton Fair
     canton-fair.svg         logo que marca Guangzhou no mapa
 ```
@@ -100,7 +101,6 @@ hipótese a página fica em branco.**
 |---|---|
 | Ligar os dois formulários | comentário **“COMO LIGAR ESTE FORMULÁRIO”**, um em cada página |
 | Foto da faixa de abertura da Missão China | `missao-china.html`, `.auvp-capa__faixa` — hoje usa a mesma foto da home |
-| Fotos do mosaico da Missão China | `.auvp-mosaico` — hoje são as de banco da home |
 | Datas, investimento e roteiro | dentro dos cards China e Chile, marcados como “A confirmar” |
 | Destino do card 2 | ver observação abaixo |
 
@@ -125,10 +125,23 @@ para longe demais.
 **O mosaico** são três quadros parados que trocam a foto por dentro, com
 fade — não é uma esteira rolando. As fotos de um quadro ficam empilhadas no
 mesmo lugar e só a opacidade se alterna, com atrasos negativos dividindo o
-ciclo entre elas. As janelas de fade se sobrepõem de propósito: se apenas se
-encostassem, sobraria um piscar de fundo entre uma foto e a seguinte. Cada
-quadro anda num passo diferente, senão as três colunas trocam ao mesmo tempo
-e o conjunto pisca como um bloco só.
+ciclo entre elas.
+
+São sete fotos da viagem, repartidas em 3 + 2 + 2. Quadro de duas fotos leva
+a classe `--duo`, que troca a janela de exibição: com duas, cada uma fica
+metade do ciclo no ar, não um terço. **Ao acrescentar ou tirar foto de um
+quadro, acerte essa classe junto** — é o que mantém a conta fechada.
+
+Dois cuidados que sustentam o efeito. As janelas de fade se sobrepõem: se
+apenas se encostassem, sobraria um piscar de fundo entre uma foto e a
+seguinte. E o passo de cada quadro é o `--ciclo` dele, nunca um
+`animation-duration` por fora — os atrasos são frações de `--ciclo`, e
+alterar a duração por outro caminho faz atraso e duração deixarem de bater,
+o que reabre o piscar.
+
+As fotos foram reduzidas para 1600px de largura antes de entrar. Os
+originais tinham 4240px e 5,9 MB somados, para aparecerem num quadro de
+~500px — a dobra baixava seis vezes mais pixel do que mostrava.
 
 O vídeo da dobra da culinária é o do YouTube, embutido pelo domínio
 `youtube-nocookie.com`, que não deixa cookie de rastreio em quem só passa

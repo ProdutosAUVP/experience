@@ -79,10 +79,18 @@
   opacity: 0;
   animation: auvp-troca var(--ciclo) linear infinite;
 }
-/* Os atrasos negativos dividem o ciclo em três: a foto 2 entra com um
-   terço de adiantamento, a 3 com dois terços. As janelas de fade se
-   sobrepõem de propósito — se apenas se encostassem, sobraria um
-   piscar de fundo entre uma foto e a seguinte. */
+/* Cada quadro anda no seu passo, senão as três colunas trocam de foto
+   ao mesmo tempo e o conjunto pisca como um bloco só.
+
+   O passo é o --ciclo do quadro, não um animation-duration à parte: os
+   atrasos abaixo são frações de --ciclo, e se a duração fosse alterada
+   por fora, atraso e duração deixariam de bater. Quando isso acontecia,
+   as fotos de um quadro paravam de se sobrepor e abria um piscar de
+   fundo entre uma e a seguinte. */
+.auvp-mosaico__quadro--2 { --ciclo: 15s; }
+.auvp-mosaico__quadro--3 { --ciclo: 18s; }
+
+/* Três fotos: cada uma fica um terço do ciclo no ar. */
 .auvp-mosaico__foto--1 { animation-delay: 0s; }
 .auvp-mosaico__foto--2 { animation-delay: calc(var(--ciclo) / -3); }
 .auvp-mosaico__foto--3 { animation-delay: calc(var(--ciclo) / -3 * 2); }
@@ -93,10 +101,18 @@
   92%  { opacity: 0; }
   100% { opacity: 1; }
 }
-/* Cada quadro anda no seu passo, senão as três colunas trocam de foto
-   ao mesmo tempo e o conjunto pisca como um bloco só. */
-.auvp-mosaico__quadro--2 .auvp-mosaico__foto { animation-duration: calc(var(--ciclo) + 3s); }
-.auvp-mosaico__quadro--3 .auvp-mosaico__foto { animation-duration: calc(var(--ciclo) + 6s); }
+
+/* Duas fotos: metade do ciclo cada, com a janela de exibição maior. As
+   bordas de fade continuam se sobrepondo, que é o que evita o piscar. */
+.auvp-mosaico__quadro--duo .auvp-mosaico__foto { animation-name: auvp-troca-duo; }
+.auvp-mosaico__quadro--duo .auvp-mosaico__foto--2 { animation-delay: calc(var(--ciclo) / -2); }
+@keyframes auvp-troca-duo {
+  0%   { opacity: 1; }
+  44%  { opacity: 1; }
+  52%  { opacity: 0; }
+  92%  { opacity: 0; }
+  100% { opacity: 1; }
+}
 
 /* Bloco de cor logo abaixo das fotos, sem respiro entre os dois. */
 .auvp-registro__texto {
