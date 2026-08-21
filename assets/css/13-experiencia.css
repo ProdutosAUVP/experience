@@ -22,10 +22,27 @@
   opacity: 0;
   transition: opacity 1.1s var(--ease);
 }
-.auvp-exp__bg--1 { background-image: url("https://images.pexels.com/photos/18285946/pexels-photo-18285946.jpeg?auto=compress&cs=tinysrgb&w=1600"); }
-.auvp-exp__bg--2 { background-image: url("https://images.pexels.com/photos/12391911/pexels-photo-12391911.jpeg?auto=compress&cs=tinysrgb&w=1600"); }
-.auvp-exp__bg--3 { background-image: url("https://images.pexels.com/photos/16731630/pexels-photo-16731630.jpeg?auto=compress&cs=tinysrgb&w=1600"); }
-.auvp-exp__bg--4 { background-image: url("https://images.pexels.com/photos/6476808/pexels-photo-6476808.jpeg?auto=compress&cs=tinysrgb&w=1600"); }
+/* As quatro fotos da dobra. Vêm do Pexels por URL do CDN, montada a
+   partir do id que está no fim do endereço da página da foto. */
+.auvp-exp__bg--1 { background-image: url("https://images.pexels.com/photos/6466290/pexels-photo-6466290.jpeg?auto=compress&cs=tinysrgb&w=1600"); }   /* hospedagem */
+.auvp-exp__bg--2 { background-image: url("https://images.pexels.com/photos/5705068/pexels-photo-5705068.jpeg?auto=compress&cs=tinysrgb&w=1600"); }   /* malas */
+.auvp-exp__bg--3 { background-image: url("https://images.pexels.com/photos/6474521/pexels-photo-6474521.jpeg?auto=compress&cs=tinysrgb&w=1600"); }   /* concierge */
+.auvp-exp__bg--4 { background-image: url("https://images.pexels.com/photos/20232078/pexels-photo-20232078.jpeg?auto=compress&cs=tinysrgb&w=1600"); }  /* mapa */
+
+/* A foto das malas entra aproximada, para o corte deixar os saltos fora
+   do quadro. O zoom é feito por transform, e não por background-size,
+   porque partindo de `cover` a escala só pode sobrar — com porcentagem
+   em background-size a imagem pode encolher abaixo da altura do quadro e
+   abrir faixa vazia.
+
+   Dois botões para ajustar: `scale` aproxima mais ou menos, e o segundo
+   valor de `transform-origin` escolhe a altura que fica parada — quanto
+   menor, mais o corte come de baixo. */
+.auvp-exp__bg--2 {
+  transform: scale(1.45);
+  transform-origin: center 22%;
+}
+
 .auvp-exp__scrim {
   position: absolute; inset: 0; z-index: 1;
   background:
