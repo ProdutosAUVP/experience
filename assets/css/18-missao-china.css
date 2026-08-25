@@ -56,10 +56,11 @@
 
 /* ---- Mosaico de fotos ----
    Cada quadro fica parado e troca a foto por dentro, com fade — não é
-   uma esteira rolando. As três fotos de um quadro ficam empilhadas no
-   mesmo lugar e só a opacidade se alterna. */
+   uma esteira rolando. As fotos de um quadro ficam empilhadas no mesmo
+   lugar e só a opacidade se alterna. Quantas são, o quadro diz na
+   classe: --quarteto, --duo, ou nada para três. */
 .auvp-mosaico {
-  --ciclo: 12s;
+  --ciclo: 16s;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(0.4rem, 0.8vw, 0.75rem);
@@ -87,10 +88,11 @@
    por fora, atraso e duração deixariam de bater. Quando isso acontecia,
    as fotos de um quadro paravam de se sobrepor e abria um piscar de
    fundo entre uma e a seguinte. */
-.auvp-mosaico__quadro--2 { --ciclo: 15s; }
+.auvp-mosaico__quadro--2 { --ciclo: 20s; }
 .auvp-mosaico__quadro--3 { --ciclo: 18s; }
 
-/* Três fotos: cada uma fica um terço do ciclo no ar. */
+/* Três fotos: cada uma fica um terço do ciclo no ar. É o padrão — um
+   quadro sem classe de quantidade cai aqui. */
 .auvp-mosaico__foto--1 { animation-delay: 0s; }
 .auvp-mosaico__foto--2 { animation-delay: calc(var(--ciclo) / -3); }
 .auvp-mosaico__foto--3 { animation-delay: calc(var(--ciclo) / -3 * 2); }
@@ -110,6 +112,23 @@
   0%   { opacity: 1; }
   44%  { opacity: 1; }
   52%  { opacity: 0; }
+  92%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Quatro fotos: um quarto do ciclo cada. Mesma regra dos outros dois
+   casos — o atraso divide o ciclo em partes iguais e a janela de
+   exibição encolhe na mesma proporção, com as bordas de fade ainda se
+   sobrepondo. O ciclo do quadro cresce junto (16s e 20s), senão cada
+   foto passaria depressa demais para ser vista. */
+.auvp-mosaico__quadro--quarteto .auvp-mosaico__foto { animation-name: auvp-troca-quarteto; }
+.auvp-mosaico__quadro--quarteto .auvp-mosaico__foto--2 { animation-delay: calc(var(--ciclo) / -4); }
+.auvp-mosaico__quadro--quarteto .auvp-mosaico__foto--3 { animation-delay: calc(var(--ciclo) / -4 * 2); }
+.auvp-mosaico__quadro--quarteto .auvp-mosaico__foto--4 { animation-delay: calc(var(--ciclo) / -4 * 3); }
+@keyframes auvp-troca-quarteto {
+  0%   { opacity: 1; }
+  20%  { opacity: 1; }
+  28%  { opacity: 0; }
   92%  { opacity: 0; }
   100% { opacity: 1; }
 }
