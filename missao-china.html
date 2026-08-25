@@ -76,25 +76,32 @@
   </section>
 
   <!-- ============ 1. O QUE A CHINA MOSTROU ============
-       Cada quadro alterna entre as fotos que estiverem dentro dele.
-       Dois quadros têm duas fotos e levam a classe --duo, que troca a
-       janela de exibição: com duas fotos, cada uma fica metade do ciclo
-       no ar, não um terço. Ao acrescentar ou tirar foto de um quadro,
-       ajuste essa classe junto. -->
+       Cada quadro alterna entre as fotos que estiverem dentro dele. São
+       onze fotos, repartidas em 4 + 4 + 3.
+
+       A quantidade tem de estar dita na classe do quadro: --quarteto
+       para quatro fotos, --duo para duas, e nada para três, que é o
+       padrão. É essa classe que divide o ciclo em partes iguais. Ao
+       acrescentar ou tirar foto de um quadro, ajuste a classe junto —
+       sem isso as fotos deixam de se revezar direito. -->
   <section class="auvp-registro" id="registro">
     <div class="auvp-mosaico" aria-hidden="true">
-      <div class="auvp-mosaico__quadro auvp-mosaico__quadro--1">
+      <div class="auvp-mosaico__quadro auvp-mosaico__quadro--1 auvp-mosaico__quadro--quarteto">
         <img class="auvp-mosaico__foto auvp-mosaico__foto--1" src="assets/img/DSC01284.jpg" alt="" loading="lazy" decoding="async">
         <img class="auvp-mosaico__foto auvp-mosaico__foto--2" src="assets/img/DSC00840.jpg" alt="" loading="lazy" decoding="async">
         <img class="auvp-mosaico__foto auvp-mosaico__foto--3" src="assets/img/DSC00629.jpg" alt="" loading="lazy" decoding="async">
+        <img class="auvp-mosaico__foto auvp-mosaico__foto--4" src="assets/img/DSC01059.jpg" alt="" loading="lazy" decoding="async">
       </div>
-      <div class="auvp-mosaico__quadro auvp-mosaico__quadro--2 auvp-mosaico__quadro--duo">
+      <div class="auvp-mosaico__quadro auvp-mosaico__quadro--2 auvp-mosaico__quadro--quarteto">
         <img class="auvp-mosaico__foto auvp-mosaico__foto--1" src="assets/img/DSC00154.jpg" alt="" loading="lazy" decoding="async">
         <img class="auvp-mosaico__foto auvp-mosaico__foto--2" src="assets/img/DSC02919.jpg" alt="" loading="lazy" decoding="async">
+        <img class="auvp-mosaico__foto auvp-mosaico__foto--3" src="assets/img/DSC00796.jpg" alt="" loading="lazy" decoding="async">
+        <img class="auvp-mosaico__foto auvp-mosaico__foto--4" src="assets/img/DSC00663.jpg" alt="" loading="lazy" decoding="async">
       </div>
-      <div class="auvp-mosaico__quadro auvp-mosaico__quadro--3 auvp-mosaico__quadro--duo">
+      <div class="auvp-mosaico__quadro auvp-mosaico__quadro--3">
         <img class="auvp-mosaico__foto auvp-mosaico__foto--1" src="assets/img/DSC02014.jpg" alt="" loading="lazy" decoding="async">
         <img class="auvp-mosaico__foto auvp-mosaico__foto--2" src="assets/img/DSC01980.jpg" alt="" loading="lazy" decoding="async">
+        <img class="auvp-mosaico__foto auvp-mosaico__foto--3" src="assets/img/DSC01364.jpg" alt="" loading="lazy" decoding="async">
       </div>
     </div>
 

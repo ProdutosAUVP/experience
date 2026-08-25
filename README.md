@@ -37,7 +37,7 @@ assets/
   img/
     auvp-experience-horizontal.svg
     hero-imersao.jpg        fundo da 1ª dobra
-    DSC*.jpg                sete fotos da Missão China — mosaico da página
+    DSC*.jpg                onze fotos da Missão China — mosaico da página
                             da missão e cartões da roleta da home
     china.svg               mapa da dobra Canton Fair
     canton-fair.svg         logo que marca Guangzhou no mapa
@@ -137,10 +137,16 @@ fade — não é uma esteira rolando. As fotos de um quadro ficam empilhadas no
 mesmo lugar e só a opacidade se alterna, com atrasos negativos dividindo o
 ciclo entre elas.
 
-São sete fotos da viagem, repartidas em 3 + 2 + 2. Quadro de duas fotos leva
-a classe `--duo`, que troca a janela de exibição: com duas, cada uma fica
-metade do ciclo no ar, não um terço. **Ao acrescentar ou tirar foto de um
-quadro, acerte essa classe junto** — é o que mantém a conta fechada.
+São onze fotos da viagem, repartidas em 4 + 4 + 3. A quantidade tem de estar
+dita na classe do quadro: `--quarteto` para quatro, `--duo` para duas, e nada
+para três, que é o padrão. É ela que divide o ciclo em partes iguais e
+encolhe a janela de exibição na mesma proporção — com quatro fotos, cada uma
+fica um quarto do ciclo no ar, não um terço. **Ao acrescentar ou tirar foto
+de um quadro, acerte essa classe junto** — é o que mantém a conta fechada.
+
+Os ciclos dos quadros de quatro fotos cresceram junto (16s e 20s, contra os
+18s do quadro de três): no ciclo antigo cada foto passaria depressa demais
+para ser vista.
 
 Dois cuidados que sustentam o efeito. As janelas de fade se sobrepõem: se
 apenas se encostassem, sobraria um piscar de fundo entre uma foto e a
@@ -149,9 +155,10 @@ seguinte. E o passo de cada quadro é o `--ciclo` dele, nunca um
 alterar a duração por outro caminho faz atraso e duração deixarem de bater,
 o que reabre o piscar.
 
-As fotos foram reduzidas para 1600px de largura antes de entrar. Os
-originais tinham 4240px e 5,9 MB somados, para aparecerem num quadro de
-~500px — a dobra baixava seis vezes mais pixel do que mostrava.
+As fotos são reduzidas para 1600px no lado maior antes de entrar. Os
+originais têm 4240px, para aparecerem num quadro de ~500px — sem reduzir, a
+dobra baixa oito vezes mais pixel do que mostra. As quatro últimas somavam
+3,0 MB e ficaram em 861 KB. **Foto nova passa por essa régua antes de subir.**
 
 O vídeo da dobra da culinária é o do YouTube, embutido pelo domínio
 `youtube-nocookie.com`, que não deixa cookie de rastreio em quem só passa
