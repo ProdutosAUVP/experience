@@ -21,7 +21,7 @@ assets/
     03-layout.css           .auvp-shell, utilitários de texto
     04-textura.css          grão de papel e barra de progresso
     05-botoes.css
-    06-navegacao.css        barra do topo e menu em tela cheia
+    06-navegacao.css        barra do topo
     07-hero.css             1ª dobra — foto com overlay preto
     08-posicionamento.css   2ª dobra — roleta de pilares
     09-imersoes.css         3ª dobra — cards de destino
@@ -73,12 +73,11 @@ python3 -m http.server 8000
 
 ## Por que não tem JavaScript
 
-Menu, acordeões, abas, cards que abrem e animações de rolagem são feitos em
-CSS puro:
+Acordeões, abas, roletas, cards que abrem e animações de rolagem são feitos
+em CSS puro:
 
 | Interação | Como funciona |
 |---|---|
-| Menu em tela cheia | âncora `#menu` + `:target` — fecha sozinho ao navegar |
 | Roleta do posicionamento | `<input type="radio">` + `<label>` — o trilho anda um cartão por clique |
 | Cards de destino | `<input type="checkbox">` + `<label>` — o card gira e mostra o verso |
 | FAQ | `<details name="…">` — abre um e fecha o outro |
@@ -106,6 +105,14 @@ hipótese a página fica em branco.**
 | Conferir a foto da aba Hospedagem | `13-experiencia.css` — a URL foi montada sem poder abrir o Pexels daqui |
 | Datas, investimento e roteiro | dentro dos cards China e Chile, marcados como “A confirmar” |
 | Destino do card 2 | ver observação abaixo |
+
+### Barra do topo
+
+O topo tem a marca e **um** destino: Missão China. Não há mais menu em tela
+cheia nem botão de sanduíche — com um link só não existe o que recolher, e
+ele aparece em qualquer largura. Se um dia voltarem mais links, volta junto o
+recolhimento em telas estreitas, que morava no `@media (max-width: 900px)` do
+`06-navegacao.css`.
 
 ### Formulário
 
@@ -171,7 +178,7 @@ para junto com o resto das animações do site.
 
 Os quatro pilares da 2ª dobra são cartões com foto num trilho horizontal.
 Quem guarda o estado são quatro `<input type="radio">` escondidos: cada um
-significa "o trilho começa no cartão N". As setas são `<label>` empilhados —
+significa "o trilho começa na posição N". As setas são `<label>` empilhados —
 em cada slot só aparece o do estado atual, e ele aponta para o radio vizinho.
 O `<span>` com `--fim` é a seta apagada, quando não há para onde ir.
 
@@ -186,10 +193,15 @@ Duas coisas seguram a conta:
    quando a tela cresce e passam a caber mais cartões do que o estado marcado
    supõe.
 
-Quantos cartões cabem é o `--vis` (1, 2 ou 3, por largura de tela). Ao mexer
-nele, acerte junto as duas regras de `@media` que apagam a seta de avançar —
-elas dizem em que estado o trilho acaba em cada faixa, e sem isso fica um
-clique que não anda.
+O primeiro lugar do trilho é um vão vazio: os cartões começam no segundo,
+como no desenho. Em tela de celular o vão sai do caminho — com um cartão por
+tela ele seria uma tela inteira em branco.
+
+Dois números governam o resto: o `--vis`, quantos cartões cabem (1, 2 ou 3,
+por largura de tela), e o `--n`, quantos lugares o trilho tem — 4 sem o vão,
+5 com ele. O último estado que ainda anda é `--n` menos `--vis`. Ao mexer em
+qualquer um dos dois, acerte junto a regra de `@media` que apaga a seta de
+avançar; sem isso sobra um clique que não anda.
 
 ### Diferencial
 
