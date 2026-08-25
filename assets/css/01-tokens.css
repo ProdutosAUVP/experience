@@ -26,6 +26,10 @@
   --verde-60: rgba(2, 54, 32, 0.6);
   --verde-30: rgba(2, 54, 32, 0.3);
   --verde-10: rgba(2, 54, 32, 0.1);
+  /* O mesmo acento, clareado para sobreviver a fundo escuro: o #023620
+     desaparece sobre o overlay preto do hero. Usar só sobre foto ou
+     tinta — sobre o papel ele reprova no contraste. */
+  --verde-claro: #a9c9b6;
 
   /* tipografia */
   --display: "General Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;

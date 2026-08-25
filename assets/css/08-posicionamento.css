@@ -1,6 +1,6 @@
 /* Posicionamento */
 .auvp-proof__head {
-  padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  padding-bottom: clamp(2rem, 4vw, 3.5rem);
 }
 .auvp-proof__statement {
   font-size: clamp(1.55rem, 3.1vw, 3rem);
@@ -9,39 +9,128 @@
   margin-top: clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.auvp-pillars {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--line-soft);
-  border-block: 1px solid var(--line-soft);
-}
-.auvp-pillar {
-  position: relative;
-  background: var(--paper);
-  padding: clamp(1.75rem, 2.6vw, 2.75rem) clamp(1.25rem, 1.8vw, 2rem) clamp(2.25rem, 3.5vw, 3.5rem);
-  display: grid;
-  gap: 0.9rem;
-  align-content: start;
-  transition: background-color 0.6s var(--ease);
-}
-.auvp-pillar:hover { background: var(--paper-2); }
-.auvp-pillar::after {
-  content: "";
-  position: absolute;
-  left: 0; bottom: -1px;
-  width: 100%; height: 2px;
-  background: var(--verde);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.7s var(--ease);
-}
-.auvp-pillar:hover::after { transform: scaleX(1); }
-.auvp-pillar h3 { font-size: clamp(1.1rem, 1.5vw, 1.45rem); line-height: 1.2; margin-top: 0.35rem; }
-.auvp-pillar p { font-size: var(--fs-small); line-height: 1.7; color: var(--ink-60); }
+/* ---- Roleta de pilares ----
+   Quatro cartões num trilho que anda de um em um. O estado vem dos
+   radios `.auvp-roleta__estado`; o CSS só traduz "radio N marcado" em
+   um deslocamento e num par de setas.
 
-@media (max-width: 1080px) { .auvp-pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 620px) {
-  .auvp-pillars { grid-template-columns: 1fr; }
-  .auvp-proof__head { grid-template-columns: 1fr; }
+   A janela é um container de consulta (`container-type: inline-size`),
+   e é isso que faz a conta fechar: dentro do trilho, `100cqw` é a
+   largura visível — não a largura do próprio trilho, que é maior. Sem
+   isso, qualquer porcentagem dentro do `translateX` mediria o elemento
+   errado e o passo sairia torto. */
+.auvp-roleta {
+  --vis: 1;              /* cartões visíveis; cresce nas telas maiores */
+  --gap: clamp(1rem, 2vw, 2rem);
+  position: relative;
+}
+.auvp-roleta__estado { position: absolute; opacity: 0; pointer-events: none; }
+
+.auvp-roleta__nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-bottom: clamp(1.25rem, 2.5vw, 2rem);
+}
+.auvp-roleta__slot {
+  position: relative;
+  flex: none;
+  width: clamp(46px, 4vw, 58px);
+  aspect-ratio: 1;
+}
+/* Todas as setas de um slot ocupam o mesmo lugar; só a do estado atual
+   fica visível e clicável. */
+.auvp-roleta__bt {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  font-family: var(--display);
+  font-size: 1.05rem;
+  color: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+  cursor: pointer;
+  transition: color 0.4s var(--ease), background-color 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+.auvp-roleta__bt--ant-fim,
+.auvp-roleta__bt--prox-fim {
+  color: var(--ink-30);
+  border-color: var(--line-soft);
+  cursor: default;
+}
+label.auvp-roleta__bt:hover {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: var(--paper);
+}
+
+.auvp-roleta__janela {
+  container-type: inline-size;
+  overflow: hidden;
+}
+.auvp-roleta__trilho {
+  /* passo = largura do cartão + vão; fim = quanto ainda sobra para andar */
+  --passo: calc((100cqw + var(--gap)) / var(--vis));
+  --fim: calc(4 * var(--passo) - var(--gap) - 100cqw);
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100cqw - (var(--vis) - 1) * var(--gap)) / var(--vis));
+  gap: var(--gap);
+  /* O clamp segura as duas pontas: nunca antes do primeiro cartão, nunca
+     além do último. É ele que evita sobrar faixa vazia quando a tela
+     cresce e passam a caber mais cartões do que o estado marcado supõe. */
+  transform: translateX(calc(-1 * clamp(0px, var(--i, 0) * var(--passo), var(--fim))));
+  transition: transform 0.9s var(--ease);
+}
+
+.auvp-roleta__cartao {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+}
+.auvp-roleta__foto {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  margin-bottom: clamp(0.75rem, 1.5vw, 1.25rem);
+  background: var(--paper-3);
+  overflow: hidden;
+}
+.auvp-roleta__foto .auvp-art { transition: transform 1.1s var(--ease); }
+.auvp-roleta__cartao:hover .auvp-art { transform: scale(1.05); }
+.auvp-roleta__cartao h3 { font-size: clamp(1.2rem, 1.7vw, 1.75rem); line-height: 1.2; }
+.auvp-roleta__cartao p { font-size: var(--fs-small); line-height: 1.7; color: var(--ink-60); }
+
+/* ---- Estados ----
+   Cada radio marcado empurra o trilho e acende um par de setas. */
+#auvp-r2:checked ~ .auvp-roleta__janela .auvp-roleta__trilho { --i: 1; }
+#auvp-r3:checked ~ .auvp-roleta__janela .auvp-roleta__trilho { --i: 2; }
+#auvp-r4:checked ~ .auvp-roleta__janela .auvp-roleta__trilho { --i: 3; }
+
+#auvp-r1:checked ~ .auvp-roleta__nav .auvp-roleta__bt--ant-fim,
+#auvp-r1:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-2,
+#auvp-r2:checked ~ .auvp-roleta__nav .auvp-roleta__bt--ant-1,
+#auvp-r2:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-3,
+#auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--ant-2,
+#auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-4,
+#auvp-r4:checked ~ .auvp-roleta__nav .auvp-roleta__bt--ant-3,
+#auvp-r4:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-fim {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Quanto mais cartão cabe na tela, mais cedo o trilho acaba — e a seta
+   de avançar precisa apagar junto, senão fica um clique que não anda. */
+@media (min-width: 760px) {
+  .auvp-roleta { --vis: 2; }
+  #auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-4 { opacity: 0; pointer-events: none; }
+  #auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-fim { opacity: 1; }
+}
+@media (min-width: 1200px) {
+  .auvp-roleta { --vis: 3; }
+  #auvp-r2:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-3 { opacity: 0; pointer-events: none; }
+  #auvp-r2:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-fim { opacity: 1; }
 }

@@ -22,10 +22,10 @@ assets/
     04-textura.css          grão de papel e barra de progresso
     05-botoes.css
     06-navegacao.css        barra do topo e menu em tela cheia
-    07-hero.css             1ª dobra
-    08-posicionamento.css   2ª dobra
+    07-hero.css             1ª dobra — foto com overlay preto
+    08-posicionamento.css   2ª dobra — roleta de pilares
     09-imersoes.css         3ª dobra — cards de destino
-    10-diferencial.css      4ª dobra
+    10-diferencial.css      4ª dobra — índice de acessos
     11-faixa.css            5ª dobra — faixa deslizante
     12-networking.css       6ª dobra
     13-experiencia.css      7ª dobra — abas
@@ -37,7 +37,8 @@ assets/
   img/
     auvp-experience-horizontal.svg
     hero-imersao.jpg        fundo da 1ª dobra
-    DSC*.jpg                sete fotos da Missão China, no mosaico
+    DSC*.jpg                sete fotos da Missão China — mosaico da página
+                            da missão e cartões da roleta da home
     china.svg               mapa da dobra Canton Fair
     canton-fair.svg         logo que marca Guangzhou no mapa
 ```
@@ -78,6 +79,7 @@ CSS puro:
 | Interação | Como funciona |
 |---|---|
 | Menu em tela cheia | âncora `#menu` + `:target` — fecha sozinho ao navegar |
+| Roleta do posicionamento | `<input type="radio">` + `<label>` — o trilho anda um cartão por clique |
 | Cards de destino | `<input type="checkbox">` + `<label>` — o card gira e mostra o verso |
 | FAQ | `<details name="…">` — abre um e fecha o outro |
 | Abas da Experiência | `<input type="radio">` + `<label>` |
@@ -165,6 +167,37 @@ duas transformações ficassem no mesmo elemento, a rotação apagaria a
 centralização e a logo sairia do lugar. Sob `prefers-reduced-motion`, o giro
 para junto com o resto das animações do site.
 
+### Roleta do posicionamento
+
+Os quatro pilares da 2ª dobra são cartões com foto num trilho horizontal.
+Quem guarda o estado são quatro `<input type="radio">` escondidos: cada um
+significa "o trilho começa no cartão N". As setas são `<label>` empilhados —
+em cada slot só aparece o do estado atual, e ele aponta para o radio vizinho.
+O `<span>` com `--fim` é a seta apagada, quando não há para onde ir.
+
+Duas coisas seguram a conta:
+
+1. **A janela é um `container-type: inline-size`.** Dentro do trilho,
+   `100cqw` é a largura visível, não a do próprio trilho — que é maior. Sem
+   isso, qualquer porcentagem dentro do `translateX` mediria o elemento
+   errado e o passo sairia torto.
+2. **O deslocamento é um `clamp`.** Ele segura as duas pontas: nunca antes do
+   primeiro cartão, nunca além do último. É o que evita sobrar faixa vazia
+   quando a tela cresce e passam a caber mais cartões do que o estado marcado
+   supõe.
+
+Quantos cartões cabem é o `--vis` (1, 2 ou 3, por largura de tela). Ao mexer
+nele, acerte junto as duas regras de `@media` que apagam a seta de avançar —
+elas dizem em que estado o trilho acaba em cada faixa, e sem isso fica um
+clique que não anda.
+
+### Diferencial
+
+Era um globo girando com uma parede de palavras por cima. Virou um índice:
+cinco linhas com número, palavra e um traço que atravessa. Cada linha entra
+com a rolagem, no timeline dela mesma — o escalonamento vem da posição na
+tela, não de `animation-delay` — e o cursor completa o traço e empurra a
+palavra. Nada de imagem externa: a dobra é só tipografia e um filete.
 ### Fotos da dobra Experiência
 
 As quatro entram por URL do CDN do Pexels. O endereço se monta a partir do id
@@ -201,7 +234,13 @@ no `01-tokens.css`.
 
 Tudo em neutros de papel e tinta. O verde **#023620** é pontual — aparece só
 em chapéus, números de seção, a palavra destacada de cada título, estados
-ativos, botões e marcas pequenas. O rodapé é a única área escura.
+ativos, botões e marcas pequenas. O rodapé e a primeira dobra são as áreas
+escuras.
+
+Existe uma segunda versão do acento, o `--verde-claro` (**#a9c9b6**), só para
+fundo escuro: sobre o overlay preto do hero o verde original desaparece. Ele
+é o contrário do outro — sobre o papel, reprova no contraste. Cada um no seu
+fundo.
 
 Todas as cores são variáveis no `01-tokens.css`. Para trocar o acento, mude
 uma linha:
@@ -222,10 +261,16 @@ ao lado.
 
 O fundo da primeira dobra é `assets/img/hero-imersao.jpg`. Para trocar, troque
 o arquivo ou o `src` do `<img class="auvp-art">` dentro de `.auvp-hero__media`.
+Sobre ela vai o overlay preto (`.auvp-hero__scrim`): uma camada chapada em
+toda a foto mais um degradê que fecha no rodapé, onde o texto mora. A soma
+das duas deixa ~75% de preto embaixo, o suficiente para o texto branco, e
+~45% no meio, onde a foto ainda precisa aparecer. Ao trocar por uma foto mais
+clara, é esse par de valores que se ajusta.
 
-As fotos dos cards de destino e da dobra Experiência ainda vêm do Pexels, por
-URL. Para deixar o site inteiro auto-contido, baixe cada uma para
-`assets/img/` e troque os `src`.
+Os cartões da roleta usam as fotos da Missão China que já estão no
+repositório. As fotos dos cards de destino e da dobra Experiência ainda vêm
+do Pexels, por URL. Para deixar o site inteiro auto-contido, baixe cada uma
+para `assets/img/` e troque os `src`.
 
 A arte vetorial das dobras (skylines, cordilheira com mina, malha de
 meridianos) foi desenhada em SVG para o projeto e está embutida no markup.
