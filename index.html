@@ -57,39 +57,13 @@
       <img src="assets/img/auvp-experience-horizontal.svg" alt="AUVP Experience">
     </a>
 
+    <!-- Um único destino no topo. Com um link só não há o que recolher
+         atrás de um menu: ele aparece em qualquer largura. -->
     <nav class="auvp-nav__links" aria-label="Navegação principal">
-      <a class="auvp-nav__link" href="#imersoes">Imersões</a>
       <a class="auvp-nav__link" href="missao-china.html">Missão China</a>
-      <a class="auvp-nav__link" href="#diferencial">Diferencial</a>
-      <a class="auvp-nav__link" href="#networking">Networking</a>
-      <a class="auvp-nav__link" href="#experiencia">Experiência</a>
-      <a class="auvp-nav__link" href="#faq">FAQ</a>
     </nav>
-
-    <a class="auvp-burger" href="#menu">Menu <i aria-hidden="true"></i></a>
   </div>
 </header>
-
-<!-- Menu em tela cheia. Abre por âncora e fecha sozinho ao navegar. -->
-<nav class="auvp-menu" id="menu" aria-label="Navegação em tela cheia">
-  <div class="auvp-shell auvp-menu__top">
-    <span class="auvp-brand"><img src="assets/img/auvp-experience-horizontal.svg" alt="AUVP Experience"></span>
-    <a class="auvp-burger auvp-burger--fechar" href="#hero">Fechar <i aria-hidden="true"></i></a>
-  </div>
-  <div class="auvp-shell auvp-menu__body">
-    <a class="auvp-menu__link" href="#imersoes"><i>01</i>Imersões</a>
-    <a class="auvp-menu__link" href="missao-china.html"><i>02</i>Missão China</a>
-    <a class="auvp-menu__link" href="#diferencial"><i>03</i>Diferencial</a>
-    <a class="auvp-menu__link" href="#networking"><i>04</i>Networking</a>
-    <a class="auvp-menu__link" href="#experiencia"><i>05</i>Experiência</a>
-    <a class="auvp-menu__link" href="#faq"><i>06</i>FAQ</a>
-    <a class="auvp-menu__link auvp-gold" href="https://wa.me/55SEUNUMERO"><i>07</i>Fale com a gente</a>
-  </div>
-  <div class="auvp-shell auvp-menu__foot">
-    <span>AUVP Experience Co.</span>
-    <span>Imersões estratégicas globais</span>
-  </div>
-</nav>
 
 <main id="conteudo">
 
@@ -137,10 +111,10 @@
     </div>
 
     <div class="auvp-shell auvp-roleta">
-      <input type="radio" name="auvp-roleta" id="auvp-r1" class="auvp-roleta__estado" aria-label="Mostrar a partir do cartão 1" checked>
-      <input type="radio" name="auvp-roleta" id="auvp-r2" class="auvp-roleta__estado" aria-label="Mostrar a partir do cartão 2">
-      <input type="radio" name="auvp-roleta" id="auvp-r3" class="auvp-roleta__estado" aria-label="Mostrar a partir do cartão 3">
-      <input type="radio" name="auvp-roleta" id="auvp-r4" class="auvp-roleta__estado" aria-label="Mostrar a partir do cartão 4">
+      <input type="radio" name="auvp-roleta" id="auvp-r1" class="auvp-roleta__estado" aria-label="Posição 1 do trilho" checked>
+      <input type="radio" name="auvp-roleta" id="auvp-r2" class="auvp-roleta__estado" aria-label="Posição 2 do trilho">
+      <input type="radio" name="auvp-roleta" id="auvp-r3" class="auvp-roleta__estado" aria-label="Posição 3 do trilho">
+      <input type="radio" name="auvp-roleta" id="auvp-r4" class="auvp-roleta__estado" aria-label="Posição 4 do trilho">
 
       <!-- As setas são <label> empilhados: em cada estado só um aparece
            em cada slot, e ele aponta para o radio vizinho. O <span> com
@@ -162,6 +136,11 @@
 
       <div class="auvp-roleta__janela auvp-sobe">
         <ul class="auvp-roleta__trilho">
+          <!-- O primeiro lugar do trilho fica vazio de propósito: os
+               cartões começam no segundo, como no desenho. Em tela de
+               celular o vão sai do caminho — ali ele seria uma tela
+               inteira em branco. -->
+          <li class="auvp-roleta__vao" aria-hidden="true"></li>
           <li class="auvp-roleta__cartao">
             <span class="auvp-roleta__foto"><img class="auvp-art" src="assets/img/DSC01980.jpg" alt="" loading="lazy" decoding="async"></span>
             <span class="auvp-num">01</span>
@@ -327,16 +306,23 @@
   </section>
 
   <!-- ============ 5. FAIXA ============ -->
+  <!-- Dois grupos idênticos: a animação anda exatamente um grupo e
+       recomeça, então a emenda nunca aparece. Ao mexer no conteúdo,
+       mexa nos dois — é a igualdade entre eles que segura o laço. -->
   <div class="auvp-marquee" aria-hidden="true">
     <div class="auvp-marquee__track">
-      <span class="auvp-marquee__item">Imersões exclusivas</span>
-      <span class="auvp-marquee__item">Explore os bastidores da economia global</span>
-      <span class="auvp-marquee__item">Imersões exclusivas</span>
-      <span class="auvp-marquee__item">Explore os bastidores da economia global</span>
-      <span class="auvp-marquee__item">Imersões exclusivas</span>
-      <span class="auvp-marquee__item">Explore os bastidores da economia global</span>
-      <span class="auvp-marquee__item">Imersões exclusivas</span>
-      <span class="auvp-marquee__item">Explore os bastidores da economia global</span>
+      <span class="auvp-marquee__grupo">
+        <span class="auvp-marquee__item">Imersões exclusivas</span>
+        <span class="auvp-marquee__item">Explore os bastidores da economia global</span>
+        <span class="auvp-marquee__item">Imersões exclusivas</span>
+        <span class="auvp-marquee__item">Explore os bastidores da economia global</span>
+      </span>
+      <span class="auvp-marquee__grupo">
+        <span class="auvp-marquee__item">Imersões exclusivas</span>
+        <span class="auvp-marquee__item">Explore os bastidores da economia global</span>
+        <span class="auvp-marquee__item">Imersões exclusivas</span>
+        <span class="auvp-marquee__item">Explore os bastidores da economia global</span>
+      </span>
     </div>
   </div>
   <p class="auvp-sr">Imersões exclusivas. Explore os bastidores da economia global.</p>

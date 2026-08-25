@@ -21,6 +21,7 @@
    errado e o passo sairia torto. */
 .auvp-roleta {
   --vis: 1;              /* cartões visíveis; cresce nas telas maiores */
+  --n: 4;                /* lugares no trilho: 4 cartões, mais o vão */
   --gap: clamp(1rem, 2vw, 2rem);
   position: relative;
 }
@@ -74,7 +75,7 @@ label.auvp-roleta__bt:hover {
 .auvp-roleta__trilho {
   /* passo = largura do cartão + vão; fim = quanto ainda sobra para andar */
   --passo: calc((100cqw + var(--gap)) / var(--vis));
-  --fim: calc(4 * var(--passo) - var(--gap) - 100cqw);
+  --fim: calc(var(--n) * var(--passo) - var(--gap) - 100cqw);
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: calc((100cqw - (var(--vis) - 1) * var(--gap)) / var(--vis));
@@ -85,6 +86,11 @@ label.auvp-roleta__bt:hover {
   transform: translateX(calc(-1 * clamp(0px, var(--i, 0) * var(--passo), var(--fim))));
   transition: transform 0.9s var(--ease);
 }
+
+/* O lugar vazio na frente da fila. No celular ele sai da conta — um
+   cartão por tela faria dele uma tela inteira em branco —, e é por isso
+   que o --n muda junto com ele. */
+.auvp-roleta__vao { display: none; }
 
 .auvp-roleta__cartao {
   display: grid;
@@ -123,14 +129,15 @@ label.auvp-roleta__bt:hover {
 }
 
 /* Quanto mais cartão cabe na tela, mais cedo o trilho acaba — e a seta
-   de avançar precisa apagar junto, senão fica um clique que não anda. */
+   de avançar precisa apagar junto, senão fica um clique que não anda.
+   Com o vão na frente são cinco lugares: 5 - --vis é o último estado
+   que ainda anda. */
 @media (min-width: 760px) {
-  .auvp-roleta { --vis: 2; }
-  #auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-4 { opacity: 0; pointer-events: none; }
-  #auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-fim { opacity: 1; }
+  .auvp-roleta { --vis: 2; --n: 5; }
+  .auvp-roleta__vao { display: block; }
 }
 @media (min-width: 1200px) {
   .auvp-roleta { --vis: 3; }
-  #auvp-r2:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-3 { opacity: 0; pointer-events: none; }
-  #auvp-r2:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-fim { opacity: 1; }
+  #auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-4 { opacity: 0; pointer-events: none; }
+  #auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-fim { opacity: 1; }
 }
