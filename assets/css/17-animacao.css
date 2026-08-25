@@ -37,11 +37,17 @@
     }
     /* Cada linha do Diferencial entra por conta própria: como o timeline
        é o da própria linha, o escalonamento vem da rolagem, não de
-       animation-delay. */
+       animation-delay.
+
+       A faixa termina em `entry 100%`, ou seja, no instante em que a
+       linha acabou de entrar inteira na tela. Antes ela ia até
+       `cover 30%` e a última linha ficava parada no meio da animação,
+       mais clara que as outras — parecia cor diferente, e era só a
+       revelação sem terminar. */
     .auvp-edge__linha {
       animation: auvp-edge-linha linear both;
       animation-timeline: view();
-      animation-range: entry 5% cover 30%;
+      animation-range: entry 10% entry 100%;
     }
     .auvp-net__item {
       animation: auvp-net-focus linear both;

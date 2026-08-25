@@ -102,7 +102,7 @@ hipótese a página fica em branco.**
 |---|---|
 | Ligar os dois formulários | comentário **“COMO LIGAR ESTE FORMULÁRIO”**, um em cada página |
 | Foto da faixa de abertura da Missão China | `missao-china.html`, `.auvp-capa__faixa` — hoje usa a mesma foto da home |
-| Conferir a foto da aba Hospedagem | `13-experiencia.css` — a URL foi montada sem poder abrir o Pexels daqui |
+| Conferir as fotos da dobra Experiência | `13-experiencia.css` — as URLs foram montadas sem poder abrir o Pexels daqui; o enquadramento das malas é o que mais pede olho |
 | Datas, investimento e roteiro | dentro dos cards China e Chile, marcados como “A confirmar” |
 | Destino do card 2 | ver observação abaixo |
 
@@ -193,23 +193,30 @@ Duas coisas seguram a conta:
    quando a tela cresce e passam a caber mais cartões do que o estado marcado
    supõe.
 
-O primeiro lugar do trilho é um vão vazio: os cartões começam no segundo,
-como no desenho. Em tela de celular o vão sai do caminho — com um cartão por
-tela ele seria uma tela inteira em branco.
+A frase da dobra ocupa a coluna da esquerda e os cartões correm à direita
+dela — é o que deixa o canto esquerdo com peso em vez de vazio. Abaixo de
+1200px as duas partes viram uma coluna só, com a frase em cima, e as setas
+passam para depois dos cartões: lá em cima, antes até da frase, elas
+apareciam sem nada para comandar.
 
-Dois números governam o resto: o `--vis`, quantos cartões cabem (1, 2 ou 3,
-por largura de tela), e o `--n`, quantos lugares o trilho tem — 4 sem o vão,
-5 com ele. O último estado que ainda anda é `--n` menos `--vis`. Ao mexer em
-qualquer um dos dois, acerte junto a regra de `@media` que apaga a seta de
-avançar; sem isso sobra um clique que não anda.
+Dois números governam o resto: o `--vis`, quantos cartões cabem na janela (1
+em tela estreita, 2 no restante), e o `--n`, quantos lugares o trilho tem. O
+último estado que ainda anda é `--n` menos `--vis`. Ao mexer em qualquer um
+dos dois, acerte junto a regra de `@media` que apaga a seta de avançar; sem
+isso sobra um clique que não anda.
 
 ### Diferencial
 
 Era um globo girando com uma parede de palavras por cima. Virou um índice:
-cinco linhas com número, palavra e um traço que atravessa. Cada linha entra
-com a rolagem, no timeline dela mesma — o escalonamento vem da posição na
-tela, não de `animation-delay` — e o cursor completa o traço e empurra a
+cinco linhas, cada uma com a palavra e um traço que atravessa. Cada linha
+entra com a rolagem, no timeline dela mesma — o escalonamento vem da posição
+na tela, não de `animation-delay` — e o cursor completa o traço e empurra a
 palavra. Nada de imagem externa: a dobra é só tipografia e um filete.
+
+A revelação termina em `entry 100%`, o instante em que a linha acabou de
+entrar inteira na tela. Enquanto ia até `cover 30%`, a última linha ficava
+parada no meio da animação, mais clara que as outras — parecia cor diferente,
+e era só a revelação sem terminar.
 ### Fotos da dobra Experiência
 
 As quatro entram por URL do CDN do Pexels. O endereço se monta a partir do id
@@ -220,12 +227,16 @@ página  pexels.com/pt-br/foto/…-14036272/
 CDN     images.pexels.com/photos/14036272/pexels-photo-14036272.jpeg?auto=compress&cs=tinysrgb&w=1600
 ```
 
-Só a foto da aba **Hospedagem** foi trocada; as outras três continuam as
-mesmas desde o início. Um merge chegou a deixar dois conjuntos de URLs no
-arquivo ao mesmo tempo, e o de baixo ganhava por vir depois — era o que fazia
-a aba 01 mostrar outra foto. Se for trocar alguma, **troque a linha, não
-acrescente outra**: duas regras para o mesmo `--bg` e a última cala a
-primeira, em silêncio.
+Se for trocar alguma, **troque a linha, não acrescente outra**: duas regras
+para o mesmo `--bg` e a última cala a primeira, em silêncio. Foi assim que a
+aba 01 já mostrou a foto errada, depois de um merge deixar dois conjuntos de
+URLs no arquivo.
+
+O quadro da dobra é largo e baixo, e o `cover` corta em cima e embaixo. Na
+foto das malas isso comia justo o que interessa, porque mala fica apoiada no
+chão: o recorte dela é puxado para baixo com `background-position: center
+72%`. É o único botão — 50% é o centro da foto, e quanto maior, mais o
+recorte desce.
 
 ### Fontes
 
