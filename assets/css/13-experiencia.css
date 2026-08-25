@@ -28,13 +28,20 @@
      página  pexels.com/pt-br/foto/…-14036272/
      CDN     images.pexels.com/photos/14036272/pexels-photo-14036272.jpeg?auto=compress&cs=tinysrgb&w=1600
 
-   Só a foto da hospedagem foi trocada; as outras três são as mesmas de
-   antes. Um merge chegou a deixar os dois conjuntos no arquivo, e o de
-   baixo ganhava por vir depois — daí a aba 01 não mostrar a foto certa. */
+   Se for trocar alguma, troque a linha, não acrescente outra: duas
+   regras para o mesmo `--bg` e a última cala a primeira, em silêncio. */
 .auvp-exp__bg--1 { background-image: url("https://images.pexels.com/photos/14036272/pexels-photo-14036272.jpeg?auto=compress&cs=tinysrgb&w=1600"); }  /* hospedagem */
-.auvp-exp__bg--2 { background-image: url("https://images.pexels.com/photos/12391911/pexels-photo-12391911.jpeg?auto=compress&cs=tinysrgb&w=1600"); }  /* logística */
-.auvp-exp__bg--3 { background-image: url("https://images.pexels.com/photos/16731630/pexels-photo-16731630.jpeg?auto=compress&cs=tinysrgb&w=1600"); }  /* concierge */
-.auvp-exp__bg--4 { background-image: url("https://images.pexels.com/photos/6476808/pexels-photo-6476808.jpeg?auto=compress&cs=tinysrgb&w=1600"); }    /* agenda */
+.auvp-exp__bg--2 { background-image: url("https://images.pexels.com/photos/4246101/pexels-photo-4246101.jpeg?auto=compress&cs=tinysrgb&w=1600"); }    /* logística */
+.auvp-exp__bg--3 { background-image: url("https://images.pexels.com/photos/7820326/pexels-photo-7820326.jpeg?auto=compress&cs=tinysrgb&w=1600"); }    /* concierge */
+.auvp-exp__bg--4 { background-image: url("https://images.pexels.com/photos/7368308/pexels-photo-7368308.jpeg?auto=compress&cs=tinysrgb&w=1600"); }    /* agenda */
+
+/* O quadro da dobra é largo e baixo; o `cover` corta em cima e embaixo.
+   Como as malas ficam apoiadas no chão, o corte centralizado come justo
+   a parte que interessa — daí o recorte puxado para baixo.
+
+   Um botão só para ajustar: o segundo valor do background-position. 50%
+   é o centro da foto; quanto maior, mais baixo o recorte desce. */
+.auvp-exp__bg--2 { background-position: center 72%; }
 
 .auvp-exp__scrim {
   position: absolute; inset: 0; z-index: 1;

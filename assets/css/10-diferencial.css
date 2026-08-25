@@ -1,9 +1,9 @@
 /* Diferencial
    Era um globo girando com uma parede de palavras por cima. Virou um
-   índice: cinco linhas, cada uma com número, palavra e um traço que
-   atravessa a linha. A dobra agora se lê de cima para baixo, no ritmo
-   da rolagem — a revelação de cada linha está no 17-animacao.css, e o
-   cursor faz o resto. */
+   índice: cinco linhas, cada uma com a palavra e um traço que atravessa
+   a linha. A dobra agora se lê de cima para baixo, no ritmo da rolagem
+   — a revelação de cada linha está no 17-animacao.css, e o cursor faz o
+   resto. */
 .auvp-edge {
   position: relative;
   overflow: hidden;
@@ -20,7 +20,7 @@
 .auvp-edge__lista { border-top: 1px solid var(--line-soft); }
 .auvp-edge__linha {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: clamp(0.9rem, 2.5vw, 2.5rem);
   padding-block: clamp(0.5rem, 1.2vw, 1rem);
@@ -28,7 +28,6 @@
   transition: background-color 0.6s var(--ease);
 }
 .auvp-edge__linha:hover { background: var(--paper-2); }
-.auvp-edge__linha .auvp-num { align-self: start; padding-top: 0.9em; }
 
 .auvp-edge__palavra {
   display: block;

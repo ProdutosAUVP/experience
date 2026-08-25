@@ -100,16 +100,6 @@
        cada estado desloca o trilho e troca o par de setas visível. Sem
        JavaScript, como o resto do site. -->
   <section class="auvp-section" id="posicionamento">
-    <div class="auvp-shell">
-      <div class="auvp-proof__head">
-        <div>
-          <h2 class="auvp-proof__statement auvp-sobe">
-            AUVP Experience promove uma imersão nos bastidores de economias que estão <em>moldando o futuro</em>.
-          </h2>
-        </div>
-      </div>
-    </div>
-
     <div class="auvp-shell auvp-roleta">
       <input type="radio" name="auvp-roleta" id="auvp-r1" class="auvp-roleta__estado" aria-label="Posição 1 do trilho" checked>
       <input type="radio" name="auvp-roleta" id="auvp-r2" class="auvp-roleta__estado" aria-label="Posição 2 do trilho">
@@ -134,13 +124,18 @@
         </span>
       </div>
 
-      <div class="auvp-roleta__janela auvp-sobe">
+      <!-- A frase ocupa o canto esquerdo, no lugar que antes ficava
+           vazio na frente da fila; os cartões correm à direita dela. Em
+           tela estreita as duas partes viram uma coluna só. -->
+      <div class="auvp-roleta__grade">
+        <div class="auvp-roleta__texto">
+          <h2 class="auvp-proof__statement auvp-sobe">
+            AUVP Experience promove uma imersão nos bastidores de economias que estão <em>moldando o futuro</em>.
+          </h2>
+        </div>
+
+        <div class="auvp-roleta__janela auvp-sobe">
         <ul class="auvp-roleta__trilho">
-          <!-- O primeiro lugar do trilho fica vazio de propósito: os
-               cartões começam no segundo, como no desenho. Em tela de
-               celular o vão sai do caminho — ali ele seria uma tela
-               inteira em branco. -->
-          <li class="auvp-roleta__vao" aria-hidden="true"></li>
           <li class="auvp-roleta__cartao">
             <span class="auvp-roleta__foto"><img class="auvp-art" src="assets/img/DSC01980.jpg" alt="" loading="lazy" decoding="async"></span>
             <span class="auvp-num">01</span>
@@ -166,6 +161,7 @@
             <p>Nada aqui é aleatório. Cada destino, empresa e encontro é pensado para gerar repertório, visão de mercado e decisões mais inteligentes sobre dinheiro.</p>
           </li>
         </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -277,27 +273,22 @@
 
       <ul class="auvp-edge__lista">
         <li class="auvp-edge__linha">
-          <span class="auvp-num">01</span>
           <span class="auvp-edge__palavra">Gastronomia</span>
           <span class="auvp-edge__traco" aria-hidden="true"></span>
         </li>
         <li class="auvp-edge__linha">
-          <span class="auvp-num">02</span>
           <span class="auvp-edge__palavra">Rotina</span>
           <span class="auvp-edge__traco" aria-hidden="true"></span>
         </li>
         <li class="auvp-edge__linha">
-          <span class="auvp-num">03</span>
           <span class="auvp-edge__palavra">Comportamento</span>
           <span class="auvp-edge__traco" aria-hidden="true"></span>
         </li>
         <li class="auvp-edge__linha">
-          <span class="auvp-num">04</span>
           <span class="auvp-edge__palavra">Arquitetura</span>
           <span class="auvp-edge__traco" aria-hidden="true"></span>
         </li>
         <li class="auvp-edge__linha">
-          <span class="auvp-num">05</span>
           <span class="auvp-edge__palavra">Dinâmica social</span>
           <span class="auvp-edge__traco" aria-hidden="true"></span>
         </li>
