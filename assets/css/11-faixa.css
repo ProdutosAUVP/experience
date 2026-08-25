@@ -12,6 +12,19 @@
   width: max-content;
   animation: auvp-slide 34s linear infinite;
 }
+/* O trilho são dois grupos iguais e a animação anda -50%, ou seja, um
+   grupo inteiro: quando o primeiro sai, o segundo está exatamente onde
+   ele começou e o laço não tem emenda.
+   O `min-width: 100vw` é o que faltava. Sem ele, um grupo media só o
+   texto que tem dentro (~1870px) e, em tela mais larga que isso, sobrava
+   um buraco vazio atravessando a faixa uma vez por volta. Com ele, um
+   grupo sozinho sempre cobre a tela, em qualquer monitor. */
+.auvp-marquee__grupo {
+  display: flex;
+  flex: none;
+  min-width: 100vw;
+  justify-content: space-around;
+}
 @keyframes auvp-slide { to { transform: translateX(-50%); } }
 .auvp-marquee__item {
   display: inline-flex;

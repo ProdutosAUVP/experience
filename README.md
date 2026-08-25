@@ -84,7 +84,7 @@ CSS puro:
 | FAQ | `<details name="…">` — abre um e fecha o outro |
 | Abas da Experiência | `<input type="radio">` + `<label>` |
 | Chips de destino | `<input type="checkbox">` — vão junto no formulário |
-| Faixa deslizante | `@keyframes` |
+| Faixa deslizante | `@keyframes` andando -50% sobre dois grupos iguais |
 | Mosaico de fotos da Missão China | `@keyframes` alternando a opacidade |
 | Logo girando sobre o mapa | `@keyframes` |
 | Perfis de networking | rolagem horizontal nativa, com encaixe |
@@ -103,7 +103,7 @@ hipótese a página fica em branco.**
 |---|---|
 | Ligar os dois formulários | comentário **“COMO LIGAR ESTE FORMULÁRIO”**, um em cada página |
 | Foto da faixa de abertura da Missão China | `missao-china.html`, `.auvp-capa__faixa` — hoje usa a mesma foto da home |
-| Conferir as fotos da dobra Experiência | `13-experiencia.css` — as URLs do CDN foram montadas sem poder abrir o Pexels daqui |
+| Conferir a foto da aba Hospedagem | `13-experiencia.css` — a URL foi montada sem poder abrir o Pexels daqui |
 | Datas, investimento e roteiro | dentro dos cards China e Chile, marcados como “A confirmar” |
 | Destino do card 2 | ver observação abaixo |
 
@@ -204,17 +204,16 @@ As quatro entram por URL do CDN do Pexels. O endereço se monta a partir do id
 que aparece no fim do link da página da foto:
 
 ```
-página  pexels.com/pt-br/foto/…-6466290/
-CDN     images.pexels.com/photos/6466290/pexels-photo-6466290.jpeg?auto=compress&cs=tinysrgb&w=1600
+página  pexels.com/pt-br/foto/…-14036272/
+CDN     images.pexels.com/photos/14036272/pexels-photo-14036272.jpeg?auto=compress&cs=tinysrgb&w=1600
 ```
 
-A foto das malas entra aproximada, para o corte deixar os saltos fora do
-quadro. O zoom é `transform: scale()`, não `background-size`: partindo de
-`cover`, a escala só pode sobrar — com porcentagem em `background-size` a
-imagem pode encolher abaixo da altura do quadro e abrir faixa vazia. Para
-ajustar, há dois botões: `scale` aproxima mais ou menos, e o segundo valor de
-`transform-origin` escolhe a altura que fica parada — quanto menor, mais o
-corte come de baixo.
+Só a foto da aba **Hospedagem** foi trocada; as outras três continuam as
+mesmas desde o início. Um merge chegou a deixar dois conjuntos de URLs no
+arquivo ao mesmo tempo, e o de baixo ganhava por vir depois — era o que fazia
+a aba 01 mostrar outra foto. Se for trocar alguma, **troque a linha, não
+acrescente outra**: duas regras para o mesmo `--bg` e a última cala a
+primeira, em silêncio.
 
 ### Fontes
 
