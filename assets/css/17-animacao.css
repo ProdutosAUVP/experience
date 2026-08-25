@@ -35,6 +35,14 @@
       animation: auvp-progresso linear both;
       animation-timeline: scroll(root block);
     }
+    /* Cada linha do Diferencial entra por conta própria: como o timeline
+       é o da própria linha, o escalonamento vem da rolagem, não de
+       animation-delay. */
+    .auvp-edge__linha {
+      animation: auvp-edge-linha linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 30%;
+    }
     .auvp-net__item {
       animation: auvp-net-focus linear both;
       animation-timeline: view();
@@ -60,6 +68,10 @@
 @keyframes auvp-abre {
   from { clip-path: inset(0 0 100% 0); transform: scale(1.08); }
   to { clip-path: inset(0 0 0 0); transform: none; }
+}
+@keyframes auvp-edge-linha {
+  from { opacity: 0; transform: translateX(-32px); }
+  to { opacity: 1; transform: none; }
 }
 @keyframes auvp-parallax { to { transform: translateY(12%); } }
 @keyframes auvp-progresso { to { transform: scaleX(1); } }

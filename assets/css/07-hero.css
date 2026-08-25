@@ -15,16 +15,29 @@
   overflow: hidden;
 }
 .auvp-hero__media { position: absolute; inset: 0; z-index: 0; }
+/* Overlay preto: uma camada chapada sobre a foto inteira e um degradê
+   que fecha no rodapé da dobra, onde o texto mora. A soma das duas
+   deixa ~75% de preto embaixo (branco legível) e ~45% no meio (a foto
+   continua aparecendo). */
 .auvp-hero__scrim {
   position: absolute; inset: 0; z-index: 1;
   background:
-    linear-gradient(to bottom, rgba(247,245,241,0.9) 0%, rgba(247,245,241,0.25) 30%, rgba(247,245,241,0.72) 68%, var(--paper) 100%),
-    linear-gradient(to right, rgba(247,245,241,0.82) 0%, rgba(247,245,241,0.1) 58%);
+    linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.06) 30%, rgba(0,0,0,0.24) 55%, rgba(0,0,0,0.58) 100%),
+    rgba(0, 0, 0, 0.5);
 }
 .auvp-hero__content { position: relative; z-index: 2; width: 100%; padding-bottom: clamp(2.5rem, 5vw, 4.5rem); align-self: end; }
 .auvp-hero__eyebrow { margin-bottom: clamp(1.5rem, 3vw, 2.6rem); }
-.auvp-hero__title { font-size: var(--fs-hero); line-height: 0.98; letter-spacing: -0.035em; max-width: 15ch; }
-.auvp-hero__title em { white-space: nowrap; }
+/* Sobre o overlay preto o texto é branco. O verde escuro do site some
+   nesse fundo, então a palavra destacada usa o acento clareado. */
+.auvp-hero__title {
+  font-size: var(--fs-hero);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  max-width: 15ch;
+  color: var(--paper);
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.4);
+}
+.auvp-hero__title em { white-space: nowrap; color: var(--verde-claro); }
 .auvp-hero__row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -32,8 +45,14 @@
   gap: clamp(1.75rem, 4vw, 4rem);
   margin-top: clamp(1.75rem, 3.5vw, 3rem);
 }
-.auvp-hero__lede { max-width: 48ch; color: var(--ink-80); font-size: clamp(0.9rem, 1.05vw, 1.05rem); line-height: 1.65; }
-.auvp-hero__lede strong { font-weight: 400; color: var(--ink); }
+.auvp-hero__lede {
+  max-width: 48ch;
+  color: rgba(247, 245, 241, 0.88);
+  font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+  line-height: 1.65;
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.45);
+}
+.auvp-hero__lede strong { font-weight: 400; color: var(--paper); }
 @media (max-width: 760px) {
   .auvp-hero__row { grid-template-columns: 1fr; align-items: start; }
 }
