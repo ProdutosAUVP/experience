@@ -4,42 +4,13 @@
    nessa página e não afeta a home. */
 
 /* ---- Abertura ----
-   Faixa de foto com o chapéu por cima; título e frase de abertura vêm
-   embaixo, no papel. A foto deixou de ocupar a tela inteira: como ela se
-   repete na roleta logo abaixo, duas telas de imagem seguidas
-   empurravam o texto para longe demais. */
-.auvp-capa__faixa {
-  position: relative;
-  display: grid;
-  place-items: center;
-  height: clamp(240px, 38vh, 420px);
-  margin-top: calc(var(--nav-h) * -1);
-  padding-top: var(--nav-h);
-  overflow: hidden;
-  isolation: isolate;
-}
-.auvp-capa__faixa .auvp-art { z-index: -2; }
-.auvp-capa__scrim {
-  position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(to bottom, rgba(20,19,17,0.6) 0%, rgba(20,19,17,0.42) 45%, rgba(20,19,17,0.55) 100%);
-}
-/* O chapéu é a única coisa sobre a foto — precisa de corpo para
-   sobreviver a uma imagem cheia de detalhe. */
-.auvp-capa__eyebrow {
-  position: relative;
-  color: var(--paper);
-  font-size: clamp(1.05rem, 2.2vw, 2rem);
-  font-weight: 500;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  text-shadow: 0 2px 14px rgba(20, 19, 17, 0.7);
-}
-
-/* Respiro igual em cima e embaixo: o texto fica solto entre a faixa e a
-   roleta, sem parecer preso a nenhuma das duas. */
+   Título e frase no papel, sem faixa de foto: a que havia era a foto da
+   home repetida, e empurrava o mosaico — imagem de verdade desta
+   viagem — para baixo da dobra. O respiro de cima compensa a barra do
+   topo, que é sticky e passa por cima. */
 .auvp-capa__texto {
   text-align: center;
-  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  padding-block: clamp(3.5rem, 8vw, 6rem) clamp(2.5rem, 6vw, 4.5rem);
 }
 .auvp-capa__title {
   font-size: clamp(2.4rem, 7vw, 6rem);

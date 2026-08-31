@@ -2,56 +2,52 @@
    A frase da dobra mora no canto esquerdo e os cartões correm à direita
    dela. As setas ficam acima, encostadas na direita.
 
-   Quem guarda o estado são os radios `.auvp-roleta__estado`; o CSS só
-   traduz "radio N marcado" em um deslocamento e num par de setas.
+   A dobra tem dois modos, e o que decide é a classe `auvp-js` no <html>:
 
-   A janela é um container de consulta (`container-type: inline-size`),
-   e é isso que faz a conta fechar: dentro do trilho, `100cqw` é a
-   largura visível — não a largura do próprio trilho, que é maior. Sem
-   isso, qualquer porcentagem dentro do `translateX` mediria o elemento
-   errado e o passo sairia torto. */
+   - sem script: a fila é uma lista que rola de lado com o dedo, com
+     encaixe (scroll-snap). As setas somem, porque não teriam o que
+     comandar, e as cópias dos cartões também — elas só servem ao laço.
+   - com script: a janela para de rolar sozinha, as setas aparecem e quem
+     desloca o trilho é o assets/js/auvp.js, um cartão por vez.
+
+   O passo é a distância entre dois cartões, e quem a mede é o próprio
+   JavaScript, no elemento — assim ela vale em qualquer largura, sem o
+   CSS ter de repetir a conta. */
 .auvp-roleta {
   --vis: 1;              /* cartões visíveis; cresce nas telas maiores */
-  --n: 8;                /* lugares no trilho: os 4 cartões e a cópia */
   --gap: clamp(1rem, 2vw, 2rem);
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
-.auvp-roleta__estado { position: absolute; opacity: 0; pointer-events: none; }
 
 /* Em tela estreita as setas passam para depois dos cartões: ali em cima,
    antes até da frase, elas apareciam sem nada para comandar. */
-.auvp-roleta { display: flex; flex-direction: column; }
 .auvp-roleta__nav {
   order: 2;
-  display: flex;
+  display: none;
   justify-content: flex-end;
   gap: 0.6rem;
   padding-top: clamp(1.25rem, 2.5vw, 2rem);
 }
-.auvp-roleta__slot {
-  position: relative;
+.auvp-js .auvp-roleta__nav { display: flex; }
+
+.auvp-roleta__bt {
   flex: none;
   width: clamp(34px, 2.6vw, 40px);
   aspect-ratio: 1;
-}
-/* Todas as setas de um slot ocupam o mesmo lugar; só a do estado atual
-   fica visível e clicável. */
-.auvp-roleta__bt {
-  position: absolute;
-  inset: 0;
   display: grid;
   place-items: center;
+  padding: 0;
   border: 1px solid var(--line);
   border-radius: 50%;
   font-family: var(--display);
   font-size: 0.8rem;
   color: var(--ink);
-  opacity: 0;
-  pointer-events: none;
   cursor: pointer;
   transition: color 0.4s var(--ease), background-color 0.4s var(--ease), border-color 0.4s var(--ease);
 }
-label.auvp-roleta__bt:hover {
+.auvp-roleta__bt:hover {
   background: var(--verde);
   border-color: var(--verde);
   color: var(--paper);
@@ -75,31 +71,31 @@ label.auvp-roleta__bt:hover {
   .auvp-proof__statement { font-size: clamp(1.5rem, 2.1vw, 2.3rem); }
 }
 
+/* Sem script, a janela é o que rola. Com script, quem anda é o trilho, e
+   a janela vira só a moldura. */
 .auvp-roleta__janela {
-  container-type: inline-size;
-  overflow: hidden;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
 }
+.auvp-js .auvp-roleta__janela {
+  overflow: hidden;
+  scroll-snap-type: none;
+}
+
 .auvp-roleta__trilho {
-  /* passo = largura do cartão + vão; fim = quanto ainda sobra para andar */
-  --passo: calc((100cqw + var(--gap)) / var(--vis));
-  --fim: calc(var(--n) * var(--passo) - var(--gap) - 100cqw);
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: calc((100cqw - (var(--vis) - 1) * var(--gap)) / var(--vis));
+  grid-auto-columns: calc((100% - (var(--vis) - 1) * var(--gap)) / var(--vis));
   gap: var(--gap);
-  /* O clamp segura as duas pontas: nunca antes do primeiro cartão, nunca
-     além do fim do trilho. Com a fila duplicada ele deixou de apertar em
-     qualquer largura — sobra trilho de sobra à direita —, mas continua
-     aqui como rede: é o que impediria uma faixa vazia se a contagem de
-     lugares (--n) e os cartões do HTML saíssem de sincronia. */
-  transform: translateX(calc(-1 * clamp(0px, var(--i, 0) * var(--passo), var(--fim))));
-  transition: transform 0.9s var(--ease);
+  transition: transform 0.7s var(--ease);
 }
 
 .auvp-roleta__cartao {
   display: grid;
   align-content: start;
   gap: 0.75rem;
+  scroll-snap-align: start;
 }
 .auvp-roleta__foto {
   position: relative;
@@ -114,61 +110,17 @@ label.auvp-roleta__bt:hover {
 .auvp-roleta__cartao h3 { font-size: clamp(1.2rem, 1.7vw, 1.75rem); line-height: 1.2; }
 .auvp-roleta__cartao p { font-size: var(--fs-small); line-height: 1.7; color: var(--ink-60); }
 
-/* ---- Passagem automática, em laço ----
-   Enquanto ninguém tocou nas setas — ou seja, enquanto o primeiro radio
-   é o marcado — o trilho anda sozinho, quatro segundos por cartão. No
-   primeiro clique numa seta outro radio passa a ser o marcado, o seletor
-   abaixo deixa de casar, a animação some e o deslocamento volta a ser o
-   do estado escolhido, com a transição de sempre. Voltar ao primeiro
-   cartão recomeça o passeio.
+/* As cópias fecham o laço do passeio: o trilho anda até parar sobre a
+   cópia do primeiro cartão e volta ao começo sem transição, o que não
+   aparece porque a tela é idêntica. Sem script não há passeio, e elas
+   seriam só conteúdo repetido.
 
-   O laço fecha sem costura porque a fila está duplicada no HTML: a
-   animação anda os quatro passos e para exatamente sobre a cópia do
-   primeiro cartão, que é idêntica ao ponto de partida. Voltar a zero ali
-   não aparece. Antes o trilho tinha só quatro cartões e precisava
-   desandar tudo de volta no fim do ciclo — era esse rebobinar, com os
-   cartões atravessando a tela ao contrário, que parecia defeito. */
-#auvp-r1:checked ~ .auvp-roleta__grade .auvp-roleta__trilho {
-  animation: auvp-roleta-giro 16s var(--ease) infinite;
-}
-/* Passar o cursor segura o passeio: quem parou para ler não perde o
-   cartão no meio da leitura. O seletor repete o #auvp-r1 de propósito —
-   sem ele esta regra perde em especificidade para a de cima, e a pausa
-   nunca acontece. */
-.auvp-roleta:hover #auvp-r1:checked ~ .auvp-roleta__grade .auvp-roleta__trilho {
-  animation-play-state: paused;
-}
-
-/* Quatro paradas de tamanho igual. A última leva ao quinto lugar do
-   trilho — a cópia do primeiro cartão —, e é de lá que o 100% volta a
-   zero sem que se veja. */
-@keyframes auvp-roleta-giro {
-  0%,   17% { transform: translateX(0); }
-  25%,  42% { transform: translateX(calc(-1 * var(--passo))); }
-  50%,  67% { transform: translateX(calc(-2 * var(--passo))); }
-  75%,  92% { transform: translateX(calc(-3 * var(--passo))); }
-  100%      { transform: translateX(calc(-4 * var(--passo))); }
-}
-
-/* ---- Estados ----
-   Cada radio marcado empurra o trilho e acende um par de setas. */
-#auvp-r2:checked ~ .auvp-roleta__grade .auvp-roleta__trilho { --i: 1; }
-#auvp-r3:checked ~ .auvp-roleta__grade .auvp-roleta__trilho { --i: 2; }
-#auvp-r4:checked ~ .auvp-roleta__grade .auvp-roleta__trilho { --i: 3; }
-
-/* A fila dá a volta: no último cartão, avançar leva ao primeiro, e no
-   primeiro, voltar leva ao último. Não existe mais seta apagada. */
-#auvp-r1:checked ~ .auvp-roleta__nav .auvp-roleta__bt--ant-4,
-#auvp-r1:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-2,
-#auvp-r2:checked ~ .auvp-roleta__nav .auvp-roleta__bt--ant-1,
-#auvp-r2:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-3,
-#auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--ant-2,
-#auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-4,
-#auvp-r4:checked ~ .auvp-roleta__nav .auvp-roleta__bt--ant-3,
-#auvp-r4:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-1 {
-  opacity: 1;
-  pointer-events: auto;
-}
+   Estas duas regras vêm depois da base do cartão de propósito: têm a
+   mesma especificidade que ela, e quem vem por último ganha. Acima, o
+   `display: grid` da base apagava o `none` daqui e as cópias apareciam
+   mesmo sem script. */
+.auvp-roleta__cartao--copia { display: none; }
+.auvp-js .auvp-roleta__cartao--copia { display: grid; }
 
 @media (min-width: 760px) {
   .auvp-roleta { --vis: 2; }

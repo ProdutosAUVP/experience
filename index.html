@@ -43,6 +43,11 @@
 <link rel="stylesheet" href="assets/css/15-formularios.css">
 <link rel="stylesheet" href="assets/css/16-rodape.css">
 <link rel="stylesheet" href="assets/css/17-animacao.css">
+
+<!-- Liga o modo com script antes da primeira pintura, para a página não
+     nascer com o desenho de uma versão e saltar para o da outra. -->
+<script>document.documentElement.classList.add('auvp-js');</script>
+<script src="assets/js/auvp.js" defer></script>
 </head>
 
 <body>
@@ -57,13 +62,47 @@
       <img src="assets/img/auvp-experience-horizontal.svg" alt="AUVP Experience">
     </a>
 
-    <!-- Um único destino no topo. Com um link só não há o que recolher
-         atrás de um menu: ele aparece em qualquer largura. -->
+    <!-- O topo percorre as dobras. "Imersões" abre um menu com a página
+         da Missão China; ele aparece no cursor e no foco do teclado, sem
+         script. Em tela estreita, quem faz esse papel é o menu inteiro
+         atrás do botão, com a mesma lista aberta. -->
     <nav class="auvp-nav__links" aria-label="Navegação principal">
-      <a class="auvp-nav__link" href="missao-china.html">Missão China</a>
+      <span class="auvp-nav__item">
+        <a class="auvp-nav__link" href="#imersoes" aria-haspopup="true">Imersões</a>
+        <span class="auvp-nav__suspenso">
+          <a class="auvp-nav__sublink" href="#imersoes">Nossas imersões</a>
+          <a class="auvp-nav__sublink" href="missao-china.html">Missão China</a>
+        </span>
+      </span>
+      <a class="auvp-nav__link" href="#diferencial">Diferencial</a>
+      <a class="auvp-nav__link" href="#networking">Networking</a>
+      <a class="auvp-nav__link" href="#experiencia">Experiência</a>
+      <a class="auvp-nav__link" href="#faq">FAQ</a>
     </nav>
+
+    <a class="auvp-burger" href="#menu">Menu <i aria-hidden="true"></i></a>
   </div>
 </header>
+
+<!-- Menu em tela cheia. Abre por âncora e fecha sozinho ao navegar. -->
+<nav class="auvp-menu" id="menu" aria-label="Navegação em tela cheia">
+  <div class="auvp-shell auvp-menu__top">
+    <span class="auvp-brand"><img src="assets/img/auvp-experience-horizontal.svg" alt="AUVP Experience"></span>
+    <a class="auvp-burger auvp-burger--fechar" href="#hero">Fechar <i aria-hidden="true"></i></a>
+  </div>
+  <div class="auvp-shell auvp-menu__body">
+    <a class="auvp-menu__link" href="#imersoes"><i>01</i>Imersões</a>
+    <a class="auvp-menu__link" href="missao-china.html"><i>02</i>Missão China</a>
+    <a class="auvp-menu__link" href="#diferencial"><i>03</i>Diferencial</a>
+    <a class="auvp-menu__link" href="#networking"><i>04</i>Networking</a>
+    <a class="auvp-menu__link" href="#experiencia"><i>05</i>Experiência</a>
+    <a class="auvp-menu__link" href="#faq"><i>06</i>FAQ</a>
+  </div>
+  <div class="auvp-shell auvp-menu__foot">
+    <span>AUVP Experience Co.</span>
+    <span>Imersões estratégicas globais</span>
+  </div>
+</nav>
 
 <main id="conteudo">
 
@@ -95,33 +134,20 @@
   </section>
 
   <!-- ============ 2. POSICIONAMENTO ============
-       Roleta horizontal: os quatro pilares viraram cartões com foto que
-       deslizam um por vez. Quem manda são os quatro radios escondidos —
-       cada estado desloca o trilho e troca o par de setas visível. Sem
-       JavaScript, como o resto do site. -->
+       Roleta horizontal: os quatro pilares viraram cartões com foto. O
+       passeio e as setas são do assets/js/auvp.js, que anda um cartão de
+       cada vez e fecha o laço em cima da cópia da fila. Sem o script a
+       dobra continua inteira: a fila vira uma lista que rola de lado com
+       o dedo, e as setas — que aí não teriam o que comandar — somem. -->
   <section class="auvp-section" id="posicionamento">
     <div class="auvp-shell auvp-roleta">
-      <input type="radio" name="auvp-roleta" id="auvp-r1" class="auvp-roleta__estado" aria-label="Posição 1 do trilho" checked>
-      <input type="radio" name="auvp-roleta" id="auvp-r2" class="auvp-roleta__estado" aria-label="Posição 2 do trilho">
-      <input type="radio" name="auvp-roleta" id="auvp-r3" class="auvp-roleta__estado" aria-label="Posição 3 do trilho">
-      <input type="radio" name="auvp-roleta" id="auvp-r4" class="auvp-roleta__estado" aria-label="Posição 4 do trilho">
-
-      <!-- As setas são <label> empilhados: em cada estado só um aparece
-           em cada slot, e ele aponta para o radio vizinho. A fila dá a
-           volta — no último cartão, avançar leva ao primeiro. -->
-      <div class="auvp-roleta__nav" aria-hidden="true">
-        <span class="auvp-roleta__slot">
-          <label class="auvp-roleta__bt auvp-roleta__bt--ant-1" for="auvp-r1">&larr;</label>
-          <label class="auvp-roleta__bt auvp-roleta__bt--ant-2" for="auvp-r2">&larr;</label>
-          <label class="auvp-roleta__bt auvp-roleta__bt--ant-3" for="auvp-r3">&larr;</label>
-          <label class="auvp-roleta__bt auvp-roleta__bt--ant-4" for="auvp-r4">&larr;</label>
-        </span>
-        <span class="auvp-roleta__slot">
-          <label class="auvp-roleta__bt auvp-roleta__bt--prox-1" for="auvp-r1">&rarr;</label>
-          <label class="auvp-roleta__bt auvp-roleta__bt--prox-2" for="auvp-r2">&rarr;</label>
-          <label class="auvp-roleta__bt auvp-roleta__bt--prox-3" for="auvp-r3">&rarr;</label>
-          <label class="auvp-roleta__bt auvp-roleta__bt--prox-4" for="auvp-r4">&rarr;</label>
-        </span>
+      <div class="auvp-roleta__nav">
+        <button class="auvp-roleta__bt auvp-roleta__bt--anterior" type="button">
+          <span class="auvp-sr">Cartão anterior</span><span aria-hidden="true">&larr;</span>
+        </button>
+        <button class="auvp-roleta__bt auvp-roleta__bt--proximo" type="button">
+          <span class="auvp-sr">Próximo cartão</span><span aria-hidden="true">&rarr;</span>
+        </button>
       </div>
 
       <!-- A frase ocupa o canto esquerdo, no lugar que antes ficava
@@ -161,22 +187,22 @@
                costura. Quando o passeio chega ao fim dela, o trilho volta
                ao começo — e como o que está na tela é idêntico, o pulo
                não aparece. Mexeu num cartão, mexa no gêmeo. -->
-          <li class="auvp-roleta__cartao" aria-hidden="true">
+          <li class="auvp-roleta__cartao auvp-roleta__cartao--copia" aria-hidden="true">
             <span class="auvp-roleta__foto"><img class="auvp-art" src="assets/img/DSC01980.jpg" alt="" loading="lazy" decoding="async"></span>
             <h3>Visitas a empresas globais</h3>
             <p>Acesso direto a empresas que moldam a economia mundial. Mais do que conhecer, você entende como elas operam, crescem e tomam decisões estratégicas na prática.</p>
           </li>
-          <li class="auvp-roleta__cartao" aria-hidden="true">
+          <li class="auvp-roleta__cartao auvp-roleta__cartao--copia" aria-hidden="true">
             <span class="auvp-roleta__foto"><img class="auvp-art" src="assets/img/DSC02014.jpg" alt="" loading="lazy" decoding="async"></span>
             <h3>Conversas com quem opera o mercado</h3>
             <p>Você aprende com quem está no jogo. Executivos e empresários compartilham visões, bastidores e decisões que não chegam nos livros.</p>
           </li>
-          <li class="auvp-roleta__cartao" aria-hidden="true">
+          <li class="auvp-roleta__cartao auvp-roleta__cartao--copia" aria-hidden="true">
             <span class="auvp-roleta__foto"><img class="auvp-art" src="assets/img/DSC00840.jpg" alt="" loading="lazy" decoding="async"></span>
             <h3>Networking com empresários e investidores</h3>
             <p>Conexões que vão além do evento. Você se relaciona com pessoas que estão construindo, investindo e expandindo, abrindo portas para oportunidades reais.</p>
           </li>
-          <li class="auvp-roleta__cartao" aria-hidden="true">
+          <li class="auvp-roleta__cartao auvp-roleta__cartao--copia" aria-hidden="true">
             <span class="auvp-roleta__foto"><img class="auvp-art" src="assets/img/DSC00629.jpg" alt="" loading="lazy" decoding="async"></span>
             <h3>Curadoria estratégica da AUVP</h3>
             <p>Nada aqui é aleatório. Cada destino, empresa e encontro é pensado para gerar repertório, visão de mercado e decisões mais inteligentes sobre dinheiro.</p>

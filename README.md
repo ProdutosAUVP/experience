@@ -2,10 +2,10 @@
 
 Site da AUVP Experience Co. — imersões estratégicas globais.
 
-Site estático: HTML, CSS e imagens. **Sem JavaScript, sem build, sem
-dependência.** Abrir o `index.html` no navegador já mostra a página final —
-não existe passo de compilação entre o que está no repositório e o que vai
-para o ar.
+Site estático: HTML, CSS, imagens e **um** arquivo de JavaScript. Sem build,
+sem dependência, sem framework. Abrir o `index.html` no navegador já mostra a
+página final — não existe passo de compilação entre o que está no repositório
+e o que vai para o ar.
 
 ---
 
@@ -15,6 +15,8 @@ para o ar.
 index.html                  home
 missao-china.html           página da Missão China
 assets/
+  js/
+    auvp.js                 os dois passeios automáticos, e só
   css/
     01-tokens.css           paleta, escala tipográfica, medidas
     02-base.css             reset e padrões do documento
@@ -71,15 +73,14 @@ python3 -m http.server 8000
 
 ---
 
-## Por que não tem JavaScript
+## Quase tudo é CSS
 
-Acordeões, abas, roletas, cards que abrem e animações de rolagem são feitos
-em CSS puro:
+O site nasceu sem JavaScript nenhum e quase tudo continua assim:
 
 | Interação | Como funciona |
 |---|---|
-| Roleta do posicionamento | `<input type="radio">` + `<label>` — o trilho anda um cartão por clique, e a fila dá a volta |
-| Passagem automática (roleta e Experiência) | `@keyframes` que só rodam enquanto o primeiro estado é o marcado |
+| Menu em tela cheia | âncora `#menu` + `:target` — fecha sozinho ao navegar |
+| Menu suspenso das Imersões | `:hover` e `:focus-within` |
 | Card da China | link para a página da missão — o card inteiro é um `<a>` |
 | Card de Próximos destinos | `<input type="checkbox">` + `<label>` — o card gira e mostra o formulário |
 | FAQ | `<details name="…">` — abre um e fecha o outro |
@@ -96,6 +97,38 @@ As animações de rolagem estão dentro de um `@supports`. Em navegador que não
 as suporta, o bloco é ignorado e o conteúdo aparece normalmente — **em nenhuma
 hipótese a página fica em branco.**
 
+### O que o JavaScript faz — e por que ele existe
+
+O `assets/js/auvp.js` cuida de **duas coisas**: o passeio automático da roleta
+do posicionamento e o das abas da Experiência. Nada mais.
+
+Ele entrou porque apareceu um pedido que CSS não faz: **o passeio precisa
+continuar depois de um clique**. CSS não sabe trocar o estado de um radio,
+então o passeio era uma animação por fora — e enquanto ela rodava, o que
+estava na tela não era o estado marcado. Daí vinham as duas queixas que
+motivaram a mudança: a ordem dos cartões "quebrando" no fim do ciclo e o
+clique nas abas parecendo não pegar.
+
+A regra agora é: **o JavaScript comanda o estado, o CSS continua desenhando.**
+Nas abas, ele só marca o próximo radio; todo o desenho vem das mesmas regras
+de `:checked` de antes. Na roleta, ele desloca o trilho — a fila está
+duplicada no HTML, e o laço fecha em cima da cópia do primeiro cartão, que é
+idêntica ao ponto de partida, então voltar ao começo não aparece.
+
+**Sem o arquivo o site continua de pé.** A classe `auvp-js`, posta no `<html>`
+por uma linha no `<head>` antes da primeira pintura, é o que liga o modo com
+script:
+
+| | com script | sem script |
+|---|---|---|
+| Roleta | trilho deslocado pelas setas e pelo relógio | fila que rola de lado com o dedo, com encaixe |
+| Setas da roleta | aparecem | somem — não teriam o que comandar |
+| Cópias dos cartões | entram, para fechar o laço | somem — seriam conteúdo repetido |
+| Abas da Experiência | trocam no clique e sozinhas | trocam no clique |
+
+Passar o cursor segura os dois passeios, e eles só andam com a dobra na tela e
+a aba do navegador à frente. Sob `prefers-reduced-motion` o relógio não liga.
+
 ---
 
 ## Antes de publicar
@@ -103,51 +136,31 @@ hipótese a página fica em branco.**
 | O quê | Onde |
 |---|---|
 | Ligar os dois formulários | comentário **“COMO LIGAR ESTE FORMULÁRIO”**, um em cada página |
-| Foto da faixa de abertura da Missão China | `missao-china.html`, `.auvp-capa__faixa` — hoje usa a mesma foto da home |
 | Conferir as fotos da dobra Experiência | `13-experiencia.css` — as URLs foram montadas sem poder abrir o Pexels daqui; o enquadramento das malas é o que mais pede olho |
 | Destino do card 2 | ver observação abaixo |
 
-### Passagem automática
-
-Duas dobras andam sozinhas, quatro segundos por cartão e por tópico: a roleta
-do posicionamento e a Experiência. As duas usam o mesmo truque, e ele é todo
-em CSS: a animação só existe **enquanto o primeiro estado é o marcado**. No
-primeiro clique numa seta ou numa aba, outro radio passa a ser o marcado, o
-seletor deixa de casar, a animação some e volta a valer o estado escolhido,
-com as transições de sempre. Voltar ao primeiro cartão — ou à primeira aba —
-recomeça o passeio.
-
-**Na roleta o passeio é um laço, e é a fila duplicada no HTML que o fecha sem
-costura.** A animação anda os quatro passos e para exatamente sobre a cópia do
-primeiro cartão, idêntica ao ponto de partida; voltar a zero ali não aparece.
-Antes o trilho tinha só os quatro cartões e precisava desandar tudo de volta
-no fim do ciclo — era esse rebobinar, com os cartões atravessando a tela ao
-contrário, que parecia defeito. **Mexeu num cartão, mexa no gêmeo**, e mantenha
-o `--n` (lugares no trilho) igual ao que está no HTML.
-
-As setas também dão a volta: no último cartão, avançar leva ao primeiro. Não
-existe mais seta apagada.
-
-Passar o cursor pausa (`animation-play-state`). **Esse seletor precisa repetir
-o `#auvp-r1` / `#auvp-e1`**: sem o id ele perde em especificidade para a regra
-que liga a animação, e a pausa simplesmente não acontece.
-
-Sob `prefers-reduced-motion`, os dois passeios param de vez — no
-`17-animacao.css`, junto com a faixa deslizante. A regra geral daquele bloco
-zera a duração das animações, o que faria cada uma saltar para o último
-quadro; aqui o que vale é o estado marcado, não o fim da animação.
-
 ### Barra do topo
 
-O topo tem a marca e **um** destino: Missão China. Não há mais menu em tela
-cheia nem botão de sanduíche — com um link só não existe o que recolher, e
-ele aparece em qualquer largura. Se um dia voltarem mais links, volta junto o
-recolhimento em telas estreitas, que morava no `@media (max-width: 900px)` do
-`06-navegacao.css`.
+O topo percorre as dobras da home: Imersões, Diferencial, Networking,
+Experiência e FAQ. "Imersões" abre um menu suspenso com **Nossas imersões** e
+**Missão China**; ele aparece no cursor e também no foco do teclado, sem
+script. Na página da Missão China o topo é o mesmo, com os destinos apontando
+para as dobras da home.
+
+Abaixo de 900px os links saem do topo e quem faz o papel é o menu em tela
+cheia, atrás do botão — lá a lista é plana e a Missão China aparece como item
+próprio.
+
+**Duas armadilhas de cascata moram aqui**, e as duas já morderam: a regra que
+esconde os links em tela estreita e a que esconde as cópias dos cartões da
+roleta têm a mesma especificidade das regras que as mostram. Quem vem por
+último ganha — se alguma delas subir de lugar no arquivo, para de valer, em
+silêncio.
 
 ### Formulário
 
-Como não há JavaScript, o `<form>` precisa de um destino:
+O JavaScript do site não trata de formulário, então o `<form>` precisa de um
+destino próprio:
 
 1. **Serviço de formulário** — crie um formulário no Formspree, Getform ou
    similar e cole a URL no `action=""`. Funciona sem mais nada.
@@ -158,10 +171,9 @@ explica as opções.
 
 ### Missão China
 
-A abertura é uma faixa de foto com o chapéu por cima; o título e a frase de
-abertura vêm embaixo, no papel. A faixa é baixa de propósito: a roleta logo
-abaixo já é imagem, e duas telas cheias de foto seguidas empurravam o texto
-para longe demais.
+A abertura é só o título e a frase, no papel. A faixa de foto que havia ali
+saiu: era a foto da home repetida e empurrava o mosaico — que já é imagem, e
+imagem de verdade desta viagem — para baixo da dobra.
 
 **O mosaico** são três quadros parados que trocam a foto por dentro, com
 fade — não é uma esteira rolando. As fotos de um quadro ficam empilhadas no
@@ -214,34 +226,22 @@ para junto com o resto das animações do site.
 
 ### Roleta do posicionamento
 
-Os quatro pilares da 2ª dobra são cartões com foto num trilho horizontal.
-Quem guarda o estado são quatro `<input type="radio">` escondidos: cada um
-significa "o trilho começa na posição N". As setas são `<label>` empilhados —
-em cada slot só aparece o do estado atual, e ele aponta para o radio vizinho.
-O `<span>` com `--fim` é a seta apagada, quando não há para onde ir.
+Os quatro pilares da 2ª dobra são cartões com foto num trilho horizontal. A
+frase da dobra ocupa a coluna da esquerda e os cartões correm à direita dela —
+é o que deixa o canto esquerdo com peso em vez de vazio. Abaixo de 1200px as
+duas partes viram uma coluna só, com a frase em cima, e as setas passam para
+depois dos cartões: lá em cima, antes até da frase, elas apareciam sem nada
+para comandar.
 
-Duas coisas seguram a conta:
+Quantos cartões cabem na janela é o `--vis` (1 em tela estreita, 2 no
+restante). O passo — a distância de um cartão ao seguinte — quem mede é o
+próprio JavaScript, no elemento, então ele vale em qualquer largura sem o CSS
+repetir a conta.
 
-1. **A janela é um `container-type: inline-size`.** Dentro do trilho,
-   `100cqw` é a largura visível, não a do próprio trilho — que é maior. Sem
-   isso, qualquer porcentagem dentro do `translateX` mediria o elemento
-   errado e o passo sairia torto.
-2. **O deslocamento é um `clamp`.** Ele segura as duas pontas: nunca antes do
-   primeiro cartão, nunca além do último. É o que evita sobrar faixa vazia
-   quando a tela cresce e passam a caber mais cartões do que o estado marcado
-   supõe.
-
-A frase da dobra ocupa a coluna da esquerda e os cartões correm à direita
-dela — é o que deixa o canto esquerdo com peso em vez de vazio. Abaixo de
-1200px as duas partes viram uma coluna só, com a frase em cima, e as setas
-passam para depois dos cartões: lá em cima, antes até da frase, elas
-apareciam sem nada para comandar.
-
-Dois números governam o resto: o `--vis`, quantos cartões cabem na janela (1
-em tela estreita, 2 no restante), e o `--n`, quantos lugares o trilho tem. O
-último estado que ainda anda é `--n` menos `--vis`. Ao mexer em qualquer um
-dos dois, acerte junto a regra de `@media` que apaga a seta de avançar; sem
-isso sobra um clique que não anda.
+A fila está duplicada no HTML e é a cópia que fecha o laço sem costura: o
+trilho anda até parar sobre a cópia do primeiro cartão e volta ao começo sem
+transição, o que não aparece porque a tela é idêntica. **Mexeu num cartão,
+mexa no gêmeo.**
 
 ### Diferencial
 
