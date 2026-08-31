@@ -96,12 +96,9 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  /* Os passeios automáticos param de vez: com a duração zerada pela
-     regra acima eles saltariam para o último quadro, e o que vale aqui
-     é o estado marcado, não o fim da animação. */
-  .auvp-marquee__track,
-  .auvp-roleta__trilho,
-  .auvp-exp__bg,
-  .auvp-exp__card,
-  .auvp-exp__card-body { animation: none; }
+  .auvp-marquee__track { animation: none; }
+  /* Os dois passeios automáticos são do assets/js/auvp.js, e ele próprio
+     não liga o relógio quando esta preferência está ativa. Aqui fica só
+     o trilho parado onde estiver. */
+  .auvp-roleta__trilho { transition: none; }
 }

@@ -24,10 +24,23 @@
 .auvp-brand { display: inline-flex; align-items: center; }
 .auvp-brand img { display: block; height: clamp(34px, 4.4vw, 46px); width: auto; }
 
-/* O topo tem um destino só, então não há mais menu em tela cheia nem
-   botão de sanduíche: o link cabe em qualquer largura e fica sempre à
-   vista. Se um dia voltarem mais links, é aqui que o recolhimento em
-   telas estreitas precisa voltar também. */
+.auvp-burger {
+  display: none;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--display);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-80);
+}
+/* O "Fechar" do menu em tela cheia aparece em qualquer largura: quem
+   chegou lá abriu o menu de propósito e precisa de saída. */
+.auvp-burger--fechar { display: inline-flex; }
+.auvp-burger i { display: block; width: 22px; height: 1px; background: currentColor; position: relative; }
+.auvp-burger i::before { content: ""; position: absolute; inset: -5px 0 auto 0; height: 1px; background: currentColor; }
+
 .auvp-nav__links { display: flex; align-items: center; gap: clamp(1.25rem, 2.4vw, 2.6rem); }
 .auvp-nav__link {
   position: relative;
@@ -51,3 +64,101 @@
 }
 .auvp-nav__link:hover { color: var(--verde); }
 .auvp-nav__link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* ---- Menu suspenso das Imersões ----
+   Abre no cursor e também no foco do teclado (:focus-within), então
+   quem navega por tab chega na Missão China sem precisar de script. Em
+   tela estreita ele não existe: lá o menu inteiro já lista tudo. */
+.auvp-nav__item { position: relative; display: inline-flex; }
+.auvp-nav__suspenso {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 6px);
+  min-width: 14rem;
+  display: grid;
+  padding: 0.5rem 0;
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 18px 40px -24px rgba(28, 27, 24, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s;
+}
+/* A ponte de 6px entre o link e o menu some sob este pseudo-elemento:
+   sem ele o cursor atravessa um vão sem hover e o menu fecha no meio do
+   caminho. */
+.auvp-nav__item::after {
+  content: "";
+  position: absolute;
+  top: 100%; left: 0;
+  width: 100%; height: 12px;
+}
+.auvp-nav__item:hover .auvp-nav__suspenso,
+.auvp-nav__item:focus-within .auvp-nav__suspenso {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+.auvp-nav__sublink {
+  padding: 0.7rem 1.25rem;
+  font-family: var(--display);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+  white-space: nowrap;
+  transition: color 0.3s var(--ease), background-color 0.3s var(--ease);
+}
+.auvp-nav__sublink:hover { color: var(--verde); background: var(--paper-2); }
+
+/* Em tela estreita os destinos saem do topo e passam para o menu em
+   tela cheia. Esta regra tem de vir depois da que abre os links, e não
+   antes: as duas têm a mesma especificidade, e quem vem por último é
+   quem vale. */
+@media (max-width: 900px) {
+  .auvp-nav__links { display: none; }
+  .auvp-burger { display: inline-flex; }
+}
+
+/* O menu entra no fluxo em vez de usar position:fixed — assim funciona
+   mesmo dentro de um container com transform. O :target já rola até ele. */
+.auvp-menu {
+  display: none;
+  scroll-margin-top: 0;
+  min-height: 100svh;
+  background: var(--paper-2);
+  grid-template-rows: var(--nav-h) 1fr auto;
+  position: relative;
+  z-index: 900;
+}
+.auvp-menu:target { display: grid; }
+
+.auvp-menu__top { display: flex; align-items: center; justify-content: space-between; }
+.auvp-menu__body { display: grid; align-content: center; gap: clamp(0.4rem, 1.4vw, 0.9rem); padding-block: 2rem; }
+.auvp-menu__link {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(2rem, 7.5vw, 3.8rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  transition: color 0.4s var(--ease);
+}
+.auvp-menu__link:hover { color: var(--verde); }
+.auvp-menu__link i {
+  font-style: normal;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.2em;
+  color: var(--verde);
+  vertical-align: super;
+  margin-right: 0.6rem;
+}
+.auvp-menu__foot {
+  display: flex; flex-wrap: wrap; gap: 1rem 2rem;
+  justify-content: space-between; align-items: center;
+  padding-block: 2rem;
+  border-top: 1px solid var(--line-soft);
+  font-size: var(--fs-small);
+  color: var(--ink-45);
+}

@@ -3,8 +3,13 @@
    uma foto por tópico, o título da dobra sobreposto à imagem e, embaixo,
    as abas — a ativa aberta com texto, as outras recolhidas. Clicar numa
    aba fecha a atual, abre a nova e troca a foto — tudo por :checked em
-   radios, sem JavaScript. */
-.auvp-exp input { position: absolute; opacity: 0; pointer-events: none; }
+   radios. O passeio automático entre elas é do assets/js/auvp.js.
+
+   O seletor dos radios é `.auvp-exp__panel input`, e não `.auvp-exp
+   input`: essa classe não existe em elemento nenhum, então a regra não
+   pegava e os quatro radios apareciam de verdade, como bolinhas soltas
+   no canto do painel. */
+.auvp-exp__panel input { position: absolute; opacity: 0; pointer-events: none; }
 .auvp-exp__panel {
   position: relative;
   width: 100%;
@@ -123,65 +128,15 @@
 #auvp-e3:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(3) .auvp-exp__card-body,
 #auvp-e4:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(4) .auvp-exp__card-body { grid-template-rows: 1fr; }
 
-/* ---- Passagem automática ----
-   Enquanto ninguém tocou nas abas — ou seja, enquanto a primeira é a
-   marcada — a dobra roda sozinha, quatro segundos por tópico: a foto
-   troca, a aba da vez abre e fica verde. No primeiro clique em outra
-   aba, outro radio passa a ser o marcado, os seletores abaixo deixam de
-   casar, as animações somem e valem as regras de estado, com as
-   transições de sempre. Voltar à primeira aba recomeça o passeio.
+/* O passeio entre os tópicos é do assets/js/auvp.js: ele só marca o
+   próximo radio a cada quatro segundos, e o desenho continua vindo das
+   regras de estado acima, com as transições de sempre.
 
-   O atraso de cada tópico é negativo e mora numa variável: assim o
-   ciclo já começa em andamento (nada de tela vazia esperando a vez) e as
-   duas animações de uma aba — foto e painel — herdam o mesmo atraso, sem
-   repetir a conta em cada regra. */
-.auvp-exp__panel { --exp-ciclo: 16s; }   /* quatro segundos por tópico */
+   Antes o passeio era uma animação por fora, e enquanto ela rodava o que
+   estava na tela não era o estado marcado — daí o clique numa aba
+   parecer não pegar, e o passeio morrer no primeiro clique. Agora clicar
+   só troca o marcado, e a contagem recomeça dali. */
 
-#auvp-e1:checked ~ .auvp-exp__media .auvp-exp__bg {
-  animation: auvp-exp-foto var(--exp-ciclo) var(--ease) var(--atraso, 0s) infinite;
-}
-#auvp-e1:checked ~ .auvp-exp__media .auvp-exp__bg--2 { --atraso: calc(var(--exp-ciclo) / -4 * 3); }
-#auvp-e1:checked ~ .auvp-exp__media .auvp-exp__bg--3 { --atraso: calc(var(--exp-ciclo) / -4 * 2); }
-#auvp-e1:checked ~ .auvp-exp__media .auvp-exp__bg--4 { --atraso: calc(var(--exp-ciclo) / -4); }
-
-#auvp-e1:checked ~ .auvp-exp__cards .auvp-exp__card {
-  animation: auvp-exp-aba var(--exp-ciclo) var(--ease) var(--atraso, 0s) infinite;
-}
-#auvp-e1:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(2) { --atraso: calc(var(--exp-ciclo) / -4 * 3); }
-#auvp-e1:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(3) { --atraso: calc(var(--exp-ciclo) / -4 * 2); }
-#auvp-e1:checked ~ .auvp-exp__cards .auvp-exp__card:nth-of-type(4) { --atraso: calc(var(--exp-ciclo) / -4); }
-#auvp-e1:checked ~ .auvp-exp__cards .auvp-exp__card-body {
-  animation: auvp-exp-corpo var(--exp-ciclo) var(--ease) var(--atraso, 0s) infinite;
-}
-
-/* Passar o cursor segura o passeio: quem parou para ler não perde o
-   tópico no meio da leitura. Os seletores repetem o #auvp-e1 de
-   propósito — sem ele estas regras perdem em especificidade para as de
-   cima, e a pausa nunca acontece. */
-.auvp-exp__panel:hover #auvp-e1:checked ~ .auvp-exp__media .auvp-exp__bg,
-.auvp-exp__panel:hover #auvp-e1:checked ~ .auvp-exp__cards .auvp-exp__card,
-.auvp-exp__panel:hover #auvp-e1:checked ~ .auvp-exp__cards .auvp-exp__card-body {
-  animation-play-state: paused;
-}
-
-/* Um quarto do ciclo para cada tópico. As bordas de fade se sobrepõem —
-   o tópico seguinte começa a entrar antes de o atual terminar de sair,
-   senão abre um buraco escuro entre as fotos. */
-@keyframes auvp-exp-foto {
-  0%,  20% { opacity: 1; }
-  26%, 94% { opacity: 0; }
-  100%     { opacity: 1; }
-}
-@keyframes auvp-exp-aba {
-  0%,  20% { flex-grow: 2.6; background-color: var(--verde); }
-  26%, 94% { flex-grow: 1; background-color: rgba(28, 27, 24, 0.38); }
-  100%     { flex-grow: 2.6; background-color: var(--verde); }
-}
-@keyframes auvp-exp-corpo {
-  0%,  20% { grid-template-rows: 1fr; }
-  26%, 94% { grid-template-rows: 0fr; }
-  100%     { grid-template-rows: 1fr; }
-}
 @media (max-width: 760px) {
   .auvp-exp__cards { flex-direction: column; }
   .auvp-exp__card { min-height: auto; }

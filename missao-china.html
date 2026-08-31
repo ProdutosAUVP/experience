@@ -35,6 +35,11 @@
 <link rel="stylesheet" href="assets/css/16-rodape.css">
 <link rel="stylesheet" href="assets/css/17-animacao.css">
 <link rel="stylesheet" href="assets/css/18-missao-china.css">
+
+<!-- Liga o modo com script antes da primeira pintura, para a página não
+     nascer com o desenho de uma versão e saltar para o da outra. -->
+<script>document.documentElement.classList.add('auvp-js');</script>
+<script src="assets/js/auvp.js" defer></script>
 </head>
 
 <body>
@@ -49,26 +54,53 @@
       <img src="assets/img/auvp-experience-horizontal.svg" alt="AUVP Experience">
     </a>
 
-    <!-- Um único destino no topo, igual ao da home. Com um link só não
-         há o que recolher atrás de um menu. -->
+    <!-- Mesmo topo da home; aqui os destinos apontam para as dobras de
+         lá. "Imersões" abre o menu com esta página. -->
     <nav class="auvp-nav__links" aria-label="Navegação principal">
-      <a class="auvp-nav__link" href="missao-china.html" aria-current="page">Missão China</a>
+      <span class="auvp-nav__item">
+        <a class="auvp-nav__link" href="index.html#imersoes" aria-haspopup="true">Imersões</a>
+        <span class="auvp-nav__suspenso">
+          <a class="auvp-nav__sublink" href="index.html#imersoes">Nossas imersões</a>
+          <a class="auvp-nav__sublink" href="missao-china.html" aria-current="page">Missão China</a>
+        </span>
+      </span>
+      <a class="auvp-nav__link" href="index.html#diferencial">Diferencial</a>
+      <a class="auvp-nav__link" href="index.html#networking">Networking</a>
+      <a class="auvp-nav__link" href="index.html#experiencia">Experiência</a>
+      <a class="auvp-nav__link" href="index.html#faq">FAQ</a>
     </nav>
+
+    <a class="auvp-burger" href="#menu">Menu <i aria-hidden="true"></i></a>
   </div>
 </header>
+
+<!-- Menu em tela cheia. Abre por âncora e fecha sozinho ao navegar. -->
+<nav class="auvp-menu" id="menu" aria-label="Navegação em tela cheia">
+  <div class="auvp-shell auvp-menu__top">
+    <span class="auvp-brand"><img src="assets/img/auvp-experience-horizontal.svg" alt="AUVP Experience"></span>
+    <a class="auvp-burger auvp-burger--fechar" href="#missao-china">Fechar <i aria-hidden="true"></i></a>
+  </div>
+  <div class="auvp-shell auvp-menu__body">
+    <a class="auvp-menu__link" href="index.html#imersoes"><i>01</i>Imersões</a>
+    <a class="auvp-menu__link" href="missao-china.html" aria-current="page"><i>02</i>Missão China</a>
+    <a class="auvp-menu__link" href="index.html#diferencial"><i>03</i>Diferencial</a>
+    <a class="auvp-menu__link" href="index.html#networking"><i>04</i>Networking</a>
+    <a class="auvp-menu__link" href="index.html#experiencia"><i>05</i>Experiência</a>
+    <a class="auvp-menu__link" href="index.html#faq"><i>06</i>FAQ</a>
+  </div>
+  <div class="auvp-shell auvp-menu__foot">
+    <span>AUVP Experience Co.</span>
+    <span>Imersões estratégicas globais</span>
+  </div>
+</nav>
 
 <main id="conteudo">
 
   <!-- ============ ABERTURA ============
-       TROCAR A FOTO DA FAIXA: suba a foto da viagem em assets/img/ e
-       troque o src abaixo. -->
+       A faixa de foto saiu: era a foto da home repetida e empurrava o
+       mosaico — que já é imagem, e imagem de verdade desta viagem — para
+       baixo da dobra. Ficaram o título e a frase, no papel. -->
   <section class="auvp-capa" id="missao-china">
-    <div class="auvp-capa__faixa">
-      <img class="auvp-art" src="assets/img/hero-imersao.jpg" alt="" fetchpriority="high" decoding="async">
-      <span class="auvp-capa__scrim" aria-hidden="true"></span>
-      <span class="auvp-num auvp-capa__eyebrow">Imersão realizada</span>
-    </div>
-
     <div class="auvp-shell auvp-capa__texto">
       <h1 class="auvp-capa__title">Missão China</h1>
       <p class="auvp-capa__lede">Uma imersão única, que já ficou gravada na história de todos os participantes.</p>
