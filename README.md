@@ -159,14 +159,19 @@ texto do perfil e os cinco se sobrepunham, ilegíveis. Com dois, o perfil da
 vez fica no lugar de cima e o seguinte espia embaixo — e o deslocamento do
 rolo perde o `+1` que centralizava.
 
-O invólucro da dobra é mais alto que a tela e o palco fica grudado dentro
-dele. O quanto já se rolou desse excedente vira uma posição contínua de 0 a
-n-1: o rolo acompanha o dedo, sem pulos, e o perfil mais perto do centro fica
-em destaque. Do JavaScript saem só duas coisas — a variável `--pos` e a classe
+**A dobra tem a altura do que tem dentro, como as outras.** Ela já teve um
+palco grudado de uma tela inteira, e o preço era esse: um conteúdo de ~500px
+no meio de 900, com o resto em branco em cima e embaixo. Sem o palco, a dobra
+caiu de 2520px para ~520px e a home encurtou 2000px.
+
+O rolo gira enquanto a dobra atravessa a tela: o centro dela indo de 85% da
+altura da janela até 15% é o curso inteiro do giro. A posição é contínua — o
+rolo acompanha o dedo, sem pulos — e o perfil mais perto do centro fica em
+destaque. Do JavaScript saem só duas coisas: a variável `--pos` e a classe
 `esta-ativo`; todo o desenho é do CSS.
 
-A velocidade do giro é a altura do invólucro: `100svh + (n - 1) × 45svh`.
-Aumentar o `45svh` faz girar mais devagar, porque estica o curso.
+Para o giro ficar mais lento, é essa faixa que se abre (85% → 95%, 15% → 5%):
+quanto mais larga, mais rolagem para o mesmo número de perfis.
 
 **Cuidado ao mexer:** a dobra tinha três animações de rolagem no
 `17-animacao.css` — o item pulsando, o numeral preenchendo, o título
