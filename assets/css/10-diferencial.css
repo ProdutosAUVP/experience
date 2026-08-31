@@ -8,13 +8,16 @@
   position: relative;
   overflow: hidden;
 }
-.auvp-edge__content { padding-block: clamp(1.5rem, 4vw, 3.5rem); }
+/* Sem respiro em cima: a dobra anterior já tem o dela, e as duas somadas
+   abriam um vão grande demais entre uma e outra. */
+.auvp-edge__content { padding-block: 0 clamp(1.5rem, 4vw, 3.5rem); }
+/* O texto de abertura é o título da dobra, e se comporta como os outros
+   títulos da página: mesma escala (--fs-title), mesmo peso e mesma cor
+   de tinta cheia. */
 .auvp-edge__title {
-  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
-  font-weight: 400;
-  color: var(--ink-60);
-  max-width: 40ch;
-  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  font-size: var(--fs-title);
+  max-width: 34ch;
+  margin-bottom: clamp(1.75rem, 3.5vw, 3rem);
 }
 
 .auvp-edge__lista { border-top: 1px solid var(--line-soft); }
@@ -33,8 +36,10 @@
   display: block;
   font-family: var(--display);
   font-weight: 500;
-  font-size: clamp(1.35rem, 3.4vw, 2.6rem);
-  line-height: 1.2;
+  /* Menor que o título da dobra, de propósito: agora quem manda ali em
+     cima é ele, e a lista é o que vem depois. */
+  font-size: clamp(1.15rem, 2.2vw, 1.75rem);
+  line-height: 1.25;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--ink);

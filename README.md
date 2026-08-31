@@ -78,7 +78,7 @@ em CSS puro:
 
 | Interação | Como funciona |
 |---|---|
-| Roleta do posicionamento | `<input type="radio">` + `<label>` — o trilho anda um cartão por clique |
+| Roleta do posicionamento | `<input type="radio">` + `<label>` — o trilho anda um cartão por clique, e a fila dá a volta |
 | Passagem automática (roleta e Experiência) | `@keyframes` que só rodam enquanto o primeiro estado é o marcado |
 | Card da China | link para a página da missão — o card inteiro é um `<a>` |
 | Card de Próximos destinos | `<input type="checkbox">` + `<label>` — o card gira e mostra o formulário |
@@ -109,13 +109,24 @@ hipótese a página fica em branco.**
 
 ### Passagem automática
 
-Duas dobras andam sozinhas: a roleta do posicionamento (uns quatro segundos
-por cartão) e a Experiência (seis por tópico). As duas usam o mesmo truque, e
-ele é todo em CSS: a animação só existe **enquanto o primeiro estado é o
-marcado**. No primeiro clique numa seta ou numa aba, outro radio passa a ser
-o marcado, o seletor deixa de casar, a animação some e volta a valer o estado
-escolhido, com as transições de sempre. Voltar ao primeiro cartão — ou à
-primeira aba — recomeça o passeio.
+Duas dobras andam sozinhas, quatro segundos por cartão e por tópico: a roleta
+do posicionamento e a Experiência. As duas usam o mesmo truque, e ele é todo
+em CSS: a animação só existe **enquanto o primeiro estado é o marcado**. No
+primeiro clique numa seta ou numa aba, outro radio passa a ser o marcado, o
+seletor deixa de casar, a animação some e volta a valer o estado escolhido,
+com as transições de sempre. Voltar ao primeiro cartão — ou à primeira aba —
+recomeça o passeio.
+
+**Na roleta o passeio é um laço, e é a fila duplicada no HTML que o fecha sem
+costura.** A animação anda os quatro passos e para exatamente sobre a cópia do
+primeiro cartão, idêntica ao ponto de partida; voltar a zero ali não aparece.
+Antes o trilho tinha só os quatro cartões e precisava desandar tudo de volta
+no fim do ciclo — era esse rebobinar, com os cartões atravessando a tela ao
+contrário, que parecia defeito. **Mexeu num cartão, mexa no gêmeo**, e mantenha
+o `--n` (lugares no trilho) igual ao que está no HTML.
+
+As setas também dão a volta: no último cartão, avançar leva ao primeiro. Não
+existe mais seta apagada.
 
 Passar o cursor pausa (`animation-play-state`). **Esse seletor precisa repetir
 o `#auvp-r1` / `#auvp-e1`**: sem o id ele perde em especificidade para a regra
