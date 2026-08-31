@@ -15,21 +15,13 @@
       animation-timeline: view();
       animation-range: entry 5% cover 38%;
     }
-    .auvp-hero-pin { height: calc(100svh + 60svh); }
+    /* O texto do hero não depende mais da rolagem: ele já chega escrito
+       sobre a foto. Só a foto continua ligada ao scroll, com um deslize
+       de parallax enquanto a dobra sai da tela. */
     .auvp-hero__media {
       animation: auvp-parallax linear both;
       animation-timeline: scroll(root block);
-      animation-range: 60svh 160svh;
-    }
-    .auvp-hero__title {
-      animation: auvp-sobe linear both;
-      animation-timeline: scroll(root block);
-      animation-range: 0 44svh;
-    }
-    .auvp-hero__row {
-      animation: auvp-sobe linear both;
-      animation-timeline: scroll(root block);
-      animation-range: 16svh 60svh;
+      animation-range: 0 100svh;
     }
     .auvp-progress i {
       animation: auvp-progresso linear both;
@@ -104,5 +96,13 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .auvp-marquee__track { animation: none; }
+  /* Os passeios automáticos param de vez: com a duração zerada pela
+     regra acima eles saltariam para o último quadro, e o que vale aqui
+     é o estado marcado, não o fim da animação. */
+  .auvp-marquee__track,
+  .auvp-roleta__trilho,
+  .auvp-exp__bg,
+  .auvp-exp__card,
+  .auvp-exp__card-body,
+  .auvp-exp__card .auvp-num { animation: none; }
 }

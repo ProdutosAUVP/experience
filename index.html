@@ -68,10 +68,10 @@
 <main id="conteudo">
 
   <!-- ============ 1. HERO ============
-       A seção fica dentro de um invólucro mais alto que a tela
-       (auvp-hero-pin). O hero em si é sticky: some pegado no topo
-       enquanto essa altura extra é rolada, então a frase termina de
-       aparecer antes que o resto da página se mova. -->
+       O texto já chega escrito sobre a foto: entra no carregamento, sem
+       depender de rolagem. O invólucro (auvp-hero-pin) tem a altura de
+       uma tela e o hero é sticky dentro dele — é isso que segura a foto
+       no lugar enquanto o parallax a desloca. -->
   <section class="auvp-hero-pin" id="hero">
   <div class="auvp-hero">
     <div class="auvp-hero__media" aria-hidden="true">
@@ -167,9 +167,11 @@
   </section>
 
   <!-- ============ 3. IMERSÕES ============
-       Os cards viram: a frente traz a foto e a chamada, o verso traz os
-       detalhes. O giro é um checkbox escondido com <label> por cima —
-       o mesmo recurso das abas da dobra Experiência, sem JavaScript. -->
+       Dois cards com desenho igual e destinos diferentes. O da China é
+       um link inteiro: clicar em qualquer parte dele leva à página da
+       Missão China. O de Próximos destinos vira e mostra o formulário no
+       verso — o giro é um checkbox escondido com <label> por cima, o
+       mesmo recurso das abas da dobra Experiência, sem JavaScript. -->
   <section class="auvp-section" id="imersoes">
     <div class="auvp-shell">
       <div class="auvp-dest__head">
@@ -181,28 +183,16 @@
       <div class="auvp-dest__grid">
 
         <div class="auvp-card auvp-sobe">
-          <input type="checkbox" id="virar-china" class="auvp-card__gatilho auvp-sr">
           <div class="auvp-card__flip">
-            <div class="auvp-card__frente">
+            <!-- O card inteiro é o link: não há verso para virar, o
+                 destino é a página da Missão China. -->
+            <a class="auvp-card__frente" href="missao-china.html">
               <span class="auvp-card__media" aria-hidden="true"><img class="auvp-art" src="https://images.pexels.com/photos/37343128/pexels-photo-37343128.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="" loading="lazy" decoding="async"></span>
               <h3 class="auvp-card__title">China</h3>
               <p class="auvp-card__sub">O maior laboratório de negócios do mundo</p>
               <p class="auvp-card__desc">Shanghai, Shenzhen e Hangzhou. Tecnologia, escala e execução em nível global.</p>
-              <label class="auvp-card__cta" for="virar-china">Ver detalhes <i aria-hidden="true">&rarr;</i></label>
-            </div>
-
-            <div class="auvp-card__verso">
-            <dl class="auvp-facts">
-            <div><dt>Cidades</dt><dd>Shanghai, Shenzhen e Hangzhou</dd></div>
-            <div><dt>Foco</dt><dd>Tecnologia, escala e execução</dd></div>
-            <div><dt>Formato</dt><dd>Agenda de negócios</dd></div>
-            <div><dt>Grupo</dt><dd>Reduzido, por seleção</dd></div>
-            </dl>
-            <p>Nenhum outro lugar do mundo permite ver, em poucos dias, tanta coisa acontecendo ao mesmo tempo: manufatura avançada, comércio digital, logística, energia e capital circulando em outra velocidade.</p>
-            <p>Shanghai mostra o mercado financeiro e o consumo. Shenzhen mostra a engenharia e a indústria de hardware. Hangzhou mostra o comércio digital e a tecnologia aplicada.</p>
-            <p class="auvp-nota">A confirmar: datas da próxima edição, investimento, o que está incluso no pacote e o roteiro dia a dia.</p>
-              <label class="auvp-card__voltar" for="virar-china">&larr; Voltar</label>
-            </div>
+              <span class="auvp-card__cta">Ver a Missão China <i aria-hidden="true">&rarr;</i></span>
+            </a>
           </div>
         </div>
 
@@ -267,7 +257,7 @@
   <section class="auvp-section auvp-edge" id="diferencial">
     <div class="auvp-shell auvp-edge__content">
       <h2 class="auvp-edge__title auvp-sobe">
-        O valor da Experience não está só no destino. Está no acesso — negócios nascem da cultura,
+        O valor da Experience não está só no destino. Está no acesso. Negócios nascem da cultura,
         dos hábitos e da forma como as pessoas vivem.
       </h2>
 
