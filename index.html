@@ -107,17 +107,17 @@
       <input type="radio" name="auvp-roleta" id="auvp-r4" class="auvp-roleta__estado" aria-label="Posição 4 do trilho">
 
       <!-- As setas são <label> empilhados: em cada estado só um aparece
-           em cada slot, e ele aponta para o radio vizinho. O <span> com
-           --fim é a seta apagada, quando não há para onde ir. -->
+           em cada slot, e ele aponta para o radio vizinho. A fila dá a
+           volta — no último cartão, avançar leva ao primeiro. -->
       <div class="auvp-roleta__nav" aria-hidden="true">
         <span class="auvp-roleta__slot">
-          <span class="auvp-roleta__bt auvp-roleta__bt--ant-fim">&larr;</span>
           <label class="auvp-roleta__bt auvp-roleta__bt--ant-1" for="auvp-r1">&larr;</label>
           <label class="auvp-roleta__bt auvp-roleta__bt--ant-2" for="auvp-r2">&larr;</label>
           <label class="auvp-roleta__bt auvp-roleta__bt--ant-3" for="auvp-r3">&larr;</label>
+          <label class="auvp-roleta__bt auvp-roleta__bt--ant-4" for="auvp-r4">&larr;</label>
         </span>
         <span class="auvp-roleta__slot">
-          <span class="auvp-roleta__bt auvp-roleta__bt--prox-fim">&rarr;</span>
+          <label class="auvp-roleta__bt auvp-roleta__bt--prox-1" for="auvp-r1">&rarr;</label>
           <label class="auvp-roleta__bt auvp-roleta__bt--prox-2" for="auvp-r2">&rarr;</label>
           <label class="auvp-roleta__bt auvp-roleta__bt--prox-3" for="auvp-r3">&rarr;</label>
           <label class="auvp-roleta__bt auvp-roleta__bt--prox-4" for="auvp-r4">&rarr;</label>
@@ -138,25 +138,46 @@
         <ul class="auvp-roleta__trilho">
           <li class="auvp-roleta__cartao">
             <span class="auvp-roleta__foto"><img class="auvp-art" src="assets/img/DSC01980.jpg" alt="" loading="lazy" decoding="async"></span>
-            <span class="auvp-num">01</span>
             <h3>Visitas a empresas globais</h3>
             <p>Acesso direto a empresas que moldam a economia mundial. Mais do que conhecer, você entende como elas operam, crescem e tomam decisões estratégicas na prática.</p>
           </li>
           <li class="auvp-roleta__cartao">
             <span class="auvp-roleta__foto"><img class="auvp-art" src="assets/img/DSC02014.jpg" alt="" loading="lazy" decoding="async"></span>
-            <span class="auvp-num">02</span>
             <h3>Conversas com quem opera o mercado</h3>
             <p>Você aprende com quem está no jogo. Executivos e empresários compartilham visões, bastidores e decisões que não chegam nos livros.</p>
           </li>
           <li class="auvp-roleta__cartao">
             <span class="auvp-roleta__foto"><img class="auvp-art" src="assets/img/DSC00840.jpg" alt="" loading="lazy" decoding="async"></span>
-            <span class="auvp-num">03</span>
             <h3>Networking com empresários e investidores</h3>
             <p>Conexões que vão além do evento. Você se relaciona com pessoas que estão construindo, investindo e expandindo, abrindo portas para oportunidades reais.</p>
           </li>
           <li class="auvp-roleta__cartao">
             <span class="auvp-roleta__foto"><img class="auvp-art" src="assets/img/DSC00629.jpg" alt="" loading="lazy" decoding="async"></span>
-            <span class="auvp-num">04</span>
+            <h3>Curadoria estratégica da AUVP</h3>
+            <p>Nada aqui é aleatório. Cada destino, empresa e encontro é pensado para gerar repertório, visão de mercado e decisões mais inteligentes sobre dinheiro.</p>
+          </li>
+
+          <!-- A fila se repete: é a cópia que faz o laço fechar sem
+               costura. Quando o passeio chega ao fim dela, o trilho volta
+               ao começo — e como o que está na tela é idêntico, o pulo
+               não aparece. Mexeu num cartão, mexa no gêmeo. -->
+          <li class="auvp-roleta__cartao" aria-hidden="true">
+            <span class="auvp-roleta__foto"><img class="auvp-art" src="assets/img/DSC01980.jpg" alt="" loading="lazy" decoding="async"></span>
+            <h3>Visitas a empresas globais</h3>
+            <p>Acesso direto a empresas que moldam a economia mundial. Mais do que conhecer, você entende como elas operam, crescem e tomam decisões estratégicas na prática.</p>
+          </li>
+          <li class="auvp-roleta__cartao" aria-hidden="true">
+            <span class="auvp-roleta__foto"><img class="auvp-art" src="assets/img/DSC02014.jpg" alt="" loading="lazy" decoding="async"></span>
+            <h3>Conversas com quem opera o mercado</h3>
+            <p>Você aprende com quem está no jogo. Executivos e empresários compartilham visões, bastidores e decisões que não chegam nos livros.</p>
+          </li>
+          <li class="auvp-roleta__cartao" aria-hidden="true">
+            <span class="auvp-roleta__foto"><img class="auvp-art" src="assets/img/DSC00840.jpg" alt="" loading="lazy" decoding="async"></span>
+            <h3>Networking com empresários e investidores</h3>
+            <p>Conexões que vão além do evento. Você se relaciona com pessoas que estão construindo, investindo e expandindo, abrindo portas para oportunidades reais.</p>
+          </li>
+          <li class="auvp-roleta__cartao" aria-hidden="true">
+            <span class="auvp-roleta__foto"><img class="auvp-art" src="assets/img/DSC00629.jpg" alt="" loading="lazy" decoding="async"></span>
             <h3>Curadoria estratégica da AUVP</h3>
             <p>Nada aqui é aleatório. Cada destino, empresa e encontro é pensado para gerar repertório, visão de mercado e decisões mais inteligentes sobre dinheiro.</p>
           </li>
@@ -388,7 +409,6 @@
         <div class="auvp-exp__cards" role="tablist" aria-label="Como cuidamos da sua experiência">
           <label class="auvp-exp__card" for="auvp-e1" role="tab">
             <span class="auvp-exp__card-top">
-              <span class="auvp-num">01</span>
               <span class="auvp-exp__card-title">Hospedagem</span>
             </span>
             <span class="auvp-exp__card-body">
@@ -397,7 +417,6 @@
           </label>
           <label class="auvp-exp__card" for="auvp-e2" role="tab">
             <span class="auvp-exp__card-top">
-              <span class="auvp-num">02</span>
               <span class="auvp-exp__card-title">Logística organizada</span>
             </span>
             <span class="auvp-exp__card-body">
@@ -406,7 +425,6 @@
           </label>
           <label class="auvp-exp__card" for="auvp-e3" role="tab">
             <span class="auvp-exp__card-top">
-              <span class="auvp-num">03</span>
               <span class="auvp-exp__card-title">Concierge</span>
             </span>
             <span class="auvp-exp__card-body">
@@ -415,7 +433,6 @@
           </label>
           <label class="auvp-exp__card" for="auvp-e4" role="tab">
             <span class="auvp-exp__card-top">
-              <span class="auvp-num">04</span>
               <span class="auvp-exp__card-title">Agenda estruturada</span>
             </span>
             <span class="auvp-exp__card-body">

@@ -12,7 +12,7 @@
    errado e o passo sairia torto. */
 .auvp-roleta {
   --vis: 1;              /* cartões visíveis; cresce nas telas maiores */
-  --n: 4;                /* lugares no trilho */
+  --n: 8;                /* lugares no trilho: os 4 cartões e a cópia */
   --gap: clamp(1rem, 2vw, 2rem);
   position: relative;
 }
@@ -51,12 +51,6 @@
   cursor: pointer;
   transition: color 0.4s var(--ease), background-color 0.4s var(--ease), border-color 0.4s var(--ease);
 }
-.auvp-roleta__bt--ant-fim,
-.auvp-roleta__bt--prox-fim {
-  color: var(--ink-30);
-  border-color: var(--line-soft);
-  cursor: default;
-}
 label.auvp-roleta__bt:hover {
   background: var(--verde);
   border-color: var(--verde);
@@ -94,8 +88,10 @@ label.auvp-roleta__bt:hover {
   grid-auto-columns: calc((100cqw - (var(--vis) - 1) * var(--gap)) / var(--vis));
   gap: var(--gap);
   /* O clamp segura as duas pontas: nunca antes do primeiro cartão, nunca
-     além do último. É ele que evita sobrar faixa vazia quando a tela
-     cresce e passam a caber mais cartões do que o estado marcado supõe. */
+     além do fim do trilho. Com a fila duplicada ele deixou de apertar em
+     qualquer largura — sobra trilho de sobra à direita —, mas continua
+     aqui como rede: é o que impediria uma faixa vazia se a contagem de
+     lugares (--n) e os cartões do HTML saíssem de sincronia. */
   transform: translateX(calc(-1 * clamp(0px, var(--i, 0) * var(--passo), var(--fim))));
   transition: transform 0.9s var(--ease);
 }
@@ -118,18 +114,22 @@ label.auvp-roleta__bt:hover {
 .auvp-roleta__cartao h3 { font-size: clamp(1.2rem, 1.7vw, 1.75rem); line-height: 1.2; }
 .auvp-roleta__cartao p { font-size: var(--fs-small); line-height: 1.7; color: var(--ink-60); }
 
-/* ---- Passagem automática ----
+/* ---- Passagem automática, em laço ----
    Enquanto ninguém tocou nas setas — ou seja, enquanto o primeiro radio
-   é o marcado — o trilho anda sozinho, uns quatro segundos por cartão.
-   No primeiro clique numa seta outro radio passa a ser o marcado, o
-   seletor abaixo deixa de casar, a animação some e o deslocamento volta
-   a ser o do estado escolhido, com a transição de sempre. Voltar ao
-   primeiro cartão recomeça o passeio.
+   é o marcado — o trilho anda sozinho, quatro segundos por cartão. No
+   primeiro clique numa seta outro radio passa a ser o marcado, o seletor
+   abaixo deixa de casar, a animação some e o deslocamento volta a ser o
+   do estado escolhido, com a transição de sempre. Voltar ao primeiro
+   cartão recomeça o passeio.
 
-   Os quadros usam o mesmo clamp do transform, então o trilho nunca
-   passa do último cartão em nenhuma largura. */
+   O laço fecha sem costura porque a fila está duplicada no HTML: a
+   animação anda os quatro passos e para exatamente sobre a cópia do
+   primeiro cartão, que é idêntica ao ponto de partida. Voltar a zero ali
+   não aparece. Antes o trilho tinha só quatro cartões e precisava
+   desandar tudo de volta no fim do ciclo — era esse rebobinar, com os
+   cartões atravessando a tela ao contrário, que parecia defeito. */
 #auvp-r1:checked ~ .auvp-roleta__grade .auvp-roleta__trilho {
-  animation: auvp-roleta-sozinha-4 16s var(--ease) infinite;
+  animation: auvp-roleta-giro 16s var(--ease) infinite;
 }
 /* Passar o cursor segura o passeio: quem parou para ler não perde o
    cartão no meio da leitura. O seletor repete o #auvp-r1 de propósito —
@@ -139,18 +139,15 @@ label.auvp-roleta__bt:hover {
   animation-play-state: paused;
 }
 
-@keyframes auvp-roleta-sozinha-4 {
-  0%,   20% { transform: translateX(0); }
-  25%,  45% { transform: translateX(calc(-1 * clamp(0px, 1 * var(--passo), var(--fim)))); }
-  50%,  70% { transform: translateX(calc(-1 * clamp(0px, 2 * var(--passo), var(--fim)))); }
-  75%,  95% { transform: translateX(calc(-1 * clamp(0px, 3 * var(--passo), var(--fim)))); }
-  100%      { transform: translateX(0); }
-}
-@keyframes auvp-roleta-sozinha-3 {
-  0%,   27% { transform: translateX(0); }
-  33%,  60% { transform: translateX(calc(-1 * clamp(0px, 1 * var(--passo), var(--fim)))); }
-  66%,  93% { transform: translateX(calc(-1 * clamp(0px, 2 * var(--passo), var(--fim)))); }
-  100%      { transform: translateX(0); }
+/* Quatro paradas de tamanho igual. A última leva ao quinto lugar do
+   trilho — a cópia do primeiro cartão —, e é de lá que o 100% volta a
+   zero sem que se veja. */
+@keyframes auvp-roleta-giro {
+  0%,   17% { transform: translateX(0); }
+  25%,  42% { transform: translateX(calc(-1 * var(--passo))); }
+  50%,  67% { transform: translateX(calc(-2 * var(--passo))); }
+  75%,  92% { transform: translateX(calc(-3 * var(--passo))); }
+  100%      { transform: translateX(calc(-4 * var(--passo))); }
 }
 
 /* ---- Estados ----
@@ -159,31 +156,22 @@ label.auvp-roleta__bt:hover {
 #auvp-r3:checked ~ .auvp-roleta__grade .auvp-roleta__trilho { --i: 2; }
 #auvp-r4:checked ~ .auvp-roleta__grade .auvp-roleta__trilho { --i: 3; }
 
-#auvp-r1:checked ~ .auvp-roleta__nav .auvp-roleta__bt--ant-fim,
+/* A fila dá a volta: no último cartão, avançar leva ao primeiro, e no
+   primeiro, voltar leva ao último. Não existe mais seta apagada. */
+#auvp-r1:checked ~ .auvp-roleta__nav .auvp-roleta__bt--ant-4,
 #auvp-r1:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-2,
 #auvp-r2:checked ~ .auvp-roleta__nav .auvp-roleta__bt--ant-1,
 #auvp-r2:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-3,
 #auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--ant-2,
 #auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-4,
 #auvp-r4:checked ~ .auvp-roleta__nav .auvp-roleta__bt--ant-3,
-#auvp-r4:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-fim {
+#auvp-r4:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-1 {
   opacity: 1;
   pointer-events: auto;
 }
 
-/* Quanto mais cartão cabe na janela, mais cedo o trilho acaba — e a seta
-   de avançar precisa apagar junto, senão fica um clique que não anda. O
-   último estado que ainda anda é --n menos --vis. */
 @media (min-width: 760px) {
   .auvp-roleta { --vis: 2; }
-  #auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-4 { opacity: 0; pointer-events: none; }
-  #auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-fim { opacity: 1; }
-  /* Com dois cartões por tela o trilho acaba um passo antes, então o
-     passeio tem três paradas em vez de quatro. */
-  #auvp-r1:checked ~ .auvp-roleta__grade .auvp-roleta__trilho {
-    animation-name: auvp-roleta-sozinha-3;
-    animation-duration: 12s;
-  }
 }
 @media (min-width: 1200px) {
   .auvp-roleta__grade { grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr); }

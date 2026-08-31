@@ -103,6 +103,5 @@
   .auvp-roleta__trilho,
   .auvp-exp__bg,
   .auvp-exp__card,
-  .auvp-exp__card-body,
-  .auvp-exp__card .auvp-num { animation: none; }
+  .auvp-exp__card-body { animation: none; }
 }
