@@ -32,21 +32,25 @@
 }
 
 .auvp-net__rolo { display: grid; }
+/* Ponto numa coluna, texto na outra. Já foi ponto solto por cima, preso
+   ao topo do item — mas o conteúdo é centralizado dentro do lugar, e
+   quanto mais alto o lugar, mais o ponto ficava acima da linha do
+   título. Em coluna, os dois sobem e descem juntos. */
 .auvp-net__item {
-  position: relative;
   display: grid;
+  grid-template-columns: 9px minmax(0, 1fr);
+  column-gap: clamp(1.25rem, 3vw, 2rem);
+  align-items: start;
   align-content: center;
-  gap: 0.35rem;
-  padding: clamp(1rem, 2vw, 1.5rem) 0 clamp(1rem, 2vw, 1.5rem) clamp(2rem, 4vw, 3rem);
+  padding-block: clamp(1rem, 2vw, 1.5rem);
 }
 /* O ponto é o que o caça-níquel destaca: apagado nos perfis de fora,
    verde e com halo no que está no centro. */
 .auvp-net__dot {
-  position: absolute;
-  left: 0;
-  top: calc(clamp(1rem, 2vw, 1.5rem) + 0.55em);
   width: 9px; height: 9px;
   border-radius: 50%;
+  /* desce até a linha do título: meia linha do h3, menos meio ponto */
+  margin-top: calc(clamp(1.35rem, 2.2vw, 1.8rem) * 0.6 - 4.5px);
   background: var(--line);
   transition: background-color 0.4s var(--ease), box-shadow 0.4s var(--ease), transform 0.4s var(--ease);
 }
@@ -65,11 +69,35 @@
 }
 
 /* ---- O caça-níquel, quando há script ----
-   A dobra tem a altura do que tem dentro, como as outras. Já teve um
-   palco grudado de uma tela inteira, e o preço era esse: um conteúdo de
-   ~500px no meio de 900, com o resto em branco em cima e embaixo. O rolo
-   gira enquanto a dobra atravessa a tela — quem faz a conta é o
-   assets/js/auvp.js. */
+   A rolagem fica presa aqui até os cinco perfis passarem. Quem segura é
+   o par de sempre: um invólucro alto (`__pin`) e, dentro dele, um palco
+   grudado no topo (`__palco`) do tamanho de uma tela. Enquanto o
+   invólucro atravessa, o palco não sai do lugar — a página parece
+   travada e o que anda é só o rolo.
+
+   Esse palco já existiu antes e foi tirado por deixar tela demais em
+   branco: um conteúdo de ~500px no meio de 900. A diferença agora é a
+   altura do lugar, que saiu de 16svh para 24svh — três deles somam
+   quase três quartos da tela, e o palco fica cheio em vez de vazio. */
+.auvp-js .auvp-net { padding-block: 0; }
+.auvp-js .auvp-net__pin {
+  /* Uma tela para o palco mais um pedaço de rolagem por perfil que falta
+     passar. Com cinco perfis dá 100svh + 4 × 40svh: o suficiente para o
+     giro ser sentido sem virar um corredor de rolagem. */
+  height: calc(100svh + (var(--n, 5) - 1) * 40svh);
+}
+.auvp-js .auvp-net__palco {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: grid;
+  align-content: center;
+  /* A barra do topo flutua por cima de tudo; o respiro de cima é o que
+     impede o rolo de passar por trás dela. */
+  padding-block: var(--nav-h) clamp(1rem, 3svh, 2rem);
+  box-sizing: border-box;
+  overflow: hidden;
+}
 /* A janela mostra três lugares e o do meio é o que vale. As bordas
    esmaecem, que é o que dá a sensação de rolo girando atrás de uma
    fresta em vez de uma lista andando. */
@@ -77,7 +105,7 @@
   /* A altura do lugar é fração da tela, não da largura: são três deles
      empilhados dentro de um palco de uma tela, e é a altura que aperta.
      Em `vh` fixos, num celular baixo o terceiro lugar ficava para fora. */
-  --altura: clamp(110px, 16svh, 165px);
+  --altura: clamp(120px, 24svh, 250px);
   height: calc(var(--altura) * 3);
   margin-top: 0;
   overflow: hidden;
@@ -103,7 +131,16 @@
 
 @media (prefers-reduced-motion: reduce) {
   /* Sem o giro, a dobra volta a ser a lista, com todos os perfis à
-     mostra e sem janela recortando nada. */
+     mostra e sem janela recortando nada. E sem o palco: prender a
+     rolagem numa tela que não gira seria só rolagem perdida. */
+  .auvp-js .auvp-net { padding-block: var(--section-y); }
+  .auvp-js .auvp-net__pin { height: auto; }
+  .auvp-js .auvp-net__palco {
+    position: static;
+    height: auto;
+    padding-block: 0;
+    overflow: visible;
+  }
   .auvp-js .auvp-net__janela { height: auto; -webkit-mask-image: none; mask-image: none; }
   .auvp-js .auvp-net__rolo { transform: none; grid-auto-rows: auto; }
   .auvp-js .auvp-net__item { opacity: 1; }
@@ -131,11 +168,32 @@
   .auvp-net__copy p { font-size: 0.85rem; line-height: 1.5; max-width: none; }
   .auvp-net__complement { max-width: none; }
   .auvp-js .auvp-net__janela {
-    --altura: clamp(150px, 22svh, 200px);
+    /* O teto é alto de propósito: com dois lugares só, um teto baixo
+       deixava o palco do tablet meio vazio. Aqui os dois acompanham a
+       tela até bem tarde. */
+    --altura: clamp(150px, 24svh, 260px);
     height: calc(var(--altura) * 2);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 100%);
+    /* O esmaecido começa tarde de propósito: cortando cedo, o segundo
+       lugar sumia quase inteiro e a metade de baixo do palco lia como
+       espaço vazio em vez de "tem mais vindo aí". */
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
   }
   /* Com o perfil da vez no primeiro lugar, o deslocamento perde o +1. */
   .auvp-js .auvp-net__rolo { transform: translateY(calc(var(--pos, 0) * var(--altura) * -1)); }
+
+  /* Dois lugares é regra de tela baixa, não de tela estreita. No tablet
+     em pé cabem os três de novo — e com dois eles deixavam a metade de
+     baixo do palco vazia, que é justamente o que o palco grudado não
+     pode fazer. Quem manda aqui é a altura, então o corte é por ela. */
+  @media (min-height: 1000px) {
+    .auvp-js .auvp-net__janela {
+      --altura: clamp(150px, 22svh, 240px);
+      height: calc(var(--altura) * 3);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 24%, #000 76%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, #000 24%, #000 76%, transparent 100%);
+    }
+    /* De volta ao lugar do meio: o +1 volta junto. */
+    .auvp-js .auvp-net__rolo { transform: translateY(calc((1 - var(--pos, 0)) * var(--altura))); }
+  }
 }

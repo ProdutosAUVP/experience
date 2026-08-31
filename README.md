@@ -61,10 +61,13 @@ Não mexa nas classes `auvp-*`: são elas que ligam o conteúdo ao estilo.
 
 Uma dobra encosta na outra: não há margem entre elas, só o `padding-block` de
 cada uma, que é o `--section-y` do `01-tokens.css`. **O vão entre duas dobras é
-o dobro desse valor** — é a conta que engana. Para apertar ou afrouxar o ritmo
-da página inteira, é essa a única linha a mexer; as dobras que precisam de mais
-respiro por dentro (o cabeçalho das Imersões, o rodapé) têm o seu próprio, e
-esses são ajustes locais.
+o dobro desse valor** — é a conta que engana: os 4rem de hoje viram 8rem de
+intervalo. Para apertar ou afrouxar o ritmo da página inteira, é essa a única
+linha a mexer; as dobras que precisam de mais respiro por dentro (o cabeçalho
+das Imersões, o rodapé) têm o seu próprio, e esses são ajustes locais.
+
+A exceção é o networking: lá o `padding-block` é zerado quando há script,
+porque quem dá o respiro é o palco grudado de uma tela inteira.
 
 ## Publicar no GitHub Pages
 
@@ -153,25 +156,44 @@ inteira do tablet, ela deixava metade da dobra vazia à direita.
 Cada perfil tem **título e texto, e mais nada** — os algarismos romanos que
 marcavam a ordem saíram: quem diz de quem é a vez é o ponto verde.
 
-**A janela mostra três lugares em tela grande e dois em tela pequena.** Com
-três lugares no celular, a altura que sobrava para cada um ficava menor que o
-texto do perfil e os cinco se sobrepunham, ilegíveis. Com dois, o perfil da
-vez fica no lugar de cima e o seguinte espia embaixo — e o deslocamento do
-rolo perde o `+1` que centralizava.
+**A janela mostra três lugares em tela grande e dois em tela baixa.** Com três
+lugares num celular, a altura que sobrava para cada um ficava menor que o texto
+do perfil e os cinco se sobrepunham, ilegíveis. Com dois, o perfil da vez fica
+no lugar de cima e o seguinte espia embaixo — e o deslocamento do rolo perde o
+`+1` que centralizava.
 
-**A dobra tem a altura do que tem dentro, como as outras.** Ela já teve um
-palco grudado de uma tela inteira, e o preço era esse: um conteúdo de ~500px
-no meio de 900, com o resto em branco em cima e embaixo. Sem o palco, a dobra
-caiu de 2520px para ~520px e a home encurtou 2000px.
+Mas **dois lugares é regra de tela baixa, não de tela estreita**: no tablet em
+pé (largura ≤ 860px e altura ≥ 1000px) voltam os três, porque com dois eles
+deixavam a metade de baixo do palco vazia. É por isso que existe um
+`@media (min-height: 1000px)` dentro do bloco de 860px.
 
-O rolo gira enquanto a dobra atravessa a tela: o centro dela indo de 85% da
-altura da janela até 15% é o curso inteiro do giro. A posição é contínua — o
-rolo acompanha o dedo, sem pulos — e o perfil mais perto do centro fica em
-destaque. Do JavaScript saem só duas coisas: a variável `--pos` e a classe
-`esta-ativo`; todo o desenho é do CSS.
+O ponto verde fica numa coluna ao lado do texto, não solto por cima dele. Preso
+ao topo do item, ele descolava da linha do título quanto mais alto o lugar
+ficava; em coluna, os dois sobem e descem juntos.
 
-Para o giro ficar mais lento, é essa faixa que se abre (85% → 95%, 15% → 5%):
-quanto mais larga, mais rolagem para o mesmo número de perfis.
+**A rolagem fica presa aqui até os cinco perfis passarem.** Quem segura são duas
+peças de CSS: o invólucro `.auvp-net__pin`, mais alto que a tela, e dentro dele
+o palco `.auvp-net__palco`, grudado no topo com uma tela de altura. Enquanto o
+invólucro atravessa, o palco não sai do lugar — a página parece travada e o que
+anda é só o rolo.
+
+Esse palco já existiu antes e foi tirado por deixar tela demais em branco: um
+conteúdo de ~500px no meio de 900. **A diferença agora é a altura do lugar**,
+que saiu de `16svh` para `24svh`: três deles somam quase três quartos da tela e
+o palco fica cheio, não vazio. Se um dia o palco voltar a parecer vazio, é esse
+o número a mexer — não o palco.
+
+O curso é o que sobra do invólucro depois da tela: `100svh + (n - 1) × 40svh`,
+ou seja, uma tela para o palco mais 40% de tela de rolagem por perfil que falta
+passar. **Para o giro ficar mais lento, é esse `40svh` que cresce**; para ser
+mais rápido, diminui. A posição é contínua — o rolo acompanha o dedo, sem
+pulos — e o perfil que está no lugar do meio fica em destaque. Do JavaScript
+saem só duas coisas: a variável `--pos` e a classe `esta-ativo`; todo o desenho
+é do CSS.
+
+Sob `prefers-reduced-motion` o palco se desfaz: o invólucro volta a ter a altura
+do conteúdo e a dobra vira a lista com os cinco perfis à mostra. Prender a
+rolagem numa tela que não gira seria só rolagem perdida.
 
 **Cuidado ao mexer:** a dobra tinha três animações de rolagem no
 `17-animacao.css` — o item pulsando, o numeral preenchendo, o título
