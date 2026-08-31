@@ -41,21 +41,6 @@
       animation-timeline: view();
       animation-range: entry 10% entry 100%;
     }
-    .auvp-net__item {
-      animation: auvp-net-focus linear both;
-      animation-timeline: view();
-      animation-range: cover 0% cover 100%;
-    }
-    .auvp-net__numeral {
-      animation: auvp-net-numeral-fill linear both;
-      animation-timeline: view();
-      animation-range: cover 0% cover 100%;
-    }
-    .auvp-net__copy h3 {
-      animation: auvp-net-topic-weight linear both;
-      animation-timeline: view();
-      animation-range: cover 0% cover 100%;
-    }
   }
 }
 
@@ -67,27 +52,17 @@
   from { clip-path: inset(0 0 100% 0); transform: scale(1.08); }
   to { clip-path: inset(0 0 0 0); transform: none; }
 }
+/* A dobra de networking tinha três animações de rolagem aqui — o item
+   pulsando, o numeral preenchendo, o título engrossando. Saíram com o
+   caça-níquel: agora quem diz qual perfil está em destaque é a classe
+   `esta-ativo`, e duas coisas mandando na mesma opacidade e na mesma
+   escala é uma briga que ninguém ganha. */
 @keyframes auvp-edge-linha {
   from { opacity: 0; transform: translateX(-32px); }
   to { opacity: 1; transform: none; }
 }
 @keyframes auvp-parallax { to { transform: translateY(12%); } }
 @keyframes auvp-progresso { to { transform: scaleX(1); } }
-@keyframes auvp-net-focus {
-  0%   { opacity: 0.3; transform: scale(0.92); }
-  50%  { opacity: 1; transform: scale(1); }
-  100% { opacity: 0.3; transform: scale(0.92); }
-}
-@keyframes auvp-net-numeral-fill {
-  0%   { color: transparent; -webkit-text-stroke-color: var(--verde-30); }
-  50%  { color: var(--verde); -webkit-text-stroke-color: var(--verde); }
-  100% { color: transparent; -webkit-text-stroke-color: var(--verde-30); }
-}
-@keyframes auvp-net-topic-weight {
-  0%   { font-weight: 300; }
-  50%  { font-weight: 500; }
-  100% { font-weight: 300; }
-}
 
 /* Preferência por menos movimento */
 @media (prefers-reduced-motion: reduce) {

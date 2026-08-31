@@ -22,10 +22,12 @@
   const semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   /* Relógio que só anda quando a dobra está na tela, a aba do navegador
-     está à frente e ninguém está com o cursor em cima. Passar o cursor
-     segura; tirar, volta a andar. Qualquer ação manual reinicia a
+     está à frente e ninguém está com o cursor na `zona` — a área que
+     segura o passeio, que nem sempre é a dobra inteira. Na roleta é só a
+     fila de cartões: parar por causa do cursor em cima do título, longe
+     dos cartões, era parar sem motivo. Qualquer ação manual reinicia a
      contagem — é isso que faz o passeio continuar depois do clique. */
-  function relogio(raiz, passo, intervalo) {
+  function relogio(raiz, passo, intervalo, zona) {
     let id = null;
     let naTela = false;
     let parado = false;
@@ -50,10 +52,11 @@
 
     const segurar = () => { parado = true; parar(); };
     const soltar = () => { parado = false; tocar(); };
-    raiz.addEventListener('pointerenter', segurar);
-    raiz.addEventListener('pointerleave', soltar);
-    raiz.addEventListener('focusin', segurar);
-    raiz.addEventListener('focusout', soltar);
+    const area = zona || raiz;
+    area.addEventListener('pointerenter', segurar);
+    area.addEventListener('pointerleave', soltar);
+    area.addEventListener('focusin', segurar);
+    area.addEventListener('focusout', soltar);
     document.addEventListener('visibilitychange', tocar);
     semMovimento.addEventListener('change', tocar);
 
@@ -110,7 +113,8 @@
       mover(true);
     };
 
-    const conta = relogio(raiz, avancar, 4000);
+    const janela = raiz.querySelector('.auvp-roleta__janela');
+    const conta = relogio(raiz, avancar, 2500, janela);
     proximo.addEventListener('click', () => { avancar(); conta.reiniciar(); });
     anterior.addEventListener('click', () => { voltar(); conta.reiniciar(); });
 
@@ -141,6 +145,46 @@
     radios.forEach((r) => r.addEventListener('change', conta.reiniciar));
   }
 
+  /* ---- Caça-níquel do networking ----
+     O invólucro é mais alto que a tela e o palco fica grudado dentro
+     dele; o quanto já se rolou desse excedente é a posição do rolo. A
+     posição é contínua (o rolo acompanha o dedo, sem pulos) e o perfil
+     mais perto do centro é o que fica em destaque. Quem desenha é o
+     CSS: daqui saem só o `--pos` e a classe `esta-ativo`. */
+  function cacaNiquel(pin) {
+    const rolo = pin.querySelector('.auvp-net__rolo');
+    if (!rolo) return;
+    const itens = Array.from(rolo.children);
+    if (itens.length < 2) return;
+    pin.style.setProperty('--n', itens.length);
+
+    let ativo = -1;
+    let pedido = null;
+
+    const medir = () => {
+      const curso = pin.offsetHeight - window.innerHeight;
+      if (curso <= 0) return;                       // sem palco grudado
+      const andado = Math.min(Math.max(-pin.getBoundingClientRect().top, 0), curso);
+      const pos = (andado / curso) * (itens.length - 1);
+      rolo.style.setProperty('--pos', pos.toFixed(4));
+      const perto = Math.round(pos);
+      if (perto === ativo) return;
+      if (itens[ativo]) itens[ativo].classList.remove('esta-ativo');
+      itens[perto].classList.add('esta-ativo');
+      ativo = perto;
+    };
+
+    const agendar = () => {
+      if (pedido) return;
+      pedido = requestAnimationFrame(() => { pedido = null; medir(); });
+    };
+
+    window.addEventListener('scroll', agendar, { passive: true });
+    window.addEventListener('resize', agendar);
+    medir();
+  }
+
   document.querySelectorAll('.auvp-roleta').forEach(roleta);
   document.querySelectorAll('.auvp-exp__panel').forEach(abas);
+  if (!semMovimento.matches) document.querySelectorAll('.auvp-net__pin').forEach(cacaNiquel);
 })();

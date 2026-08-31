@@ -16,7 +16,7 @@ index.html                  home
 missao-china.html           página da Missão China
 assets/
   js/
-    auvp.js                 os dois passeios automáticos, e só
+    auvp.js                 os passeios automáticos e o caça-níquel
   css/
     01-tokens.css           paleta, escala tipográfica, medidas
     02-base.css             reset e padrões do documento
@@ -29,7 +29,7 @@ assets/
     09-imersoes.css         3ª dobra — cards de destino
     10-diferencial.css      4ª dobra — índice de acessos
     11-faixa.css            5ª dobra — faixa deslizante
-    12-networking.css       6ª dobra
+    12-networking.css       6ª dobra — caça-níquel
     13-experiencia.css      7ª dobra — abas
     14-faq.css              8ª dobra
     15-formularios.css      campos, chips e o formulário de sugestão
@@ -89,7 +89,7 @@ O site nasceu sem JavaScript nenhum e quase tudo continua assim:
 | Faixa deslizante | `@keyframes` andando -50% sobre dois grupos iguais |
 | Mosaico de fotos da Missão China | `@keyframes` alternando a opacidade |
 | Logo girando sobre o mapa | `@keyframes` |
-| Perfis de networking | rolagem horizontal nativa, com encaixe |
+| Perfis de networking | caça-níquel movido pela rolagem — ver abaixo |
 | Revelação ao rolar | `animation-timeline: view()` |
 | Barra de progresso | `animation-timeline: scroll()` |
 
@@ -99,8 +99,9 @@ hipótese a página fica em branco.**
 
 ### O que o JavaScript faz — e por que ele existe
 
-O `assets/js/auvp.js` cuida de **duas coisas**: o passeio automático da roleta
-do posicionamento e o das abas da Experiência. Nada mais.
+O `assets/js/auvp.js` cuida de **três coisas**: o passeio automático da roleta
+do posicionamento, o das abas da Experiência e o caça-níquel da dobra de
+networking. Nada mais.
 
 Ele entrou porque apareceu um pedido que CSS não faz: **o passeio precisa
 continuar depois de um clique**. CSS não sabe trocar o estado de um radio,
@@ -125,9 +126,30 @@ script:
 | Setas da roleta | aparecem | somem — não teriam o que comandar |
 | Cópias dos cartões | entram, para fechar o laço | somem — seriam conteúdo repetido |
 | Abas da Experiência | trocam no clique e sozinhas | trocam no clique |
+| Networking | caça-níquel, um perfil por vez em destaque | lista com os cinco perfis à mostra |
 
-Passar o cursor segura os dois passeios, e eles só andam com a dobra na tela e
-a aba do navegador à frente. Sob `prefers-reduced-motion` o relógio não liga.
+Os dois passeios só andam com a dobra na tela e a aba do navegador à frente, e
+o cursor segura cada um na sua área: **na roleta, só quando está sobre a fila
+de cartões** — parar porque o cursor passou pelo título, longe deles, era
+parar sem motivo. Sob `prefers-reduced-motion` o relógio não liga e o
+caça-níquel nem se monta.
+
+### O caça-níquel do networking
+
+O invólucro da dobra é mais alto que a tela e o palco fica grudado dentro
+dele. O quanto já se rolou desse excedente vira uma posição contínua de 0 a
+n-1: o rolo acompanha o dedo, sem pulos, e o perfil mais perto do centro fica
+em destaque. Do JavaScript saem só duas coisas — a variável `--pos` e a classe
+`esta-ativo`; todo o desenho é do CSS.
+
+A velocidade do giro é a altura do invólucro: `100svh + (n - 1) × 45svh`.
+Aumentar o `45svh` faz girar mais devagar, porque estica o curso.
+
+**Cuidado ao mexer:** a dobra tinha três animações de rolagem no
+`17-animacao.css` — o item pulsando, o numeral preenchendo, o título
+engrossando. Elas saíram junto com o desenho antigo. Duas coisas mandando na
+mesma opacidade e na mesma escala é uma briga que ninguém ganha: enquanto
+conviveram, o rolo ficou com os perfis em tamanhos e opacidades trocados.
 
 ---
 
@@ -141,11 +163,15 @@ a aba do navegador à frente. Sob `prefers-reduced-motion` o relógio não liga.
 
 ### Barra do topo
 
-O topo percorre as dobras da home: Imersões, Diferencial, Networking,
-Experiência e FAQ. "Imersões" abre um menu suspenso com **Nossas imersões** e
-**Missão China**; ele aparece no cursor e também no foco do teclado, sem
+O topo percorre as dobras da home: Pilares, Imersões, Diferencial, Networking,
+Experiência e FAQ. "Imersões" tem os dois papéis — **no clique**, leva à dobra
+Nossas imersões; **parado sobre ele**, abre o menu com a Missão China, que é o
+único item de lá. O menu aparece no cursor e também no foco do teclado, sem
 script. Na página da Missão China o topo é o mesmo, com os destinos apontando
 para as dobras da home.
+
+O rótulo **Pilares** é o da 2ª dobra (`#posicionamento`), a dos quatro cartões
+— trocar o nome é trocar o texto do link, o `id` da seção não precisa mudar.
 
 Abaixo de 900px os links saem do topo e quem faz o papel é o menu em tela
 cheia, atrás do botão — lá a lista é plana e a Missão China aparece como item
