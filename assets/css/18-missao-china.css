@@ -10,7 +10,7 @@
    topo, que é sticky e passa por cima. */
 .auvp-capa__texto {
   text-align: center;
-  padding-block: clamp(3.5rem, 8vw, 6rem) clamp(2.5rem, 6vw, 4.5rem);
+  padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(1.75rem, 4vw, 3rem);
 }
 .auvp-capa__title {
   font-size: clamp(2.4rem, 7vw, 6rem);
@@ -108,7 +108,7 @@
 .auvp-registro__texto {
   background: var(--verde);
   color: var(--paper);
-  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  padding-block: clamp(2rem, 4vw, 3.5rem);
 }
 .auvp-relato {
   display: grid;

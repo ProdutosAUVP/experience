@@ -57,6 +57,15 @@ no lugar certo.
 
 Não mexa nas classes `auvp-*`: são elas que ligam o conteúdo ao estilo.
 
+### Espaço entre as dobras
+
+Uma dobra encosta na outra: não há margem entre elas, só o `padding-block` de
+cada uma, que é o `--section-y` do `01-tokens.css`. **O vão entre duas dobras é
+o dobro desse valor** — é a conta que engana. Para apertar ou afrouxar o ritmo
+da página inteira, é essa a única linha a mexer; as dobras que precisam de mais
+respiro por dentro (o cabeçalho das Imersões, o rodapé) têm o seu próprio, e
+esses são ajustes locais.
+
 ## Publicar no GitHub Pages
 
 **Settings → Pages → Source: Deploy from a branch → `main` / `/ (root)`.**
@@ -140,6 +149,9 @@ caça-níquel nem se monta.
 FAQ, com as mesmas proporções e o mesmo ponto de quebra (860px). Abaixo disso
 vira uma coluna só, com teto de 560px e centralizada: esparramada na tela
 inteira do tablet, ela deixava metade da dobra vazia à direita.
+
+Cada perfil tem **título e texto, e mais nada** — os algarismos romanos que
+marcavam a ordem saíram: quem diz de quem é a vez é o ponto verde.
 
 **A janela mostra três lugares em tela grande e dois em tela pequena.** Com
 três lugares no celular, a altura que sobrava para cada um ficava menor que o

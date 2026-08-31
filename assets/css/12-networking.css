@@ -44,19 +44,11 @@
 .auvp-net__dot {
   position: absolute;
   left: 0;
-  top: calc(clamp(1rem, 2vw, 1.5rem) + 0.6em);
+  top: calc(clamp(1rem, 2vw, 1.5rem) + 0.55em);
   width: 9px; height: 9px;
   border-radius: 50%;
   background: var(--line);
   transition: background-color 0.4s var(--ease), box-shadow 0.4s var(--ease), transform 0.4s var(--ease);
-}
-.auvp-net__numeral {
-  font-family: var(--display);
-  font-weight: 300;
-  font-size: var(--fs-micro);
-  letter-spacing: 0.24em;
-  color: var(--ink-30);
-  transition: color 0.4s var(--ease);
 }
 .auvp-net__copy h3 {
   font-family: var(--display);
@@ -117,7 +109,6 @@
   box-shadow: 0 0 0 5px var(--verde-10);
   transform: scale(1.15);
 }
-.auvp-js .auvp-net__item.esta-ativo .auvp-net__numeral { color: var(--verde); }
 
 @media (prefers-reduced-motion: reduce) {
   /* Sem o giro, a dobra volta a ser a lista: nada de palco grudado nem

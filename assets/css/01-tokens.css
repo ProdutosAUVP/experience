@@ -44,7 +44,10 @@
   --fs-micro: 0.6875rem;
 
   --gutter: clamp(1.25rem, 5vw, 5rem);
-  --section-y: clamp(2.5rem, 5vw, 5rem);
+  /* Respiro de cima e de baixo de cada dobra. Como as dobras se
+     encostam, o vão entre duas é o dobro disto — por isso ele é menor do
+     que parece: 3rem aqui viram 6rem de intervalo. */
+  --section-y: clamp(1.5rem, 3vw, 3rem);
   --max-w: 1560px;
   --nav-h: 76px;
 
