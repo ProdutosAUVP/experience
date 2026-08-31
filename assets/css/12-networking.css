@@ -64,21 +64,12 @@
   transition: color 0.4s var(--ease);
 }
 
-/* ---- O caça-níquel, quando há script ---- */
-.auvp-js .auvp-net { padding-block: 0; }
-/* Uma tela para o palco e um tanto de rolagem por perfil: é essa altura
-   extra que dá o curso do giro. Mexer no 45svh muda a velocidade — mais
-   alto, gira mais devagar. */
-.auvp-js .auvp-net__pin { height: calc(100svh + (var(--n, 5) - 1) * 45svh); }
-.auvp-js .auvp-net__palco {
-  position: sticky;
-  top: 0;
-  height: 100svh;
-  display: grid;
-  align-content: center;
-  padding-top: var(--nav-h);
-  overflow: hidden;
-}
+/* ---- O caça-níquel, quando há script ----
+   A dobra tem a altura do que tem dentro, como as outras. Já teve um
+   palco grudado de uma tela inteira, e o preço era esse: um conteúdo de
+   ~500px no meio de 900, com o resto em branco em cima e embaixo. O rolo
+   gira enquanto a dobra atravessa a tela — quem faz a conta é o
+   assets/js/auvp.js. */
 /* A janela mostra três lugares e o do meio é o que vale. As bordas
    esmaecem, que é o que dá a sensação de rolo girando atrás de uma
    fresta em vez de uma lista andando. */
@@ -111,10 +102,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* Sem o giro, a dobra volta a ser a lista: nada de palco grudado nem
-     de perfis apagados. */
-  .auvp-js .auvp-net__pin { height: auto; }
-  .auvp-js .auvp-net__palco { position: static; height: auto; overflow: visible; }
+  /* Sem o giro, a dobra volta a ser a lista, com todos os perfis à
+     mostra e sem janela recortando nada. */
   .auvp-js .auvp-net__janela { height: auto; -webkit-mask-image: none; mask-image: none; }
   .auvp-js .auvp-net__rolo { transform: none; grid-auto-rows: auto; }
   .auvp-js .auvp-net__item { opacity: 1; }
