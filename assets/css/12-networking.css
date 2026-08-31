@@ -1,75 +1,132 @@
-/* Networking
-   Dobra compacta, em zigue-zague numa espinha central — cada perfil
-   intercala de lado. Funciona como uma roleta: o item ganha foco
-   (opacidade e escala plenas) só enquanto cruza o centro da tela,
-   e esmaece nas pontas — destacando um de cada vez conforme rola. */
-.auvp-net__intro { text-align: center; }
-.auvp-net__statement { font-size: clamp(1.75rem, 4.4vw, 4rem); line-height: 1.05; letter-spacing: -0.035em; max-width: 16ch; margin-inline: auto; }
-.auvp-net__complement { max-width: 40ch; margin-inline: auto; margin-top: clamp(1rem, 2vw, 1.5rem); color: var(--ink-80); font-size: var(--fs-body); line-height: 1.55; }
+/* Networking — caça-níquel
+   O invólucro é alto, o palco fica grudado na tela e o rolo gira
+   conforme a rolagem, deixando um perfil por vez em destaque. Quem move
+   o rolo é o assets/js/auvp.js: ele traduz a rolagem numa posição
+   contínua (`--pos`, de 0 a n-1) e marca com `esta-ativo` o perfil mais
+   perto do centro.
 
-.auvp-net__list {
-  --gut: clamp(1.5rem, 3vw, 2.5rem);
-  position: relative;
-  max-width: 620px;
+   Sem script a dobra é uma lista comum, com os cinco perfis à mostra de
+   uma vez — nada aqui depende do rolo para ser lido. É por isso que o
+   estado normal é a lista, e o caça-níquel entra depois, atrás da
+   classe `auvp-js`. */
+.auvp-net__intro { text-align: center; }
+.auvp-net__statement {
+  font-size: clamp(1.75rem, 4.4vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  max-width: 16ch;
   margin-inline: auto;
-  margin-top: clamp(2rem, 4vw, 3rem);
 }
-.auvp-net__list::before {
-  content: "";
-  position: absolute;
-  left: 50%; top: 0.4em; bottom: 0.4em;
-  width: 1px;
-  background: var(--line);
-  transform: translateX(-50%);
+.auvp-net__complement {
+  max-width: 40ch;
+  margin-inline: auto;
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+  color: var(--ink-80);
+  font-size: var(--fs-body);
+  line-height: 1.55;
 }
-/* Cada item é um bloco normal (um por linha, sem risco de grid
-   empurrar dois para a mesma fileira) — a largura de 50% menos meio
-   vão, com margem automática de um lado só, é o que intercala. */
+
+.auvp-net__janela { margin-top: clamp(2rem, 4vw, 3rem); }
+.auvp-net__rolo {
+  display: grid;
+  max-width: 640px;
+  margin-inline: auto;
+}
 .auvp-net__item {
   position: relative;
-  width: calc(50% - var(--gut) / 2);
-  padding-block: clamp(1.1rem, 2vw, 1.6rem);
+  display: grid;
+  align-content: center;
+  gap: 0.35rem;
+  padding: clamp(1rem, 2vw, 1.5rem) 0 clamp(1rem, 2vw, 1.5rem) clamp(2rem, 4vw, 3rem);
 }
-.auvp-net__item:nth-child(odd) { margin-right: auto; text-align: right; }
-.auvp-net__item:nth-child(even) { margin-left: auto; text-align: left; }
-.auvp-net__item > * { max-width: 32ch; }
-.auvp-net__item:nth-child(odd) > * { margin-left: auto; }
-.auvp-net__item:nth-child(even) > * { margin-right: auto; }
+/* O ponto é o que o caça-níquel destaca: apagado nos perfis de fora,
+   verde e com halo no que está no centro. */
 .auvp-net__dot {
   position: absolute;
-  top: clamp(1.4rem, 2.4vw, 1.9rem);
-  width: 8px; height: 8px;
+  left: 0;
+  top: calc(clamp(1rem, 2vw, 1.5rem) + 0.6em);
+  width: 9px; height: 9px;
   border-radius: 50%;
-  background: var(--verde);
-  box-shadow: 0 0 0 4px var(--paper);
+  background: var(--line);
+  transition: background-color 0.4s var(--ease), box-shadow 0.4s var(--ease), transform 0.4s var(--ease);
 }
-.auvp-net__item:nth-child(odd) .auvp-net__dot { right: calc(var(--gut) / -2 - 4px); }
-.auvp-net__item:nth-child(even) .auvp-net__dot { left: calc(var(--gut) / -2 - 4px); }
 .auvp-net__numeral {
-  display: block;
   font-family: var(--display);
   font-weight: 300;
-  font-size: clamp(1.9rem, 4vw, 3rem);
-  line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--verde-30);
-  margin-bottom: 0.4rem;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.24em;
+  color: var(--ink-30);
+  transition: color 0.4s var(--ease);
 }
 .auvp-net__copy h3 {
   font-family: var(--display);
   font-size: clamp(1.35rem, 2.2vw, 1.8rem);
   margin-bottom: 0.4rem;
+  transition: color 0.4s var(--ease);
 }
-.auvp-net__copy p { font-size: var(--fs-small); color: var(--ink-60); line-height: 1.65; }
+.auvp-net__copy p {
+  font-size: var(--fs-small);
+  color: var(--ink-60);
+  line-height: 1.65;
+  max-width: 44ch;
+  transition: color 0.4s var(--ease);
+}
 
-@media (max-width: 620px) {
-  .auvp-net__list::before { left: 0.4rem; transform: none; }
-  .auvp-net__item, .auvp-net__item:nth-child(even) {
-    width: 100%;
-    margin-left: 1.4rem;
-    margin-right: 0;
-    text-align: left;
-  }
-  .auvp-net__item > *, .auvp-net__item:nth-child(even) > * { margin-left: 0; margin-right: auto; max-width: 34ch; }
-  .auvp-net__item .auvp-net__dot, .auvp-net__item:nth-child(even) .auvp-net__dot { left: -1rem; right: auto; }
+/* ---- O caça-níquel, quando há script ---- */
+.auvp-js .auvp-net { padding-block: 0; }
+/* Uma tela para o palco e um tanto de rolagem por perfil: é essa altura
+   extra que dá o curso do giro. Mexer no 45svh muda a velocidade — mais
+   alto, gira mais devagar. */
+.auvp-js .auvp-net__pin { height: calc(100svh + (var(--n, 5) - 1) * 45svh); }
+.auvp-js .auvp-net__palco {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: grid;
+  align-content: center;
+  gap: clamp(1.5rem, 4vh, 3rem);
+  padding-top: var(--nav-h);
+  overflow: hidden;
+}
+/* A janela mostra três lugares e o do meio é o que vale. As bordas
+   esmaecem, que é o que dá a sensação de rolo girando atrás de uma
+   fresta em vez de uma lista andando. */
+/* A frase encolhe dentro do palco: em corpo cheio, ela mais os três
+   lugares do rolo não cabiam numa tela e o título saía cortado por cima. */
+.auvp-js .auvp-net__statement { font-size: clamp(1.5rem, 3.2vw, 2.6rem); }
+.auvp-js .auvp-net__complement { font-size: var(--fs-small); }
+.auvp-js .auvp-net__janela {
+  --altura: clamp(125px, 17vh, 165px);
+  height: calc(var(--altura) * 3);
+  margin-top: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 24%, #000 76%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 24%, #000 76%, transparent 100%);
+}
+.auvp-js .auvp-net__rolo {
+  grid-auto-rows: var(--altura);
+  /* Em --pos 0 o primeiro perfil fica no lugar do meio; daí para baixo,
+     cada ponto inteiro sobe um lugar. */
+  transform: translateY(calc((1 - var(--pos, 0)) * var(--altura)));
+}
+.auvp-js .auvp-net__item {
+  opacity: 0.28;
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.auvp-js .auvp-net__item.esta-ativo { opacity: 1; }
+.auvp-js .auvp-net__item.esta-ativo .auvp-net__dot {
+  background: var(--verde);
+  box-shadow: 0 0 0 5px var(--verde-10);
+  transform: scale(1.15);
+}
+.auvp-js .auvp-net__item.esta-ativo .auvp-net__numeral { color: var(--verde); }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Sem o giro, a dobra volta a ser a lista: nada de palco grudado nem
+     de perfis apagados. */
+  .auvp-js .auvp-net__pin { height: auto; }
+  .auvp-js .auvp-net__palco { position: static; height: auto; overflow: visible; }
+  .auvp-js .auvp-net__janela { height: auto; -webkit-mask-image: none; mask-image: none; }
+  .auvp-js .auvp-net__rolo { transform: none; grid-auto-rows: auto; }
+  .auvp-js .auvp-net__item { opacity: 1; }
 }

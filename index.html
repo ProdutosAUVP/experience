@@ -62,15 +62,16 @@
       <img src="assets/img/auvp-experience-horizontal.svg" alt="AUVP Experience">
     </a>
 
-    <!-- O topo percorre as dobras. "Imersões" abre um menu com a página
-         da Missão China; ele aparece no cursor e no foco do teclado, sem
-         script. Em tela estreita, quem faz esse papel é o menu inteiro
-         atrás do botão, com a mesma lista aberta. -->
+    <!-- O topo percorre as dobras. "Imersões" tem os dois papéis: no
+         clique, leva à dobra Nossas imersões; parado sobre ele, abre o
+         menu com a Missão China. O menu aparece no cursor e no foco do
+         teclado, sem script. Em tela estreita, quem faz esse papel é o
+         menu inteiro atrás do botão, com a lista plana. -->
     <nav class="auvp-nav__links" aria-label="Navegação principal">
+      <a class="auvp-nav__link" href="#posicionamento">Pilares</a>
       <span class="auvp-nav__item">
         <a class="auvp-nav__link" href="#imersoes" aria-haspopup="true">Imersões</a>
         <span class="auvp-nav__suspenso">
-          <a class="auvp-nav__sublink" href="#imersoes">Nossas imersões</a>
           <a class="auvp-nav__sublink" href="missao-china.html">Missão China</a>
         </span>
       </span>
@@ -91,12 +92,13 @@
     <a class="auvp-burger auvp-burger--fechar" href="#hero">Fechar <i aria-hidden="true"></i></a>
   </div>
   <div class="auvp-shell auvp-menu__body">
-    <a class="auvp-menu__link" href="#imersoes"><i>01</i>Imersões</a>
-    <a class="auvp-menu__link" href="missao-china.html"><i>02</i>Missão China</a>
-    <a class="auvp-menu__link" href="#diferencial"><i>03</i>Diferencial</a>
-    <a class="auvp-menu__link" href="#networking"><i>04</i>Networking</a>
-    <a class="auvp-menu__link" href="#experiencia"><i>05</i>Experiência</a>
-    <a class="auvp-menu__link" href="#faq"><i>06</i>FAQ</a>
+    <a class="auvp-menu__link" href="#posicionamento"><i>01</i>Pilares</a>
+    <a class="auvp-menu__link" href="#imersoes"><i>02</i>Imersões</a>
+    <a class="auvp-menu__link" href="missao-china.html"><i>03</i>Missão China</a>
+    <a class="auvp-menu__link" href="#diferencial"><i>04</i>Diferencial</a>
+    <a class="auvp-menu__link" href="#networking"><i>05</i>Networking</a>
+    <a class="auvp-menu__link" href="#experiencia"><i>06</i>Experiência</a>
+    <a class="auvp-menu__link" href="#faq"><i>07</i>FAQ</a>
   </div>
   <div class="auvp-shell auvp-menu__foot">
     <span>AUVP Experience Co.</span>
@@ -355,57 +357,66 @@
   </div>
   <p class="auvp-sr">Imersões exclusivas. Explore os bastidores da economia global.</p>
 
-  <!-- ============ 6. NETWORKING ============ -->
-  <section class="auvp-section" id="networking">
-    <div class="auvp-shell auvp-net__intro">
-      <h2 class="auvp-net__statement auvp-sobe">Você não vai sozinho. E isso <em>muda tudo</em>.</h2>
-      <p class="auvp-net__complement auvp-sobe">
-        Empresários, investidores e executivos que estão jogando o mesmo jogo que você.
-      </p>
-    </div>
+  <!-- ============ 6. NETWORKING ============
+       Caça-níquel: o invólucro é alto, o palco fica grudado na tela e o
+       rolo gira conforme a rolagem, deixando um perfil por vez em
+       destaque. Quem move o rolo é o assets/js/auvp.js — sem ele, o
+       invólucro perde a altura extra e a dobra vira a lista de sempre,
+       com os cinco perfis à mostra de uma vez. -->
+  <section class="auvp-section auvp-net" id="networking">
+    <div class="auvp-net__pin">
+      <div class="auvp-net__palco">
+        <div class="auvp-shell auvp-net__intro">
+          <h2 class="auvp-net__statement">Você não vai sozinho. E isso <em>muda tudo</em>.</h2>
+          <p class="auvp-net__complement">
+            Empresários, investidores e executivos que estão jogando o mesmo jogo que você.
+          </p>
+        </div>
 
-    <div class="auvp-shell">
-      <div class="auvp-net__list" role="list" aria-label="Perfis que participam">
-        <article class="auvp-net__item" role="listitem">
-          <span class="auvp-net__dot" aria-hidden="true"></span>
-          <span class="auvp-net__numeral" aria-hidden="true">I</span>
-          <div class="auvp-net__copy">
-            <h3>Empresários</h3>
-            <p>Quem já opera um negócio e busca referência de escala, eficiência e expansão fora do Brasil.</p>
-          </div>
-        </article>
-        <article class="auvp-net__item" role="listitem">
-          <span class="auvp-net__dot" aria-hidden="true"></span>
-          <span class="auvp-net__numeral" aria-hidden="true">II</span>
-          <div class="auvp-net__copy">
-            <h3>Investidores</h3>
-            <p>Quem aloca capital e quer entender, na fonte, as economias que definem os próximos ciclos.</p>
-          </div>
-        </article>
-        <article class="auvp-net__item" role="listitem">
-          <span class="auvp-net__dot" aria-hidden="true"></span>
-          <span class="auvp-net__numeral" aria-hidden="true">III</span>
-          <div class="auvp-net__copy">
-            <h3>Executivos</h3>
-            <p>Quem toma decisão dentro de grandes estruturas e precisa de repertório internacional real.</p>
-          </div>
-        </article>
-        <article class="auvp-net__item" role="listitem">
-          <span class="auvp-net__dot" aria-hidden="true"></span>
-          <span class="auvp-net__numeral" aria-hidden="true">IV</span>
-          <div class="auvp-net__copy">
-            <h3>Fundadores</h3>
-            <p>Quem está construindo e quer ver de perto como empresas globais resolveram os mesmos problemas.</p>
-          </div>
-        </article>
-        <article class="auvp-net__item" role="listitem">
-          <span class="auvp-net__dot" aria-hidden="true"></span>
-          <span class="auvp-net__numeral" aria-hidden="true">V</span>
-          <div class="auvp-net__copy">
-            <h3>Conversas que continuam</h3>
-            <p>O grupo não termina no embarque de volta. As conexões seguem — e é aí que costuma nascer o negócio.</p>
-          </div>
-        </article>
+        <div class="auvp-shell auvp-net__janela">
+          <ul class="auvp-net__rolo" aria-label="Perfis que participam">
+          <li class="auvp-net__item">
+            <span class="auvp-net__dot" aria-hidden="true"></span>
+            <span class="auvp-net__numeral" aria-hidden="true">I</span>
+            <div class="auvp-net__copy">
+              <h3>Empresários</h3>
+              <p>Quem já opera um negócio e busca referência de escala, eficiência e expansão fora do Brasil.</p>
+            </div>
+          </li>
+          <li class="auvp-net__item">
+            <span class="auvp-net__dot" aria-hidden="true"></span>
+            <span class="auvp-net__numeral" aria-hidden="true">II</span>
+            <div class="auvp-net__copy">
+              <h3>Investidores</h3>
+              <p>Quem aloca capital e quer entender, na fonte, as economias que definem os próximos ciclos.</p>
+            </div>
+          </li>
+          <li class="auvp-net__item">
+            <span class="auvp-net__dot" aria-hidden="true"></span>
+            <span class="auvp-net__numeral" aria-hidden="true">III</span>
+            <div class="auvp-net__copy">
+              <h3>Executivos</h3>
+              <p>Quem toma decisão dentro de grandes estruturas e precisa de repertório internacional real.</p>
+            </div>
+          </li>
+          <li class="auvp-net__item">
+            <span class="auvp-net__dot" aria-hidden="true"></span>
+            <span class="auvp-net__numeral" aria-hidden="true">IV</span>
+            <div class="auvp-net__copy">
+              <h3>Fundadores</h3>
+              <p>Quem está construindo e quer ver de perto como empresas globais resolveram os mesmos problemas.</p>
+            </div>
+          </li>
+          <li class="auvp-net__item">
+            <span class="auvp-net__dot" aria-hidden="true"></span>
+            <span class="auvp-net__numeral" aria-hidden="true">V</span>
+            <div class="auvp-net__copy">
+              <h3>Conversas que continuam</h3>
+              <p>O grupo não termina no embarque de volta. As conexões seguem — e é aí que costuma nascer o negócio.</p>
+            </div>
+          </li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
