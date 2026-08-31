@@ -9,29 +9,29 @@
    uma vez — nada aqui depende do rolo para ser lido. É por isso que o
    estado normal é a lista, e o caça-níquel entra depois, atrás da
    classe `auvp-js`. */
-.auvp-net__intro { text-align: center; }
+/* Título e texto de apoio à esquerda, o rolo à direita — a mesma
+   divisão do FAQ, com as mesmas proporções e o mesmo ponto de quebra. */
+.auvp-net__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
 .auvp-net__statement {
-  font-size: clamp(1.75rem, 4.4vw, 4rem);
+  font-size: clamp(1.6rem, 3.4vw, 3rem);
   line-height: 1.05;
   letter-spacing: -0.035em;
-  max-width: 16ch;
-  margin-inline: auto;
+  max-width: 18ch;
 }
 .auvp-net__complement {
-  max-width: 40ch;
-  margin-inline: auto;
+  max-width: 38ch;
   margin-top: clamp(1rem, 2vw, 1.5rem);
   color: var(--ink-80);
-  font-size: var(--fs-body);
-  line-height: 1.55;
+  font-size: var(--fs-small);
+  line-height: 1.6;
 }
 
-.auvp-net__janela { margin-top: clamp(2rem, 4vw, 3rem); }
-.auvp-net__rolo {
-  display: grid;
-  max-width: 640px;
-  margin-inline: auto;
-}
+.auvp-net__rolo { display: grid; }
 .auvp-net__item {
   position: relative;
   display: grid;
@@ -84,19 +84,17 @@
   height: 100svh;
   display: grid;
   align-content: center;
-  gap: clamp(1.5rem, 4vh, 3rem);
   padding-top: var(--nav-h);
   overflow: hidden;
 }
 /* A janela mostra três lugares e o do meio é o que vale. As bordas
    esmaecem, que é o que dá a sensação de rolo girando atrás de uma
    fresta em vez de uma lista andando. */
-/* A frase encolhe dentro do palco: em corpo cheio, ela mais os três
-   lugares do rolo não cabiam numa tela e o título saía cortado por cima. */
-.auvp-js .auvp-net__statement { font-size: clamp(1.5rem, 3.2vw, 2.6rem); }
-.auvp-js .auvp-net__complement { font-size: var(--fs-small); }
 .auvp-js .auvp-net__janela {
-  --altura: clamp(125px, 17vh, 165px);
+  /* A altura do lugar é fração da tela, não da largura: são três deles
+     empilhados dentro de um palco de uma tela, e é a altura que aperta.
+     Em `vh` fixos, num celular baixo o terceiro lugar ficava para fora. */
+  --altura: clamp(110px, 16svh, 165px);
   height: calc(var(--altura) * 3);
   margin-top: 0;
   overflow: hidden;
@@ -129,4 +127,35 @@
   .auvp-js .auvp-net__janela { height: auto; -webkit-mask-image: none; mask-image: none; }
   .auvp-js .auvp-net__rolo { transform: none; grid-auto-rows: auto; }
   .auvp-js .auvp-net__item { opacity: 1; }
+}
+
+/* Numa coluna só — que é onde o FAQ também quebra —, o título volta para
+   cima do rolo e a janela mostra menos lugares, senão o palco não cabe
+   numa tela de celular. */
+/* Numa coluna só — que é onde o FAQ também quebra — o título fica acima
+   do rolo e sobra bem menos tela para ele. Aqui a janela passa a mostrar
+   dois lugares em vez de três, com o perfil da vez no de cima e o
+   seguinte espiando embaixo.
+
+   Foi o que resolveu o pior estrago em tela pequena: com três lugares, a
+   altura que sobrava para cada um ficava menor que o texto do perfil, e
+   os cinco se sobrepunham uns aos outros, ilegíveis. */
+@media (max-width: 860px) {
+  /* Uma coluna só, e com teto de largura: no tablet, esparramada na
+     tela inteira, ela deixava metade da dobra vazia à direita. */
+  .auvp-net__grade {
+    grid-template-columns: minmax(0, 560px);
+    justify-content: center;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  .auvp-net__copy p { font-size: 0.85rem; line-height: 1.5; max-width: none; }
+  .auvp-net__complement { max-width: none; }
+  .auvp-js .auvp-net__janela {
+    --altura: clamp(150px, 22svh, 200px);
+    height: calc(var(--altura) * 2);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 100%);
+  }
+  /* Com o perfil da vez no primeiro lugar, o deslocamento perde o +1. */
+  .auvp-js .auvp-net__rolo { transform: translateY(calc(var(--pos, 0) * var(--altura) * -1)); }
 }
