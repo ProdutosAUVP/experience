@@ -3,7 +3,7 @@
   display: flex; flex-wrap: wrap;
   align-items: flex-end; justify-content: space-between;
   gap: 1.5rem 3rem;
-  padding-bottom: clamp(2.25rem, 4vw, 3.5rem);
+  padding-bottom: clamp(1.5rem, 2.8vw, 2.5rem);
 }
 /* Dois destinos, dois cards — maiores, porque agora carregam a
    chamada inteira na frente. */

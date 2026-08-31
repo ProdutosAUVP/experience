@@ -9,7 +9,7 @@
   color: var(--f-texto);
   font-family: var(--display);
   font-weight: 400;
-  padding-block: clamp(3.5rem, 7vw, 6rem) 2.5rem;
+  padding-block: clamp(2.5rem, 5vw, 4.5rem) 2.5rem;
 }
 .auvp-footer__grid {
   display: grid;
