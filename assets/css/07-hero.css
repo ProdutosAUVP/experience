@@ -1,8 +1,8 @@
 /* Hero */
-/* --hero-pin: quanto de rolagem extra fica "presa" no hero antes de
-   liberar o resto da página — o mesmo intervalo usado no reveal do
-   título (ver 17-animacao.css). O truque é só CSS: um invólucro mais alto
-   que a tela, com o hero de verdade grudado (sticky) dentro dele. */
+/* O texto já chega escrito sobre a foto: não há mais reveal ligado à
+   rolagem, e por isso o invólucro tem a altura de uma tela e nada mais.
+   Ele ainda existe (com o hero sticky dentro) porque é o que segura a
+   foto no lugar enquanto o parallax do 17-animacao.css a desloca. */
 .auvp-hero-pin { position: relative; height: 100svh; }
 .auvp-hero {
   position: sticky;
@@ -44,6 +44,14 @@
   align-items: end;
   gap: clamp(1.75rem, 4vw, 4rem);
   margin-top: clamp(1.75rem, 3.5vw, 3rem);
+}
+
+/* A entrada é no carregamento, não na rolagem: title e frase sobem uma
+   vez, em menos de um segundo, e ficam. Quem abre a página e não rola
+   lê a dobra inteira. */
+@media (prefers-reduced-motion: no-preference) {
+  .auvp-hero__title { animation: auvp-sobe 0.9s var(--ease) both; }
+  .auvp-hero__row { animation: auvp-sobe 0.9s var(--ease) 0.15s both; }
 }
 .auvp-hero__lede {
   max-width: 48ch;

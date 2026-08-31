@@ -79,7 +79,9 @@ em CSS puro:
 | Interação | Como funciona |
 |---|---|
 | Roleta do posicionamento | `<input type="radio">` + `<label>` — o trilho anda um cartão por clique |
-| Cards de destino | `<input type="checkbox">` + `<label>` — o card gira e mostra o verso |
+| Passagem automática (roleta e Experiência) | `@keyframes` que só rodam enquanto o primeiro estado é o marcado |
+| Card da China | link para a página da missão — o card inteiro é um `<a>` |
+| Card de Próximos destinos | `<input type="checkbox">` + `<label>` — o card gira e mostra o formulário |
 | FAQ | `<details name="…">` — abre um e fecha o outro |
 | Abas da Experiência | `<input type="radio">` + `<label>` |
 | Chips de destino | `<input type="checkbox">` — vão junto no formulário |
@@ -103,8 +105,26 @@ hipótese a página fica em branco.**
 | Ligar os dois formulários | comentário **“COMO LIGAR ESTE FORMULÁRIO”**, um em cada página |
 | Foto da faixa de abertura da Missão China | `missao-china.html`, `.auvp-capa__faixa` — hoje usa a mesma foto da home |
 | Conferir as fotos da dobra Experiência | `13-experiencia.css` — as URLs foram montadas sem poder abrir o Pexels daqui; o enquadramento das malas é o que mais pede olho |
-| Datas, investimento e roteiro | dentro dos cards China e Chile, marcados como “A confirmar” |
 | Destino do card 2 | ver observação abaixo |
+
+### Passagem automática
+
+Duas dobras andam sozinhas: a roleta do posicionamento (uns quatro segundos
+por cartão) e a Experiência (seis por tópico). As duas usam o mesmo truque, e
+ele é todo em CSS: a animação só existe **enquanto o primeiro estado é o
+marcado**. No primeiro clique numa seta ou numa aba, outro radio passa a ser
+o marcado, o seletor deixa de casar, a animação some e volta a valer o estado
+escolhido, com as transições de sempre. Voltar ao primeiro cartão — ou à
+primeira aba — recomeça o passeio.
+
+Passar o cursor pausa (`animation-play-state`). **Esse seletor precisa repetir
+o `#auvp-r1` / `#auvp-e1`**: sem o id ele perde em especificidade para a regra
+que liga a animação, e a pausa simplesmente não acontece.
+
+Sob `prefers-reduced-motion`, os dois passeios param de vez — no
+`17-animacao.css`, junto com a faixa deslizante. A regra geral daquele bloco
+zera a duração das animações, o que faria cada uma saltar para o último
+quadro; aqui o que vale é o estado marcado, não o fim da animação.
 
 ### Barra do topo
 
@@ -287,6 +307,10 @@ placeholder de campo, que não carrega informação — quem carrega é o `<labe
 ao lado.
 
 ### Imagens
+
+O texto da primeira dobra já chega escrito sobre a foto: entra no
+carregamento, em menos de um segundo, e não depende mais de rolagem. Quem
+abre a página e não rola lê a dobra inteira.
 
 O fundo da primeira dobra é `assets/img/hero-imersao.jpg`. Para trocar, troque
 o arquivo ou o `src` do `<img class="auvp-art">` dentro de `.auvp-hero__media`.

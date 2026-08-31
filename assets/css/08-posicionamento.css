@@ -118,6 +118,41 @@ label.auvp-roleta__bt:hover {
 .auvp-roleta__cartao h3 { font-size: clamp(1.2rem, 1.7vw, 1.75rem); line-height: 1.2; }
 .auvp-roleta__cartao p { font-size: var(--fs-small); line-height: 1.7; color: var(--ink-60); }
 
+/* ---- Passagem automática ----
+   Enquanto ninguém tocou nas setas — ou seja, enquanto o primeiro radio
+   é o marcado — o trilho anda sozinho, uns quatro segundos por cartão.
+   No primeiro clique numa seta outro radio passa a ser o marcado, o
+   seletor abaixo deixa de casar, a animação some e o deslocamento volta
+   a ser o do estado escolhido, com a transição de sempre. Voltar ao
+   primeiro cartão recomeça o passeio.
+
+   Os quadros usam o mesmo clamp do transform, então o trilho nunca
+   passa do último cartão em nenhuma largura. */
+#auvp-r1:checked ~ .auvp-roleta__grade .auvp-roleta__trilho {
+  animation: auvp-roleta-sozinha-4 16s var(--ease) infinite;
+}
+/* Passar o cursor segura o passeio: quem parou para ler não perde o
+   cartão no meio da leitura. O seletor repete o #auvp-r1 de propósito —
+   sem ele esta regra perde em especificidade para a de cima, e a pausa
+   nunca acontece. */
+.auvp-roleta:hover #auvp-r1:checked ~ .auvp-roleta__grade .auvp-roleta__trilho {
+  animation-play-state: paused;
+}
+
+@keyframes auvp-roleta-sozinha-4 {
+  0%,   20% { transform: translateX(0); }
+  25%,  45% { transform: translateX(calc(-1 * clamp(0px, 1 * var(--passo), var(--fim)))); }
+  50%,  70% { transform: translateX(calc(-1 * clamp(0px, 2 * var(--passo), var(--fim)))); }
+  75%,  95% { transform: translateX(calc(-1 * clamp(0px, 3 * var(--passo), var(--fim)))); }
+  100%      { transform: translateX(0); }
+}
+@keyframes auvp-roleta-sozinha-3 {
+  0%,   27% { transform: translateX(0); }
+  33%,  60% { transform: translateX(calc(-1 * clamp(0px, 1 * var(--passo), var(--fim)))); }
+  66%,  93% { transform: translateX(calc(-1 * clamp(0px, 2 * var(--passo), var(--fim)))); }
+  100%      { transform: translateX(0); }
+}
+
 /* ---- Estados ----
    Cada radio marcado empurra o trilho e acende um par de setas. */
 #auvp-r2:checked ~ .auvp-roleta__grade .auvp-roleta__trilho { --i: 1; }
@@ -143,6 +178,12 @@ label.auvp-roleta__bt:hover {
   .auvp-roleta { --vis: 2; }
   #auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-4 { opacity: 0; pointer-events: none; }
   #auvp-r3:checked ~ .auvp-roleta__nav .auvp-roleta__bt--prox-fim { opacity: 1; }
+  /* Com dois cartões por tela o trilho acaba um passo antes, então o
+     passeio tem três paradas em vez de quatro. */
+  #auvp-r1:checked ~ .auvp-roleta__grade .auvp-roleta__trilho {
+    animation-name: auvp-roleta-sozinha-3;
+    animation-duration: 12s;
+  }
 }
 @media (min-width: 1200px) {
   .auvp-roleta__grade { grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr); }

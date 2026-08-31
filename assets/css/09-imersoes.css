@@ -14,10 +14,11 @@
   align-items: start;
 }
 
-/* O card gira: frente com a foto e a chamada, verso com os detalhes.
-   O estado mora num checkbox escondido e os <label> são o que se
-   clica — o mesmo recurso das abas da dobra Experiência, sem
-   JavaScript. */
+/* Dois cards com o mesmo desenho e destinos diferentes: o da China é um
+   link inteiro para a página da missão; o de Próximos destinos gira e
+   mostra o formulário no verso. O giro mora num checkbox escondido, com
+   os <label> por cima — o mesmo recurso das abas da dobra Experiência,
+   sem JavaScript. */
 .auvp-card { perspective: 1600px; }
 
 .auvp-card__flip {
@@ -94,7 +95,8 @@
   border: 1px solid rgba(247, 245, 241, 0.5);
   color: var(--paper);
 }
-.auvp-card__cta:hover { gap: 1.1rem; border-color: var(--paper); }
+.auvp-card__cta:hover,
+.auvp-card__frente:hover .auvp-card__cta { gap: 1.1rem; border-color: var(--paper); }
 
 .auvp-card__verso {
   transform: rotateY(180deg);
@@ -110,32 +112,7 @@
 .auvp-card__voltar { color: var(--verde); margin-top: 0.5rem; }
 .auvp-card__voltar:hover { gap: 1.1rem; }
 
-.auvp-facts { display: grid; gap: 0.75rem; }
-.auvp-facts div { display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: 1rem; font-size: var(--fs-small); }
-.auvp-facts dt {
-  font-family: var(--display);
-  color: var(--ink-45);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: var(--fs-micro);
-  font-weight: 500;
-  padding-top: 0.35em;
-}
-.auvp-facts dd { font-size: 1.05rem; }
-
-.auvp-nota {
-  font-size: var(--fs-micro);
-  letter-spacing: 0.06em;
-  color: var(--ink-45);
-  border-left: 2px solid var(--verde-30);
-  padding-left: 0.9rem;
-  line-height: 1.7;
-}
-
 @media (max-width: 860px) {
   .auvp-dest__grid { grid-template-columns: 1fr; }
   .auvp-card__flip { min-height: clamp(420px, 76vh, 560px); }
-}
-@media (max-width: 640px) {
-  .auvp-facts div { grid-template-columns: 1fr; gap: 0.2rem; }
 }
