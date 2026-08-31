@@ -136,6 +136,17 @@ caça-níquel nem se monta.
 
 ### O caça-níquel do networking
 
+**Título e texto de apoio à esquerda, o rolo à direita** — a mesma divisão do
+FAQ, com as mesmas proporções e o mesmo ponto de quebra (860px). Abaixo disso
+vira uma coluna só, com teto de 560px e centralizada: esparramada na tela
+inteira do tablet, ela deixava metade da dobra vazia à direita.
+
+**A janela mostra três lugares em tela grande e dois em tela pequena.** Com
+três lugares no celular, a altura que sobrava para cada um ficava menor que o
+texto do perfil e os cinco se sobrepunham, ilegíveis. Com dois, o perfil da
+vez fica no lugar de cima e o seguinte espia embaixo — e o deslocamento do
+rolo perde o `+1` que centralizava.
+
 O invólucro da dobra é mais alto que a tela e o palco fica grudado dentro
 dele. O quanto já se rolou desse excedente vira uma posição contínua de 0 a
 n-1: o rolo acompanha o dedo, sem pulos, e o perfil mais perto do centro fica
@@ -182,6 +193,25 @@ esconde os links em tela estreita e a que esconde as cópias dos cartões da
 roleta têm a mesma especificidade das regras que as mostram. Quem vem por
 último ganha — se alguma delas subir de lugar no arquivo, para de valer, em
 silêncio.
+
+### Responsividade
+
+Dois pontos do site já quebraram feio em tela pequena e agora têm regra
+própria. Vale saber quais são antes de mexer neles:
+
+**Dobra Experiência, até 900px.** As abas empilham — a 768 as quatro lado a
+lado já cortavam os títulos no meio ("LOGÍSTICA ORGANIZAD…"). E, empilhadas,
+elas não cabem mais penduradas no rodapé do painel: em tela pequena a fila
+passava por cima do título e furava a moldura por baixo. Nessa faixa o painel
+deixa de posicionar por cima e volta ao fluxo; a foto e o véu seguem no fundo,
+absolutos, e o painel cresce com o que tem dentro. As abas também passam a
+`flex: 0 0 auto`: enquanto a base do flex era 0, o cartão aberto encolhia para
+a altura do título e o `overflow: hidden` comia o fim do texto, em silêncio.
+
+**Dobra de networking, até 860px.** Ver a seção do caça-níquel acima.
+
+O resto do site já era fluido e continua: conferido de 320px a 1920px nas duas
+páginas, sem estouro horizontal e sem elemento fora da tela.
 
 ### Formulário
 

@@ -137,7 +137,28 @@
    parecer não pegar, e o passeio morrer no primeiro clique. Agora clicar
    só troca o marcado, e a contagem recomeça dali. */
 
-@media (max-width: 760px) {
-  .auvp-exp__cards { flex-direction: column; }
-  .auvp-exp__card { min-height: auto; }
+/* Até 900px as abas empilham — a 768 as quatro lado a lado já cortavam
+   os títulos no meio ("LOGÍSTICA ORGANIZAD…"). E, empilhadas, elas não
+   cabem mais penduradas no rodapé do painel: em tela pequena a fila
+   passava por cima do título e furava a moldura por baixo. Então aqui o
+   painel deixa de posicionar por cima e volta ao fluxo — a foto e o véu
+   seguem no fundo, absolutos, e o painel cresce com o que tem dentro. */
+@media (max-width: 900px) {
+  .auvp-exp__panel {
+    min-height: 0;
+    display: grid;
+    gap: clamp(1.5rem, 5vw, 2.5rem);
+    padding: clamp(1.75rem, 6vw, 3rem) clamp(1.25rem, 5vw, 2rem);
+  }
+  .auvp-exp__intro { position: static; inset: auto; }
+  .auvp-exp__cards {
+    position: static;
+    inset: auto;
+    flex-direction: column;
+  }
+  /* Empilhadas, as abas crescem com o que têm dentro. Enquanto a base
+     do flex era 0, o cartão aberto encolhia para a altura do título e
+     comia o fim do texto — o `overflow: hidden` do painel fazia o resto,
+     em silêncio. */
+  .auvp-exp__card { min-height: auto; flex: 0 0 auto; }
 }
