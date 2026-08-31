@@ -46,8 +46,8 @@
   --gutter: clamp(1.25rem, 5vw, 5rem);
   /* Respiro de cima e de baixo de cada dobra. Como as dobras se
      encostam, o vão entre duas é o dobro disto — por isso ele é menor do
-     que parece: 3rem aqui viram 6rem de intervalo. */
-  --section-y: clamp(1.5rem, 3vw, 3rem);
+     que parece: 4rem aqui viram 8rem de intervalo. */
+  --section-y: clamp(2rem, 3.8vw, 4rem);
   --max-w: 1560px;
   --nav-h: 76px;
 

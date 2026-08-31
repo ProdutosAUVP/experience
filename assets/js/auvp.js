@@ -146,13 +146,14 @@
   }
 
   /* ---- Caça-níquel do networking ----
-     O rolo gira enquanto a dobra atravessa a tela: o centro dela indo de
-     85% da altura da janela até 15% é o curso inteiro do giro. Não há
-     palco grudado — a dobra tem a altura do que tem dentro, como as
-     outras, e é isso que evita a tela quase vazia que o pin cobrava.
+     A rolagem fica presa na dobra até os cinco perfis passarem. Quem
+     prende é o CSS: o invólucro é mais alto que a tela e o palco dentro
+     dele fica grudado no topo. O que sobra do invólucro depois da tela —
+     o curso — é a régua do giro: quanto dele já andou é exatamente
+     quanto do rolo já girou.
 
      A posição é contínua (o rolo acompanha o dedo, sem pulos) e o perfil
-     mais perto do centro é o que fica em destaque. Quem desenha é o
+     que está no lugar do meio é o que fica em destaque. Quem desenha é o
      CSS: daqui saem só o `--pos` e a classe `esta-ativo`. */
   function cacaNiquel(pin) {
     const rolo = pin.querySelector('.auvp-net__rolo');
@@ -165,13 +166,10 @@
     let pedido = null;
 
     const medir = () => {
-      const caixa = pin.getBoundingClientRect();
-      const tela = window.innerHeight;
-      const centro = caixa.top + caixa.height / 2;
-      const inicio = tela * 0.85;                   // centro aqui: primeiro perfil
-      const fim = tela * 0.15;                      // centro aqui: último
-      const bruto = (inicio - centro) / (inicio - fim);
-      const pos = Math.min(Math.max(bruto, 0), 1) * (itens.length - 1);
+      const curso = pin.offsetHeight - window.innerHeight;
+      if (curso <= 0) return;                       // palco solto: nada a girar
+      const andado = Math.min(Math.max(-pin.getBoundingClientRect().top, 0), curso);
+      const pos = (andado / curso) * (itens.length - 1);
       rolo.style.setProperty('--pos', pos.toFixed(4));
       const perto = Math.round(pos);
       if (perto === ativo) return;
