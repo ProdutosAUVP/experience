@@ -95,6 +95,17 @@ O site nasceu sem JavaScript nenhum e quase tudo continua assim:
 | Menu suspenso das Imersões | `:hover` e `:focus-within` |
 | Card da China | link para a página da missão — o card inteiro é um `<a>` |
 | Card de Próximos destinos | `<input type="checkbox">` + `<label>` — o card gira e mostra o formulário |
+
+Os dois cards das Imersões têm sempre a mesma altura, e é a grade que garante
+isso: **não ponha `align-items: start` em `.auvp-dest__grid`**. Com ele, cada
+card passa a ter a própria altura — o de Próximos destinos cresce até caber o
+formulário do verso e o da China fica no mínimo, e a diferença muda de monitor
+para monitor, porque o formulário quebra em mais ou menos linhas conforme a
+largura. No esticado (o padrão) os dois recebem a altura da linha, que é a do
+mais alto. Numa coluna só eles ficam empilhados, não lado a lado, e aí cada um
+volta a ter a altura do que carrega — forçar a igualdade ali só encheria o card
+da China de vazio.
+
 | FAQ | `<details name="…">` — abre um e fecha o outro |
 | Abas da Experiência | `<input type="radio">` + `<label>` |
 | Chips de destino | `<input type="checkbox">` — vão junto no formulário |

@@ -271,7 +271,17 @@
    em vez de sete, e a dobra deixa de ser uma coluna estreita e alta. Os
    campos longos — endereço, a pergunta aberta e o grupo de sim/não —
    atravessam a linha inteira. */
-.auvp-jornada__form { max-width: 1040px; margin-inline: auto; }
+/* O painel é o mesmo do verso do card de Próximos destinos, na home:
+   papel de um tom mais escuro, a mesma borda fina e o mesmo respiro por
+   dentro. Antes o formulário ficava solto no papel da página e os dois
+   não pareciam a mesma peça. */
+.auvp-jornada__form {
+  max-width: 1040px;
+  margin-inline: auto;
+  padding: clamp(1.5rem, 3vw, 3rem);
+  background: var(--paper-2);
+  border: 1px solid var(--line-soft);
+}
 .auvp-jornada__form .auvp-form {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1.5rem, 2.4vw, 2rem) clamp(1.5rem, 3vw, 2.75rem);

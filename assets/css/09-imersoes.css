@@ -7,12 +7,21 @@
 }
 /* Dois destinos, dois cards — maiores, porque agora carregam a
    chamada inteira na frente. */
+/* Sem `align-items: start`: com ele, cada card tinha a própria altura —
+   o de Próximos destinos crescia até caber o formulário do verso e o da
+   China ficava no mínimo. Eram dois cards de alturas diferentes lado a
+   lado, e a diferença mudava de monitor para monitor, porque o
+   formulário quebra em mais ou menos linhas conforme a largura. No
+   esticado (o padrão da grade) os dois sempre têm a altura da linha, que
+   é a do mais alto: iguais em qualquer tela, e sem rolagem por dentro. */
 .auvp-dest__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(0.75rem, 1.4vw, 1.4rem);
-  align-items: start;
 }
+/* Grade de uma célula só, para o card repassar a altura da linha ao
+   flip — que é quem desenha. */
+.auvp-card { display: grid; }
 
 /* Dois cards com o mesmo desenho e destinos diferentes: o da China é um
    link inteiro para a página da missão; o de Próximos destinos gira e
@@ -21,6 +30,8 @@
    sem JavaScript. */
 .auvp-card { perspective: 1600px; }
 
+/* O mínimo é o piso do card quando o conteúdo é curto; quem manda acima
+   dele é a altura da linha da grade, igual para os dois. */
 .auvp-card__flip {
   position: relative;
   display: grid;
@@ -113,6 +124,8 @@
 .auvp-card__voltar:hover { gap: 1.1rem; }
 
 @media (max-width: 860px) {
+  /* Numa coluna só os dois ficam empilhados, não lado a lado: não há
+     comparação a fazer, e cada um volta a ter a altura do que carrega. */
   .auvp-dest__grid { grid-template-columns: 1fr; }
   .auvp-card__flip { min-height: clamp(420px, 76vh, 560px); }
 }
