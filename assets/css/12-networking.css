@@ -217,3 +217,44 @@
     .auvp-js .auvp-net__rolo { transform: translateY(calc((1 - var(--pos, 0)) * var(--altura))); }
   }
 }
+
+/* ---- No celular, sem palco ----
+   O palco grudado é uma tela inteira para um título curto e um perfil de
+   cada vez. No desktop sobra tela para isso; num celular, não: o que
+   ficava em volta do perfil era vão, e o pior vinha depois do último,
+   quando o lugar de baixo esvazia e ainda falta meia tela de palco até a
+   dobra seguinte — ~360px de nada no 390x844. Somado a isso, prender a
+   rolagem custava ~2200px de percurso, quase três telas de dedo, para
+   ler cinco parágrafos.
+
+   Aqui a dobra volta a ser a lista dos cinco perfis, que é o mesmo
+   desenho que ela já tem sem script e sob `prefers-reduced-motion`. A
+   trava continua valendo em tablet e desktop; para trazê-la de volta ao
+   celular, é este bloco inteiro que sai. */
+@media (max-width: 720px) {
+  .auvp-js .auvp-net { padding-block: var(--section-y); }
+  .auvp-js .auvp-net + .auvp-section { padding-block-start: var(--section-y); }
+  .auvp-js .auvp-net__pin { height: auto; }
+  .auvp-js .auvp-net__palco {
+    position: static;
+    height: auto;
+    padding-block: 0;
+    overflow: visible;
+  }
+  .auvp-js .auvp-net__janela {
+    height: auto;
+    padding-left: 0;
+    margin-left: 0;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .auvp-js .auvp-net__rolo { transform: none; grid-auto-rows: auto; }
+  .auvp-js .auvp-net__item { opacity: 1; }
+  /* Sem rolo girando, o ponto da vez não existe: todos ficam iguais, e
+     quem separa um perfil do outro é o espaço, como na lista sem script. */
+  .auvp-js .auvp-net__item.esta-ativo .auvp-net__dot {
+    background: var(--line);
+    box-shadow: none;
+    transform: none;
+  }
+}
