@@ -179,9 +179,18 @@ anda é só o rolo.
 
 Esse palco já existiu antes e foi tirado por deixar tela demais em branco: um
 conteúdo de ~500px no meio de 900. **A diferença agora é a altura do lugar**,
-que saiu de `16svh` para `24svh`: três deles somam quase três quartos da tela e
-o palco fica cheio, não vazio. Se um dia o palco voltar a parecer vazio, é esse
-o número a mexer — não o palco.
+que saiu de `16svh` para `27svh`: três deles somam ~80% da tela e o palco fica
+cheio, não vazio. Se um dia o palco voltar a parecer vazio, é esse o número a
+mexer — não o palco.
+
+Esse número serve aos dois lados. Quanto mais alto o lugar, mais para baixo
+fica o do meio, que é onde mora o perfil da vez — o que enche o palco no começo
+e **encurta a sobra depois que o último perfil passa**, quando o lugar de baixo
+fica vazio. Essa sobra final é do próprio mecanismo: num rolo que destaca pelo
+meio, o último perfil sempre tem um lugar vazio embaixo. Dá para encurtá-la
+(e está encurtada: o respiro de baixo do palco é zero e a dobra seguinte não
+tem respiro de cima), mas não dá para zerá-la sem apertar os lugares — que é
+justamente o que esvazia o palco durante o resto do percurso.
 
 O curso é o que sobra do invólucro depois da tela: `100svh + (n - 1) × 40svh`,
 ou seja, uma tela para o palco mais 40% de tela de rolagem por perfil que falta
@@ -219,6 +228,14 @@ Nossas imersões; **parado sobre ele**, abre o menu com a Missão China, que é 
 único item de lá. O menu aparece no cursor e também no foco do teclado, sem
 script. Na página da Missão China o topo é o mesmo, com os destinos apontando
 para as dobras da home.
+
+**A barra é sticky com `margin-bottom: calc(var(--nav-h) * -1)`**: ela puxa o
+que vem depois para debaixo dela, que é o que deixa o hero começar no topo da
+tela. O efeito colateral é que qualquer dobra de abertura perde uma altura de
+barra do seu respiro de cima — foi o que deixou o título da Missão China
+encostado na barra. Por isso a abertura de lá soma `var(--nav-h)` ao próprio
+`padding-block` (`18-missao-china.css`); qualquer abertura nova precisa fazer o
+mesmo.
 
 O rótulo **Pilares** é o da 2ª dobra (`#posicionamento`), a dos quatro cartões
 — trocar o nome é trocar o texto do link, o `id` da seção não precisa mudar.
