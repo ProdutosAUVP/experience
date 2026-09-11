@@ -123,6 +123,12 @@
   height: calc(var(--altura) * 3);
   margin-top: 0;
   overflow: hidden;
+  /* O halo do ponto em destaque é um box-shadow de 5px, e o ponto começa
+     na borda esquerda da janela — sem esta folga o `overflow: hidden`
+     cortava o halo ao meio. A margem negativa devolve os 12px, então a
+     janela cresce para a esquerda e o conteúdo não sai do lugar. */
+  padding-left: 12px;
+  margin-left: -12px;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 24%, #000 76%, transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 0%, #000 24%, #000 76%, transparent 100%);
 }
