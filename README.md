@@ -277,6 +277,24 @@ a altura do título e o `overflow: hidden` comia o fim do texto, em silêncio.
 
 **Dobra de networking, até 860px.** Ver a seção do caça-níquel acima.
 
+**O respiro das dobras, até 720px.** O `clamp` do `--section-y` trava no mínimo
+bem antes do celular (3,8vw de 390px dá 15px, muito abaixo dos 2rem), então a
+tela pequena herdava o respiro pensado para a grande — 64px de vão entre duas
+dobras, quase 8% de uma tela de 844px. Abaixo de 720px o mínimo é menor e o vão
+cai para 44px. É uma linha só, no `01-tokens.css`.
+
+**O caça-níquel não prende a rolagem no celular, até 720px.** O palco grudado é
+uma tela inteira para um título curto e um perfil de cada vez: no desktop sobra
+tela para isso, num celular não. O que ficava em volta do perfil era vão, e o
+pior vinha depois do último, quando o lugar de baixo esvazia e ainda falta meia
+tela de palco até a dobra seguinte — eram ~360px de nada no 390×844. Somado a
+isso, a trava custava ~2200px de percurso, quase três telas de dedo, para ler
+cinco parágrafos. Abaixo de 720px a dobra volta a ser a lista dos cinco perfis
+— o mesmo desenho que ela já tem sem script e sob `prefers-reduced-motion` —, e
+com isso ela cai de 2194px para 823px e a home encolhe ~19% no celular. A trava
+continua valendo de 721px para cima; para trazê-la de volta ao celular, é o
+último bloco do `12-networking.css` que sai.
+
 O resto do site já era fluido e continua: conferido de 320px a 1920px nas duas
 páginas, sem estouro horizontal e sem elemento fora da tela.
 

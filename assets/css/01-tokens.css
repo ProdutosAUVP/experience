@@ -53,3 +53,12 @@
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+/* No celular o `clamp` do --section-y trava no mínimo (3.8vw de 390px dá
+   15px, bem abaixo dos 2rem), então a tela pequena herdava o respiro
+   pensado para a grande: 32px de cada lado, 64px de vão entre duas
+   dobras. Numa tela de 844px de altura isso é quase 8% do que se vê por
+   vez. O mínimo do celular é menor, e o vão cai para 44px. */
+@media (max-width: 720px) {
+  :root { --section-y: 1.4rem; }
+}
