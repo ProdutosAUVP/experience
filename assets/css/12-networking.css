@@ -84,6 +84,10 @@
    altura do lugar, que saiu de 16svh para 24svh — três deles somam
    quase três quartos da tela, e o palco fica cheio em vez de vazio. */
 .auvp-js .auvp-net { padding-block: 0; }
+/* A dobra que vem depois não precisa do respiro de cima: o palco já tem
+   uma tela inteira, e o que se via entre os dois era o rodapé vazio do
+   palco somado a esse respiro. */
+.auvp-js .auvp-net + .auvp-section { padding-block-start: 0; }
 .auvp-js .auvp-net__pin {
   /* Uma tela para o palco mais um pedaço de rolagem por perfil que falta
      passar. Com cinco perfis dá 100svh + 4 × 40svh: o suficiente para o
@@ -97,8 +101,10 @@
   display: grid;
   align-content: center;
   /* A barra do topo flutua por cima de tudo; o respiro de cima é o que
-     impede o rolo de passar por trás dela. */
-  padding-block: var(--nav-h) clamp(1rem, 3svh, 2rem);
+     impede o rolo de passar por trás dela. Embaixo não há barra nenhuma,
+     e o respiro que havia ali só somava ao vão para a dobra seguinte —
+     quem fecha a janela por baixo é o esmaecido do mask. */
+  padding-block: var(--nav-h) 0;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -109,7 +115,11 @@
   /* A altura do lugar é fração da tela, não da largura: são três deles
      empilhados dentro de um palco de uma tela, e é a altura que aperta.
      Em `vh` fixos, num celular baixo o terceiro lugar ficava para fora. */
-  --altura: clamp(120px, 24svh, 250px);
+  /* Três lugares de 27svh ocupam ~81% do palco. O número grande serve
+     aos dois lados: quanto mais alto o lugar, mais para baixo fica o do
+     meio — o que enche o palco no começo e encurta a sobra depois que o
+     último perfil passa, quando o lugar de baixo fica vazio. */
+  --altura: clamp(120px, 27svh, 280px);
   height: calc(var(--altura) * 3);
   margin-top: 0;
   overflow: hidden;

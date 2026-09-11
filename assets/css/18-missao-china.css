@@ -6,11 +6,14 @@
 /* ---- Abertura ----
    Título e frase no papel, sem faixa de foto: a que havia era a foto da
    home repetida, e empurrava o mosaico — imagem de verdade desta
-   viagem — para baixo da dobra. O respiro de cima compensa a barra do
-   topo, que é sticky e passa por cima. */
+   viagem — para baixo da dobra. */
 .auvp-capa__texto {
   text-align: center;
-  padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(1.75rem, 4vw, 3rem);
+  /* O `var(--nav-h)` no respiro de cima não é enfeite: a barra do topo
+     puxa o conteúdo seguinte para baixo dela com uma margem negativa de
+     uma altura de barra. Sem somar essa altura aqui, o respiro era
+     engolido inteiro e o título encostava na barra. */
+  padding-block: calc(var(--nav-h) + clamp(2.5rem, 6vw, 4.5rem)) clamp(1.75rem, 4vw, 3rem);
 }
 .auvp-capa__title {
   font-size: clamp(2.4rem, 7vw, 6rem);
