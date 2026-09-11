@@ -135,6 +135,48 @@
   .auvp-relato { grid-template-columns: 1fr; gap: 2rem; }
 }
 
+/* ---- No celular, foto e texto alternados ----
+   Em tela larga são duas faixas: três fotos em cima, três relatos no
+   bloco verde embaixo. Num celular as três fotos viravam colunas de
+   ~126px — mais altas que largas por um fator de dois, com gente cortada
+   pela metade — e os três relatos caíam todos juntos num paredão verde.
+
+   Aqui as duas faixas viram uma coluna só, alternando: foto, relato,
+   foto, relato, foto, relato. Cada foto ocupa a largura inteira e cada
+   relato vem logo abaixo da sua.
+
+   Como o mosaico e o bloco de texto são irmãos no HTML — e precisam
+   continuar sendo, que é o que desenha as duas faixas no desktop —, quem
+   intercala é o `display: contents`: os invólucros somem da caixa e os
+   seis filhos viram itens diretos da dobra, aí o `order` alterna. O verde
+   e o gutter, que eram do invólucro, passam para cada relato. */
+@media (max-width: 720px) {
+  .auvp-registro { display: flex; flex-direction: column; }
+  .auvp-mosaico,
+  .auvp-registro__texto,
+  .auvp-registro__texto > .auvp-shell,
+  .auvp-relato { display: contents; }
+
+  .auvp-mosaico__quadro--1 { order: 1; }
+  .auvp-relato__item:nth-child(1) { order: 2; }
+  .auvp-mosaico__quadro--2 { order: 3; }
+  .auvp-relato__item:nth-child(2) { order: 4; }
+  .auvp-mosaico__quadro--3 { order: 5; }
+  .auvp-relato__item:nth-child(3) { order: 6; }
+
+  /* A foto agora tem a largura toda: a altura vem da proporção, não de
+     um clamp, senão o retrato esticado volta em telas mais largas. */
+  .auvp-mosaico__quadro { height: auto; aspect-ratio: 4 / 3; }
+
+  /* O verde e o respiro lateral eram do invólucro, que deixou de existir
+     como caixa. Sem intervalo entre um relato e a foto seguinte, as
+     faixas se encostam e a alternância lê como uma peça só. */
+  .auvp-relato__item {
+    background: var(--verde);
+    padding: clamp(1.5rem, 6vw, 2.25rem) var(--gutter);
+  }
+}
+
 /* ---- Números da viagem ----
    Cada número centralizado sobre o próprio rótulo, sem as linhas que
    separavam as colunas. */

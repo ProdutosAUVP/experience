@@ -277,6 +277,19 @@ a altura do título e o `overflow: hidden` comia o fim do texto, em silêncio.
 
 **Dobra de networking, até 860px.** Ver a seção do caça-níquel acima.
 
+**Registro da Missão China, até 720px: foto e texto alternados.** Em tela larga
+são duas faixas — três fotos em cima, três relatos no bloco verde embaixo. Num
+celular as três fotos viravam colunas de ~126px, mais altas que largas por um
+fator de dois e com gente cortada pela metade, e os três relatos caíam juntos
+num paredão verde. Abaixo de 720px as duas faixas viram uma coluna só,
+alternando: foto, relato, foto, relato, foto, relato.
+
+O mosaico e o bloco de texto são irmãos no HTML e **precisam continuar sendo** —
+é isso que desenha as duas faixas no desktop. Quem intercala é o
+`display: contents`: os invólucros somem da caixa, os seis filhos viram itens
+diretos da dobra e o `order` alterna. O verde e o gutter, que eram do invólucro,
+passam para cada relato. Mexer nessa dobra é lembrar das duas montagens.
+
 **O respiro das dobras, até 720px.** O `clamp` do `--section-y` trava no mínimo
 bem antes do celular (3,8vw de 390px dá 15px, muito abaixo dos 2rem), então a
 tela pequena herdava o respiro pensado para a grande — 64px de vão entre duas
