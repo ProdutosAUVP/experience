@@ -418,6 +418,12 @@ O texto da primeira dobra já chega escrito sobre a foto: entra no
 carregamento, em menos de um segundo, e não depende mais de rolagem. Quem
 abre a página e não rola lê a dobra inteira.
 
+**A dobra tem 88svh, não 100**: ela para um pouco antes do fim da tela para a
+próxima aparecer por baixo, e é esse pedaço espiando que convida a rolar. Uma
+tela cheia até a borda não dá pista de que há mais. O número está em duas
+linhas do `07-hero.css` (`.auvp-hero-pin` e o `min-height` do `.auvp-hero`) e
+as duas mudam juntas.
+
 O fundo da primeira dobra é `assets/img/hero-imersao.jpg`. Para trocar, troque
 o arquivo ou o `src` do `<img class="auvp-art">` dentro de `.auvp-hero__media`.
 Sobre ela vai o overlay preto (`.auvp-hero__scrim`): uma camada chapada em
