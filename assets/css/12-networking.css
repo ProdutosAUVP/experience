@@ -218,43 +218,46 @@
   }
 }
 
-/* ---- No celular, sem palco ----
-   O palco grudado é uma tela inteira para um título curto e um perfil de
-   cada vez. No desktop sobra tela para isso; num celular, não: o que
-   ficava em volta do perfil era vão, e o pior vinha depois do último,
-   quando o lugar de baixo esvazia e ainda falta meia tela de palco até a
-   dobra seguinte — ~360px de nada no 390x844. Somado a isso, prender a
-   rolagem custava ~2200px de percurso, quase três telas de dedo, para
-   ler cinco parágrafos.
+/* ---- O caça-níquel no celular ----
+   O giro e a trava são os mesmos do desktop; o que muda é a conta da
+   altura do lugar.
 
-   Aqui a dobra volta a ser a lista dos cinco perfis, que é o mesmo
-   desenho que ela já tem sem script e sob `prefers-reduced-motion`. A
-   trava continua valendo em tablet e desktop; para trazê-la de volta ao
-   celular, é este bloco inteiro que sai. */
+   Em tela grande o lugar é fração da tela (`27svh`) e sobra palco: o que
+   fica em volta do rolo é respiro. Num celular não sobra nada, e o
+   `24svh` da faixa de 860px deixava a soma (título + dois lugares) bem
+   menor que o palco — o resto virava vão, e o pior aparecia depois do
+   último perfil, quando o lugar de baixo esvazia: ~360px de nada no
+   390x844.
+
+   Aqui o lugar deixa de ser fração da tela e passa a ser o que sobra do
+   palco depois do título, dividido pelo número de lugares. O rolo passa
+   a preencher o palco em vez de flutuar no meio dele, e o vão que sobrava
+   vira o lugar do perfil seguinte — que é conteúdo, não vazio.
+
+   As 13rem são a reserva do bloco de título (o `h2` em duas linhas, o
+   parágrafo de apoio e o intervalo entre eles). Se esse texto crescer,
+   é esse número que acompanha. */
 @media (max-width: 720px) {
-  .auvp-js .auvp-net { padding-block: var(--section-y); }
-  .auvp-js .auvp-net + .auvp-section { padding-block-start: var(--section-y); }
-  .auvp-js .auvp-net__pin { height: auto; }
-  .auvp-js .auvp-net__palco {
-    position: static;
-    height: auto;
-    padding-block: 0;
-    overflow: visible;
-  }
   .auvp-js .auvp-net__janela {
-    height: auto;
-    padding-left: 0;
-    margin-left: 0;
-    -webkit-mask-image: none;
-    mask-image: none;
+    --altura: clamp(120px, calc((100svh - var(--nav-h) - 13rem) / 3), 230px);
+    height: calc(var(--altura) * 3);
+    /* Três lugares com o da vez no meio, como no desktop: o esmaecido
+       volta a ser simétrico. */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
   }
-  .auvp-js .auvp-net__rolo { transform: none; grid-auto-rows: auto; }
-  .auvp-js .auvp-net__item { opacity: 1; }
-  /* Sem rolo girando, o ponto da vez não existe: todos ficam iguais, e
-     quem separa um perfil do outro é o espaço, como na lista sem script. */
-  .auvp-js .auvp-net__item.esta-ativo .auvp-net__dot {
-    background: var(--line);
-    box-shadow: none;
-    transform: none;
+  .auvp-js .auvp-net__rolo { transform: translateY(calc((1 - var(--pos, 0)) * var(--altura))); }
+
+  /* Celular baixo: com três lugares, o que sobra para cada um fica menor
+     que o texto de um perfil e eles se sobrepõem. Aí são dois, com o da
+     vez em cima e o seguinte espiando embaixo. */
+  @media (max-height: 719px) {
+    .auvp-js .auvp-net__janela {
+      --altura: clamp(120px, calc((100svh - var(--nav-h) - 13rem) / 2), 200px);
+      height: calc(var(--altura) * 2);
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+    }
+    .auvp-js .auvp-net__rolo { transform: translateY(calc(var(--pos, 0) * var(--altura) * -1)); }
   }
 }

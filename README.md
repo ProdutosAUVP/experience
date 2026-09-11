@@ -283,17 +283,32 @@ tela pequena herdava o respiro pensado para a grande — 64px de vão entre duas
 dobras, quase 8% de uma tela de 844px. Abaixo de 720px o mínimo é menor e o vão
 cai para 44px. É uma linha só, no `01-tokens.css`.
 
-**O caça-níquel não prende a rolagem no celular, até 720px.** O palco grudado é
-uma tela inteira para um título curto e um perfil de cada vez: no desktop sobra
-tela para isso, num celular não. O que ficava em volta do perfil era vão, e o
-pior vinha depois do último, quando o lugar de baixo esvazia e ainda falta meia
-tela de palco até a dobra seguinte — eram ~360px de nada no 390×844. Somado a
-isso, a trava custava ~2200px de percurso, quase três telas de dedo, para ler
-cinco parágrafos. Abaixo de 720px a dobra volta a ser a lista dos cinco perfis
-— o mesmo desenho que ela já tem sem script e sob `prefers-reduced-motion` —, e
-com isso ela cai de 2194px para 823px e a home encolhe ~19% no celular. A trava
-continua valendo de 721px para cima; para trazê-la de volta ao celular, é o
-último bloco do `12-networking.css` que sai.
+**O lugar do caça-níquel deixa de ser fração da tela, até 720px.** Em tela
+grande o lugar é `27svh` e sobra palco: o que fica em volta do rolo é respiro.
+Num celular não sobra nada, e o `24svh` da faixa de 860px deixava a soma
+(título + dois lugares) bem menor que o palco — o resto virava vão, e o pior
+aparecia depois do último perfil, quando o lugar de baixo esvazia: eram ~360px
+de nada no 390×844, com o rolo ocupando só 68% da tela.
+
+Abaixo de 720px o lugar passa a ser **o que sobra do palco depois do título,
+dividido pelo número de lugares**: `calc((100svh - var(--nav-h) - 13rem) / 3)`.
+O rolo preenche o palco em vez de flutuar no meio dele, e o vão que sobrava
+vira o lugar do perfil seguinte, que é conteúdo. O giro e a trava são
+exatamente os mesmos do desktop — muda só a conta da altura.
+
+As `13rem` são a reserva do bloco de título (o `h2` em duas linhas, o parágrafo
+de apoio e o intervalo entre eles): se esse texto crescer, é esse número que
+acompanha.
+
+Abaixo de 720px de altura são dois lugares em vez de três, com o da vez em cima
+e o seguinte espiando embaixo: com três, o que sobrava para cada um ficava menor
+que o texto de um perfil e eles se sobrepunham.
+
+Medido de 320×568 a 719×900: o lugar fica entre 142px e 216px contra um perfil
+de 90px (nunca aperta), a grade sobra 21–33px dentro do palco (nunca estoura), o
+rolo passa a ocupar **79% a 86%** da tela e a sobra depois do último perfil cai
+de 360px para 189–312px. Essa sobra final é a mesma do desktop: num rolo que
+destaca pelo meio, o último perfil sempre tem um lugar vazio embaixo.
 
 O resto do site já era fluido e continua: conferido de 320px a 1920px nas duas
 páginas, sem estouro horizontal e sem elemento fora da tela.
