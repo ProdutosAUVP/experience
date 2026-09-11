@@ -11,11 +11,15 @@
    classe `auvp-js`. */
 /* Título e texto de apoio à esquerda, o rolo à direita — a mesma
    divisão do FAQ, com as mesmas proporções e o mesmo ponto de quebra. */
+/* `start`, e não `center`, é o mesmo alinhamento do FAQ — e é o que tira
+   o vão. A coluna da esquerda é curta (título e um parágrafo) e a da
+   direita tem a altura do rolo inteiro: centralizada, a esquerda descia
+   uns 230px, e o que aparecia embaixo da faixa animada era tela vazia. */
 .auvp-net__grade {
   display: grid;
   grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
   gap: clamp(2rem, 5vw, 5rem);
-  align-items: center;
+  align-items: start;
 }
 .auvp-net__statement {
   font-size: clamp(1.6rem, 3.4vw, 3rem);

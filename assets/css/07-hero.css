@@ -54,7 +54,8 @@
    lê a dobra inteira. */
 @media (prefers-reduced-motion: no-preference) {
   .auvp-hero__title { animation: auvp-sobe 0.9s var(--ease) both; }
-  .auvp-hero__row { animation: auvp-sobe 0.9s var(--ease) 0.15s both; }
+  .auvp-hero__row,
+  .auvp-hero__nota { animation: auvp-sobe 0.9s var(--ease) 0.15s both; }
 }
 .auvp-hero__lede {
   max-width: 48ch;
@@ -64,14 +65,10 @@
   text-shadow: 0 1px 18px rgba(0, 0, 0, 0.45);
 }
 .auvp-hero__lede strong { font-weight: 400; color: var(--paper); }
-/* O aviso da próxima missão ocupa a coluna estreita da linha, alinhado
-   pela base com a frase. É informação de canto: menor, em caixa alta e
-   com um ponto verde claro na frente para não se confundir com a frase. */
+/* O aviso da próxima missão vem embaixo da frase, não ao lado dela. É
+   informação de canto: menor, em caixa alta, sem marcador na frente. */
 .auvp-hero__nota {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  white-space: nowrap;
+  margin-top: clamp(0.9rem, 1.8vw, 1.4rem);
   font-family: var(--display);
   font-size: var(--fs-micro);
   font-weight: 500;
@@ -79,12 +76,6 @@
   text-transform: uppercase;
   color: rgba(247, 245, 241, 0.9);
   text-shadow: 0 1px 18px rgba(0, 0, 0, 0.45);
-}
-.auvp-hero__nota::before {
-  content: "";
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--verde-claro);
 }
 @media (max-width: 760px) {
   .auvp-hero__row { grid-template-columns: 1fr; align-items: start; }

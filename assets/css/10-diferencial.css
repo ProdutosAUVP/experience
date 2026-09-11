@@ -8,9 +8,10 @@
   position: relative;
   overflow: hidden;
 }
-/* Sem respiro em cima: a dobra anterior já tem o dela, e as duas somadas
-   abriam um vão grande demais entre uma e outra. */
-.auvp-edge__content { padding-block: 0 clamp(0.5rem, 1.5vw, 1.25rem); }
+/* Sem respiro nem em cima nem embaixo: a dobra anterior já tem o dela, e
+   embaixo vem a faixa animada, que traz o próprio. As duas somadas
+   abriam um vão grande demais. */
+.auvp-edge__content { padding-block: 0; }
 /* O texto de abertura é o título da dobra, e se comporta como os outros
    títulos da página: mesma escala (--fs-title), mesmo peso e mesma cor
    de tinta cheia. */
