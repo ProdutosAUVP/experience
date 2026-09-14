@@ -114,7 +114,9 @@
     };
 
     const janela = raiz.querySelector('.auvp-roleta__janela');
-    const conta = relogio(raiz, avancar, 2500, janela);
+    // 4,5s entre um cartão e o seguinte. Já foi 2,5s, e no cartão com o
+    // texto mais longo não dava tempo de ler antes de ele sair.
+    const conta = relogio(raiz, avancar, 4500, janela);
     proximo.addEventListener('click', () => { avancar(); conta.reiniciar(); });
     anterior.addEventListener('click', () => { voltar(); conta.reiniciar(); });
 
