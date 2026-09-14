@@ -134,9 +134,9 @@ hipótese a página fica em branco.**
 
 ### O que o JavaScript faz — e por que ele existe
 
-O `assets/js/auvp.js` cuida de **três coisas**: o passeio automático da roleta
-do posicionamento, o das abas da Experiência e o caça-níquel da dobra de
-networking. Nada mais.
+O `assets/js/auvp.js` cuida de **quatro coisas**: o passeio automático da
+roleta do posicionamento, o das abas da Experiência, o caça-níquel da dobra de
+networking e o envio dos formulários sem sair da página. Nada mais.
 
 Ele entrou porque apareceu um pedido que CSS não faz: **o passeio precisa
 continuar depois de um clique**. CSS não sabe trocar o estado de um radio,
@@ -162,6 +162,7 @@ script:
 | Cópias dos cartões | entram, para fechar o laço | somem — seriam conteúdo repetido |
 | Abas da Experiência | trocam no clique e sozinhas | trocam no clique |
 | Networking | caça-níquel, um perfil por vez em destaque | lista com os cinco perfis à mostra |
+| Envio do formulário | vai para um iframe escondido e vira um agradecimento | envio do navegador: a página vai até a resposta do script |
 
 Os dois passeios só andam com a dobra na tela e a aba do navegador à frente, e
 o cursor segura cada um na sua área: **na roleta, só quando está sobre a fila
@@ -239,7 +240,7 @@ conviveram, o rolo ficou com os perfis em tamanhos e opacidades trocados.
 
 | O quê | Onde |
 |---|---|
-| Ligar os dois formulários | comentário **“COMO LIGAR ESTE FORMULÁRIO”**, um em cada página |
+| Trocar o destino dos formulários | a URL do `/exec` no `action`, uma em cada página |
 | Conferir as fotos da dobra Experiência | `13-experiencia.css` — as URLs foram montadas sem poder abrir o Pexels daqui; o enquadramento das malas é o que mais pede olho |
 | Destino do card 2 | ver observação abaixo |
 
@@ -338,17 +339,43 @@ destaca pelo meio, o último perfil sempre tem um lugar vazio embaixo.
 O resto do site já era fluido e continua: conferido de 320px a 1920px nas duas
 páginas, sem estouro horizontal e sem elemento fora da tela.
 
-### Formulário
+### Formulário — para onde vai o que as pessoas escrevem
 
-O JavaScript do site não trata de formulário, então o `<form>` precisa de um
-destino próprio:
+O `action` dos dois formulários aponta para um **app da web do Apps Script**,
+que grava cada resposta numa planilha do Google. A URL termina em `/exec` e
+**está escrita nas duas páginas** (`index.html` e `missao-china.html`): trocar
+o destino é trocar as duas.
 
-1. **Serviço de formulário** — crie um formulário no Formspree, Getform ou
-   similar e cole a URL no `action=""`. Funciona sem mais nada.
-2. **Link direto** — troque o botão por um link de WhatsApp ou e-mail.
+O que sai no envio:
 
-Enquanto nenhum for feito, o botão não envia nada. O comentário no arquivo
-explica as opções.
+| campo | o que é |
+|---|---|
+| `origem` | `home` ou `missao-china` — para saber de onde veio |
+| `assunto` | o mesmo, em texto, para quem lê a planilha |
+| `destinos[]` | um valor por caixinha marcada (chega como lista) |
+| `sugestao` | o campo aberto, obrigatório |
+| `email` | obrigatório |
+| `_isca` | a armadilha de robô: preenchida, o script descarta |
+
+**O envio funciona com e sem JavaScript, e é o `target` que separa os dois
+casos.** Ele não está no HTML de propósito: sem script, o `<form>` faz o envio
+do navegador mesmo, a página vai até o `/exec` e mostra a resposta do script —
+feio, mas a linha é gravada. Com script, o `auvp.js` cria um iframe escondido,
+põe o `target` nele e troca o formulário por um agradecimento, sem tirar
+ninguém da página.
+
+**O agradecimento é otimista, e isso é de propósito.** A resposta vem de outro
+domínio e o navegador não deixa lê-la; o que dá para saber é que o servidor
+respondeu (o `load` do iframe) — e, se nem isso vier, um prazo de 4s o mostra
+assim mesmo. O pedido saiu nos dois casos. **Quem confirma de verdade é a
+planilha**, e é lá que se confere quando alguém disser que enviou e sumiu.
+
+O código que recebe está no projeto do Apps Script, preso à planilha
+(Extensões → Apps Script). Dois cuidados de lá: **toda alteração no código só
+vale depois de "Implantar → Gerenciar implantações → Nova versão"** — a URL
+continua servindo a versão antiga até isso —, e o acesso da implantação
+precisa ser **"Qualquer pessoa"**, não "qualquer pessoa com Conta do Google",
+senão só quem estiver logado consegue enviar.
 
 ### Missão China
 
