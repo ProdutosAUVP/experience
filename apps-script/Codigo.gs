@@ -117,10 +117,40 @@ function folha() {
 
   // Aba que já existe com o cabeçalho de uma versão anterior: reescreve.
   // Sem isso, campos novos entram sob rótulos velhos e a planilha mente.
-  // Atenção: as linhas gravadas antes continuam na ordem antiga.
   const atual = f.getRange(1, 1, 1, COLUNAS.length).getValues()[0];
-  if (atual.join('|') !== COLUNAS.join('|')) cabecalho(f);
+  if (atual.join('|') !== COLUNAS.join('|')) {
+    migrar(f, atual);
+    cabecalho(f);
+  }
   return f;
+}
+
+/* O layout que existiu antes de Nome e Telefone entrarem. Fica aqui para
+   as linhas gravadas naquela época serem remanejadas em vez de ficarem
+   sob rótulos errados quando o cabeçalho muda. */
+const COLUNAS_V1 = ['Data', 'Origem', 'Destinos marcados', 'Sugestão', 'E-mail', 'Assunto'];
+
+/** Remaneja as linhas do layout antigo para o de hoje, uma única vez.
+ *  Só mexe se o cabeçalho for exatamente o antigo — qualquer outra coisa
+ *  ele deixa quieta, porque remanejar no escuro é pior que não remanejar. */
+function migrar(f, atual) {
+  if (atual.slice(0, COLUNAS_V1.length).join('|') !== COLUNAS_V1.join('|')) return;
+
+  const quantas = f.getLastRow() - 1;
+  if (quantas < 1) return;
+
+  const velhas = f.getRange(2, 1, quantas, COLUNAS_V1.length).getValues();
+  const novas = velhas.map((l) => [
+    l[0],   // Data
+    l[1],   // Origem
+    '',     // Nome — não existia
+    l[4],   // E-mail
+    '',     // Telefone — não existia
+    l[2],   // Destinos marcados
+    l[3],   // Sugestão
+    l[5],   // Assunto
+  ]);
+  f.getRange(2, 1, novas.length, COLUNAS.length).setValues(novas);
 }
 
 /** Escreve (ou reescreve) a primeira linha com os nomes das colunas.
