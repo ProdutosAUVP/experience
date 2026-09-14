@@ -18,7 +18,8 @@
 const PLANILHA_ID = '';
 
 const ABA = 'Sugestões';
-const COLUNAS = ['Data', 'Origem', 'Destinos marcados', 'Sugestão', 'E-mail', 'Assunto'];
+const COLUNAS = ['Data', 'Origem', 'Nome', 'E-mail', 'Telefone',
+                 'Destinos marcados', 'Sugestão', 'Assunto'];
 
 /** O envio dos formulários cai aqui. */
 function doPost(e) {
@@ -42,6 +43,8 @@ function doGet(e) {
     try {
       gravar({
         origem: 'teste-doGet',
+        nome: 'Fulano de Teste',
+        telefone: '(00) 00000-0000',
         sugestao: 'Linha de teste, pode apagar',
         email: 'teste@exemplo.com',
         assunto: 'Teste de ligação',
@@ -74,12 +77,15 @@ function gravar(p, ps) {
   const trava = LockService.getScriptLock();
   trava.waitLock(30000);               // dois envios ao mesmo tempo não
   try {                                // podem disputar a mesma linha
+    // A ordem tem de bater com COLUNAS, linha a linha.
     folha().appendRow([
       new Date(),
       p.origem || '',
+      p.nome || '',
+      p.email || '',
+      p.telefone || '',
       (ps['destinos[]'] || []).join(', '),
       p.sugestao || '',
-      p.email || '',
       p.assunto || '',
     ]);
   } finally {
@@ -100,18 +106,30 @@ function folha() {
   let f = planilha.getSheetByName(ABA);
   if (!f) {
     f = planilha.insertSheet(ABA);
-    f.appendRow(COLUNAS);
-    f.setFrozenRows(1);
-    f.getRange('A1:F1').setFontWeight('bold');
+    cabecalho(f);
+    return f;
   }
+
+  // Aba que já existe com o cabeçalho de uma versão anterior: reescreve.
+  // Sem isso, campos novos entram sob rótulos velhos e a planilha mente.
+  // Atenção: as linhas gravadas antes continuam na ordem antiga.
+  const atual = f.getRange(1, 1, 1, COLUNAS.length).getValues()[0];
+  if (atual.join('|') !== COLUNAS.join('|')) cabecalho(f);
   return f;
 }
 
 /** Rode este pelo editor (▶) para provar que a gravação funciona com as
  *  suas permissões, sem passar pela web. */
+function cabecalho(f) {
+  f.getRange(1, 1, 1, COLUNAS.length).setValues([COLUNAS]).setFontWeight('bold');
+  f.setFrozenRows(1);
+}
+
 function testarGravacao() {
   gravar({
     origem: 'teste-editor',
+    nome: 'Fulano de Teste',
+    telefone: '(00) 00000-0000',
     sugestao: 'Linha de teste, pode apagar',
     email: 'teste@exemplo.com',
     assunto: 'Teste de ligação',

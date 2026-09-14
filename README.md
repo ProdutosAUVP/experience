@@ -357,8 +357,16 @@ O que sai no envio:
 | `assunto` | o mesmo, em texto, para quem lê a planilha |
 | `destinos[]` | um valor por caixinha marcada (chega como lista) |
 | `sugestao` | o campo aberto, obrigatório |
+| `nome` | obrigatório |
 | `email` | obrigatório |
+| `telefone` | opcional |
 | `_isca` | a armadilha de robô: preenchida, o script descarta |
+
+A ordem das colunas na planilha é a do `COLUNAS`, no topo do `Codigo.gs`, e o
+`appendRow` do `gravar()` precisa segui-la **linha a linha**. Ao acrescentar um
+campo, mexa nos dois — e nos dois HTML, que não têm template. O script reescreve
+sozinho o cabeçalho quando ele não bate com o `COLUNAS`; o que ele não faz é
+consertar as linhas gravadas antes, que ficam na ordem antiga.
 
 **O envio funciona com e sem JavaScript, e é o `target` que separa os dois
 casos.** Ele não está no HTML de propósito: sem script, o `<form>` faz o envio
