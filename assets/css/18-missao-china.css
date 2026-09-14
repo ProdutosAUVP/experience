@@ -309,41 +309,32 @@
 /* ---- Chamada final e formulário ---- */
 .auvp-jornada__head { text-align: center; padding-bottom: clamp(2.5rem, 5vw, 4rem); }
 .auvp-jornada__title { font-size: clamp(1.8rem, 4vw, 3.4rem); line-height: 1.08; max-width: 20ch; margin-inline: auto; }
-/* Formulário em duas colunas: as sete perguntas cabem em quatro linhas
-   em vez de sete, e a dobra deixa de ser uma coluna estreita e alta. Os
-   campos longos — endereço, a pergunta aberta e o grupo de sim/não —
-   atravessam a linha inteira. */
-/* O painel é o mesmo do verso do card de Próximos destinos, na home:
-   papel de um tom mais escuro, a mesma borda fina e o mesmo respiro por
-   dentro. Antes o formulário ficava solto no papel da página e os dois
-   não pareciam a mesma peça. */
+/* O painel é o verso do card de Próximos destinos, na home, repetido
+   aqui: mesma largura útil, mesmo papel de um tom mais escuro, mesma
+   borda fina, mesmo respiro por dentro e mesmo intervalo entre as
+   perguntas — por isso os valores abaixo repetem os do
+   `.auvp-card__verso` no 09-imersoes.css. Mexeu num, mexa no outro.
+
+   Aqui já morou outro formulário, com sete perguntas em duas colunas, e
+   é de lá que vinha a largura de 1040px. Com as duas perguntas de agora,
+   uma coluna estreita é o certo — e é o que faz os dois parecerem a
+   mesma peça. */
 .auvp-jornada__form {
-  max-width: 1040px;
+  /* 640px é a largura que o verso do card tem numa tela de 1440 — o
+     painel de lá é fração da grade, então não há um número que bata em
+     toda largura; este é o que bate onde a maioria vê. */
+  max-width: 640px;
   margin-inline: auto;
-  padding: clamp(1.5rem, 3vw, 3rem);
+  display: grid;
+  align-content: start;
+  gap: 1.35rem;
+  padding: clamp(1.5rem, 2.2vw, 2.4rem);
   background: var(--paper-2);
   border: 1px solid var(--line-soft);
 }
-.auvp-jornada__form .auvp-form {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.5rem, 2.4vw, 2rem) clamp(1.5rem, 3vw, 2.75rem);
-  align-items: start;
+.auvp-jornada__chamada {
+  font-size: var(--fs-small);
+  color: var(--ink-60);
+  line-height: 1.7;
 }
-.auvp-jornada__form .auvp-form > .auvp-largo { grid-column: 1 / -1; }
-@media (max-width: 720px) {
-  .auvp-jornada__form .auvp-form { grid-template-columns: 1fr; }
-}
-
-/* Pergunta com respostas fixas: mesmo desenho dos chips de destino da
-   home, com radio no lugar do checkbox. */
-.auvp-escolha { display: grid; gap: 0.75rem; }
-.auvp-escolha legend {
-  font-family: var(--display);
-  font-size: var(--fs-micro);
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-45);
-}
-.auvp-escolha__opcoes { display: flex; flex-wrap: wrap; gap: 0.55rem; }
 

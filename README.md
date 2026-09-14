@@ -95,6 +95,28 @@ O site nasceu sem JavaScript nenhum e quase tudo continua assim:
 | Menu suspenso das Imersões | `:hover` e `:focus-within` |
 | Card da China | link para a página da missão — o card inteiro é um `<a>` |
 | Card de Próximos destinos | `<input type="checkbox">` + `<label>` — o card gira e mostra o formulário |
+| FAQ | `<details name="…">` — abre um e fecha o outro |
+| Abas da Experiência | `<input type="radio">` + `<label>` |
+| Chips de destino | `<input type="checkbox">` — vão junto no formulário |
+| Faixa deslizante | `@keyframes` andando -50% sobre dois grupos iguais |
+| Mosaico de fotos da Missão China | `@keyframes` alternando a opacidade |
+| Logo girando sobre o mapa | `@keyframes` |
+| Perfis de networking | caça-níquel movido pela rolagem — ver abaixo |
+| Revelação ao rolar | `animation-timeline: view()` |
+| Barra de progresso | `animation-timeline: scroll()` |
+
+### O formulário de sugestão, e os dois cards que o cercam
+
+**O mesmo formulário aparece em dois lugares**: no verso do card de Próximos
+destinos (home) e na dobra final da Missão China. Mesma chamada, mesmos dez
+destinos, mesmos dois campos e mesmo botão — o painel da Missão China repete os
+valores do `.auvp-card__verso` para os dois parecerem a mesma peça. Não há
+template neste site, então **ao mexer num, mexa no outro**: `index.html` e
+`missao-china.html`.
+
+Duas diferenças, ambas de propósito: o `assunto` (campo escondido) diz de qual
+página veio, senão as duas origens chegam iguais na caixa de entrada; e o
+"Voltar" só existe na home, onde ele desvira o card.
 
 Os dois cards das Imersões têm sempre a mesma altura, e é a grade que garante
 isso: **não ponha `align-items: start` em `.auvp-dest__grid`**. Com ele, cada
@@ -105,24 +127,6 @@ largura. No esticado (o padrão) os dois recebem a altura da linha, que é a do
 mais alto. Numa coluna só eles ficam empilhados, não lado a lado, e aí cada um
 volta a ter a altura do que carrega — forçar a igualdade ali só encheria o card
 da China de vazio.
-
-| FAQ | `<details name="…">` — abre um e fecha o outro |
-| Abas da Experiência | `<input type="radio">` + `<label>` |
-| Chips de destino | `<input type="checkbox">` — vão junto no formulário |
-
-**Os destinos aparecem em dois lugares** — no verso do card de Próximos
-destinos (home) e na pergunta "Tem algum destino de preferência?" do formulário
-da Missão China — e são a mesma lista, com o mesmo `name="destinos[]"`, para as
-duas origens chegarem iguais na caixa de entrada. Não há template neste site, então
-**ao acrescentar ou tirar um destino, mexa nos dois arquivos**: `index.html` e
-`missao-china.html`.
-
-| Faixa deslizante | `@keyframes` andando -50% sobre dois grupos iguais |
-| Mosaico de fotos da Missão China | `@keyframes` alternando a opacidade |
-| Logo girando sobre o mapa | `@keyframes` |
-| Perfis de networking | caça-níquel movido pela rolagem — ver abaixo |
-| Revelação ao rolar | `animation-timeline: view()` |
-| Barra de progresso | `animation-timeline: scroll()` |
 
 As animações de rolagem estão dentro de um `@supports`. Em navegador que não
 as suporta, o bloco é ignorado e o conteúdo aparece normalmente — **em nenhuma
@@ -419,6 +423,10 @@ A fila está duplicada no HTML e é a cópia que fecha o laço sem costura: o
 trilho anda até parar sobre a cópia do primeiro cartão e volta ao começo sem
 transição, o que não aparece porque a tela é idêntica. **Mexeu num cartão,
 mexa no gêmeo.**
+
+O passeio anda de **4,5 em 4,5 segundos** — o número está no `roleta()` do
+`assets/js/auvp.js`. Já foi 2,5s, e no cartão de texto mais longo não dava
+tempo de ler antes de ele sair.
 
 ### Diferencial
 

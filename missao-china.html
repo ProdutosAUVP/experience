@@ -230,7 +230,18 @@
         <h2 class="auvp-jornada__title auvp-sobe">O próximo destino já está sendo traçado. Seja um dos primeiros a saber.</h2>
       </div>
 
+      <!-- O mesmo formulário do verso do card de Próximos destinos, na
+           home: mesma chamada, mesmos dez destinos, mesmos dois campos e
+           mesmo botão. O que ficava aqui antes era outro formulário, com
+           sete perguntas em duas colunas. Ao mexer num, mexa no outro.
+
+           A única diferença é invisível: o `assunto` diz de qual página
+           veio, senão as duas origens chegam iguais na caixa de entrada.
+           O "Voltar" do card também não vem junto — lá ele desvira o
+           card, e aqui não há card para desvirar. -->
       <div class="auvp-jornada__form" id="candidatura">
+        <p class="auvp-jornada__chamada">Marque os destinos que fariam você embarcar e diga o que quer ver por lá. As sugestões entram na curadoria dos próximos roteiros.</p>
+
         <!-- COMO LIGAR ESTE FORMULÁRIO
              Não há JavaScript no site, então o envio precisa de um
              destino no action="": a URL de um serviço de formulário
@@ -238,67 +249,31 @@
              botão não envia nada. O README detalha as opções. -->
         <form class="auvp-form" method="post" action="">
           <input type="text" name="_isca" class="auvp-isca" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <input type="hidden" name="assunto" value="Próxima jornada — AUVP Experience">
+          <input type="hidden" name="assunto" value="Sugestão de destino — Missão China">
 
-          <div class="auvp-field">
-            <label for="jor-nome">Nome completo</label>
-            <input id="jor-nome" name="nome" type="text" autocomplete="name" placeholder="Como está no seu documento" required>
+          <div class="auvp-chips">
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Japão"><span>Japão</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Estados Unidos"><span>Estados Unidos</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Emirados Árabes"><span>Emirados Árabes</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Índia"><span>Índia</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Coreia do Sul"><span>Coreia do Sul</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Alemanha"><span>Alemanha</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Singapura"><span>Singapura</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="México"><span>México</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Portugal"><span>Portugal</span></label>
+            <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Chile"><span>Chile</span></label>
           </div>
 
           <div class="auvp-field">
-            <label for="jor-endereco">Endereço</label>
-            <input id="jor-endereco" name="endereco" type="text" autocomplete="street-address" placeholder="Rua, número, cidade e estado">
+            <label for="sug-destino">Sua sugestão</label>
+            <input id="sug-destino" name="sugestao" type="text" placeholder="Destino e o que você gostaria de ver lá" required>
           </div>
-
           <div class="auvp-field">
-            <label for="jor-email">E-mail</label>
-            <input id="jor-email" name="email" type="email" autocomplete="email" placeholder="voce@empresa.com" required>
+            <label for="sug-email">E-mail</label>
+            <input id="sug-email" name="email" type="email" placeholder="voce@empresa.com" required>
           </div>
 
-          <div class="auvp-field">
-            <label for="jor-telefone">Telefone</label>
-            <input id="jor-telefone" name="telefone" type="tel" autocomplete="tel" placeholder="(00) 00000-0000">
-          </div>
-
-          <!-- Os mesmos destinos do verso do card de Próximos destinos, na
-               home, com o mesmo `name`: quem responde marca em vez de
-               escrever, e as duas origens chegam com a mesma cara na caixa
-               de entrada. Ao acrescentar um destino, acrescente nos dois. -->
-          <fieldset class="auvp-escolha auvp-largo">
-            <legend>Tem algum destino de preferência?</legend>
-            <div class="auvp-escolha__opcoes">
-              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Japão"><span>Japão</span></label>
-              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Estados Unidos"><span>Estados Unidos</span></label>
-              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Emirados Árabes"><span>Emirados Árabes</span></label>
-              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Índia"><span>Índia</span></label>
-              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Coreia do Sul"><span>Coreia do Sul</span></label>
-              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Alemanha"><span>Alemanha</span></label>
-              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Singapura"><span>Singapura</span></label>
-              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="México"><span>México</span></label>
-              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Portugal"><span>Portugal</span></label>
-              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Chile"><span>Chile</span></label>
-            </div>
-          </fieldset>
-
-          <div class="auvp-field auvp-largo">
-            <label for="jor-experiencia">Qual foi a melhor experiência da sua vida?</label>
-            <textarea id="jor-experiencia" name="experiencia" placeholder="Conte pra gente"></textarea>
-          </div>
-
-          <fieldset class="auvp-escolha">
-            <legend>Você levaria alguém nessa viagem?</legend>
-            <div class="auvp-escolha__opcoes">
-              <label class="auvp-chip"><input type="radio" name="acompanhante" value="Não"><span>Não</span></label>
-              <label class="auvp-chip"><input type="radio" name="acompanhante" value="Sim"><span>Sim</span></label>
-            </div>
-          </fieldset>
-
-          <div class="auvp-field">
-            <label for="jor-quem">Se sim, quem?</label>
-            <input id="jor-quem" name="acompanhante_quem" type="text" placeholder="Quem viajaria com você">
-          </div>
-
-          <div class="auvp-largo"><button class="auvp-btn" type="submit">Enviar candidatura <i aria-hidden="true">&rarr;</i></button></div>
+          <div><button class="auvp-btn" type="submit">Enviar sugestão <i aria-hidden="true">&rarr;</i></button></div>
         </form>
       </div>
     </div>
