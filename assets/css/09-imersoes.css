@@ -123,6 +123,15 @@
 .auvp-card__voltar { color: var(--verde); margin-top: 0.5rem; }
 .auvp-card__voltar:hover { gap: 1.1rem; }
 
+/* Depois do envio sobra só o agradecimento dentro do card, e o card
+   continua com a altura da linha da grade. Alinhado ao topo, ele ficava
+   pendurado com meia altura de vazio embaixo; no meio, o card inteiro
+   vira a confirmação. O "Voltar" acompanha o centro para a coluna não
+   ficar torta. Sem suporte a `:has()` fica tudo como antes, no topo —
+   que é feio, não quebrado. */
+.auvp-card__verso:has(.auvp-form__recibo) { align-content: center; }
+.auvp-card__verso:has(.auvp-form__recibo) .auvp-card__voltar { justify-self: center; }
+
 @media (max-width: 860px) {
   /* Numa coluna só os dois ficam empilhados, não lado a lado: não há
      comparação a fazer, e cada um volta a ter a altura do que carrega. */

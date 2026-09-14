@@ -14,6 +14,9 @@ e o que vai para o ar.
 ```
 index.html                  home
 missao-china.html           página da Missão China
+apps-script/
+  Codigo.gs                 o que recebe os formulários e grava na planilha
+                            (cópia versionada — o Google não lê daqui)
 assets/
   js/
     auvp.js                 os passeios automáticos e o caça-níquel
@@ -354,8 +357,16 @@ O que sai no envio:
 | `assunto` | o mesmo, em texto, para quem lê a planilha |
 | `destinos[]` | um valor por caixinha marcada (chega como lista) |
 | `sugestao` | o campo aberto, obrigatório |
+| `nome` | obrigatório |
 | `email` | obrigatório |
+| `telefone` | opcional |
 | `_isca` | a armadilha de robô: preenchida, o script descarta |
+
+A ordem das colunas na planilha é a do `COLUNAS`, no topo do `Codigo.gs`, e o
+`appendRow` do `gravar()` precisa segui-la **linha a linha**. Ao acrescentar um
+campo, mexa nos dois — e nos dois HTML, que não têm template. O script reescreve
+sozinho o cabeçalho quando ele não bate com o `COLUNAS`; o que ele não faz é
+consertar as linhas gravadas antes, que ficam na ordem antiga.
 
 **O envio funciona com e sem JavaScript, e é o `target` que separa os dois
 casos.** Ele não está no HTML de propósito: sem script, o `<form>` faz o envio
@@ -364,6 +375,14 @@ feio, mas a linha é gravada. Com script, o `auvp.js` cria um iframe escondido,
 põe o `target` nele e troca o formulário por um agradecimento, sem tirar
 ninguém da página.
 
+**O agradecimento fica sozinho no painel.** A chamada de cima ("Marque os
+destinos…") sai junto com o formulário, porque pede o que já foi feito — sendo
+a única coisa ali, ela é tamanho de título, com um selo verde acima. No card da
+home o painel passa a centralizar o conteúdo (`:has(.auvp-form__recibo)`),
+senão o agradecimento ficava pendurado no topo com meia altura de card vazia
+embaixo; o "Voltar" continua, porque é a única saída de volta para a frente do
+card.
+
 **O agradecimento é otimista, e isso é de propósito.** A resposta vem de outro
 domínio e o navegador não deixa lê-la; o que dá para saber é que o servidor
 respondeu (o `load` do iframe) — e, se nem isso vier, um prazo de 4s o mostra
@@ -371,11 +390,42 @@ assim mesmo. O pedido saiu nos dois casos. **Quem confirma de verdade é a
 planilha**, e é lá que se confere quando alguém disser que enviou e sumiu.
 
 O código que recebe está no projeto do Apps Script, preso à planilha
-(Extensões → Apps Script). Dois cuidados de lá: **toda alteração no código só
-vale depois de "Implantar → Gerenciar implantações → Nova versão"** — a URL
-continua servindo a versão antiga até isso —, e o acesso da implantação
-precisa ser **"Qualquer pessoa"**, não "qualquer pessoa com Conta do Google",
-senão só quem estiver logado consegue enviar.
+(Extensões → Apps Script), e uma cópia dele mora em **`apps-script/Codigo.gs`**
+para ficar versionada junto com o site. **O Google não lê daqui**: ao mudar
+algo, copie para lá e publique.
+
+Dois cuidados que respondem por quase toda falha de ligação:
+
+1. **Toda alteração no código só vale depois de "Implantar → Gerenciar
+   implantações → ✏️ → Versão: Nova versão".** Até isso, a URL do `/exec`
+   continua servindo o código antigo. Criar uma implantação nova, em vez de
+   versionar a existente, gera **outra URL** — e aí é o `action` das duas
+   páginas que precisa mudar.
+2. **O acesso da implantação precisa ser "Qualquer pessoa"**, não "qualquer
+   pessoa com Conta do Google". Com a segunda, quem não estiver logado recebe
+   uma tela de login no lugar da gravação.
+
+### Quando a linha não aparece na planilha
+
+O agradecimento no site é otimista e não prova nada — quem prova é a planilha.
+Três lugares para olhar, nesta ordem:
+
+1. **Abra a URL do `/exec` no navegador.** O `doGet` responde em texto: se
+   disser "No ar" com o nome da planilha e a contagem de linhas, o script está
+   certo e o problema é do lado do envio. Se pedir login, é o acesso da
+   implantação. Se der `Script function not found: doGet`, o código publicado é
+   antigo — falta a nova versão.
+2. **`?teste=1` no fim dessa mesma URL** grava uma linha. Se gravar, a ponta
+   Google está inteira.
+3. **"Execuções", no menu da esquerda do editor.** Cada envio do site vira uma
+   execução ali, com o erro por extenso quando falha. **Nenhuma execução** quer
+   dizer que o pedido não chegou — a essa altura, o suspeito é a implantação ou
+   a página publicada ainda ser a antiga.
+
+A armadilha mais silenciosa é o projeto do Apps Script ser **avulso** em vez de
+preso à planilha: `SpreadsheetApp.getActive()` devolve null, nada é gravado e o
+site continua agradecendo. É para isso que existe a constante `PLANILHA_ID` no
+topo do `Codigo.gs`.
 
 ### Missão China
 
