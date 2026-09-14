@@ -260,10 +260,25 @@
             <input id="jor-telefone" name="telefone" type="tel" autocomplete="tel" placeholder="(00) 00000-0000">
           </div>
 
-          <div class="auvp-field auvp-largo">
-            <label for="jor-destino">Tem algum destino de preferência?</label>
-            <input id="jor-destino" name="destino" type="text" placeholder="Para onde você gostaria de ir">
-          </div>
+          <!-- Os mesmos destinos do verso do card de Próximos destinos, na
+               home, com o mesmo `name`: quem responde marca em vez de
+               escrever, e as duas origens chegam com a mesma cara na caixa
+               de entrada. Ao acrescentar um destino, acrescente nos dois. -->
+          <fieldset class="auvp-escolha auvp-largo">
+            <legend>Tem algum destino de preferência?</legend>
+            <div class="auvp-escolha__opcoes">
+              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Japão"><span>Japão</span></label>
+              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Estados Unidos"><span>Estados Unidos</span></label>
+              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Emirados Árabes"><span>Emirados Árabes</span></label>
+              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Índia"><span>Índia</span></label>
+              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Coreia do Sul"><span>Coreia do Sul</span></label>
+              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Alemanha"><span>Alemanha</span></label>
+              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Singapura"><span>Singapura</span></label>
+              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="México"><span>México</span></label>
+              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Portugal"><span>Portugal</span></label>
+              <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Chile"><span>Chile</span></label>
+            </div>
+          </fieldset>
 
           <div class="auvp-field auvp-largo">
             <label for="jor-experiencia">Qual foi a melhor experiência da sua vida?</label>

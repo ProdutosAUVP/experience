@@ -109,6 +109,14 @@ da China de vazio.
 | FAQ | `<details name="…">` — abre um e fecha o outro |
 | Abas da Experiência | `<input type="radio">` + `<label>` |
 | Chips de destino | `<input type="checkbox">` — vão junto no formulário |
+
+**Os destinos aparecem em dois lugares** — no verso do card de Próximos
+destinos (home) e na pergunta "Tem algum destino de preferência?" do formulário
+da Missão China — e são a mesma lista, com o mesmo `name="destinos[]"`, para as
+duas origens chegarem iguais na caixa de entrada. Não há template neste site, então
+**ao acrescentar ou tirar um destino, mexa nos dois arquivos**: `index.html` e
+`missao-china.html`.
+
 | Faixa deslizante | `@keyframes` andando -50% sobre dois grupos iguais |
 | Mosaico de fotos da Missão China | `@keyframes` alternando a opacidade |
 | Logo girando sobre o mapa | `@keyframes` |
