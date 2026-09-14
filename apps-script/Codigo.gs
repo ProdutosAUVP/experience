@@ -110,6 +110,11 @@ function folha() {
     return f;
   }
 
+  // Aba existente mais estreita que o cabeçalho de hoje: alarga antes de
+  // tentar ler a faixa, senão a leitura abaixo já estoura.
+  const faltam = COLUNAS.length - f.getMaxColumns();
+  if (faltam > 0) f.insertColumnsAfter(f.getMaxColumns(), faltam);
+
   // Aba que já existe com o cabeçalho de uma versão anterior: reescreve.
   // Sem isso, campos novos entram sob rótulos velhos e a planilha mente.
   // Atenção: as linhas gravadas antes continuam na ordem antiga.
@@ -118,13 +123,19 @@ function folha() {
   return f;
 }
 
-/** Rode este pelo editor (▶) para provar que a gravação funciona com as
- *  suas permissões, sem passar pela web. */
+/** Escreve (ou reescreve) a primeira linha com os nomes das colunas.
+ *  Alarga a aba antes: uma planilha nova vem com 26 colunas, mas uma aba
+ *  enxugada à mão pode ter menos que o COLUNAS de hoje, e aí tanto ler
+ *  quanto escrever a faixa estoura com "range exceeds grid limits". */
 function cabecalho(f) {
+  const faltam = COLUNAS.length - f.getMaxColumns();
+  if (faltam > 0) f.insertColumnsAfter(f.getMaxColumns(), faltam);
   f.getRange(1, 1, 1, COLUNAS.length).setValues([COLUNAS]).setFontWeight('bold');
   f.setFrozenRows(1);
 }
 
+/** Rode este pelo editor (▶) para provar que a gravação funciona com as
+ *  suas permissões, sem passar pela web. */
 function testarGravacao() {
   gravar({
     origem: 'teste-editor',
