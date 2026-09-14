@@ -364,6 +364,14 @@ feio, mas a linha é gravada. Com script, o `auvp.js` cria um iframe escondido,
 põe o `target` nele e troca o formulário por um agradecimento, sem tirar
 ninguém da página.
 
+**O agradecimento fica sozinho no painel.** A chamada de cima ("Marque os
+destinos…") sai junto com o formulário, porque pede o que já foi feito — sendo
+a única coisa ali, ela é tamanho de título, com um selo verde acima. No card da
+home o painel passa a centralizar o conteúdo (`:has(.auvp-form__recibo)`),
+senão o agradecimento ficava pendurado no topo com meia altura de card vazia
+embaixo; o "Voltar" continua, porque é a única saída de volta para a frente do
+card.
+
 **O agradecimento é otimista, e isso é de propósito.** A resposta vem de outro
 domínio e o navegador não deixa lê-la; o que dá para saber é que o servidor
 respondeu (o `load` do iframe) — e, se nem isso vier, um prazo de 4s o mostra

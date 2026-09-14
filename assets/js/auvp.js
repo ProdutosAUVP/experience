@@ -222,6 +222,11 @@
 
     const botao = form.querySelector('button[type="submit"]');
     const rotulo = botao ? botao.innerHTML : '';
+    // A chamada que fica acima do formulário ("Marque os destinos…") pede
+    // o que já foi feito, então ela sai junto: depois do envio, o painel
+    // é só o agradecimento.
+    const chamada = form.previousElementSibling &&
+      form.previousElementSibling.tagName === 'P' ? form.previousElementSibling : null;
     let enviando = false;
     let prazo = null;
 
@@ -229,10 +234,16 @@
       if (!enviando) return;              // `load` inicial do iframe, não o nosso
       enviando = false;
       clearTimeout(prazo);
-      const aviso = document.createElement('p');
+
+      const aviso = document.createElement('div');
       aviso.className = 'auvp-form__recibo';
       aviso.setAttribute('role', 'status');
-      aviso.textContent = 'Recebemos sua sugestão. Obrigado — ela entra na curadoria dos próximos roteiros.';
+      aviso.innerHTML =
+        '<span class="auvp-form__selo" aria-hidden="true"></span>' +
+        '<strong>Sugestão recebida.</strong>' +
+        '<span class="auvp-form__recibo-apoio">Obrigado. Ela entra na curadoria dos próximos roteiros.</span>';
+
+      if (chamada) chamada.remove();
       form.replaceWith(aviso);
     };
 

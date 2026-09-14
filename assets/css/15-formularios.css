@@ -37,13 +37,53 @@
 .auvp-isca { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 
 /* O agradecimento que toma o lugar do formulário depois do envio. Vale
-   nos dois lugares em que o formulário aparece, por isso mora aqui. */
+   nos dois lugares em que o formulário aparece, por isso mora aqui.
+
+   Ele fica sozinho no painel: a chamada de cima ("Marque os destinos…")
+   sai junto com o formulário, porque pede o que já foi feito. Sendo a
+   única coisa ali, é tamanho de título que ele pede, não de legenda. */
 .auvp-form__recibo {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 0.55rem;
+  padding-block: clamp(1.75rem, 5vw, 3rem);
+}
+/* O selo é um círculo verde com um tique desenhado por duas bordas de um
+   pseudo-elemento girado — sem imagem e sem fonte de ícones. */
+.auvp-form__selo {
+  position: relative;
+  width: clamp(38px, 7vw, 48px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--verde);
+  margin-bottom: 0.35rem;
+}
+.auvp-form__selo::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 46%;
+  width: 30%; height: 15%;
+  border-left: 2px solid var(--paper);
+  border-bottom: 2px solid var(--paper);
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+.auvp-form__recibo strong {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--verde);
+}
+.auvp-form__recibo-apoio {
   font-size: var(--fs-small);
   line-height: 1.7;
-  color: var(--verde);
-  padding: 1.25rem 0;
-  border-top: 1px solid var(--verde-30);
+  color: var(--ink-60);
+  max-width: 34ch;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .auvp-form__recibo { animation: auvp-sobe 0.7s var(--ease) both; }
 }
 
 /* Chips: caixas de seleção reais, para o formulário levar a escolha.
