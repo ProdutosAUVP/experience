@@ -36,6 +36,16 @@
 
 .auvp-isca { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 
+/* O agradecimento que toma o lugar do formulário depois do envio. Vale
+   nos dois lugares em que o formulário aparece, por isso mora aqui. */
+.auvp-form__recibo {
+  font-size: var(--fs-small);
+  line-height: 1.7;
+  color: var(--verde);
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--verde-30);
+}
+
 /* Chips: caixas de seleção reais, para o formulário levar a escolha.
    Servem tanto aos destinos da home quanto às respostas de sim/não da
    Missão China — por isso moraram aqui, e não na dobra de imersões. */

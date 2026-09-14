@@ -259,14 +259,20 @@
             <div class="auvp-card__verso">
             <p>Marque os destinos que fariam você embarcar e diga o que quer ver por lá. As sugestões entram na curadoria dos próximos roteiros.</p>
 
-            <!-- COMO LIGAR ESTE FORMULÁRIO
-            Não há JavaScript no site, então o envio precisa de um
-            destino no action="": a URL de um serviço de formulário
-            (Formspree, Getform ou similar). Enquanto estiver vazio, o
-            botão não envia nada. O README detalha as opções. -->
-            <form class="auvp-form" method="post" action="">
+            <!-- COMO ESTE FORMULÁRIO É ENVIADO
+            O `action` aponta para um app da web do Apps Script, que grava
+            a resposta numa planilha. Sem JavaScript o envio é o do
+            navegador mesmo: a página vai até o endereço acima e mostra a
+            resposta do script — feio, mas funciona e a linha é gravada.
+            Com JavaScript, o assets/js/auvp.js manda o envio para um
+            iframe escondido e troca o formulário por um agradecimento,
+            sem tirar ninguém da página.
+            Trocar o destino é trocar esta URL — e ela está nas duas
+            páginas, aqui e na missao-china.html. -->
+            <form class="auvp-form auvp-form--remoto" method="post" action="https://script.google.com/macros/s/AKfycbxYTjsbuURjj62IVWj3UYsy2Qlxph7kKx9jULwAalBKGyeqGqRUjVxp0td5Fe8KgcGu/exec">
             <input type="text" name="_isca" class="auvp-isca" tabindex="-1" autocomplete="off" aria-hidden="true">
             <input type="hidden" name="assunto" value="Sugestão de destino — AUVP Experience">
+            <input type="hidden" name="origem" value="home">
 
             <div class="auvp-chips">
             <label class="auvp-chip"><input type="checkbox" name="destinos[]" value="Japão"><span>Japão</span></label>

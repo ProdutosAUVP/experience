@@ -190,7 +190,80 @@
     medir();
   }
 
+  /* ---- Envio dos formulários ----
+     O `action` do <form> aponta para um app da web do Apps Script, que
+     grava a resposta numa planilha. Sem este arquivo o envio continua
+     acontecendo — é o do navegador mesmo, que sai da página e mostra a
+     resposta do script. Feio, mas a linha é gravada, e é por isso que o
+     `target` não está no HTML: ele é posto aqui, só quando há script.
+
+     Com script, o envio vai para um iframe escondido e a página não se
+     mexe. O que não dá para fazer é ler a resposta: ela vem de outro
+     domínio, e o navegador não deixa. Por isso o agradecimento é dado no
+     `load` do iframe — que diz "o servidor respondeu", não "deu certo" —
+     e, se esse `load` não vier (há navegador que recusa emoldurar a
+     resposta do Google), um prazo curto o dá assim mesmo. O pedido saiu
+     nos dois casos; quem confere de verdade é a planilha. */
+  function envioRemoto(form) {
+    const alvo = 'auvp-recebedor';
+    let quadro = document.querySelector('iframe[name="' + alvo + '"]');
+    if (!quadro) {
+      quadro = document.createElement('iframe');
+      quadro.name = alvo;
+      quadro.title = 'Envio do formulário';
+      quadro.setAttribute('aria-hidden', 'true');
+      quadro.setAttribute('tabindex', '-1');
+      // Fora da vista, mas carregando: `display: none` em iframe é
+      // terreno movediço entre navegadores.
+      quadro.style.cssText = 'position:absolute;width:0;height:0;border:0;left:-9999px';
+      document.body.appendChild(quadro);
+    }
+    form.target = alvo;
+
+    const botao = form.querySelector('button[type="submit"]');
+    const rotulo = botao ? botao.innerHTML : '';
+    let enviando = false;
+    let prazo = null;
+
+    const agradecer = () => {
+      if (!enviando) return;              // `load` inicial do iframe, não o nosso
+      enviando = false;
+      clearTimeout(prazo);
+      const aviso = document.createElement('p');
+      aviso.className = 'auvp-form__recibo';
+      aviso.setAttribute('role', 'status');
+      aviso.textContent = 'Recebemos sua sugestão. Obrigado — ela entra na curadoria dos próximos roteiros.';
+      form.replaceWith(aviso);
+    };
+
+    form.addEventListener('submit', () => {
+      // O navegador só dispara `submit` depois de validar os campos
+      // obrigatórios, então aqui o envio já está de saída.
+      enviando = true;
+      if (botao) {
+        botao.disabled = true;
+        botao.innerHTML = 'Enviando…';
+      }
+      clearTimeout(prazo);
+      prazo = setTimeout(agradecer, 4000);
+    });
+
+    quadro.addEventListener('load', agradecer);
+
+    // Se o botão ficar preso em "Enviando…" por muito tempo, algo saiu do
+    // esperado: devolve o rótulo para a pessoa poder tentar de novo.
+    form.addEventListener('submit', () => {
+      setTimeout(() => {
+        if (botao && botao.disabled && document.contains(form)) {
+          botao.disabled = false;
+          botao.innerHTML = rotulo;
+        }
+      }, 12000);
+    });
+  }
+
   document.querySelectorAll('.auvp-roleta').forEach(roleta);
+  document.querySelectorAll('.auvp-form--remoto').forEach(envioRemoto);
   document.querySelectorAll('.auvp-exp__panel').forEach(abas);
   if (!semMovimento.matches) document.querySelectorAll('.auvp-net__pin').forEach(cacaNiquel);
 })();
